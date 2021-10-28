@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@javax.persistence.Entity
 public class RentalTime implements Serializable {
 
    @Id

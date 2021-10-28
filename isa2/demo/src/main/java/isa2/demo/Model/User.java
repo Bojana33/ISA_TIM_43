@@ -12,7 +12,7 @@ import java.lang.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@javax.persistence.Entity
 @Table(name = "users")
 public class User {
 

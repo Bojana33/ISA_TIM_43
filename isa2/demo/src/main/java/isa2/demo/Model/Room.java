@@ -13,7 +13,7 @@ import java.lang.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@javax.persistence.Entity
 public class Room implements Serializable {
 
    @Id

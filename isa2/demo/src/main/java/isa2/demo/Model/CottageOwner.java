@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 
 @Entity
 @Data
-@Table(name = "boat_owners")
-public class BoatOwner extends User {
-
+@Table(name = "cottage_owners")
+public class CottageOwner extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "boat_owner_id", unique = true, nullable = false)
+    @Column(name = "cottage_owner_id", unique = true, nullable = false)
     private Integer id;
 
     @Column(name = "loyalty_points")
@@ -21,9 +20,8 @@ public class BoatOwner extends User {
     @Column
     private UserCategory category;
 
-    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "boatOwner")
-    public java.util.Collection<Boat> boat;
-
-    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "boatOwner")
+    @OneToMany
     public java.util.Collection<Reservation> reservation;
+    @OneToMany
+    public java.util.Collection<Cottage> cottage;
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.lang.*;
@@ -20,6 +21,7 @@ public class Reservation implements Serializable {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "reservation_id", unique = true, nullable = false)
    private Integer id;
 
    @Column

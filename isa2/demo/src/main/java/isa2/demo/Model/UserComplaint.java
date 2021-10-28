@@ -14,7 +14,7 @@ import java.lang.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@javax.persistence.Entity
 public class UserComplaint implements Serializable {
 
    @Id
