@@ -27,7 +27,7 @@ public class RentalTime implements Serializable {
    @Column
    private LocalDateTime end;
 
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    private Entity entity;
 
 

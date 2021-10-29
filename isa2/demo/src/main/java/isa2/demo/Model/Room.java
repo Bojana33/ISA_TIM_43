@@ -23,7 +23,8 @@ public class Room implements Serializable {
    @Column
    private Integer numberOfBeds;
 
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "cottage_id",referencedColumnName = "id")
    private Cottage cottage;
 
 }

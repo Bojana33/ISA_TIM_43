@@ -26,7 +26,7 @@ public class Period implements Serializable {
    @Column
    private LocalDateTime endDate;
    
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY)
    public Reservation reservation;
 
 }

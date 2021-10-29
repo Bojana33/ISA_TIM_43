@@ -1,19 +1,16 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
-@Entity
+@javax.persistence.Entity
 @Data
-@Table(name = "boats")
-public class Boat extends isa2.demo.Model.Entity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "boat_id", unique = true, nullable = false)
-    private Integer id;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Boat extends Entity {
 
     @Column
     private BoatType type;
@@ -43,8 +40,8 @@ public class Boat extends isa2.demo.Model.Entity {
     @Column
     private String fishingEquipment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boat_owner_id", referencedColumnName = "boat_owner_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "boat_owner_id", referencedColumnName = "id")
     public BoatOwner boatOwner;
 
     @ElementCollection

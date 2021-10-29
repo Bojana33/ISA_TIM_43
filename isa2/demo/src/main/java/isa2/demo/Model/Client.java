@@ -1,18 +1,16 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @javax.persistence.Entity
 @Data
-@Table(name = "clients")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Client extends User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id", unique = true, nullable = false)
-    private Integer id;
 
     @Column(name = "loyalty_points")
     private java.lang.Double loyaltyPoints;
@@ -23,10 +21,12 @@ public class Client extends User {
     @Column
     private UserCategory category;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     public java.util.Collection<Reservation> reservation;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "client_subscriptions", joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id")
+            , inverseJoinColumns = @JoinColumn(name = "entity_id", referencedColumnName = "id"))
     public java.util.Collection<Entity> subscriptions;
 
 }

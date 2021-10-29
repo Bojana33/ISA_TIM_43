@@ -1,21 +1,19 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
-@Entity
+@javax.persistence.Entity
 @Data
-@Table(name = "cottages")
-public class Cottage extends isa2.demo.Model.Entity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cottage_id", unique = true, nullable = false)
-    private Integer id;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Cottage extends Entity {
 
-    @OneToMany
-    public java.util.Collection<Room> room;
-    @ManyToOne
-    public CottageOwner cottageOwner;
+    @OneToMany(mappedBy = "cottage", fetch = FetchType.LAZY)
+    private java.util.Collection<Room> rooms;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CottageOwner cottageOwner;
 }

@@ -1,13 +1,16 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.io.Serializable;
 
-@Entity
+@javax.persistence.Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "additionalServices")
 public class AdditionalService implements Serializable {
 
@@ -22,10 +25,10 @@ public class AdditionalService implements Serializable {
     private java.lang.Double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entity_id", referencedColumnName = "entity_id")
-    public isa2.demo.Model.Entity entity;
+    @JoinColumn(name = "entity_id", referencedColumnName = "id")
+    public Entity entity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", referencedColumnName = "reservation_id")
+    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
     public Reservation reservation;
 }

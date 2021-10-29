@@ -30,7 +30,7 @@ public class UserComplaint implements Serializable {
    @Column
    private Boolean processed;
 
-   @OneToOne
+   @OneToOne(mappedBy = "userComplaint", fetch = FetchType.EAGER)
    private Reservation reservation;
 
 }

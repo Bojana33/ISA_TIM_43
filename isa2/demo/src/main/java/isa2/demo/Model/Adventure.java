@@ -1,19 +1,16 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
-@Entity
+@javax.persistence.Entity
 @Data
-@Table(name = "advantures")
-public class Adventure extends isa2.demo.Model.Entity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "advanture_id", unique = true, nullable = false)
-    private Integer id;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Adventure extends Entity {
 
     @Column(name = "instructor_bio")
     private java.lang.String instructorBio;

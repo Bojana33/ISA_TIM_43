@@ -1,14 +1,16 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Collections;
 
-@Entity
+@javax.persistence.Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "addresses")
 public class Address implements Serializable {
 
@@ -27,14 +29,13 @@ public class Address implements Serializable {
     private java.lang.String number;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id" , referencedColumnName = "user_id")
-    public java.util.Set<User> user;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+    private java.util.Set<User> users;
 
-    @OneToMany
-    public java.util.Collection<RegistrationRequest> registrationRequest;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+    private java.util.Collection<RegistrationRequest> registrationRequest;
 
-    @OneToOne
-    public isa2.demo.Model.Entity entity;
+    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
+    private Entity entity;
 
 }

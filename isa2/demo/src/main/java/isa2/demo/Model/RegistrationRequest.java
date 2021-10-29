@@ -43,7 +43,7 @@ public class RegistrationRequest implements Serializable {
    @Column
    private String rejectionReason;
    
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.ALL)
    private Address address;
 
 

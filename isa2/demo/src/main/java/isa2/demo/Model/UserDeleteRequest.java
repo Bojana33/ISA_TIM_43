@@ -29,7 +29,7 @@ public class UserDeleteRequest implements Serializable {
    @Column
    private DeleteRequestStatus status;
 
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "userDeleteRequest")
    private User user;
 
 }

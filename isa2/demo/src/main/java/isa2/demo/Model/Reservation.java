@@ -21,7 +21,7 @@ public class Reservation implements Serializable {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "reservation_id", unique = true, nullable = false)
+   @Column(unique = true, nullable = false)
    private Integer id;
 
    @Column
@@ -39,48 +39,27 @@ public class Reservation implements Serializable {
    @Column
    private String additionalNotes;
    
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    private Period reservedPeriod;
 
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    private Period salePeriod;
 
-   @OneToMany
-   private Collection<AdditionalService> additionalService;
+   @OneToMany(fetch = FetchType.LAZY)
+   private Collection<AdditionalService> additionalServices;
 
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY)
    private OwnersReview ownersReview;
 
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    private ClientsReview clientsReview;
 
-   @OneToOne
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    private UserComplaint userComplaint;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    private Client client;
 
-   @ManyToOne
-   private Instructor instructor;
-
-   @ManyToOne
-   private CottageOwner cottageOwner;
-
-   @ManyToOne
-   private BoatOwner boatOwner;
-   
-   
-   
-   
-   
-   
-   
-   
-  
-   
-   
-   
-   
-   
-
+   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   private isa2.demo.Model.Entity entity;
 }

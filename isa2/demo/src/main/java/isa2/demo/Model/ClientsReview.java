@@ -1,6 +1,6 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -8,6 +8,10 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "client_reviews")
 public class ClientsReview implements Serializable {
 
@@ -21,8 +25,7 @@ public class ClientsReview implements Serializable {
     @Column
     private java.lang.Double grade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id", referencedColumnName = "reservation_id")
+    @OneToOne(fetch = FetchType.LAZY)
     public Reservation reservation;
 
 }

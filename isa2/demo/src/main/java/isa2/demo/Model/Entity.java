@@ -1,23 +1,27 @@
 package isa2.demo.Model;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @javax.persistence.Entity
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name = "entities")
 public class Entity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "entity_id", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
     @Column
     private java.lang.String name;
     @Column
     private java.lang.String description;
-    @Column
+    @ElementCollection
     private java.util.Set<String> photos;
     @Column(name = "average_grade")
     private java.lang.Double averageGrade;
@@ -26,15 +30,18 @@ public class Entity implements Serializable {
     @Column(name = "price_per_day")
     private java.lang.Double pricePerDay;
 
-    @OneToOne
-    public Address address;
-    @OneToMany
-    public java.util.Collection<RentalTime> rentalTime;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
 
-    @OneToMany
-    public java.util.Collection<AdditionalService> additionalService;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
+    private java.util.Collection<RentalTime> rentalTimes;
 
-    @ManyToMany
-    public java.util.Collection<Client> subscribedClients;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
+    private java.util.Collection<AdditionalService> additionalServices;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private java.util.Collection<Client> subscribedClients;
+
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity")
+    public java.util.Collection<Reservation> reservations;
 }

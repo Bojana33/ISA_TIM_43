@@ -1,6 +1,6 @@
 package isa2.demo.Model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +9,10 @@ import javax.persistence.Table;
 
 @Entity
 @Data
-@Table(name = "instructors")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Instructor extends User {
 
     @Column(name = "loyalty_points")
@@ -18,6 +21,4 @@ public class Instructor extends User {
     @Column
     private UserCategory category;
 
-    @OneToMany
-    public java.util.Collection<Reservation> reservation;
 }
