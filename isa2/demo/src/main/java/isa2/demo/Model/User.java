@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.lang.*;
 import java.security.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -64,6 +65,11 @@ public class User implements UserDetails {
    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    private UserDeleteRequest userDeleteRequest;
 
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name = "user_authority",
+           joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+           inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+   private List<Authority> authorities;
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -72,12 +78,12 @@ public class User implements UserDetails {
 
    @Override
    public String getUsername() {
-      return null;
+      return this.username;
    }
 
    @Override
    public boolean isAccountNonExpired() {
-      return false;
+      return true;
    }
 
    @Override
