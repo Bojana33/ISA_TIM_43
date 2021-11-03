@@ -33,6 +33,9 @@ public class User implements UserDetails {
    private String username;
 
    @Column(nullable = false)
+   private String firstName;
+
+   @Column(nullable = false)
    private String surname;
 
    @Column(nullable = false)
@@ -89,17 +92,16 @@ public class User implements UserDetails {
 
    @Override
    public boolean isAccountNonLocked() {
-      return false;
+      return true;
    }
 
    @Override
    public boolean isCredentialsNonExpired() {
-      return false;
+      return true;
    }
 
    @Override
    public boolean isEnabled() {
-      return false;
+      return true;
    }
-
 }
