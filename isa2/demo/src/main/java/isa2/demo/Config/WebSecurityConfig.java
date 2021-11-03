@@ -2,11 +2,9 @@ package isa2.demo.Config;
 
 import isa2.demo.Security.RestAuthenticationEntryPoint;
 import isa2.demo.Security.TokenAuthenticationFilter;
-import isa2.demo.Service.CustomUserDetailsService;
+import isa2.demo.Service.ServiceImpl.CustomUserDetailsService;
 import isa2.demo.Utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

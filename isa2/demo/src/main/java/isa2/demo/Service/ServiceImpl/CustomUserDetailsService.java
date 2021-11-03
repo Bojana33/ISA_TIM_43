@@ -1,4 +1,4 @@
-package isa2.demo.Service;
+package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.User;
 import isa2.demo.Repository.UserRepository;

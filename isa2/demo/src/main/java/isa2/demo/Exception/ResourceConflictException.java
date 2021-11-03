@@ -1,4 +1,4 @@
-package isa2.demo.Model;
+package isa2.demo.Exception;
 
 import lombok.Getter;
 import lombok.Setter;

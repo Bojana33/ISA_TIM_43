@@ -1,3 +1,11 @@
+INSERT INTO AUTHORITY (name)
+VALUES ('ROLE_USER'),
+       ('ROLE_ADMIN'),
+       ('ROLE_BOATOWNER'),
+       ('ROLE_CLIENT'),
+       ('ROLE_COTTAGEOWNER'),
+       ('ROLE_INSTRUCTOR');
+
 INSERT INTO addresses(
     city, country, house_number, street)
 VALUES ('Belgrade', 'Serbia', '10', 'Kralja Aleksandra I');

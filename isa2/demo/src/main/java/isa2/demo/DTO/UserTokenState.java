@@ -1,4 +1,4 @@
-package isa2.demo.Model;
+package isa2.demo.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
