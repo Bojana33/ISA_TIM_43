@@ -33,7 +33,7 @@ public class OwnersReview implements Serializable {
    @Column
    private Boolean isReported;
    
-   @OneToOne(mappedBy = "ownersReview", fetch = FetchType.EAGER)
+   @OneToOne(fetch = FetchType.EAGER, mappedBy = "ownersReview")
    private Reservation reservation;
 
 }

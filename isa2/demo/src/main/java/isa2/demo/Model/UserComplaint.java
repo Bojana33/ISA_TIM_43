@@ -15,6 +15,7 @@ import java.lang.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @javax.persistence.Entity
+@Table(name = "user_complaints")
 public class UserComplaint implements Serializable {
 
    @Id
@@ -30,7 +31,7 @@ public class UserComplaint implements Serializable {
    @Column
    private Boolean processed;
 
-   @OneToOne(mappedBy = "userComplaint", fetch = FetchType.EAGER)
+   @OneToOne(fetch = FetchType.EAGER, mappedBy = "userComplaint")
    private Reservation reservation;
 
 }

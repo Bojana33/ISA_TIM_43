@@ -22,14 +22,13 @@ public class RentalTime implements Serializable {
    private Integer id;
 
    @Column
-   private LocalDateTime start;
+   private LocalDateTime start_date;
 
    @Column
-   private LocalDateTime end;
+   private LocalDateTime end_date;
 
-   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-   private Entity entity;
-
-
+   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   @JoinColumn(name = "reservation_entity_id", referencedColumnName = "id")
+   private isa2.demo.Model.Entity entity;
 
 }

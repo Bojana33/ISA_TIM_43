@@ -12,8 +12,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Cottage extends Entity {
 
-    @OneToMany(mappedBy = "cottage", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cottage")
     private java.util.Collection<Room> rooms;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cottage_owner_id", referencedColumnName = "id")
     private CottageOwner cottageOwner;
 }

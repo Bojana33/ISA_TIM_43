@@ -14,6 +14,7 @@ import java.lang.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @javax.persistence.Entity
+@Table(name = "user_delete_requests")
 public class UserDeleteRequest implements Serializable {
 
    @Id
@@ -29,7 +30,8 @@ public class UserDeleteRequest implements Serializable {
    @Column
    private DeleteRequestStatus status;
 
-   @OneToOne(fetch = FetchType.LAZY, mappedBy = "userDeleteRequest")
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "user_id", referencedColumnName = "id")
    private User user;
 
 }

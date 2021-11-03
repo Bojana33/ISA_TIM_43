@@ -1,3 +1,7 @@
-INSERT INTO users(
-    activated, deleted, email, first_log_in, is_admin, last_password_reset_date, password, phone_number, surname, username, address_address_id, user_delete_request_id)
-VALUES (TRUE,FALSE,'user@gmail.com',null,FALSE,null,'asdasd','0604030531','uservovic','user',1,null);
+INSERT INTO addresses(
+    city, country, house_number, street)
+VALUES ('Belgrade', 'Serbia', '10', 'Kralja Aleksandra I');
+
+INSERT INTO public.users(
+    activated, deleted, email, first_log_in, is_admin, last_password_reset_date, password, phone_number, surname, username, address_id)
+VALUES (true, false, 'user@userovic.com', false, false, null, 'password', '04203050236', 'userovic', 'userovic', 1);

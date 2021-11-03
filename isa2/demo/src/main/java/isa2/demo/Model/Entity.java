@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(name = "entities")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Entity implements Serializable {
 
     @Id
@@ -31,6 +32,7 @@ public class Entity implements Serializable {
     private java.lang.Double pricePerDay;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
@@ -39,7 +41,7 @@ public class Entity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
     private java.util.Collection<AdditionalService> additionalServices;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "subscriptions")
     private java.util.Collection<Client> subscribedClients;
 
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity")

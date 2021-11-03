@@ -25,7 +25,7 @@ public class ClientsReview implements Serializable {
     @Column
     private java.lang.Double grade;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientsReview")
     public Reservation reservation;
 
 }

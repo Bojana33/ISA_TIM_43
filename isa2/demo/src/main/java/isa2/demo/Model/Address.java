@@ -26,7 +26,7 @@ public class Address implements Serializable {
     @Column
     private java.lang.String street;
     @Column
-    private java.lang.String number;
+    private java.lang.String houseNumber;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")

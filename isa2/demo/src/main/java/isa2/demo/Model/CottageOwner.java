@@ -19,6 +19,6 @@ public class CottageOwner extends User {
     @Column
     private UserCategory category;
 
-    @OneToMany(mappedBy = "cottageOwner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cottageOwner")
     public java.util.Collection<Cottage> cottages;
 }

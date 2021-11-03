@@ -25,7 +25,8 @@ public class Period implements Serializable {
 
    @Column
    private LocalDateTime endDate;
-   
+
+   //TODO: NE ZNAM STA OVDE DA STAVIM ZA MAPPEDBY
    @OneToOne(fetch = FetchType.LAZY)
    public Reservation reservation;
 
