@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserService{
     Optional<User> findById(Integer id);
-    User findByUsername(String username);
+    User findByEmail(String email);
     List<User> findAll () throws AccessDeniedException;
     User save(UserRequest userRequest);
 }
