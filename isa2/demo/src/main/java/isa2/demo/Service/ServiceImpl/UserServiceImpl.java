@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     private AuthorityService authService;
 
     @Override
-    public User findByUsername(String username) throws UsernameNotFoundException {
-        User u = userRepository.findByUsername(username);
+    public User findByEmail(String email) throws UsernameNotFoundException {
+        User u = userRepository.findByEmail(email);
         return u;
     }
 
@@ -46,13 +46,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRequest userRequest) {
         User u = new User();
-        u.setUsername(userRequest.getUsername());
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setFirstName(userRequest.getFirstName());
         u.setSurname(userRequest.getSurname());
         u.setEmail(userRequest.getEmail());
         u.setPhoneNumber(userRequest.getPhoneNumber());
-        u.setFirstLogIn(false);
+        u.setFirstLogIn(true);
         u.setDeleted(false);
         u.setIsAdmin(false);
         u.setActivated(true);

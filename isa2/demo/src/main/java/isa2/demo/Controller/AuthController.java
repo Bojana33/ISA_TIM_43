@@ -50,7 +50,7 @@ public class AuthController {
 
         //
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
                         authenticationRequest.getPassword()));
 
         // Ubaci korisnika u trenutni security kontekst
@@ -69,9 +69,9 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
 
-        User existUser = this.userService.findByUsername(userRequest.getUsername());
+        User existUser = this.userService.findByEmail(userRequest.getEmail());
         if (existUser != null) {
-            throw new ResourceConflictException(userRequest.getId(), "Username already exists");
+            throw new ResourceConflictException(userRequest.getId(), "Email already exists");
         }
 
         User user = this.userService.save(userRequest);
@@ -88,7 +88,7 @@ public class AuthController {
         String username = this.tokenUtils.getUsernameFromToken(token);
         User user = (User) this.userDetailsService.loadUserByUsername(username);
 
-        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate().getTimestamp())) {
+        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             String refreshedToken = tokenUtils.refreshToken(token);
             int expiresIn = tokenUtils.getExpiredIn();
 

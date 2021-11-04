@@ -8,7 +8,6 @@ import javax.persistence.Column;
 public class UserRequest {
 
     private Integer id;
-    private String username;
     private String password;
     private String firstName;
     private String surname;

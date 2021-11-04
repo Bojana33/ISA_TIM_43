@@ -9,10 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.io.Serializable;
 import java.lang.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -28,9 +28,6 @@ public class User implements UserDetails {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(unique = true,nullable = false)
    private Integer id;
-
-   @Column(nullable = false)
-   private String username;
 
    @Column(nullable = false)
    private String firstName;
@@ -77,12 +74,18 @@ public class User implements UserDetails {
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return null;
+      return this.authorities;
    }
 
    @Override
    public String getUsername() {
-      return this.username;
+      return this.email;
+   }
+
+   public void setPassword(String password) {
+      Timestamp now = new Timestamp(new Date().getTime());
+      this.setLastPasswordResetDate(now);
+      this.password = password;
    }
 
    @Override
@@ -102,6 +105,6 @@ public class User implements UserDetails {
 
    @Override
    public boolean isEnabled() {
-      return true;
+      return this.activated;
    }
 }
