@@ -10,9 +10,6 @@ INSERT INTO addresses(
     city, country, house_number, street)
 VALUES ('Belgrade', 'Serbia', '10', 'Kralja Aleksandra I');
 
-INSERT INTO authority (name) VALUES ('ROLE_USER');
-INSERT INTO authority (name) VALUES ('ROLE_ADMIN');
-
 
 INSERT INTO public.users(
     activated, deleted, email, first_log_in, is_admin, last_password_reset_date, password, phone_number, first_name,surname, address_id)
