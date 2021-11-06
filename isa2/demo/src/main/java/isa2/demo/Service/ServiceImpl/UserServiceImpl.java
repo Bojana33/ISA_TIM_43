@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         u.setAuthorities(auth);
 
         u = this.userRepository.save(u);
-        return u;
+         return u;
     }
 
 }

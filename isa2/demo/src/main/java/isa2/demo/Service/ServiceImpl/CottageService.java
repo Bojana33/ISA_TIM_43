@@ -25,7 +25,7 @@ public class CottageService implements isa2.demo.Service.CottageService {
 
         Cottage cottage = new Cottage();
         cottage.setName(cottageDTO.getCottageName());
-        cottage.setAddress(cottageDTO.getAddress());
+        cottage.setAddress(null);
         cottage.setMaxNumberOfGuests(cottageDTO.getMaxNumberOfGuests());
         cottage.setPricePerDay(cottageDTO.getPricePerDay());
         cottage.setRentalTimes(null);

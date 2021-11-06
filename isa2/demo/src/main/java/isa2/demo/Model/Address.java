@@ -1,5 +1,6 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,14 +29,13 @@ public class Address implements Serializable {
     @Column
     private java.lang.String houseNumber;
 
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
     private java.util.Set<User> users;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
     private java.util.Collection<RegistrationRequest> registrationRequest;
 
-    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "address")
     private Entity entity;
 
 }
