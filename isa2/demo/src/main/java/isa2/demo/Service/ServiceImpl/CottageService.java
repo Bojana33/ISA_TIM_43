@@ -21,23 +21,8 @@ public class CottageService implements isa2.demo.Service.CottageService {
     }
 
     @Override
-    public Cottage addNewCottage(CottageDTO cottageDTO) {
-
-        Cottage cottage = new Cottage();
-        cottage.setName(cottageDTO.getCottageName());
-        cottage.setAddress(null);
-        cottage.setMaxNumberOfGuests(cottageDTO.getMaxNumberOfGuests());
-        cottage.setPricePerDay(cottageDTO.getPricePerDay());
-        cottage.setRentalTimes(null);
-        cottage.setReservations(null);
-        cottage.setSubscribedClients(null);
-        cottage.setDescription(cottageDTO.getDescription());
-        cottage.setAverageGrade((double) 0);
-        cottage.setAdditionalServices(null);
-        cottage.setCottageOwner(cottage.getCottageOwner());
-        //TODO: test sa puno nullova, ispraviti ovo
-        cottage.setRooms(null);
-
+    public Cottage addNewCottage(Cottage cottage) {
+        //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom
         return cottageRepository.save(cottage);
     }
 }

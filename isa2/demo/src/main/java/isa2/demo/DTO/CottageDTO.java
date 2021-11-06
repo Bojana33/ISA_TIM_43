@@ -1,6 +1,7 @@
 package isa2.demo.DTO;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import isa2.demo.Model.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,7 @@ public class CottageDTO {
     private String cottageName;
     private String description;
     private Set<String> photos;
-    private Double averageGrade;
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
     private AddressDTO addressDTO;
-
 }

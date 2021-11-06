@@ -24,12 +24,13 @@ public class Entity implements Serializable {
     private java.lang.String description;
     @ElementCollection
     private java.util.Set<String> photos;
-    @Column(name = "average_grade")
-    private java.lang.Double averageGrade;
     @Column(name = "max_guests")
     private java.lang.Integer maxNumberOfGuests;
     @Column(name = "price_per_day")
     private java.lang.Double pricePerDay;
+
+    @Transient
+    private java.lang.Double averageGrade = 0.0;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")

@@ -1,7 +1,12 @@
 package isa2.demo.DTO;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 
+@Getter
+@Setter
 public class AddressDTO {
     private java.lang.String city;
     private java.lang.String country;
