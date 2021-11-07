@@ -7,7 +7,6 @@ import isa2.demo.Model.AdditionalService;
 import isa2.demo.Model.Cottage;
 import isa2.demo.Model.Reservation;
 import isa2.demo.Model.Room;
-import net.bytebuddy.implementation.bytecode.Addition;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -25,8 +24,23 @@ public class CottageMapper {
 
     public Cottage mapDtoToCottage(CottageDTO cottageDTO){
         Cottage cottage = modelMapper.modelMapper().map(cottageDTO, Cottage.class);
-        Collection<Reservation> reservationCollection = cottage.getReservations();
+        cottage.setRooms(getRooms(cottage));
+        cottage.setReservations(getReservations(cottage));
+        return cottage;
+    }
+
+    private Collection<Room> getRooms(Cottage cottage) {
         Collection<Room> roomCollection = cottage.getRooms();
+        if(roomCollection != null){
+            for(Room room : roomCollection){
+                room.setCottage(cottage);
+            }
+        }
+        return roomCollection;
+    }
+
+    private Collection<Reservation> getReservations(Cottage cottage) {
+        Collection<Reservation> reservationCollection = cottage.getReservations();
 
         if(reservationCollection != null){
             for(Reservation reservation : reservationCollection){
@@ -41,17 +55,9 @@ public class CottageMapper {
                 }
              }
         }
-
-        if(roomCollection != null){
-            for(Room room : roomCollection){
-                room.setCottage(cottage);
-            }
-        }
-        cottage.setRooms(roomCollection);
-        cottage.setReservations(reservationCollection);
-        return cottage;
-
+        return reservationCollection;
     }
+
     public Collection<Reservation> mapCottageReservations(Collection<ReservationDTO> reservationDTOS){
         Collection<Reservation> reservations = new HashSet<>();
         for(ReservationDTO reservationDTO : reservationDTOS){

@@ -17,15 +17,14 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     final
     CottageRepository cottageRepository;
 
-    final ReservationRepository reservationRepository;
-    public CottageServiceImpl(CottageRepository cottageRepository,  ReservationRepository reservationRepository) {
+
+    public CottageServiceImpl(CottageRepository cottageRepository) {
         this.cottageRepository = cottageRepository;
-        this.reservationRepository = reservationRepository;
     }
 
     @Override
     public Cottage addNewCottage(Cottage cottage) {
-        //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom i ROOMS
+        //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom
         return cottageRepository.save(cottage);
 
     }

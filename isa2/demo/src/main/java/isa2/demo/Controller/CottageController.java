@@ -29,8 +29,8 @@ public class CottageController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public Cottage addNewCottage(@RequestBody CottageDTO cottageDTO){
-        Cottage cottage1 = cottageMapper.mapDtoToCottage(cottageDTO);
-        cottage1 = cottageService.addNewCottage(cottage1);
-        return cottage1;
+        Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
+        cottage = cottageService.addNewCottage(cottage);
+        return cottage;
     }
 }
