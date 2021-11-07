@@ -19,5 +19,6 @@ public class CottageDTO {
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
     private AddressDTO addressDTO;
+    private Collection<RoomDTO> roomsDTO;
     private Collection<ReservationDTO> reservationsDTO;
 }

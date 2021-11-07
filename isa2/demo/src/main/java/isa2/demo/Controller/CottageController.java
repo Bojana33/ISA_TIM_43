@@ -18,21 +18,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CottageController {
 
-    public final ModelMapperConfig modelMapper;
     public final CottageService cottageService;
     public final CottageMapper cottageMapper;
 
-    public CottageController(CottageService cottageService, ModelMapperConfig modelMapper, CottageMapper cottageMapper) {
+    public CottageController(CottageService cottageService, CottageMapper cottageMapper) {
         this.cottageService = cottageService;
-        this.modelMapper = modelMapper;
         this.cottageMapper = cottageMapper;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public Cottage addNewCottage(@RequestBody CottageDTO cottageDTO){
-        //TODO: ovde prespojiti sve lepo, a onda prositi servisu samo cottage
-        //Cottage cottage1 = cottageMapper.mapDtoToCottage(cottageDTO);
         Cottage cottage1 = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage1 = cottageService.addNewCottage(cottage1);
         return cottage1;

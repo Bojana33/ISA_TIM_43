@@ -17,13 +17,9 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     final
     CottageRepository cottageRepository;
 
-    final
-    UserRepository userRepository;
-
     final ReservationRepository reservationRepository;
-    public CottageServiceImpl(CottageRepository cottageRepository, UserRepository userRepository, ReservationRepository reservationRepository) {
+    public CottageServiceImpl(CottageRepository cottageRepository,  ReservationRepository reservationRepository) {
         this.cottageRepository = cottageRepository;
-        this.userRepository = userRepository;
         this.reservationRepository = reservationRepository;
     }
 
