@@ -6,6 +6,7 @@ import isa2.demo.Model.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -18,4 +19,6 @@ public class CottageDTO {
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
     private AddressDTO addressDTO;
+    private Collection<RoomDTO> roomsDTO;
+    private Collection<ReservationDTO> reservationsDTO;
 }
