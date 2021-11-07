@@ -25,13 +25,18 @@ public class CottageMapper {
     public Cottage mapDtoToCottage(CottageDTO cottageDTO){
         Cottage cottage1 = modelMapper.modelMapper().map(cottageDTO, Cottage.class);
         Collection<Reservation> reservationCollection = cottage1.getReservations();
-        for(Reservation reservation : reservationCollection){
-            reservation.setEntity(cottage1);
-            reservation.setCreationDate(LocalDateTime.now());
-            for(AdditionalService additionalService: reservation.getAdditionalServices()){
-                additionalService.setEntity(cottage1);
-                additionalService.setReservation(reservation);
-            }
+        if(reservationCollection != null){
+            for(Reservation reservation : reservationCollection){
+                reservation.setEntity(cottage1);
+                reservation.setCreationDate(LocalDateTime.now());
+                Collection<AdditionalService> additionalServices = reservation.getAdditionalServices();
+                if(additionalServices != null){
+                    for(AdditionalService additionalService: additionalServices){
+                        additionalService.setEntity(cottage1);
+                        additionalService.setReservation(reservation);
+                    }
+                }
+             }
         }
 
         cottage1.setReservations(reservationCollection);
