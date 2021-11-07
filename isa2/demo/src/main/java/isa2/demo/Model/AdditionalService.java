@@ -1,5 +1,6 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Table(name = "additionalServices")
 public class AdditionalService implements Serializable {
 
+    //TODO: verovatno treba da se doda state kako bi znali da li je klijent selektovao dodatnu uslugu
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "additinalServices_id", unique = true, nullable = false)
@@ -26,9 +28,11 @@ public class AdditionalService implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entity_id", referencedColumnName = "id")
+    @JsonBackReference
     public Entity entity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id", referencedColumnName = "id")
+    @JsonBackReference
     public Reservation reservation;
 }

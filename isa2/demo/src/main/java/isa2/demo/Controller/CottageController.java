@@ -2,6 +2,7 @@ package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.CottageDTO;
+import isa2.demo.DTO.Mappers.CottageMapper;
 import isa2.demo.Model.Address;
 import isa2.demo.Model.Cottage;
 
@@ -19,25 +20,21 @@ public class CottageController {
 
     public final ModelMapperConfig modelMapper;
     public final CottageService cottageService;
+    public final CottageMapper cottageMapper;
 
-    public CottageController(CottageService cottageService, ModelMapperConfig modelMapper) {
+    public CottageController(CottageService cottageService, ModelMapperConfig modelMapper, CottageMapper cottageMapper) {
         this.cottageService = cottageService;
         this.modelMapper = modelMapper;
-    }
-
-    @GetMapping
-    public String helloFromCottages(){
-        return "Hello";
+        this.cottageMapper = cottageMapper;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public Cottage addNewCottage(@RequestBody CottageDTO cottageDTO){
-        Cottage cottage1 = modelMapper.modelMapper().map(cottageDTO, Cottage.class);
-//        Address address = modelMapper.modelMapper().map(cottageDTO.getAddressDTO(), Address.class);
-//        cottage1.setAddress(address);
+        //TODO: ovde prespojiti sve lepo, a onda prositi servisu samo cottage
+        //Cottage cottage1 = cottageMapper.mapDtoToCottage(cottageDTO);
+        Cottage cottage1 = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage1 = cottageService.addNewCottage(cottage1);
-        //Cottage cottage = cottageService.addNewCottage(cottageDTO);
         return cottage1;
     }
 }
