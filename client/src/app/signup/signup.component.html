@@ -1,0 +1,35 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="75">
+        <mat-toolbar color="primary">Signup Form</mat-toolbar>
+        <form fxLayoutAlign="stretch" fxLayout="column" class="signup-form" [formGroup]="form" (submit)="submit()">
+            <mat-form-field>
+                <input matInput type="text" placeholder="First Name" formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Surname" formControlName="surname">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email" formControlName="email" required>
+              </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" formControlName="password" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Address" formControlName="address">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="City" formControlName="city">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Country" formControlName="country">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Phone Number" formControlName="phoneNumber">
+              </mat-form-field>
+              <button mat-raised-button type="submit">Sign Up</button>
+          </form>
+    </mat-card>
+</div>
