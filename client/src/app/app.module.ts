@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,8 +11,24 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { NavbarComponent } from './navbar/navbar.component';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
+import { SignupComponent } from './signup/signup.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ApiService } from './service/api.service';
+import { UserService } from './service/user.service';
+import { ConfigService } from './service/config.service';
+import { AuthService } from './service/auth.service';
+import { LoginGuard } from './guard/login.guard';
+import { GuestGuard } from './guard/guest.guard';
+import { AdminGuard } from './guard/admin.guard';
+import { TokenInterceptor } from './interceptor/TokenInterceptor';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
 
 
 
@@ -21,7 +37,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
+    SignupComponent,
+    ChangePasswordComponent,
+    ForbiddenComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +56,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatToolbarModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSidenavModule,
+    MatIconModule
   ],
-  providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    LoginGuard,
+    GuestGuard,
+    AdminGuard,
+    AuthService,
+    ApiService,
+    UserService,
+    ConfigService,
+    MatIconRegistry,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
