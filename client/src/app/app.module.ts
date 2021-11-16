@@ -28,6 +28,7 @@ import { AdminGuard } from './guard/admin.guard';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SignupClientComponent } from './signup/signup-client/signup-client.component';
 
 
 
@@ -42,7 +43,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SignupComponent,
     ChangePasswordComponent,
     ForbiddenComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SignupClientComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ReactiveFormsModule,
     MatSidenavModule,
     MatIconModule
+  ],
+  exports: [
+    SignupClientComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

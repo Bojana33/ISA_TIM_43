@@ -80,6 +80,22 @@ public class AuthController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    // Endpoint za registraciju novog korisnika - klijenta
+    @PostMapping("/signupClient")
+    public ResponseEntity<UserRequest> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+
+        User existUser = this.userService.findByEmail(userRequest.getEmail());
+        if (existUser != null) {
+            throw new ResourceConflictException(userRequest.getId(), "Email already exists");
+        }
+
+        UserRequest user = this.userService.saveUserRequest(userRequest);
+        HttpHeaders headers = new HttpHeaders();
+        //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        //return ResponseEntity.ok();
+    }
+
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
     @PostMapping(value = "/refresh")
     public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
