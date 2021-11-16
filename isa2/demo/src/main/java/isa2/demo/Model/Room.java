@@ -1,5 +1,6 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Room implements Serializable {
 
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "cottage_id",referencedColumnName = "id")
+   @JsonBackReference
    private Cottage cottage;
 
 }

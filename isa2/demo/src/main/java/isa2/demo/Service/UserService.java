@@ -12,4 +12,5 @@ public interface UserService{
     User findByEmail(String email);
     List<User> findAll () throws AccessDeniedException;
     User save(UserRequest userRequest);
+    UserRequest saveUserRequest(UserRequest userRequest);
 }

@@ -4,6 +4,7 @@ import isa2.demo.Model.Authority;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
 import isa2.demo.Repository.UserRepository;
+import isa2.demo.Repository.UserRequestRepository;
 import isa2.demo.Service.AuthorityService;
 import isa2.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AuthorityService authService;
+
+    @Autowired
+    private UserRequestRepository userRequestRepository;
 
     @Override
     public User findByEmail(String email) throws UsernameNotFoundException {
@@ -62,6 +66,12 @@ public class UserServiceImpl implements UserService {
 
         u = this.userRepository.save(u);
         return u;
+    }
+
+    @Override
+    public UserRequest saveUserRequest(UserRequest userRequest) {
+        UserRequest u = this.userRequestRepository.save(userRequest);
+         return u;
     }
 
 }
