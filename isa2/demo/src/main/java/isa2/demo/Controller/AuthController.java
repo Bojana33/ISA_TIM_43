@@ -1,5 +1,6 @@
 package isa2.demo.Controller;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import isa2.demo.DTO.JwtAuthenticationRequest;
 import isa2.demo.Exception.ResourceConflictException;
 import isa2.demo.Model.User;
@@ -9,6 +10,7 @@ import isa2.demo.Service.ServiceImpl.CustomUserDetailsService;
 import isa2.demo.Service.UserService;
 import isa2.demo.Utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -82,17 +85,21 @@ public class AuthController {
 
     // Endpoint za registraciju novog korisnika - klijenta
     @PostMapping("/signupClient")
-    public ResponseEntity<UserRequest> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<UserRequest> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) throws MessagingException {
 
         User existUser = this.userService.findByEmail(userRequest.getEmail());
         if (existUser != null) {
             throw new ResourceConflictException(userRequest.getId(), "Email already exists");
         }
-
-        UserRequest user = this.userService.saveUserRequest(userRequest);
-        HttpHeaders headers = new HttpHeaders();
-        //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        try {
+            UserRequest user = this.userService.saveUserRequest(userRequest);
+            HttpHeaders headers = new HttpHeaders();
+            //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (MessagingException me) {
+            System.out.println("Message exception");
+            return new ResponseEntity<>(null, HttpStatus.CREATED);
+        }
         //return ResponseEntity.ok();
     }
 
@@ -128,5 +135,14 @@ public class AuthController {
     static class PasswordChanger {
         public String oldPassword;
         public String newPassword;
+    }
+
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (userService.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
     }
 }

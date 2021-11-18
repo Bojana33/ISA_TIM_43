@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface UserRequestRepository extends JpaRepository<UserRequest,Integer>{
+    UserRequest findByVerificationCode(String verificationCode);
 }
