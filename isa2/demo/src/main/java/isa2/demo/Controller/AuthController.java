@@ -137,12 +137,14 @@ public class AuthController {
         public String newPassword;
     }
 
-    @GetMapping("/verify")
-    public String verifyUser(@Param("code") String code) {
+    @GetMapping("/verify/{verificationCode}")
+    public String verifyUser(@PathVariable("verificationCode") String code) {
+        System.out.println("stigao");
         if (userService.verify(code)) {
             return "verify_success";
         } else {
             return "verify_fail";
         }
+
     }
 }

@@ -116,22 +116,11 @@ public class UserServiceImpl implements UserService {
             String subject = "Please verify your registration";
             String verifyURL = "localhost:8090" + "/verify?code=" + userRequest.getVerificationCode();
             String content = "Dear " + userRequest.getFirstName() + ",<br>"
-                    + "Please click the link below to verify your registration:<br><h3><a href='localhost:8090/auth/verifyCode'"+userRequest.getVerificationCode()+"'>VERIFY</a></h3>"
-                    + "Thank you,<br>"
-                    + "ISA 43.";
+                    + "Please click the link below to verify your registration" + "</p><br><a href='http://localhost:8090/auth/verify/" + userRequest.getVerificationCode() +
+            "'> VERIFY</a>";
 
-            // Generating verification link with the help of firebase
-            //FirebaseAuth fib = FirebaseAuth.getInstance();
-            //String link= fib.generateEmailVerificationLink(email);
-            //String randomCode = RandomString.make(64);
             msg.setSubject(subject);
-            //String verifyURL = "localhost:8090" + "/verify?code=" + userRequest.getVerificationCode();
-            String content1 = content.replace("[[URL]]", verifyURL);
-            msg.setContent(content1, "text/html");
-            //msg.setContent("Dear ..." + "please click the link bellow to verify your registration");
-            //msg.setContent(link, "text/html");
-            //msg.setSentDate(new Date());
-
+            msg.setContent(content, "text/html");
             Transport.send(msg);
         } catch (AddressException ae) {
             System.out.println("Address exception");
