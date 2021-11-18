@@ -92,15 +92,13 @@ public class AuthController {
             throw new ResourceConflictException(userRequest.getId(), "Email already exists");
         }
         try {
-            UserRequest user = this.userService.saveUserRequest(userRequest);
+            UserRequest userRequest1 = this.userService.saveUserRequest(userRequest);
             HttpHeaders headers = new HttpHeaders();
-            //headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            return new ResponseEntity<>(userRequest1, HttpStatus.CREATED);
         } catch (MessagingException me) {
             System.out.println("Message exception");
-            return new ResponseEntity<>(null, HttpStatus.CREATED);
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
-        //return ResponseEntity.ok();
     }
 
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
@@ -139,11 +137,10 @@ public class AuthController {
 
     @GetMapping("/verify/{verificationCode}")
     public String verifyUser(@PathVariable("verificationCode") String code) {
-        System.out.println("stigao");
         if (userService.verify(code)) {
-            return "verify_success";
+            return "Successfully verified, you can now login as a client";
         } else {
-            return "verify_fail";
+            return "Verification token has expired";
         }
 
     }

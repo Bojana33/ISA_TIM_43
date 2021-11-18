@@ -138,12 +138,25 @@ public class UserServiceImpl implements UserService {
     public boolean verify(String verificationCode) {
         UserRequest userRequest = userRequestRepository.findByVerificationCode(verificationCode);
 
-        //TO DO: Add check if user already exists
-        if (userRequest == null) {
+        if (userRequest == null || userRequest.getVerificationCode() == null) {
             return false;
         } else {
-            //TO DO: Create user
+            //Create user
+            User user = new User();
+            user.setFirstName(userRequest.getFirstName());
+            user.setSurname(userRequest.getSurname());
+            user.setPassword(userRequest.getPassword());
+            user.setEmail(userRequest.getEmail());
+            user.setPhoneNumber(userRequest.getPhoneNumber());
+            //user.setAddress(userRequest.getAddress());
+            user.setActivated(true);
+            user.setDeleted(false);
+            user.setIsAdmin(false);
+            userRepository.save(user);
 
+            //disable ability to verified 2 times same account
+            userRequest.setVerificationCode(null);
+            userRequestRepository.save(userRequest);
             return true;
         }
 

@@ -35,6 +35,9 @@ public class Address implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
     private java.util.Collection<RegistrationRequest> registrationRequest;
 
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+    //private java.util.Collection<UserRequest> userRequest;
+
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "address")
     private Entity entity;
 

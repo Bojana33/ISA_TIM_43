@@ -13,7 +13,7 @@ import {User} from '../../model/user';
 export class SignupClientComponent implements OnInit {
   user: User;
   form!: FormGroup;
-  isSuccess: any;
+  isSuccess = false;
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -24,6 +24,7 @@ export class SignupClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isSuccess = false;
     this.form = this.formBuilder.group({
       firstName: '',
       surname: '',
@@ -40,10 +41,10 @@ export class SignupClientComponent implements OnInit {
 
   submit(): void {
     console.log();
-    this.isSuccess = true;
     this.http.post('http://localhost:8090/auth/signupClient', this.form.getRawValue())
       .subscribe(res => {
         console.log(res);
+        this.isSuccess = true;
       });
   }
 }
