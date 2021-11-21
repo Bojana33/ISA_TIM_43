@@ -20,7 +20,7 @@ public class RegistrationRequest implements Serializable {
    private Integer id;
 
    @Column
-   private String name;
+   private String firstName;
 
    @Column
    private String surname;
@@ -36,6 +36,9 @@ public class RegistrationRequest implements Serializable {
 
    @Column
    private Boolean confirmed;
+
+   @Column
+   private String registrationExplanation;
 
    @Column
    private UserType userType;

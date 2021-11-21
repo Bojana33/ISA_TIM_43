@@ -1,8 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
-import isa2.demo.Model.Authority;
-import isa2.demo.Model.User;
-import isa2.demo.Model.UserRequest;
+import isa2.demo.Model.*;
+import isa2.demo.Repository.RegistrationRequestRepository;
 import isa2.demo.Repository.UserRepository;
 import isa2.demo.Service.AuthorityService;
 import isa2.demo.Service.UserService;
@@ -20,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RegistrationRequestRepository registrationRequestRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -54,10 +56,40 @@ public class UserServiceImpl implements UserService {
         u.setFirstLogIn(true);
         u.setDeleted(false);
         u.setIsAdmin(false);
-        u.setActivated(true);
+        u.setActivated(false);
 
-        List<Authority> auth = authService.findByname("ROLE_USER");
-        // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
+        List<Authority> auth;
+
+        if (userRequest.getUserType() == UserType.CLIENT){
+             auth = authService.findByname("ROLE_CLIENT");
+        }
+        else if (userRequest.getUserType() == UserType.COTTAGEOWNER){
+            auth = authService.findByname("ROLE_COTTAGEOWNER");
+        } else
+        if (userRequest.getUserType() == UserType.BOATOWNER){
+            auth = authService.findByname("ROLE_BOATOWNER");
+        } else
+        if (userRequest.getUserType() == UserType.INSTRUCTOR){
+            auth = authService.findByname("ROLE_INSTRUCTOR");
+        } else{
+            auth = authService.findByname("ROLE_ADMIN");
+        }
+
+        if (userRequest.getUserType() == UserType.BOATOWNER || userRequest.getUserType() == UserType.COTTAGEOWNER || userRequest.getUserType() == UserType.INSTRUCTOR){
+            RegistrationRequest registrationRequest = new RegistrationRequest();
+            registrationRequest.setPassword(userRequest.getPassword());
+            registrationRequest.setFirstName(userRequest.getFirstName());
+            registrationRequest.setSurname(userRequest.getSurname());
+            registrationRequest.setEmail(userRequest.getEmail());
+            registrationRequest.setPhoneNumber(userRequest.getPhoneNumber());
+            registrationRequest.setConfirmed(false);
+            registrationRequest.setRegistrationExplanation(userRequest.getRegistrationExplanation());
+            registrationRequest.setUserType(userRequest.getUserType());
+
+            this.registrationRequestRepository.save(registrationRequest);
+
+        }
+
         u.setAuthorities(auth);
 
         u = this.userRepository.save(u);

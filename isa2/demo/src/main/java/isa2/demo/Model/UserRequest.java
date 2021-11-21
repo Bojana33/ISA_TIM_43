@@ -13,4 +13,6 @@ public class UserRequest {
     private String surname;
     private String email;
     private String phoneNumber;
+    private UserType userType = UserType.CLIENT;
+    private String registrationExplanation;
 }
