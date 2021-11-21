@@ -29,6 +29,17 @@
               <mat-form-field>
                 <input matInput placeholder="Phone Number" formControlName="phoneNumber">
               </mat-form-field>
+              <mat-form-field>
+                <mat-label>Registration Type</mat-label>
+                <mat-select formControlName = "userType">
+                  <mat-option value="COTTAGEOWNER">Cottage Owner</mat-option>
+                  <mat-option value="BOATOWNER">Boat Owner</mat-option>
+                  <mat-option value="INSTRUCTOR">Fishing Instructor</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <textarea matInput type="text" placeholder="Registration Explanation" formControlName="registrationExplanation" required></textarea>
+              </mat-form-field>
               <button mat-raised-button type="submit">Sign Up</button>
           </form>
     </mat-card>

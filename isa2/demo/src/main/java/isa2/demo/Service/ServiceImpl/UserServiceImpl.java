@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
         if (userRequest.getUserType() == UserType.BOATOWNER || userRequest.getUserType() == UserType.COTTAGEOWNER || userRequest.getUserType() == UserType.INSTRUCTOR){
             RegistrationRequest registrationRequest = new RegistrationRequest();
-            registrationRequest.setPassword(userRequest.getPassword());
+            registrationRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             registrationRequest.setFirstName(userRequest.getFirstName());
             registrationRequest.setSurname(userRequest.getSurname());
             registrationRequest.setEmail(userRequest.getEmail());

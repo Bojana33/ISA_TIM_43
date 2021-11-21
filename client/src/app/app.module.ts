@@ -28,6 +28,7 @@ import { AdminGuard } from './guard/admin.guard';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MatSelectModule} from '@angular/material/select';
 
 
 
@@ -58,7 +59,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FormsModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

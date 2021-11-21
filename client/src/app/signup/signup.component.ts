@@ -1,3 +1,4 @@
+import { UserType } from './../enum/user-type';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +25,9 @@ export class SignupComponent implements OnInit {
       address: '',
       city: '',
       country: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      registrationExplanation: '',
+      userType: UserType
     });
   }
 
