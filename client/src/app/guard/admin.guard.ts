@@ -10,6 +10,7 @@ export class AdminGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.userService.currentUser) {
       if (JSON.stringify(this.userService.currentUser.authorities).search('ROLE_ADMIN') !== -1) {
+        this.router.navigate(['/home']);
         return true;
       } else {
         this.router.navigate(['/403']);

@@ -9,7 +9,7 @@
             <mat-form-field>
                 <input matInput type="password" placeholder="Password" formControlName="password" required>
               </mat-form-field>
-              <button mat-raised-button type="submit">Login</button>
+              <button [disabled]="!loginForm.form.valid" mat-raised-button type="submit">Login</button>
           </form>
     </mat-card>
 </div>

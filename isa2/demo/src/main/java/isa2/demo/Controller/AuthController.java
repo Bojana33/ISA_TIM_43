@@ -81,7 +81,7 @@ public class AuthController {
     }
 
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
-    @PostMapping(value = "/refresh")
+    @GetMapping(value = "/refresh")
     public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
 
         String token = tokenUtils.getToken(request);

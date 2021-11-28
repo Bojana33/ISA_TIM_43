@@ -11,8 +11,10 @@ INSERT INTO addresses(
 VALUES ('Belgrade', 'Serbia', '10', 'Kralja Aleksandra I');
 
 
+-- password - password
 INSERT INTO public.users(
     activated, deleted, email, first_log_in, is_admin, last_password_reset_date, password, phone_number, first_name,surname, address_id)
-VALUES (true, false, 'user@userovic.com', false, false, null, 'password', '04203050236', 'userovic', 'Pera', 1);
+VALUES (true, false, 'user@userovic.com', false, false, null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC', '04203050236', 'userovic', 'Pera', 1);
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 2);

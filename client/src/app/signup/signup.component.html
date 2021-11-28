@@ -3,10 +3,10 @@
         <mat-toolbar color="primary">Signup Form</mat-toolbar>
         <form fxLayoutAlign="stretch" fxLayout="column" class="signup-form" [formGroup]="form" (submit)="submit()">
             <mat-form-field>
-                <input matInput type="text" placeholder="First Name" formControlName="firstName">
+                <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="text" placeholder="Surname" formControlName="surname">
+                <input matInput type="text" placeholder="Surname" formControlName="surname" required>
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="email" placeholder="Email" formControlName="email" required>
@@ -15,23 +15,23 @@
                 <input matInput type="password" placeholder="Password" formControlName="password" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword">
+                <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Address" formControlName="address">
+                <input matInput placeholder="Address" formControlName="address" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="City" formControlName="city">
+                <input matInput placeholder="City" formControlName="city" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Country" formControlName="country">
+                <input matInput placeholder="Country" formControlName="country" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Phone Number" formControlName="phoneNumber">
+                <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Registration Type</mat-label>
-                <mat-select formControlName = "userType">
+                <mat-select formControlName = "userType" required>
                   <mat-option value="COTTAGEOWNER">Cottage Owner</mat-option>
                   <mat-option value="BOATOWNER">Boat Owner</mat-option>
                   <mat-option value="INSTRUCTOR">Fishing Instructor</mat-option>

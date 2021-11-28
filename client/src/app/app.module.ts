@@ -29,10 +29,11 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MatSelectModule} from '@angular/material/select';
-
-
-
-
+import { AdminComponent } from './admin/admin.component';
+import { HomeComponent } from './home/home.component';
+import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -43,7 +44,10 @@ import { MatSelectModule} from '@angular/material/select';
     SignupComponent,
     ChangePasswordComponent,
     ForbiddenComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AdminComponent,
+    HomeComponent,
+    RegistrationRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,9 @@ import { MatSelectModule} from '@angular/material/select';
     ReactiveFormsModule,
     MatSidenavModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatDialogModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
