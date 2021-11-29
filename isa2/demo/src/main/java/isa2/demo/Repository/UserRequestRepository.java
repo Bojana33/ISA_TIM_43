@@ -11,4 +11,5 @@ public interface UserRequestRepository extends JpaRepository<UserRequest,Integer
     //UserRequest findByVerificationCode(String verificationCode);
     @Query("SELECT u FROM UserRequest u WHERE u.verificationCode = ?1")
     UserRequest findByVerificationCode(String code);
+    UserRequest findByEmail(String email);
 }

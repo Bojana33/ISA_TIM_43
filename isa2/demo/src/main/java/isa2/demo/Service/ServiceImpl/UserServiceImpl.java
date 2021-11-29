@@ -1,7 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
+import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Model.Authority;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
@@ -11,7 +10,6 @@ import isa2.demo.Service.AuthorityService;
 import isa2.demo.Service.UserService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -79,13 +76,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRequest saveUserRequest(UserRequest userRequest)  {
+    public UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException {
         try {
             String randomCode = RandomString.make(64);
             userRequest.setVerificationCode(randomCode);
             sendVerificationEmail(userRequest);
         }catch (MessagingException me) {
             System.out.println("Message exception");
+        }
+
+        if (userRepository.findByEmail(userRequest.getEmail()) != null || userRequestRepository.findByEmail(userRequest.getEmail()) != null) {
+            throw new EmailAlreadyInUseException("Email already in use");
         }
         UserRequest u = this.userRequestRepository.save(userRequest);
         return u;

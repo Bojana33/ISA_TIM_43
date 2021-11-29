@@ -1,5 +1,6 @@
 package isa2.demo.Service;
 
+import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
 
@@ -14,7 +15,7 @@ public interface UserService{
     User findByEmail(String email);
     List<User> findAll () throws AccessDeniedException;
     User save(UserRequest userRequest);
-    UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException;
+    UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException;
     void sendVerificationEmail(UserRequest userRequest) throws AddressException, MessagingException;
     boolean verify(String verificationCode);
 }

@@ -1,7 +1,7 @@
 package isa2.demo.Controller;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
 import isa2.demo.DTO.JwtAuthenticationRequest;
+import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Exception.ResourceConflictException;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
@@ -10,11 +10,7 @@ import isa2.demo.Service.ServiceImpl.CustomUserDetailsService;
 import isa2.demo.Service.UserService;
 import isa2.demo.Utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -85,7 +81,7 @@ public class AuthController {
 
     // Endpoint za registraciju novog korisnika - klijenta
     @PostMapping("/signupClient")
-    public ResponseEntity<UserRequest> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) throws MessagingException {
+    public HttpEntity<? extends Object> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
 
         User existUser = this.userService.findByEmail(userRequest.getEmail());
         if (existUser != null) {
@@ -93,11 +89,14 @@ public class AuthController {
         }
         try {
             UserRequest userRequest1 = this.userService.saveUserRequest(userRequest);
-            HttpHeaders headers = new HttpHeaders();
-            return new ResponseEntity<>(userRequest1, HttpStatus.CREATED);
+            return new ResponseEntity<UserRequest>(userRequest1, HttpStatus.CREATED);
         } catch (MessagingException me) {
             System.out.println("Message exception");
-            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<MessagingException>(new MessagingException(), HttpStatus.FORBIDDEN);
+        }
+        catch (EmailAlreadyInUseException e) {
+            System.out.println("Email already in use");
+            return new ResponseEntity<EmailAlreadyInUseException>(new EmailAlreadyInUseException("Email already in use"), HttpStatus.FORBIDDEN);
         }
     }
 
