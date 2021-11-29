@@ -1,6 +1,7 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.JwtAuthenticationRequest;
+import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Exception.ResourceConflictException;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
@@ -9,10 +10,7 @@ import isa2.demo.Service.ServiceImpl.CustomUserDetailsService;
 import isa2.demo.Service.UserService;
 import isa2.demo.Utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -80,6 +79,27 @@ public class AuthController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
+    // Endpoint za registraciju novog korisnika - klijenta
+    @PostMapping("/signupClient")
+    public HttpEntity<? extends Object> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+
+        User existUser = this.userService.findByEmail(userRequest.getEmail());
+        if (existUser != null) {
+            throw new ResourceConflictException(userRequest.getId(), "Email already exists");
+        }
+        try {
+            UserRequest userRequest1 = this.userService.saveUserRequest(userRequest);
+            return new ResponseEntity<UserRequest>(userRequest1, HttpStatus.CREATED);
+        } catch (MessagingException me) {
+            System.out.println("Message exception");
+            return new ResponseEntity<MessagingException>(new MessagingException(), HttpStatus.FORBIDDEN);
+        }
+        catch (EmailAlreadyInUseException e) {
+            System.out.println("Email already in use");
+            return new ResponseEntity<EmailAlreadyInUseException>(new EmailAlreadyInUseException("Email already in use"), HttpStatus.FORBIDDEN);
+        }
+    }
+
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
     @PostMapping(value = "/refresh")
     public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
@@ -112,5 +132,15 @@ public class AuthController {
     static class PasswordChanger {
         public String oldPassword;
         public String newPassword;
+    }
+
+    @GetMapping("/verify/{verificationCode}")
+    public String verifyUser(@PathVariable("verificationCode") String code) {
+        if (userService.verify(code)) {
+            return "Successfully verified, you can now login as a client";
+        } else {
+            return "Verification token has expired";
+        }
+
     }
 }

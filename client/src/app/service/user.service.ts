@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {ConfigService} from './config.service';
 import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +11,14 @@ import {map} from 'rxjs/operators';
 export class UserService {
 
   currentUser:any;
+  private usersUrl: string;
 
   constructor(
     private apiService: ApiService,
-    private config: ConfigService
+    private config: ConfigService,
+    private http: HttpClient
   ) {
+    this.usersUrl = 'http://localhost:8090/auth/signup';
   }
 
   initUser() {
@@ -47,4 +52,7 @@ export class UserService {
     return this.apiService.get(this.config.users_url);
   }
 
+  save(user: User) {
+    return this.http.post<User>(this.usersUrl, user);
+  }
 }
