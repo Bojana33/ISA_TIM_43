@@ -1,8 +1,13 @@
 package isa2.demo.Service;
 
+<<<<<<< HEAD
 import isa2.demo.Exception.EmailAlreadyInUseException;
+=======
+import isa2.demo.Model.RegistrationRequest;
+>>>>>>> F3.3
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -12,10 +17,13 @@ import java.util.Optional;
 
 public interface UserService{
     Optional<User> findById(Integer id);
-    User findByEmail(String email);
+    User findByEmail(String email) throws UsernameNotFoundException;
     List<User> findAll () throws AccessDeniedException;
     User save(UserRequest userRequest);
     UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException;
     void sendVerificationEmail(UserRequest userRequest) throws AddressException, MessagingException;
     boolean verify(String verificationCode);
+    User save(RegistrationRequest userRequest);
+    void sendEmail(RegistrationRequest registrationRequest, String subject, String content) throws AddressException, MessagingException;
+
 }

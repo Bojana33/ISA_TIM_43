@@ -3,9 +3,11 @@ package isa2.demo.Controller;
 import isa2.demo.DTO.JwtAuthenticationRequest;
 import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Exception.ResourceConflictException;
+import isa2.demo.Model.RegistrationRequest;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
 import isa2.demo.DTO.UserTokenState;
+import isa2.demo.Service.RegistrationRequestService;
 import isa2.demo.Service.ServiceImpl.CustomUserDetailsService;
 import isa2.demo.Service.UserService;
 import isa2.demo.Utils.TokenUtils;
@@ -41,6 +43,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RegistrationRequestService registrationRequestService;
+
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
@@ -66,17 +71,27 @@ public class AuthController {
 
     // Endpoint za registraciju novog korisnika
     @PostMapping("/signup")
-    public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<? extends Object> addUser(@RequestBody RegistrationRequest registrationRequest, UriComponentsBuilder ucBuilder) {
 
-        User existUser = this.userService.findByEmail(userRequest.getEmail());
-        if (existUser != null) {
-            throw new ResourceConflictException(userRequest.getId(), "Email already exists");
+        User existUser = this.userService.findByEmail(registrationRequest.getEmail());
+        RegistrationRequest existRequest = this.registrationRequestService.findByEmail(registrationRequest.getEmail());
+        if (existUser != null || existRequest != null) {
+            throw new ResourceConflictException(registrationRequest.getId(), "Email already exists");
         }
+        //try{
+            RegistrationRequest request = this.registrationRequestService.save(registrationRequest);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(request.getId()).toUri());
+            return new ResponseEntity<>(request, HttpStatus.CREATED);
+//        } catch (MessagingException me) {
+//            System.out.println("Message exception");
+//            return new ResponseEntity<MessagingException>(new MessagingException(), HttpStatus.FORBIDDEN);
+//        }
+//        catch (EmailAlreadyInUseException e) {
+//            System.out.println("Email already in use");
+//            return new ResponseEntity<EmailAlreadyInUseException>(new EmailAlreadyInUseException("Email already in use"), HttpStatus.FORBIDDEN);
+//        }
 
-        User user = this.userService.save(userRequest);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     // Endpoint za registraciju novog korisnika - klijenta
@@ -101,7 +116,7 @@ public class AuthController {
     }
 
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
-    @PostMapping(value = "/refresh")
+    @GetMapping(value = "/refresh")
     public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
 
         String token = tokenUtils.getToken(request);

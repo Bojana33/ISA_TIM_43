@@ -29,8 +29,9 @@ export class UserService {
             .then(user => {
               this.currentUser = user;
             });
+        }else{
+          return null;
         }
-        return null;
       })
       .catch(() => null);
     return promise;

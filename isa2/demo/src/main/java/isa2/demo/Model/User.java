@@ -1,5 +1,8 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +25,10 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class User implements UserDetails {
+
+   private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +41,7 @@ public class User implements UserDetails {
    @Column(nullable = false)
    private String surname;
 
+   @JsonIgnore
    @Column(nullable = false)
    private String password;
 
@@ -88,16 +95,19 @@ public class User implements UserDetails {
       this.password = password;
    }
 
+   @JsonIgnore
    @Override
    public boolean isAccountNonExpired() {
       return true;
    }
 
+   @JsonIgnore
    @Override
    public boolean isAccountNonLocked() {
       return true;
    }
 
+   @JsonIgnore
    @Override
    public boolean isCredentialsNonExpired() {
       return true;

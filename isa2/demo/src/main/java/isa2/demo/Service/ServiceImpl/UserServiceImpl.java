@@ -1,9 +1,14 @@
 package isa2.demo.Service.ServiceImpl;
 
+<<<<<<< HEAD
 import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Model.Authority;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
+=======
+import isa2.demo.Model.*;
+import isa2.demo.Repository.RegistrationRequestRepository;
+>>>>>>> F3.3
 import isa2.demo.Repository.UserRepository;
 import isa2.demo.Repository.UserRequestRepository;
 import isa2.demo.Service.AuthorityService;
@@ -15,8 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
+<<<<<<< HEAD
 import javax.mail.internet.*;
 import javax.servlet.http.HttpServletRequest;
+=======
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+>>>>>>> F3.3
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +38,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RegistrationRequestRepository registrationRequestRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -55,7 +69,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserRequest userRequest){
+    public User save(UserRequest userRequest) {
+        return null;
+    }
+
+    @Override
+    public User save(RegistrationRequest userRequest) {
         User u = new User();
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setFirstName(userRequest.getFirstName());
@@ -67,8 +86,25 @@ public class UserServiceImpl implements UserService {
         u.setIsAdmin(false);
         u.setActivated(true);
 
-        List<Authority> auth = authService.findByname("ROLE_USER");
-        // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
+        List<Authority> auth;
+
+        if (userRequest.getUserType() == UserType.CLIENT){
+             auth = authService.findByname("ROLE_CLIENT");
+        }
+        else if (userRequest.getUserType() == UserType.COTTAGEOWNER){
+            auth = authService.findByname("ROLE_COTTAGEOWNER");
+        } else
+        if (userRequest.getUserType() == UserType.BOATOWNER){
+            auth = authService.findByname("ROLE_BOATOWNER");
+        } else
+        if (userRequest.getUserType() == UserType.INSTRUCTOR){
+            auth = authService.findByname("ROLE_INSTRUCTOR");
+        } else{
+            u.setIsAdmin(true);
+            auth = authService.findByname("ROLE_ADMIN");
+        }
+
+        //auth.add(this.authService.findByName("ROLE_USER"));
         u.setAuthorities(auth);
 
         u = this.userRepository.save(u);
@@ -138,7 +174,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean verify(String verificationCode) {
         UserRequest userRequest = userRequestRepository.findByVerificationCode(verificationCode);
-
         if (userRequest == null || userRequest.getVerificationCode() == null) {
             return false;
         } else {
@@ -161,5 +196,34 @@ public class UserServiceImpl implements UserService {
             return true;
         }
 
+    }
+    @Override
+    public void sendEmail(RegistrationRequest registrationRequest, String subject, String content) throws AddressException, MessagingException {
+        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("inisatim43@gmail.com", "bajicb182075");
+                }
+            });
+
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("inisatim43@gmail.com", false));
+
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(registrationRequest.getEmail()));
+
+            msg.setSubject(subject);
+            msg.setContent(content, "text/html");
+            Transport.send(msg);
+        } catch (AddressException ae) {
+            System.out.println("Address exception");
+        } catch (MessagingException me) {
+            System.out.println("Message exception");
+        }
     }
 }

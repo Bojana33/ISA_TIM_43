@@ -14,7 +14,6 @@ import { Subject } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   title = 'Login';
-  githubLink = 'https://github.com/bfwg/angular-spring-starter';
   form!: FormGroup;
 
   /**
@@ -28,13 +27,9 @@ export class LoginComponent implements OnInit, OnDestroy {
    * Notification message from received
    * form request or router
    */
-  /**
-   * Notification message from received
-   * form request or router
-   */
-  notification!: DisplayMessage;
+  notification: DisplayMessage | undefined;
 
-  returnUrl!: string;
+  returnUrl: string | undefined;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   constructor(
@@ -66,10 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  repository() {
-    window.location.href = this.githubLink;
-  }
-
   onSubmit() {
     /**
      * Innocent until proven guilty
@@ -78,11 +69,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.submitted = true;
 
     this.authService.login(this.form.value)
-      .subscribe(data => {
+      .subscribe(_data => {
           this.userService.getMyInfo().subscribe();
           this.router.navigate([this.returnUrl]);
         },
-        error => {
+        _error => {
           this.submitted = false;
           this.notification = {msgType: 'error', msgBody: 'Incorrect email or password.'};
         });

@@ -1,8 +1,8 @@
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {serialize} from '../shared/utilities/serialize';
 import {Observable} from 'rxjs';
-import {catchError, filter, map} from 'rxjs/operators';
+import {catchError, filter} from 'rxjs/operators';
 
 export enum RequestMethod {
   Get = 'GET',
@@ -29,12 +29,13 @@ export class ApiService {
 
   get(path: string, args?: any): Observable<any> {
     const options = {
-      headers: this.headers
+      headers: this.headers,
+      params : new HttpParams()
     };
 
-    // if (args) {
-    //   options['params'] = serialize(args);
-    // }
+    if (args) {
+      options['params'] = serialize(args);
+    }
 
     return this.http.get(path, options)
       .pipe(catchError(this.checkError.bind(this)));
@@ -64,11 +65,6 @@ export class ApiService {
 
   // Display error if logged in, otherwise redirect to IDP
   private checkError(error: any): any {
-    if (error && error.status === 401) {
-      // this.redirectIfUnauth(error);
-    } else {
-      // this.displayError(error);
-    }
     throw error;
   }
 
