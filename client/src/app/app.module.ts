@@ -28,12 +28,7 @@ import { AdminGuard } from './guard/admin.guard';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-<<<<<<< HEAD
 import { SignupClientComponent } from './signup/signup-client/signup-client.component';
-
-
-
-=======
 import { MatSelectModule} from '@angular/material/select';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
@@ -42,7 +37,6 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
->>>>>>> F3.3
 
 
 
@@ -55,14 +49,11 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     ChangePasswordComponent,
     ForbiddenComponent,
     NotFoundComponent,
-<<<<<<< HEAD
-    SignupClientComponent
-=======
+    SignupClientComponent,
     AdminComponent,
     HomeComponent,
     RegistrationRequestsComponent,
     RejectRequestComponent
->>>>>>> F3.3
   ],
   imports: [
     BrowserModule,
@@ -101,7 +92,7 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     ApiService,
     UserService,
     ConfigService,
-    MatIconRegistry,
+    MatIconRegistry
   ],
   bootstrap: [AppComponent]
 })

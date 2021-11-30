@@ -4,14 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-<<<<<<< HEAD
 import {SignupClientComponent} from './signup/signup-client/signup-client.component';
-
-const routes: Routes = [
-  {path:'login', component: LoginComponent },
-  {path:'signup', component: SignupComponent },
-  {path:'signupClient', component: SignupClientComponent}
-=======
 import { AdminGuard } from './guard/admin.guard';
 import { AdminComponent } from './admin/admin.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -26,6 +19,11 @@ const routes: Routes = [
     path:'home', 
     component: HomeComponent,
     pathMatch: 'full' 
+  },
+
+  {
+    path:'signupClient', 
+    component: SignupClientComponent
   },
   {
     path:'login', 
@@ -68,7 +66,6 @@ const routes: Routes = [
   //   path: '**',
   //   redirectTo: '/404'
   // }
->>>>>>> F3.3
 ];
 
 @NgModule({

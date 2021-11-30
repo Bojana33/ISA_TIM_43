@@ -78,19 +78,10 @@ public class AuthController {
         if (existUser != null || existRequest != null) {
             throw new ResourceConflictException(registrationRequest.getId(), "Email already exists");
         }
-        //try{
-            RegistrationRequest request = this.registrationRequestService.save(registrationRequest);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(request.getId()).toUri());
-            return new ResponseEntity<>(request, HttpStatus.CREATED);
-//        } catch (MessagingException me) {
-//            System.out.println("Message exception");
-//            return new ResponseEntity<MessagingException>(new MessagingException(), HttpStatus.FORBIDDEN);
-//        }
-//        catch (EmailAlreadyInUseException e) {
-//            System.out.println("Email already in use");
-//            return new ResponseEntity<EmailAlreadyInUseException>(new EmailAlreadyInUseException("Email already in use"), HttpStatus.FORBIDDEN);
-//        }
+        RegistrationRequest request = this.registrationRequestService.save(registrationRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(request.getId()).toUri());
+        return new ResponseEntity<>(request, HttpStatus.CREATED);
 
     }
 
