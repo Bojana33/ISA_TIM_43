@@ -2,6 +2,7 @@ import { UserType } from './../enum/user-type';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +13,7 @@ export class SignupComponent implements OnInit {
   form!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
+    private snackbar: MatSnackBar,
     private http: HttpClient
     ) { }
 
@@ -37,6 +39,10 @@ export class SignupComponent implements OnInit {
     .subscribe(res =>{
       console.log(res);
     });
+  }
+
+  registeredSnackBar(){
+    this.snackbar.open('Registration was successful!','cancel');
   }
 
 }

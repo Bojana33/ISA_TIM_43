@@ -1,11 +1,16 @@
+import { RejectRequestComponent } from './../reject-request/reject-request.component';
 import { UserType } from './../enum/user-type';
 import { ConfigService } from './../service/config.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RegistrationRequestService } from '../service/registration-request.service';
 
 export class RegistrationRequest{
   constructor(
+    public id: number,
     public firstName: string,
     public surname: string,
     public email: string,
@@ -26,11 +31,14 @@ export class RegistrationRequest{
 export class RegistrationRequestsComponent implements OnInit {
 
   requests: RegistrationRequest[]=[];
+  request:any;
 
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
-    private dialog: MatDialog
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog,
+    private requestService: RegistrationRequestService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +53,15 @@ export class RegistrationRequestsComponent implements OnInit {
       }
         
     )
+  }
+
+  approveRequest(id:number) {
+    this.approvedSnackBar();
+    return this.httpClient.get(this.config.registration_request_url + '/approve_request/' + id).subscribe(res=>{console.log(res)});
+  }
+
+  approvedSnackBar(){
+    this.snackbar.open('Request is approved','cancel');
   }
 
 }

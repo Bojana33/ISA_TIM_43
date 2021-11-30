@@ -34,6 +34,9 @@ import { HomeComponent } from './home/home.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { RejectRequestComponent } from './reject-request/reject-request.component';
+
 
 
 @NgModule({
@@ -47,7 +50,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     NotFoundComponent,
     AdminComponent,
     HomeComponent,
-    RegistrationRequestsComponent
+    RegistrationRequestsComponent,
+    RejectRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +70,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatIconModule,
     MatSelectModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

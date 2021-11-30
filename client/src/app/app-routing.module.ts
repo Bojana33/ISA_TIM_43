@@ -1,3 +1,4 @@
+import { RejectRequestComponent } from './reject-request/reject-request.component';
 import { GuestGuard } from './guard/guest.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'registration-requests',
     component: RegistrationRequestsComponent
+  },
+  {
+    path: 'reject-request/:id',
+    component: RejectRequestComponent
   },
   {
     path: 'change-password',

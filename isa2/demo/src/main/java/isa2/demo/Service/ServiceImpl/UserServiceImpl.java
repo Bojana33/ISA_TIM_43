@@ -10,9 +10,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserRequest userRequest) {
+    public User save(RegistrationRequest userRequest) {
         User u = new User();
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setFirstName(userRequest.getFirstName());
@@ -56,7 +61,7 @@ public class UserServiceImpl implements UserService {
         u.setFirstLogIn(true);
         u.setDeleted(false);
         u.setIsAdmin(false);
-        u.setActivated(false);
+        u.setActivated(true);
 
         List<Authority> auth;
 
@@ -72,28 +77,45 @@ public class UserServiceImpl implements UserService {
         if (userRequest.getUserType() == UserType.INSTRUCTOR){
             auth = authService.findByname("ROLE_INSTRUCTOR");
         } else{
+            u.setIsAdmin(true);
             auth = authService.findByname("ROLE_ADMIN");
         }
 
-        if (userRequest.getUserType() == UserType.BOATOWNER || userRequest.getUserType() == UserType.COTTAGEOWNER || userRequest.getUserType() == UserType.INSTRUCTOR){
-            RegistrationRequest registrationRequest = new RegistrationRequest();
-            registrationRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-            registrationRequest.setFirstName(userRequest.getFirstName());
-            registrationRequest.setSurname(userRequest.getSurname());
-            registrationRequest.setEmail(userRequest.getEmail());
-            registrationRequest.setPhoneNumber(userRequest.getPhoneNumber());
-            registrationRequest.setConfirmed(false);
-            registrationRequest.setRegistrationExplanation(userRequest.getRegistrationExplanation());
-            registrationRequest.setUserType(userRequest.getUserType());
-
-            this.registrationRequestRepository.save(registrationRequest);
-
-        }
-
+        //auth.add(this.authService.findByName("ROLE_USER"));
         u.setAuthorities(auth);
 
         u = this.userRepository.save(u);
          return u;
+    }
+
+    @Override
+    public void sendEmail(RegistrationRequest registrationRequest, String subject, String content) throws AddressException, MessagingException {
+        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("inisatim43@gmail.com", "bajicb182075");
+                }
+            });
+
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("inisatim43@gmail.com", false));
+
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(registrationRequest.getEmail()));
+
+            msg.setSubject(subject);
+            msg.setContent(content, "text/html");
+            Transport.send(msg);
+        } catch (AddressException ae) {
+            System.out.println("Address exception");
+        } catch (MessagingException me) {
+            System.out.println("Message exception");
+        }
     }
 
 }

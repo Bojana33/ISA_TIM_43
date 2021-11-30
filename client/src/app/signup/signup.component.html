@@ -40,7 +40,7 @@
               <mat-form-field>
                 <textarea matInput type="text" placeholder="Registration Explanation" formControlName="registrationExplanation" required></textarea>
               </mat-form-field>
-              <button mat-raised-button type="submit">Sign Up</button>
+              <button mat-raised-button type="submit" (click)="registeredSnackBar()" routerLink="/home">Sign Up</button>
           </form>
     </mat-card>
 </div>
