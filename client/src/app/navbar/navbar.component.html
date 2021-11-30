@@ -8,14 +8,8 @@
     <a mat-button>Adventures</a>
     <a mat-button>Cottages</a>
     <a mat-button>Boats</a>
-<<<<<<< HEAD
-    <a mat-button routerLink="login">Login</a>
-    <a mat-stroked-button color="accent" routerLink="signup">Sign Up As Owner</a>
-    <a mat-raised-button color="accent" routerLink="signupClient">Sign Up</a>
-=======
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
-    <a mat-raised-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up</a>
+    <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up</a>
     <a mat-stroked-button color="accent" *ngIf="hasSignedIn()" (click)="logout()" >Logout</a>
->>>>>>> F3.3
 </mat-toolbar>

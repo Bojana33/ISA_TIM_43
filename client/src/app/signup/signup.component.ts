@@ -1,8 +1,9 @@
 import { UserType } from './../enum/user-type';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomValidationService } from '../service/custom-validation.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,6 +15,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private snackbar: MatSnackBar,
+    private customValidator: CustomValidationService,
     private http: HttpClient
     ) { }
 
@@ -22,15 +24,16 @@ export class SignupComponent implements OnInit {
       firstName: '',
       surname: '',
       email: '',
-      password: '',
-      repeatPassword: '',
+      password: ['', Validators.required,Validators.minLength(3), Validators.maxLength(64)],
+      repeatPassword: ['', Validators.required,Validators.minLength(3), Validators.maxLength(64)],
       address: '',
       city: '',
       country: '',
       phoneNumber: '',
       registrationExplanation: '',
       userType: UserType
-    });
+    },
+    {validator: this.customValidator.passwordMatchValidator('password', 'repeatPassword')});
   }
 
   submit() : void{
