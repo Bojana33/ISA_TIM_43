@@ -1,10 +1,7 @@
 package isa2.demo.Service;
 
-<<<<<<< HEAD
 import isa2.demo.Exception.EmailAlreadyInUseException;
-=======
 import isa2.demo.Model.RegistrationRequest;
->>>>>>> F3.3
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

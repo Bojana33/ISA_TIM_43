@@ -1,14 +1,11 @@
 package isa2.demo.Service.ServiceImpl;
 
-<<<<<<< HEAD
 import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Model.Authority;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
-=======
 import isa2.demo.Model.*;
 import isa2.demo.Repository.RegistrationRequestRepository;
->>>>>>> F3.3
 import isa2.demo.Repository.UserRepository;
 import isa2.demo.Repository.UserRequestRepository;
 import isa2.demo.Service.AuthorityService;
@@ -20,14 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
-<<<<<<< HEAD
 import javax.mail.internet.*;
 import javax.servlet.http.HttpServletRequest;
-=======
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
->>>>>>> F3.3
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
