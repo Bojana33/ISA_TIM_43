@@ -1,6 +1,7 @@
 package isa2.demo.Service;
 
 import isa2.demo.Exception.EmailAlreadyInUseException;
+import isa2.demo.Exception.EmailNotExistsException;
 import isa2.demo.Model.RegistrationRequest;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
@@ -22,5 +23,6 @@ public interface UserService{
     boolean verify(String verificationCode);
     User save(RegistrationRequest userRequest);
     void sendEmail(RegistrationRequest registrationRequest, String subject, String content) throws AddressException, MessagingException;
-
+    User findByUsername(String email) throws UsernameNotFoundException;
+    User updateUser(User userUpdate, String user) throws EmailNotExistsException;
 }

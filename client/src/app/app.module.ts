@@ -37,6 +37,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -53,7 +54,8 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     AdminComponent,
     HomeComponent,
     RegistrationRequestsComponent,
-    RejectRequestComponent
+    RejectRequestComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

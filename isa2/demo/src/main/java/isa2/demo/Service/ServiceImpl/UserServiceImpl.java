@@ -1,6 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Exception.EmailAlreadyInUseException;
+import isa2.demo.Exception.EmailNotExistsException;
 import isa2.demo.Model.Authority;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
@@ -45,6 +46,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) throws UsernameNotFoundException {
+        User u = userRepository.findByEmail(email);
+        return u;
+    }
+
+    @Override
+    public User findByUsername(String email) throws UsernameNotFoundException {
         User u = userRepository.findByEmail(email);
         return u;
     }
@@ -172,13 +179,18 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setFirstName(userRequest.getFirstName());
             user.setSurname(userRequest.getSurname());
-            user.setPassword(userRequest.getPassword());
+            user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             user.setEmail(userRequest.getEmail());
             user.setPhoneNumber(userRequest.getPhoneNumber());
             //user.setAddress(userRequest.getAddress());
             user.setActivated(true);
             user.setDeleted(false);
             user.setIsAdmin(false);
+
+            List<Authority> auth;
+            auth = authService.findByname("ROLE_USER");
+            user.setAuthorities(auth);
+
             userRepository.save(user);
 
             //disable ability to verified 2 times same account
@@ -186,8 +198,8 @@ public class UserServiceImpl implements UserService {
             userRequestRepository.save(userRequest);
             return true;
         }
-
     }
+
     @Override
     public void sendEmail(RegistrationRequest registrationRequest, String subject, String content) throws AddressException, MessagingException {
         try {
@@ -216,5 +228,16 @@ public class UserServiceImpl implements UserService {
         } catch (MessagingException me) {
             System.out.println("Message exception");
         }
+    }
+
+    @Override
+    public User updateUser(User userUpdate, String user) throws EmailNotExistsException {
+        User existingUser = this.findByUsername(user);
+        if(existingUser == null)
+            throw new EmailNotExistsException("User not exists");
+        existingUser.setFirstName(userUpdate.getFirstName());
+        existingUser.setSurname(userUpdate.getSurname());
+        existingUser.setPhoneNumber(userUpdate.getPhoneNumber());
+        return userRepository.save(existingUser);
     }
 }

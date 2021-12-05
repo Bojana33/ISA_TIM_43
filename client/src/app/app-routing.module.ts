@@ -13,27 +13,36 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import { ProfileComponent } from './profile/profile.component';
+import {UserService} from './service/user.service';
 
 const routes: Routes = [
   {
-    path:'home', 
+    path: 'home',
     component: HomeComponent,
-    pathMatch: 'full' 
+    pathMatch: 'full'
   },
 
   {
-    path:'signupClient', 
-    component: SignupClientComponent
+    path: 'signupClient',
+    component: SignupClientComponent,
+    canActivate: [GuestGuard]
   },
   {
-    path:'login', 
+    path: 'login',
     component: LoginComponent,
-    canActivate: [GuestGuard] 
+    canActivate: [GuestGuard]
   },
   {
-    path:'signup',
+    path: 'signup',
     component: SignupComponent,
     canActivate: [GuestGuard],
+    pathMatch: 'full'
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [UserService],
     pathMatch: 'full'
   },
   {

@@ -24,7 +24,7 @@ public class BasicController {
     }
 
     @GetMapping("/whoami")
-    //@PreAuthorize("hasAnyRole('USER', 'BOATOWNER', 'COTTAGEOWNER', 'ADMIN', 'CLIENT', 'INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('USER', 'BOATOWNER', 'COTTAGEOWNER', 'ADMIN', 'CLIENT', 'INSTRUCTOR')")
     public User user(Principal user) {
         return this.userService.findByEmail(user.getName());
     }

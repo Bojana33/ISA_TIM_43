@@ -1,6 +1,6 @@
 import { UserType } from './../enum/user-type';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomValidationService } from '../service/custom-validation.service';
@@ -24,8 +24,8 @@ export class SignupComponent implements OnInit {
       firstName: '',
       surname: '',
       email: '',
-      password: ['', Validators.required,Validators.minLength(3), Validators.maxLength(64)],
-      repeatPassword: ['', Validators.required,Validators.minLength(3), Validators.maxLength(64)],
+      password: ['', Validators.required, Validators.minLength(3), Validators.maxLength(64)],
+      repeatPassword: ['', Validators.required, Validators.minLength(3), Validators.maxLength(64)],
       address: '',
       city: '',
       country: '',
@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit {
 
   submit() : void{
     console.log();
-    this.http.post('http://localhost:8090/auth/signup',this.form.getRawValue())
+    this.http.post('http://localhost:8090/auth/signup', this.form.getRawValue())
     .subscribe(res =>{
       console.log(res);
     });
