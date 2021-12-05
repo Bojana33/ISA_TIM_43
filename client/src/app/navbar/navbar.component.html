@@ -3,9 +3,10 @@
 
     <div class="spacer"></div>
 
-    <a mat-button routerLink="registration-requests">Registration Requests</a>
+    <a mat-button routerLink="profile">Profile</a>
+    <a mat-button routerLink="registration-requests" *ngIf="hasSignedIn() && hasRole('ADMIN')">Registration Requests</a>
     <a mat-button routerLink="home">Home</a>
-    <a mat-button>Adventures</a>
+    <a mat-button routerLink="adventures">Adventures</a>
     <a mat-button>Cottages</a>
     <a mat-button>Boats</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>

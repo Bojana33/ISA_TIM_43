@@ -36,7 +36,7 @@ export class AuthService {
     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
         console.log('Login success');
-        this.access_token = res.accessToken;
+        this.access_token = res['body'].accessToken;
       }));
   }
 

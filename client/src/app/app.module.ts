@@ -1,3 +1,4 @@
+import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -37,8 +38,20 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
+import { AdventuresComponent } from './adventures/adventures.component';
+import { AdventureComponent } from './adventure/adventure.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
+import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRippleModule } from '@angular/material/core';
+// import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 
-
+// const mapConfig: YaConfig = {
+//   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
+//   lang: 'en_US',
+// };
 
 @NgModule({
   declarations: [
@@ -53,7 +66,12 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     AdminComponent,
     HomeComponent,
     RegistrationRequestsComponent,
-    RejectRequestComponent
+    RejectRequestComponent,
+    AdventuresComponent,
+    AdventureComponent,
+    ProfileComponent,
+    UpdateAdventureComponent,
+    CreateAdventureComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +91,10 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     MatSelectModule,
     MatTableModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule
   ],
   exports: [
     SignupClientComponent
@@ -87,12 +108,15 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     },
     LoginGuard,
     GuestGuard,
+    InstructorGuard,
     AdminGuard,
     AuthService,
     ApiService,
     UserService,
     ConfigService,
-    MatIconRegistry
+    MatIconRegistry,
+    MatNativeDateModule
+    
   ],
   bootstrap: [AppComponent]
 })

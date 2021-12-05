@@ -56,4 +56,18 @@ export class UserService {
   save(user: User) {
     return this.http.post<User>(this.usersUrl, user);
   }
+
+  getUserRole(){
+    return JSON.stringify(this.currentUser.userType);
+  }
+
+  loggedRole(role:string){
+    if (this.currentUser == null){
+      return false;
+    }
+    if (JSON.stringify(this.currentUser.authorities).search('ROLE_'+role) !== -1){
+      return true;
+    }
+    return false;
+  }
 }
