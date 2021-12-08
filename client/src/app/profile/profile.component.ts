@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {ConfigService} from '../service/config.service';
+import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../service/user.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {Address} from '../model/address';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +13,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  userProfile: any;
 
-  ngOnInit(): void {
+  constructor(
+    private httpClient: HttpClient,
+    private config: ConfigService,
+    private router: ActivatedRoute,
+    private userService: UserService) {
   }
 
+  ngOnInit(): void {
+    this.userService.getMyInfo().subscribe((response) =>
+     this.userProfile = response);
+  }
 }

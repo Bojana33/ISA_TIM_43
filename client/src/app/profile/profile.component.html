@@ -1,1 +1,28 @@
-<p>profile works!</p>
+<div class="content" style="width:1500px; margin-left:35%; margin-top:5%; margin-right: 35%">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="25%">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header class="name">
+          <mat-card-title>{{userProfile.firstName}} {{userProfile.surname}}</mat-card-title>
+        </mat-card-header>
+        <div class="photo">
+          <img height="auto" mat-card-image src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png">
+        </div>
+        <mat-card-content>
+          <p>
+            Phone number: {{userProfile.phoneNumber}}
+          </p>
+          <p>
+            Address:
+          </p>
+          <p>
+            Email: {{userProfile.email}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="buttons">
+          <a mat-stroked-button color="primary" routerLink="profileUpdate">Update information</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

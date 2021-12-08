@@ -18,5 +18,10 @@ public class Adventure extends Entity {
     private java.lang.Double cancellationFee;
     @Column(name = "house_rules")
     private java.lang.String houseRules;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_id", referencedColumnName = "id")
+    private Instructor instructor;
+    @Column
+    private String defaultFishingEquipment;
 
 }

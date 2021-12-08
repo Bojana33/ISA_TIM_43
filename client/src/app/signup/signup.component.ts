@@ -24,8 +24,8 @@ export class SignupComponent implements OnInit {
       firstName: '',
       surname: '',
       email: '',
-      password: ['', Validators.required, Validators.minLength(3), Validators.maxLength(64)],
-      repeatPassword: ['', Validators.required, Validators.minLength(3), Validators.maxLength(64)],
+      password: ['', Validators.compose([ Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
+      repeatPassword: ['', Validators.compose([ Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
       address: '',
       city: '',
       country: '',
@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
   submit() : void{
     console.log();
     this.http.post('http://localhost:8090/auth/signup', this.form.getRawValue())
-    .subscribe(res =>{
+    .subscribe(res => {
       console.log(res);
     });
   }

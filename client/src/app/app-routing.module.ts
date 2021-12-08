@@ -1,7 +1,10 @@
+import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
+import { InstructorGuard } from './guard/instructor.guard';
+import { AdventuresComponent } from './adventures/adventures.component';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
 import { GuestGuard } from './guard/guest.guard';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import {SignupClientComponent} from './signup/signup-client/signup-client.component';
@@ -15,6 +18,10 @@ import { HomeComponent } from './home/home.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
 import { ProfileComponent } from './profile/profile.component';
 import {UserService} from './service/user.service';
+import { AdventureComponent } from './adventure/adventure.component';
+import { Adventure } from './model/adventure';
+import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
+import {ProfileUpdateComponent} from './profile/profile-update/profile-update.component';
 
 const routes: Routes = [
   {
@@ -42,13 +49,36 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [UserService],
+    //canActivate: [UserService],
     pathMatch: 'full'
   },
   {
     path: 'admin',
     component: AdminComponent,
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'profile/profileUpdate',
+    component: ProfileUpdateComponent
+  },
+  {
+    path: 'adventures',
+    component: AdventuresComponent,
+    // canActivate: [InstructorGuard]
+  },
+  {
+    path: 'adventure/:id',
+    component: AdventureComponent
+  },
+  {
+    path: 'update-adventure/:id',
+    component: UpdateAdventureComponent,
+    //canActivate: [InstructorGuard]
+  },
+  {
+    path: 'create-adventure',
+    component: CreateAdventureComponent,
+    //canActivate: [InstructorGuard]
   },
   {
     path: 'registration-requests',

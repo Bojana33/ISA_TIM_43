@@ -1,0 +1,31 @@
+<div class="content" style="width:1500px; margin-left:35%; margin-top:5%; margin-right: 35%">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="25%">
+  <mat-card class="mat-elevation-z4">
+    <mat-toolbar color="primary">Update User Profile</mat-toolbar>
+    <form fxLayoutAlign="stretch" fxLayout="column" class="update-adventure-form" [formGroup]="userProfile">
+      <div class="photo">
+        <img height="auto" mat-card-image src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png">
+      </div>
+      <mat-card-content>
+        <mat-form-field>
+          <p>First name:</p>
+          <input matInput type="text" placeholder="{{firstName}}" formControlName="firstName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <p>Surname:</p>
+          <input matInput type="text" placeholder="{{surname}}" formControlName="surname" required>
+        </mat-form-field>
+      <mat-form-field>
+        <p>Phone number:</p>
+        <input matInput type="text" placeholder="{{phoneNumber}}" formControlName="phoneNumber" required>
+      </mat-form-field>
+      </mat-card-content>
+      <button mat-raised-button type="submit" (click)="onSubmit(userProfile.value)">Submit</button>
+    </form>
+  </mat-card>
+    </div>
+  </div>
+</div>
+
+

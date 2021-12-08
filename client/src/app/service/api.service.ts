@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@a
 import {Injectable} from '@angular/core';
 import {serialize} from '../shared/utilities/serialize';
 import {Observable} from 'rxjs';
-import {catchError, filter} from 'rxjs/operators';
+import {catchError, filter, map} from 'rxjs/operators';
 
 export enum RequestMethod {
   Get = 'GET',

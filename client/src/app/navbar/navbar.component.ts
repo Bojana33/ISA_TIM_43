@@ -27,4 +27,8 @@ export class NavbarComponent implements OnInit {
     return !!this.userService.currentUser;
   }
 
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
+  }
+
 }

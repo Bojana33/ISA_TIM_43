@@ -1,3 +1,4 @@
+import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,7 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -38,8 +39,20 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdventuresComponent } from './adventures/adventures.component';
+import { AdventureComponent } from './adventure/adventure.component';
+import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
+import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRippleModule } from '@angular/material/core';
+import { ProfileUpdateComponent } from './profile/profile-update/profile-update.component';
+// import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 
-
+// const mapConfig: YaConfig = {
+//   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
+//   lang: 'en_US',
+// };
 
 @NgModule({
   declarations: [
@@ -55,7 +68,13 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     RegistrationRequestsComponent,
     RejectRequestComponent,
-    ProfileComponent
+    ProfileComponent,
+    AdventuresComponent,
+    AdventureComponent,
+    ProfileComponent,
+    UpdateAdventureComponent,
+    CreateAdventureComponent,
+    ProfileUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +94,10 @@ import { ProfileComponent } from './profile/profile.component';
     MatSelectModule,
     MatTableModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule
   ],
   exports: [
     SignupClientComponent
@@ -89,12 +111,14 @@ import { ProfileComponent } from './profile/profile.component';
     },
     LoginGuard,
     GuestGuard,
+    InstructorGuard,
     AdminGuard,
     AuthService,
     ApiService,
     UserService,
     ConfigService,
-    MatIconRegistry
+    MatIconRegistry,
+    MatNativeDateModule
   ],
   bootstrap: [AppComponent]
 })

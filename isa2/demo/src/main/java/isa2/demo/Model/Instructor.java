@@ -2,10 +2,8 @@ package isa2.demo.Model;
 
 import lombok.*;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Data
@@ -20,5 +18,8 @@ public class Instructor extends User {
 
     @Column
     private UserCategory category;
+
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "instructor")
+    public java.util.Collection<Adventure> adventure;
 
 }
