@@ -19,7 +19,7 @@ export class AdventureComponent implements OnInit {
     private config: ConfigService,
     private router: ActivatedRoute,
     private userService: UserService,
-    private adventureService:AdventureService
+    private adventureService: AdventureService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class AdventureComponent implements OnInit {
     .subscribe((response) =>
     this.adventure = response);
   }
-  
+
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }

@@ -1,6 +1,8 @@
 package isa2.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Table(name = "addresses")
 public class Address implements Serializable {
 
@@ -29,8 +32,8 @@ public class Address implements Serializable {
     @Column
     private java.lang.String houseNumber;
 
-    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
-    //private java.util.Set<User> users;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
+    private java.util.Set<User> users;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
 //    private java.util.Collection<RegistrationRequest> registrationRequest;

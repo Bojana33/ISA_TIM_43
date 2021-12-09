@@ -22,6 +22,9 @@ import { AdventureComponent } from './adventure/adventure.component';
 import { Adventure } from './model/adventure';
 import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
 import {ProfileUpdateComponent} from './profile/profile-update/profile-update.component';
+import {CottagesComponent} from './user-quest/cottages/cottages.component';
+import {BoatsComponent} from './user-quest/boats/boats.component';
+import {AdventuresUserComponent} from './user-quest/adventures-user/adventures-user.component';
 
 const routes: Routes = [
   {
@@ -94,17 +97,26 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
+    path: 'cottagesCatalog',
+    component: CottagesComponent
+  },
+  {
+    path: 'boatsCatalog',
+    component: BoatsComponent
+  },
+  {
+    path: 'adventuresCatalog',
+    component: AdventuresUserComponent
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },
   {
     path: '403',
     component: ForbiddenComponent
-  }
-  // {
-  //   path: '**',
-  //   redirectTo: '/404'
-  // }
+  },
+  { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

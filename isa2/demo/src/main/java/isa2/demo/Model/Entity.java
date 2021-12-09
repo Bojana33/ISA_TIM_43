@@ -32,7 +32,8 @@ public class Entity implements Serializable {
     @Column
     private java.lang.String entityPhoto;
 
-    @Transient
+    //TO DO: return this to transient, it is only a temporary column
+    @Column(name = "average_grade")
     private java.lang.Double averageGrade = 0.0;
 
     @OneToOne(cascade = CascadeType.ALL)

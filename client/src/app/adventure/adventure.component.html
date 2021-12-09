@@ -1,6 +1,5 @@
 <div >
   <div  fxLayout="row" fxLayoutGap="16%">
-    <img class="entity_photo" src="{{adventure.entityPhoto}}">
     <div >
       <mat-card class="reservation">
         <h1>Create fast reservation</h1>
@@ -31,44 +30,42 @@
           </mat-form-field><br>
           <button mat-raised-button type="submit">Submit</button>
         </form>
-        
+
       </mat-card>
     </div>
   </div>
-    <h1 class="info">{{adventure.name}}</h1>
-    <div fxLayout="row" fxLayoutGap="20px" *ngIf="hasSignedIn() && (hasRole('INSTRUCTOR') || hasRole('ADMIN'))" class="buttons">
-      <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}">Edit</button>
-      <button mat-flat-button color="accent" (click)="deleteAdventure()" >Delete</button>
+  <h1 class="info">{{adventure.name}}</h1>
+  <div fxLayout="row" fxLayoutGap="20px" *ngIf="hasSignedIn() && (hasRole('INSTRUCTOR') || hasRole('ADMIN'))" class="buttons">
+    <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}">Edit</button>
+    <button mat-flat-button color="accent" (click)="deleteAdventure()" >Delete</button>
+  </div>
+
+  <div class="content">
+    <h1>Price</h1>
+    <h3>{{adventure.pricePerDay}}e</h3>
+    <h1>Description</h1>
+    <h3>{{adventure.description}}</h3>
+    <h1>Instructor Biography</h1>
+    <h3>{{adventure.instructorBio}}</h3>
+    <h1>Max Number of Guests</h1>
+    <h3>{{adventure.maxNumberOfGuests}}</h3>
+    <h1>House Rules</h1>
+    <h3>{{adventure.houseRules}}</h3>
+    <h1>Default fishing equipment</h1>
+    <h3></h3>
+    <h1>Cancellation Fee</h1>
+    <h3>{{adventure.cancellationFee}}%</h3>
+    <h1>Address</h1>
+    <!-- <div class="container">
+        <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
+          <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
+        </ya-map>
+      </div> -->
+    <div fxLayout="row" fxLayoutGap="20px">
+      <h1>Photos of previous adventures</h1>
+      <button mat-flat-button color="accent" >Add new photo</button>
     </div>
-    
-      <div class="content">
-        <h1>Price</h1>
-        <h3>{{adventure.pricePerDay}}e</h3>
-        <h1>Description</h1>
-        <h3>{{adventure.description}}</h3>
-        <h1>Instructor Biography</h1>
-        <h3>{{adventure.instructorBio}}</h3>
-        <h1>Max Number of Guests</h1>
-        <h3>{{adventure.maxNumberOfGuests}}</h3>
-        <h1>House Rules</h1>
-        <h3>{{adventure.houseRules}}</h3>
-        <h1>Default fishing equipment</h1>
-        <h3></h3>
-        <h1>Cancellation Fee</h1>
-        <h3>{{adventure.cancellationFee}}%</h3>
-        <h1>Address</h1>
-        <!-- <div class="container">
-            <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
-              <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
-            </ya-map>
-          </div> -->
-        <div fxLayout="row" fxLayoutGap="20px">
-          <h1>Photos of previous adventures</h1>
-          <button mat-flat-button color="accent" >Add new photo</button>
-        </div>
-        <input type="file" (change)="onSelect($event)" multiple>
-        <img *ngFor='let url of urls' [src]="url" height="100"><br>
-    
-</div>
+    <input type="file" (change)="onSelect($event)" multiple>
+    <img *ngFor='let url of urls' [src]="url" height="100"><br>
 
-
+  </div>

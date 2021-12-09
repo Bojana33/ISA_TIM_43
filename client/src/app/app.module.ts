@@ -47,6 +47,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 import { ProfileUpdateComponent } from './profile/profile-update/profile-update.component';
+import { CottagesComponent } from './user-quest/cottages/cottages.component';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {FilterPipe} from './user-quest/filter.pipe';
+import { BoatsComponent } from './user-quest/boats/boats.component';
+import { AdventuresUserComponent } from './user-quest/adventures-user/adventures-user.component';
 // import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 
 // const mapConfig: YaConfig = {
@@ -74,7 +79,11 @@ import { ProfileUpdateComponent } from './profile/profile-update/profile-update.
     ProfileComponent,
     UpdateAdventureComponent,
     CreateAdventureComponent,
-    ProfileUpdateComponent
+    ProfileUpdateComponent,
+    CottagesComponent,
+    FilterPipe,
+    BoatsComponent,
+    AdventuresUserComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +106,8 @@ import { ProfileUpdateComponent } from './profile/profile-update/profile-update.
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatRippleModule
+    MatRippleModule,
+    Ng2SearchPipeModule
   ],
   exports: [
     SignupClientComponent

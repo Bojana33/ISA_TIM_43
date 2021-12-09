@@ -10,11 +10,21 @@ export class ConfigService {
   private _user_url = 'http://localhost:8090/user';
   private _registration_request_url = 'http://localhost:8090/registration_request';
   private _adventure_url = 'http://localhost:8090/adventures';
+  private _cottage_url = 'http://localhost:8090/cottages';
+  private _boat_url = 'http://localhost:8090/boats';
 
   private _refresh_token_url = this._auth_url + '/refresh';
 
   get adventure_url(): string{
     return this._adventure_url;
+  }
+
+  get cottage_url(): string{
+    return this._cottage_url;
+  }
+
+  get boat_url(): string{
+    return this._boat_url;
   }
 
   get registration_request_url(): string{

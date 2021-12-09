@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setFirstName(userRequest.getFirstName());
             user.setSurname(userRequest.getSurname());
-            user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+            user.setPassword(userRequest.getPassword());
             user.setEmail(userRequest.getEmail());
             user.setPhoneNumber(userRequest.getPhoneNumber());
             //user.setAddress(userRequest.getAddress());
@@ -194,8 +194,11 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
 
             //disable ability to verified 2 times same account
-            userRequest.setVerificationCode(null);
-            userRequestRepository.save(userRequest);
+            //userRequest.setVerificationCode(null);
+            //userRequestRepository.save(userRequest);
+
+            //delete user request
+            userRequestRepository.delete(userRequest);
             return true;
         }
     }

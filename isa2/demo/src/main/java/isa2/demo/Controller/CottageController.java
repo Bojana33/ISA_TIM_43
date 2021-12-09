@@ -4,6 +4,7 @@ import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
 import isa2.demo.Model.Address;
+import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
 
 import isa2.demo.Service.CottageService;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,5 +35,10 @@ public class CottageController {
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage = cottageService.addNewCottage(cottage);
         return cottage;
+    }
+
+    @GetMapping("/get_all")
+    public ResponseEntity<List<Cottage>> getAll(){
+        return new ResponseEntity<>(this.cottageService.findAll(), HttpStatus.OK);
     }
 }

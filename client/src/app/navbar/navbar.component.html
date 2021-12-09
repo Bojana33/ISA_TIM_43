@@ -5,12 +5,18 @@
 
     <a mat-button routerLink="registration-requests" *ngIf="hasSignedIn() && hasRole('ADMIN')">Registration Requests</a>
     <a mat-button routerLink="home">Home</a>
-    <a mat-button routerLink="adventures">Adventures</a>
-    <a mat-button>Cottages</a>
-    <a mat-button>Boats</a>
+    <a mat-button routerLink="adventures" *ngIf="hasSignedIn() && hasRole('ADMIN')">Adventures</a>
+    <a mat-button *ngIf="hasSignedIn() && hasRole('ADMIN')">Cottages</a>
+    <a mat-button *ngIf="hasSignedIn() && hasRole('ADMIN')">Boats</a>
+  <!--USER AND GUEST ENTITY CATALOGS!-->
+    <a mat-button routerLink="adventuresCatalog">Adventures</a>
+    <a mat-button routerLink="boatsCatalog">Boats</a>
+    <a mat-button routerLink="cottagesCatalog">Cottages</a>
+  <!--!-->
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
     <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up</a>
     <a mat-stroked-button color="accent" *ngIf="hasSignedIn()" (click)="logout()" >Logout</a>
     <a mat-stroked-button color="accent" routerLink="profile" *ngIf="hasRole('USER')">Profile</a>
 </mat-toolbar>
+
