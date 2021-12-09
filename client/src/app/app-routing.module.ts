@@ -13,25 +13,28 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { RegistrationRequestsComponent } from './registration-requests/registration-requests.component';
+import {BoatsComponent} from './boats/boats.component';
+import {CottagesComponent} from './cottages/cottages.component';
+import {AdventuresComponent} from './adventures/adventures.component';
+import {UserListComponent} from './user-list/user-list.component';
 
 const routes: Routes = [
   {
-    path:'home', 
+    path: 'home',
     component: HomeComponent,
-    pathMatch: 'full' 
+    pathMatch: 'full'
   },
-
   {
-    path:'signupClient', 
+    path: 'signupClient',
     component: SignupClientComponent
   },
   {
-    path:'login', 
+    path: 'login',
     component: LoginComponent,
-    canActivate: [GuestGuard] 
+    canActivate: [GuestGuard]
   },
   {
-    path:'signup',
+    path: 'signup',
     component: SignupComponent,
     canActivate: [GuestGuard],
     pathMatch: 'full'
@@ -40,6 +43,26 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'boats',
+    component: BoatsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'cottages',
+    component: CottagesComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'adventures',
+    component: AdventuresComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'users',
+    component: UserListComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'registration-requests',
@@ -62,6 +85,7 @@ const routes: Routes = [
     path: '403',
     component: ForbiddenComponent
   }
+
   // {
   //   path: '**',
   //   redirectTo: '/404'

@@ -26,5 +26,7 @@ export class NavbarComponent implements OnInit {
   hasSignedIn() {
     return !!this.userService.currentUser;
   }
+  getAll(){
+  }
 
 }

@@ -37,6 +37,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
+import { BoatsComponent } from './boats/boats.component';
+import { CottagesComponent } from './cottages/cottages.component';
+import { AdventuresComponent } from './adventures/adventures.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 
@@ -53,7 +57,11 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
     AdminComponent,
     HomeComponent,
     RegistrationRequestsComponent,
-    RejectRequestComponent
+    RejectRequestComponent,
+    BoatsComponent,
+    CottagesComponent,
+    AdventuresComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

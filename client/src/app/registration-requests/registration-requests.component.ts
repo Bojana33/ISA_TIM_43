@@ -31,7 +31,7 @@ export class RegistrationRequest{
 export class RegistrationRequestsComponent implements OnInit {
 
   requests: RegistrationRequest[]=[];
-  request:any;
+  request: any;
 
   constructor(
     private httpClient: HttpClient,
@@ -51,7 +51,7 @@ export class RegistrationRequestsComponent implements OnInit {
         console.log(response);
         this.requests = response;
       }
-        
+
     )
   }
 
