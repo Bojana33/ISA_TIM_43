@@ -13,6 +13,9 @@ import { UserService } from '../service/user.service';
 export class AdventureComponent implements OnInit {
 
   adventure:any;
+  
+  address!: string;
+  addressTxt! : string;
 
   constructor(
     private httpClient: HttpClient,
@@ -24,14 +27,16 @@ export class AdventureComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAdventure();
-    // this.urls = this.adventure.photos;
   }
   urls:string[] = [];
 
   getAdventure(){
     return this.httpClient.get(this.config.adventure_url + '/get_adventure/' + this.router.snapshot.params.id)
-    .subscribe((response) =>
-    this.adventure = response);
+    .subscribe((response) =>{
+      this.adventure = response;
+      this.address = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + '&kind=house&results=' + this.adventure.address.houseNumber;
+      this.addressTxt = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + ' '+ this.adventure.address.houseNumber;
+    });
   }
   
   hasRole(role:string){

@@ -57,11 +57,8 @@
         <h1>Cancellation Fee</h1>
         <h3>{{adventure.cancellationFee}}%</h3>
         <h1>Address</h1>
-        <!-- <div class="container">
-            <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
-              <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
-            </ya-map>
-          </div> -->
+        <h3>{{addressTxt}}</h3>
+        <app-map [address]="address"></app-map>
         <div fxLayout="row" fxLayoutGap="20px">
           <h1>Photos of previous adventures</h1>
           <button mat-flat-button color="accent" >Add new photo</button>

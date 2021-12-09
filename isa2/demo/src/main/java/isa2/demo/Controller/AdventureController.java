@@ -30,7 +30,7 @@ public class AdventureController {
         this.adventureMapper = adventureMapper;
     }
 
-    @GetMapping("/get_all_adventures")
+    @GetMapping(value = "/get_all_adventures", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Adventure>> getAllAdventures(){
         return new ResponseEntity<>(this.adventureService.findAll(), HttpStatus.OK);
     }
@@ -40,7 +40,7 @@ public class AdventureController {
         return new ResponseEntity<>(this.adventureService.findOne(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/add_adventure",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/add_adventure",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Adventure> addAdventure(@RequestBody AdventureDTO adventureDTO/*,@RequestParam("imageUrl") MultipartFile imageUrl*/){
         Adventure adventure = adventureMapper.mapDtoToAdventure(adventureDTO);
         Path path = Paths.get("E:\\Internet_Softverske_Arhitekture\\projekat2\\Git\\ISA_TIM_43\\client\\src\\assets\\images");

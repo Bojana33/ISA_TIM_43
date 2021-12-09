@@ -33,8 +33,9 @@ public class AdventureServiceImpl implements AdventureService {
 
     @Override
     public Adventure update(Integer id, Adventure adventure) {
-        Adventure adventureForUpdate = this.adventureRepository.findById(id).get();
+        Adventure adventureForUpdate = this.adventureRepository.findById(adventure.getId()).get();
         adventureForUpdate.setName(adventure.getName());
+        // TODO : Dodavanje adrese ne radi dobro
         //adventureForUpdate.setAddress(adventure.getAddress());
         adventureForUpdate.setCancellationFee(adventure.getCancellationFee());
         adventureForUpdate.setInstructor(adventure.getInstructor());

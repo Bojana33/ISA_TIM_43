@@ -46,12 +46,13 @@ import { CreateAdventureComponent } from './create-adventure/create-adventure.co
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
-// import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+import { MapComponent } from './map/map.component';
 
-// const mapConfig: YaConfig = {
-//   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
-//   lang: 'en_US',
-// };
+const mapConfig: YaConfig = {
+  apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
+  lang: 'en_US',
+};
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { MatRippleModule } from '@angular/material/core';
     AdventureComponent,
     ProfileComponent,
     UpdateAdventureComponent,
-    CreateAdventureComponent
+    CreateAdventureComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +96,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatRippleModule
+    MatRippleModule,
+    AngularYandexMapsModule.forRoot(mapConfig)
   ],
   exports: [
     SignupClientComponent

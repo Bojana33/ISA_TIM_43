@@ -73,7 +73,8 @@ const routes: Routes = [
   },
   {
     path: 'registration-requests',
-    component: RegistrationRequestsComponent
+    component: RegistrationRequestsComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'reject-request/:id',

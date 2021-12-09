@@ -1,3 +1,4 @@
+import { ApiService } from './../service/api.service';
 import { AdditionalService } from './../model/additional-service';
 import { Address } from './../model/address';
 import { HttpClient } from '@angular/common/http';
@@ -13,11 +14,11 @@ import { Adventure } from '../model/adventure';
 export class AdventuresComponent implements OnInit {
 
   adventures: Adventure[]=[];
-  adventure: any;
 
   constructor(
     private httpClient: HttpClient,
-    private config: ConfigService
+    private config: ConfigService,
+    private api: ApiService
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +26,7 @@ export class AdventuresComponent implements OnInit {
   }
 
   getAdventures(){
-    this.httpClient.get<any>(this.config.adventure_url + '/get_all_adventures').subscribe(
+    this.api.get(this.config.adventure_url + '/get_all_adventures').subscribe(
       response => {
         console.log(response);
         this.adventures = response;

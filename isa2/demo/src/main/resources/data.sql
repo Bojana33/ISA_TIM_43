@@ -10,6 +10,10 @@ INSERT INTO addresses(
     city, country, house_number, street)
 VALUES ('Belgrade', 'Serbia', '10', 'Kralja Aleksandra I');
 
+INSERT INTO addresses(
+    city, country, house_number, street)
+VALUES ('Belgrade', 'Serbia', '110', 'Bulevar Kralja Aleksandra I');
+
 
 -- password - password
 INSERT INTO public.users(
@@ -20,16 +24,16 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 2);
 
 insert into
-    entities(name, description,  max_guests, price_per_day, entity_photo)
-values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png');
+    entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
+values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png',1);
 
 insert into
     adventure(id, instructor_bio, cancellation_fee, house_rules)
 values (1,'This is instructor biography', 10, 'Some house rules');
 
 insert into
-    entities(name, description,  max_guests, price_per_day, entity_photo)
-values ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg');
+    entities(name, description,  max_guests, price_per_day, entity_photo,address_id)
+values ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2);
 
 insert into
     adventure(id, instructor_bio, cancellation_fee, house_rules)
