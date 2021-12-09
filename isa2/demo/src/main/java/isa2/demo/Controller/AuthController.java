@@ -1,6 +1,8 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.JwtAuthenticationRequest;
+import isa2.demo.DTO.Mappers.UserRequestMapper;
+import isa2.demo.DTO.UserRequestDTO;
 import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Exception.ResourceConflictException;
 import isa2.demo.Model.RegistrationRequest;
@@ -46,6 +48,9 @@ public class AuthController {
     @Autowired
     private RegistrationRequestService registrationRequestService;
 
+    @Autowired
+    private UserRequestMapper userRequestMapper;
+
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
@@ -87,8 +92,9 @@ public class AuthController {
 
     // Endpoint za registraciju novog korisnika - klijenta
     @PostMapping("/signupClient")
-    public HttpEntity<? extends Object> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+    public HttpEntity<? extends Object> addClientUser(@RequestBody UserRequestDTO userRequestDTO, UriComponentsBuilder ucBuilder) {
 
+        UserRequest userRequest = userRequestMapper.mapDtoToUserRequest(userRequestDTO);
         User existUser = this.userService.findByEmail(userRequest.getEmail());
         if (existUser != null) {
             throw new ResourceConflictException(userRequest.getId(), "Email already exists");
