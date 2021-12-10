@@ -57,7 +57,8 @@ export class RegistrationRequestsComponent implements OnInit {
 
   approveRequest(id:number) {
     this.approvedSnackBar();
-    return this.httpClient.get(this.config.registration_request_url + '/approve_request/' + id).subscribe(res=>{console.log(res)});
+    return this.httpClient.get(this.config.registration_request_url + '/approve_request/' + id).subscribe(res =>{
+      console.log(res)});
   }
 
   approvedSnackBar(){

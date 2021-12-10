@@ -72,6 +72,7 @@ public class UserServiceImpl implements UserService {
         u.setSurname(userRequest.getSurname());
         u.setEmail(userRequest.getEmail());
         u.setPhoneNumber(userRequest.getPhoneNumber());
+        u.setAddress(userRequest.getAddress());
         u.setFirstLogIn(true);
         u.setDeleted(false);
         u.setIsAdmin(false);
@@ -175,7 +176,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(userRequest.getPassword());
             user.setEmail(userRequest.getEmail());
             user.setPhoneNumber(userRequest.getPhoneNumber());
-            //user.setAddress(userRequest.getAddress());
+            user.setAddress(userRequest.getAddress());
             user.setActivated(true);
             user.setDeleted(false);
             user.setIsAdmin(false);

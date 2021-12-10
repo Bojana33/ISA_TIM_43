@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CottageController {
@@ -32,5 +35,15 @@ public class CottageController {
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage = cottageService.addNewCottage(cottage);
         return cottage;
+    }
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping("")
+    public List<CottageDTO> getAllCottages() {
+        List<Cottage> cottages = cottageService.findAllCottages();
+        List<CottageDTO> cottageDTOS = new ArrayList<>();
+        for(Cottage cottage:cottages){
+            cottageDTOS.add(cottageMapper.mapCottageToDto(cottage));
+        }
+        return cottageDTOS;
     }
 }

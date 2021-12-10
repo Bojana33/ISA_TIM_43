@@ -19,4 +19,8 @@ public class UserRequestMapper {
         UserRequest userRequest = modelMapper.modelMapper().map(userRequestDTO, UserRequest.class);
         return userRequest;
     }
+    public UserRequestDTO mapUserRequestToDto(UserRequest userRequest){
+        UserRequestDTO userRequestDTO = modelMapper.modelMapper().map(userRequest, UserRequestDTO.class);
+        return userRequestDTO;
+    }
 }

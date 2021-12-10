@@ -10,6 +10,7 @@ import isa2.demo.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class CottageServiceImpl implements isa2.demo.Service.CottageService {
@@ -27,5 +28,10 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
         //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom
         return cottageRepository.save(cottage);
 
+    }
+
+    @Override
+    public List<Cottage> findAllCottages() {
+        return cottageRepository.findAll();
     }
 }
