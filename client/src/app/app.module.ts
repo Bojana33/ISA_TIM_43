@@ -52,6 +52,9 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FilterPipe} from './user-quest/filter.pipe';
 import { BoatsComponent } from './user-quest/boats/boats.component';
 import { AdventuresUserComponent } from './user-quest/adventures-user/adventures-user.component';
+import { UserComplaintComponent } from './user-complaint/user-complaint.component';
+import { SubscriptionsComponent } from './user-quest/subscriptions/subscriptions.component';
+import { ReservationsComponent } from './user-quest/reservations/reservations.component';
 // import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 
 // const mapConfig: YaConfig = {
@@ -83,7 +86,10 @@ import { AdventuresUserComponent } from './user-quest/adventures-user/adventures
     CottagesComponent,
     FilterPipe,
     BoatsComponent,
-    AdventuresUserComponent
+    AdventuresUserComponent,
+    UserComplaintComponent,
+    SubscriptionsComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,

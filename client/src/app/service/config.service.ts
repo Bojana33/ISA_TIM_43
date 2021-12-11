@@ -12,6 +12,7 @@ export class ConfigService {
   private _adventure_url = 'http://localhost:8090/adventures';
   private _cottage_url = 'http://localhost:8090/cottages';
   private _boat_url = 'http://localhost:8090/boats';
+  private _client_url = 'http://localhost:8090/client';
 
   private _refresh_token_url = this._auth_url + '/refresh';
 
@@ -25,6 +26,10 @@ export class ConfigService {
 
   get boat_url(): string{
     return this._boat_url;
+  }
+
+  get client_url(): string{
+    return this._client_url;
   }
 
   get registration_request_url(): string{

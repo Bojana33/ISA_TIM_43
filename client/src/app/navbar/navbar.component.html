@@ -13,6 +13,8 @@
     <a mat-button routerLink="boatsCatalog">Boats</a>
     <a mat-button routerLink="cottagesCatalog">Cottages</a>
   <!--!-->
+    <a mat-button routerLink="userComplaint" *ngIf="hasRole('USER')">Complaint</a>
+    <a mat-button routerLink="userReservations" *ngIf="hasRole('USER')">Reservations</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
     <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up</a>

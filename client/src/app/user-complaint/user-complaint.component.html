@@ -1,0 +1,20 @@
+<div class="content" style="width:1500px; margin-left:5%; margin-top:0.5%; margin-right: 35%">
+<select class="select" ng-model="searchFilter" ng-change="selectAction()">
+  <option>Complaint about ...</option>
+  <option>Cottage</option>
+  <option>Cottage owner</option>
+  <option>Boat</option>
+  <option>Boat owner</option>
+  <option>Adventure</option>
+  <option>Instructor</option>
+</select>
+<input #box class="searchForm" type="text" placeholder="Search by name:"  [(ngModel)]="searchTerm" >
+
+<mat-card class="mat-elevation-z4" style="margin-top: 9%">
+  <mat-toolbar color="primary">Write your complaint</mat-toolbar>
+  <form fxLayoutAlign="stretch" fxLayout="column" class="update-adventure-form">
+        <textarea style="margin-top: 1%; height: 150px" ng-model="myTextarea" rows="10" placeholder="Write here..."></textarea>
+    <button mat-raised-button type="submit" style="margin-top: 1%">Submit</button>
+  </form>
+</mat-card>
+</div>

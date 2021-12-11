@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserService {
             return false;
         } else {
             //Create user
-            User user = new User();
+            Client user = new Client();
             user.setFirstName(userRequest.getFirstName());
             user.setSurname(userRequest.getSurname());
             user.setPassword(userRequest.getPassword());
@@ -186,6 +186,9 @@ public class UserServiceImpl implements UserService {
             user.setActivated(true);
             user.setDeleted(false);
             user.setIsAdmin(false);
+            user.setLoyaltyPoints(0.0);
+            user.setCategory(UserCategory.REGULAR);
+            user.setPenalty(0);
 
             List<Authority> auth;
             auth = authService.findByname("ROLE_USER");

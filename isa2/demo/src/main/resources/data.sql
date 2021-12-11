@@ -30,8 +30,9 @@ VALUES (true, false, 'user2@userovic.com', false, false, null, '$2a$10$OyHff7x9U
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 2);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
-INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (3, 2);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (3, 1);
 
+INSERT INTO client (id, loyalty_points, penalty, category) VALUES (2, 3, 1, 0);
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
 values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png', 1);
@@ -74,4 +75,9 @@ insert into
 values ('BROD 2', 'Perfect rest day on our boat', 10, 9, './../../assets/images/fishing-boat.jpg', 5);
 
 INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
-VALUES (6, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel')
+VALUES (6, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel');
+
+INSERT INTO periods (id, end_date, start_date) VALUES (1, '2008-11-11', '2008-11-12');
+
+INSERT INTO reservations (additional_notes, number_of_guests, price,  client_id, reservation_entity_id, reserved_period_id)
+VALUES   ('Additional note1', 3, 25, 2, 1, 1)

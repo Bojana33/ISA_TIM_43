@@ -25,6 +25,8 @@ import {ProfileUpdateComponent} from './profile/profile-update/profile-update.co
 import {CottagesComponent} from './user-quest/cottages/cottages.component';
 import {BoatsComponent} from './user-quest/boats/boats.component';
 import {AdventuresUserComponent} from './user-quest/adventures-user/adventures-user.component';
+import {UserComplaintComponent} from './user-complaint/user-complaint.component';
+import {ReservationsComponent} from './user-quest/reservations/reservations.component';
 
 const routes: Routes = [
   {
@@ -107,6 +109,14 @@ const routes: Routes = [
   {
     path: 'adventuresCatalog',
     component: AdventuresUserComponent
+  },
+  {
+    path: 'userComplaint',
+    component: UserComplaintComponent
+  },
+  {
+    path: 'userReservations',
+    component: ReservationsComponent
   },
   {
     path: '404',
