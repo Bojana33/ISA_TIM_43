@@ -2,6 +2,7 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.RegistrationRequest;
 import isa2.demo.Repository.RegistrationRequestRepository;
+import isa2.demo.Service.OwnerService;
 import isa2.demo.Service.RegistrationRequestService;
 import isa2.demo.Service.UserService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,9 +21,13 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
 
     public final PasswordEncoder passwordEncoder;
 
+    public final OwnerService ownerService;
+
     public RegistrationRequestServiceImpl(RegistrationRequestRepository registrationRequestRepository,
                                           UserService userService,
-                                          PasswordEncoder passwordEncoder){
+                                          PasswordEncoder passwordEncoder,
+                                          OwnerService ownerService){
+        this.ownerService = ownerService;
         this.registrationRequestRepository = registrationRequestRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -38,7 +43,7 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
     public RegistrationRequest approveRequest(Integer id) {
         RegistrationRequest request = this.registrationRequestRepository.findById(id).get();
         request.setConfirmed(true);
-        this.userService.save(request);
+        this.ownerService.saveOwnerFromRequest(request);
         String subject = "Request approved";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + "Your registration request is approved";
         try {

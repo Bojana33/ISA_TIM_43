@@ -66,45 +66,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(RegistrationRequest userRequest) {
-        User u = new User();
-        u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        u.setFirstName(userRequest.getFirstName());
-        u.setSurname(userRequest.getSurname());
-        u.setEmail(userRequest.getEmail());
-        u.setPhoneNumber(userRequest.getPhoneNumber());
-        u.setAddress(userRequest.getAddress());
-        u.setFirstLogIn(true);
-        u.setDeleted(false);
-        u.setIsAdmin(false);
-        u.setActivated(true);
-
-        List<Authority> auth;
-
-        if (userRequest.getUserType() == UserType.CLIENT){
-             auth = authService.findByname("ROLE_CLIENT");
-        }
-        else if (userRequest.getUserType() == UserType.COTTAGEOWNER){
-            auth = authService.findByname("ROLE_COTTAGEOWNER");
-        } else
-        if (userRequest.getUserType() == UserType.BOATOWNER){
-            auth = authService.findByname("ROLE_BOATOWNER");
-        } else
-        if (userRequest.getUserType() == UserType.INSTRUCTOR){
-            auth = authService.findByname("ROLE_INSTRUCTOR");
-        } else{
-            u.setIsAdmin(true);
-            auth = authService.findByname("ROLE_ADMIN");
-        }
-
-        //auth.add(this.authService.findByName("ROLE_USER"));
-        u.setAuthorities(auth);
-
-        //u = this.userRepository.save(u);
-        return u;
-    }
-
-    @Override
     public UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException {
         try {
             String randomCode = RandomString.make(64);
