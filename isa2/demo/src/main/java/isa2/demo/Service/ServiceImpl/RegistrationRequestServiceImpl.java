@@ -1,13 +1,9 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.RegistrationRequest;
-import isa2.demo.Model.User;
 import isa2.demo.Repository.RegistrationRequestRepository;
-import isa2.demo.Repository.UserRepository;
 import isa2.demo.Service.RegistrationRequestService;
 import isa2.demo.Service.UserService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +20,9 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
 
     public final PasswordEncoder passwordEncoder;
 
-    public RegistrationRequestServiceImpl(RegistrationRequestRepository registrationRequestRepository, UserService userService, PasswordEncoder passwordEncoder){
+    public RegistrationRequestServiceImpl(RegistrationRequestRepository registrationRequestRepository,
+                                          UserService userService,
+                                          PasswordEncoder passwordEncoder){
         this.registrationRequestRepository = registrationRequestRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;

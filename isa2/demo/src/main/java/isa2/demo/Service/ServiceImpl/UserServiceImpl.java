@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     private UserRequestRepository userRequestRepository;
 
 
+
     @Override
     public User findByEmail(String email) throws UsernameNotFoundException {
         User u = userRepository.findByEmail(email);
@@ -99,7 +100,7 @@ public class UserServiceImpl implements UserService {
         //auth.add(this.authService.findByName("ROLE_USER"));
         u.setAuthorities(auth);
 
-        u = this.userRepository.save(u);
+        //u = this.userRepository.save(u);
         return u;
     }
 

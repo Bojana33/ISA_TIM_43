@@ -17,5 +17,5 @@ public class Cottage extends Entity {
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "cottage_owner_id", referencedColumnName = "id")
-    private CottageOwner cottageOwner;
+    private Owner owner;
 }
