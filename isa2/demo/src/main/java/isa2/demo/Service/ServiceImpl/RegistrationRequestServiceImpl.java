@@ -63,9 +63,9 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
     }
 
     @Override
-    public void rejectRequest(Integer id, RegistrationRequest registrationRequest) {
+    public void rejectRequest(Integer id, String rejectionReason) {
         RegistrationRequest request = this.registrationRequestRepository.findById(id).get();
-        request.setRejectionReason(registrationRequest.getRejectionReason());
+        request.setRejectionReason(rejectionReason);
         this.registrationRequestRepository.save(request);
         String subject = "Request rejected";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + request.getRejectionReason();

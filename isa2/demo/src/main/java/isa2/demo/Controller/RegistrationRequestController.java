@@ -54,8 +54,8 @@ public class RegistrationRequestController {
     }
 
     @PostMapping(value = "/reject_request/{id}")
-    public void  rejectRequest(@PathVariable Integer id,@RequestBody RegistrationRequest registrationRequest){
-        this.registrationRequestService.rejectRequest(id,registrationRequest);
+    public void  rejectRequest(@PathVariable Integer id,@RequestBody String rejectionReason){
+        this.registrationRequestService.rejectRequest(id,rejectionReason);
     }
 
 }
