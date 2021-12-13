@@ -57,10 +57,6 @@ export class UserService {
     return this.http.post<User>(this.usersUrl, user);
   }
 
-  getUserRole(){
-    return JSON.stringify(this.currentUser.userType);
-  }
-
   loggedRole(role:string){
     if (this.currentUser == null){
       return false;
