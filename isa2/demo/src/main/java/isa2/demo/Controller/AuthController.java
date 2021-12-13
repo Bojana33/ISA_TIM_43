@@ -80,7 +80,7 @@ public class AuthController {
     }
 
     // Endpoint za registraciju novog korisnika
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<? extends Object> addUser(@RequestBody RegistrationRequestDTO registrationRequestDTO, UriComponentsBuilder ucBuilder) {
 
         RegistrationRequest registrationRequest = registrationRequestMapper.mapDtoToRegistration(registrationRequestDTO);

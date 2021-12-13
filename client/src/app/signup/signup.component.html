@@ -18,20 +18,23 @@
                 <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Address" formControlName="address" required>
-              </mat-form-field>
-              <mat-form-field>
                 <input matInput placeholder="City" formControlName="city" required>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Country" formControlName="country" required>
               </mat-form-field>
               <mat-form-field>
+                <input matInput placeholder="Street" formControlName="street" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="House Number" formControlName="houseNumber" required>
+              </mat-form-field>
+              <mat-form-field>
                 <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Registration Type</mat-label>
-                <mat-select formControlName = "userType" required>
+                <mat-select formControlName = "ownerType" required>
                   <mat-option value="COTTAGEOWNER">Cottage Owner</mat-option>
                   <mat-option value="BOATOWNER">Boat Owner</mat-option>
                   <mat-option value="INSTRUCTOR">Fishing Instructor</mat-option>

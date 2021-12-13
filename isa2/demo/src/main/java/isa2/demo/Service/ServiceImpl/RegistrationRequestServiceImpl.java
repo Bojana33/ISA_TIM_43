@@ -79,16 +79,7 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
 
     @Override
     public RegistrationRequest save(RegistrationRequest registrationRequest) {
-        RegistrationRequest request = new RegistrationRequest();
-        request.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-        request.setFirstName(registrationRequest.getFirstName());
-        request.setSurname(registrationRequest.getSurname());
-        request.setEmail(registrationRequest.getEmail());
-        request.setPhoneNumber(registrationRequest.getPhoneNumber());
-        request.setConfirmed(false);
-        request.setRegistrationExplanation(registrationRequest.getRegistrationExplanation());
-        request.setUserType(registrationRequest.getUserType());
-
+        registrationRequest.setConfirmed(false);
         return this.registrationRequestRepository.save(registrationRequest);
     }
 

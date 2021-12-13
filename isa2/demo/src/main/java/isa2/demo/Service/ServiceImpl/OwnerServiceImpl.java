@@ -42,10 +42,10 @@ public class OwnerServiceImpl implements OwnerService {
         owner.setCategory(UserCategory.REGULAR);
 
         List<Authority> auth;
-        if (registrationRequest.getUserType() == UserType.COTTAGEOWNER){
+        if (registrationRequest.getOwnerType() == OwnerType.COTTAGEOWNER){
             auth = authorityService.findByname("ROLE_COTTAGEOWNER");
             owner.setOwnerType(OwnerType.COTTAGEOWNER);
-        } else if (registrationRequest.getUserType() == UserType.BOATOWNER){
+        } else if (registrationRequest.getOwnerType() == OwnerType.BOATOWNER){
             auth = authorityService.findByname("ROLE_BOATOWNER");
             owner.setOwnerType(OwnerType.BOATOWNER);
         } else {
