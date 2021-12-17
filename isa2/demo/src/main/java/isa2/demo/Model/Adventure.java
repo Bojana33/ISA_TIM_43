@@ -12,15 +12,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Adventure extends Entity {
 
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "adventure_owner_id", referencedColumnName = "id")
+    private Owner owner;
+
     @Column(name = "instructor_bio")
     private java.lang.String instructorBio;
     @Column(name = "cancellation_fee")
     private java.lang.Double cancellationFee;
     @Column(name = "house_rules")
     private java.lang.String houseRules;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "instructor_id", referencedColumnName = "id")
-    private Instructor instructor;
     @Column
     private String defaultFishingEquipment;
 

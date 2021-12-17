@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     private UserRequestRepository userRequestRepository;
 
 
+
     @Override
     public User findByEmail(String email) throws UsernameNotFoundException {
         User u = userRepository.findByEmail(email);
@@ -62,44 +63,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRequest userRequest) {
         return null;
-    }
-
-    @Override
-    public User save(RegistrationRequest userRequest) {
-        User u = new User();
-        u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        u.setFirstName(userRequest.getFirstName());
-        u.setSurname(userRequest.getSurname());
-        u.setEmail(userRequest.getEmail());
-        u.setPhoneNumber(userRequest.getPhoneNumber());
-        u.setFirstLogIn(true);
-        u.setDeleted(false);
-        u.setIsAdmin(false);
-        u.setActivated(true);
-
-        List<Authority> auth;
-
-        if (userRequest.getUserType() == UserType.CLIENT){
-             auth = authService.findByname("ROLE_CLIENT");
-        }
-        else if (userRequest.getUserType() == UserType.COTTAGEOWNER){
-            auth = authService.findByname("ROLE_COTTAGEOWNER");
-        } else
-        if (userRequest.getUserType() == UserType.BOATOWNER){
-            auth = authService.findByname("ROLE_BOATOWNER");
-        } else
-        if (userRequest.getUserType() == UserType.INSTRUCTOR){
-            auth = authService.findByname("ROLE_INSTRUCTOR");
-        } else{
-            u.setIsAdmin(true);
-            auth = authService.findByname("ROLE_ADMIN");
-        }
-
-        //auth.add(this.authService.findByName("ROLE_USER"));
-        u.setAuthorities(auth);
-
-        u = this.userRepository.save(u);
-        return u;
     }
 
     @Override
@@ -175,7 +138,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(userRequest.getPassword());
             user.setEmail(userRequest.getEmail());
             user.setPhoneNumber(userRequest.getPhoneNumber());
-            //user.setAddress(userRequest.getAddress());
+            user.setAddress(userRequest.getAddress());
             user.setActivated(true);
             user.setDeleted(false);
             user.setIsAdmin(false);

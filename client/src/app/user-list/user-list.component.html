@@ -1,0 +1,40 @@
+<!--<div class="container">-->
+<!--  <div class="container">-->
+<!--    <div class="container">-->
+<!--      <div class="row col-md-6 col-md-offset-2 custyle">-->
+<!--        <table class="table table-striped custab">-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>First Name</th>-->
+<!--            <th>Last name</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let user of users">-->
+<!--            <td>{{user.firstName}}</td>-->
+<!--            <td>{{user.surname}}</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline" *ngIf="users">
+
+      <div class="column is-4" *ngFor="let user of users">
+
+        <div class="card">
+          <div class="card-content">
+            <a routerLink="/users/{{ user.firstName }}">
+              {{user.firstName}}
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

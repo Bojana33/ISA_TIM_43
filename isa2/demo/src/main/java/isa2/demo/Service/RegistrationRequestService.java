@@ -13,7 +13,7 @@ public interface RegistrationRequestService {
 
     RegistrationRequest getOne(Integer id);
 
-    void rejectRequest(Integer id, RegistrationRequest registrationRequest);
+    void rejectRequest(Integer id, String rejectionReason);
 
     RegistrationRequest save(RegistrationRequest registrationRequest);
 

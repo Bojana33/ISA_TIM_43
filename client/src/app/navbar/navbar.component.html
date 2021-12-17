@@ -6,9 +6,30 @@
     <a mat-button routerLink="profile">Profile</a>
     <a mat-button routerLink="registration-requests" *ngIf="hasSignedIn() && hasRole('ADMIN')">Registration Requests</a>
     <a mat-button routerLink="home">Home</a>
-    <a mat-button routerLink="adventures">Adventures</a>
-    <a mat-button>Cottages</a>
-    <a mat-button>Boats</a>
+    <div class="dropdown is-hoverable">
+      <div class="dropdown-trigger">
+        <button class="mat-button" aria-haspopup="true" aria-controls="dropdown-menu4">
+          <span>Entities</span>
+          <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+        <div class="dropdown-content">
+          <div color="accent" class="dropdown-item">
+            <a mat-button routerLink = "adventures">Adventures</a>
+          </div>
+          <div class="dropdown-item">
+            <a mat-button routerLink = "cottages">Cottages</a>
+          </div>
+          <div class="dropdown-item">
+            <a mat-button routerLink = "boats">Boats</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a mat-button routerLink="users">Users</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
     <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up</a>
