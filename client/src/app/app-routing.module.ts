@@ -17,6 +17,7 @@ import {BoatsComponent} from './boats/boats.component';
 import {CottagesComponent} from './cottages/cottages.component';
 import {AdventuresComponent} from './adventures/adventures.component';
 import {UserListComponent} from './user-list/user-list.component';
+import {CottageComponent} from './cottage/cottage.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,10 @@ const routes: Routes = [
   {
     path: 'reject-request/:id',
     component: RejectRequestComponent
+  },
+  {
+    path: 'cottages/:id',
+    component: CottageComponent
   },
   {
     path: 'change-password',

@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegistrationRequestService } from '../service/registration-request.service';
 
-export class RegistrationRequest{
+export class RegistrationRequestDTO {
   constructor(
     public id: number,
     public firstName: string,
     public surname: string,
     public email: string,
-    public confirmed: boolean,
+    public phoneNumber: string,
     public registrationExplanation: string,
     public rejectionReason: string,
     public userType: UserType
@@ -30,7 +30,7 @@ export class RegistrationRequest{
 })
 export class RegistrationRequestsComponent implements OnInit {
 
-  requests: RegistrationRequest[]=[];
+  requests: RegistrationRequestDTO[]=[];
   request: any;
 
   constructor(

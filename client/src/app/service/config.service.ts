@@ -8,7 +8,8 @@ export class ConfigService {
   private _api_url = 'http://localhost:8090/api';
   private _auth_url = 'http://localhost:8090/auth';
   private _user_url = this._api_url + '/user';
-  private _registration_request_url = 'http://localhost:8090/registration_request'
+  private _cottages_url = 'http://localhost:8090/cottages';
+  private _registration_request_url = 'http://localhost:8090/registration_request';
 
   private _refresh_token_url = this._auth_url + '/refresh';
 
@@ -42,6 +43,10 @@ export class ConfigService {
 
   get users_url(): string {
     return this._users_url;
+  }
+
+  get cottages_url(): string{
+    return this._cottages_url;
   }
 
   private _foo_url = this._api_url + '/foo';
