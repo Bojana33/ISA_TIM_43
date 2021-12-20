@@ -51,6 +51,8 @@ import { MapComponent } from './map/map.component';
 import { BoatsComponent } from './boats/boats.component';
 import { CottagesComponent } from './cottages/cottages.component';
 import { UserListComponent } from './user-list/user-list.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -103,6 +105,7 @@ const mapConfig: YaConfig = {
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
+    MatGridListModule,
     AngularYandexMapsModule.forRoot(mapConfig)
   ],
   exports: [

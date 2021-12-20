@@ -15,7 +15,7 @@ public class Cottage extends Entity {
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "cottage")
     private java.util.Collection<Room> rooms;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cottage_owner_id", referencedColumnName = "id")
     private Owner owner;
 }

@@ -1,5 +1,5 @@
-<h1 class="title"> Fishing Adventures</h1>
-    <button mat-flat-button color="accent" class="edit" routerLink="/create-adventure">Create</button>
+<!-- <h1 class="title"> Fishing Adventures</h1> -->
+    <button *ngIf="hasRole('INSTRUCTOR')" mat-flat-button color="accent" class="edit" routerLink="/create-adventure">Create</button>
 
 <div class="content">
     <div fxLayout="row wrap" fxLayoutGap="16px grid">

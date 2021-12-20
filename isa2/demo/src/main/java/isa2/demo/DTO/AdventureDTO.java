@@ -9,6 +9,7 @@ import java.util.Set;
 @Setter
 public class AdventureDTO {
     private Integer id;
+    private Integer adventureOwnerId;
     private String name;
     private AddressDTO addressDTO;
     private String description;

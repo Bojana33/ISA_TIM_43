@@ -21,7 +21,7 @@ public class BasicController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "user/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/user/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> findAllUsers() throws AccessDeniedException {
         return userService.findAll();
     }

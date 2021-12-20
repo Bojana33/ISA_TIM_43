@@ -1,8 +1,8 @@
 <div >
-  <div  fxLayout="row" fxLayoutGap="16%">
+  <div  fxLayout="row" >
     <img class="entity_photo" src="{{adventure.entityPhoto}}">
     <div >
-      <mat-card class="reservation">
+      <mat-card *ngIf="hasRole('INSTRUCTOR')" class="reservation">
         <h1>Create fast reservation</h1>
         <form>
           <mat-form-field appearance="fill">
@@ -22,13 +22,13 @@
           <mat-form-field>
             <input matInput placeholder="Max number of guests">
           </mat-form-field><br>
-          <mat-form-field>
+          <!-- <mat-form-field>
             <mat-label>Additional Services</mat-label>
             <mat-select formControlName = "additionalServices" multiple>
               <mat-option value="additionalService">Fishing from boat / Price: 5e</mat-option>
               <mat-option value="a1">Rubber boots / Price: 3e</mat-option>
             </mat-select>
-          </mat-form-field><br>
+          </mat-form-field><br> -->
           <button mat-raised-button type="submit">Submit</button>
         </form>
         
@@ -59,13 +59,29 @@
         <h1>Address</h1>
         <h3>{{addressTxt}}</h3>
         <app-map [address]="address"></app-map>
-        <div fxLayout="row" fxLayoutGap="20px">
-          <h1>Photos of previous adventures</h1>
-          <button mat-flat-button color="accent" >Add new photo</button>
+        <h1>Photos of previous adventures</h1>
+        <div *ngIf="hasRole('INSTRUCTOR')" fxLayout="row" fxLayoutGap="20px">
+          <input type="file" (change)="onFileChanged($event)">
+          <button mat-flat-button color="accent" (click)="uploadPhoto()">Save new photo</button>
         </div>
-        <input type="file" (change)="onSelect($event)" multiple>
-        <img *ngFor='let url of urls' [src]="url" height="100"><br>
+          
+        </div>
+        <div class="album">
+          <mat-grid-list cols="4" rowHeight="150px" size="400px">
+            <mat-grid-tile
+              *ngFor = "let photo of album; let index= index;"
+              [rowspan]="photo.rows"
+              [colspan]="photo.cols"
+              style="background-color: blueviolet;">
+              <img src="https://picsum.photos/200/{{300+index}}" style="object-fit: cover; width: 100%; height: 100%;">
+              <!-- <img *ngFor="let url of adventure.photos;" src="{{url}}" style="object-fit: cover; width: 100%; height: 100%;"> -->
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+        
+        
     
 </div>
+
 
 

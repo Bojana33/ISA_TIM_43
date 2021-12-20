@@ -50,8 +50,10 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
-    public Optional<User> findById(Integer id) {
-        Optional<User> u = Optional.ofNullable(userRepository.findById(id).orElse(null));
+    public User findById(Integer id) {
+//        Optional<User> u = Optional.ofNullable(userRepository.findById(id).orElse(null));
+//        return u;
+        User u = this.userRepository.getById(id);
         return u;
     }
 

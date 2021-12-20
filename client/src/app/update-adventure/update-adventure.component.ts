@@ -79,7 +79,7 @@ export class UpdateAdventureComponent implements OnInit {
     this.adventureObj.houseRules = form.value.houseRules;
     this.adventureObj.pricePerDay = form.value.pricePerDay;
     this.adventureObj.cancellationFee = form.value.cancellationFee;
-    this.adventureObj.entityPhoto = "./../../assets/images/capsule_616x353.jpg";
+    this.adventureObj.entityPhoto = form.value.entityPhoto;
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
     this.adventureObj.id = form.value.id;
     this.adventureObj.addressDTO.id= form.value.id;

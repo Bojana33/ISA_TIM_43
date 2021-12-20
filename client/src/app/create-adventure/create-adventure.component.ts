@@ -1,3 +1,4 @@
+import { UserService } from './../service/user.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -14,8 +15,6 @@ import { AdventureService } from '../service/adventure.service';
 })
 export class CreateAdventureComponent implements OnInit {
   
-  selectedFile!: File;
-  imageName: any;
   adventureObj! : Adventure;
 
   adventure = new FormGroup({
@@ -32,14 +31,13 @@ export class CreateAdventureComponent implements OnInit {
     //public additionalServices: AdditionalService,
     pricePerDay: new FormControl(0.0),
     cancellationFee: new FormControl(0),
-    entityPhoto: new FormControl(''),
     defaultFishingEquipment: new FormControl('')
 })
 
 constructor(
   private router: ActivatedRoute,
   private adventureService: AdventureService,
-  private httpClient:HttpClient
+  private userService: UserService
 ) { }
 
   ngOnInit(): void {
@@ -60,26 +58,12 @@ constructor(
     this.adventureObj.cancellationFee = form.value.cancellationFee;
     this.adventureObj.entityPhoto = "./../../assets/images/capsule_616x353.jpg";
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
+    this.adventureObj.adventureOwnerId = this.userService.currentUser.id;
   }
 
   createAdventure(){
-    // this.onUpload();
-    // this.adventure.value.entityPhoto = this.imageName;
-    const data: FormData = new FormData();
     this.addAdventure(this.adventure);
     this.adventureService.saveAdventure(JSON.parse(JSON.stringify(this.adventureObj))).subscribe(res=>{console.log(res)});
-  }
-  
-  public onFileChanged(event:any) {
-    //Select File
-    this.selectedFile = event.target.files[0];
-  }
-
-  public uploadPhoto(){
-    this.createAdventure();
-    const data: FormData = new FormData();
-    data.append('imageUrl', this.selectedFile,this.selectedFile.name);
-    this.adventureService.saveImage(data,this.adventure.get('id')?.value).subscribe(res=>{console.log(res)});
   }
 
 }

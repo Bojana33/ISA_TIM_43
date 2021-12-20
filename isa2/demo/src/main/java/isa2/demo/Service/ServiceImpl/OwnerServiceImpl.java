@@ -57,4 +57,9 @@ public class OwnerServiceImpl implements OwnerService {
         ownerRepository.save(owner);
         return owner;
     }
+
+    @Override
+    public Owner findById(Integer id) {
+        return this.ownerRepository.findById(id).get();
+    }
 }

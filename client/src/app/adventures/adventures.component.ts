@@ -1,3 +1,4 @@
+import { UserService } from './../service/user.service';
 import { ApiService } from './../service/api.service';
 import { AdditionalService } from './../model/additional-service';
 import { Address } from './../model/address';
@@ -18,7 +19,8 @@ export class AdventuresComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
-    private api: ApiService
+    private api: ApiService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +35,14 @@ export class AdventuresComponent implements OnInit {
       }
         
     )
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
+  }
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
   }
 
 }

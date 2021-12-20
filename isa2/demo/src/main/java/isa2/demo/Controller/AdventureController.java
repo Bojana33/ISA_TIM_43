@@ -37,21 +37,14 @@ public class AdventureController {
 
     @GetMapping("/get_adventure/{id}")
     public ResponseEntity<Adventure> getAdventure(@PathVariable Integer id){
+        // TODO: Show photos of this adventure
         return new ResponseEntity<>(this.adventureService.findOne(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/add_adventure",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Adventure> addAdventure(@RequestBody AdventureDTO adventureDTO/*,@RequestParam("imageUrl") MultipartFile imageUrl*/){
+    public ResponseEntity<Adventure> addAdventure(@RequestBody AdventureDTO adventureDTO){
         Adventure adventure = adventureMapper.mapDtoToAdventure(adventureDTO);
-        Path path = Paths.get("E:\\Internet_Softverske_Arhitekture\\projekat2\\Git\\ISA_TIM_43\\client\\src\\assets\\images");
-//        try{
-//            InputStream inputStream = imageUrl.getInputStream();
-//            Files.copy(inputStream, path.resolve(imageUrl.getOriginalFilename()),
-//                    StandardCopyOption.REPLACE_EXISTING);
-//            adventure.setEntityPhoto("./../../assets/images/"+ imageUrl.getOriginalFilename().toLowerCase());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        // TODO: Add additional services    
         return new ResponseEntity<>(this.adventureService.save(adventure), HttpStatus.CREATED);
     }
 
@@ -63,7 +56,7 @@ public class AdventureController {
             InputStream inputStream = imageUrl.getInputStream();
             Files.copy(inputStream, path.resolve(imageUrl.getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            adventure.setEntityPhoto("./../../assets/images/"+ imageUrl.getOriginalFilename().toLowerCase());
+            adventure.getPhotos().add("./../../assets/images/"+ imageUrl.getOriginalFilename().toLowerCase());
         } catch (Exception e) {
             e.printStackTrace();
         }
