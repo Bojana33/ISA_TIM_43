@@ -30,7 +30,7 @@ export class RegistrationRequestDTO {
 })
 export class RegistrationRequestsComponent implements OnInit {
 
-  requests: RegistrationRequestDTO[]=[];
+  requests: RegistrationRequestDTO[] = [];
   request: any;
 
   constructor(
@@ -45,6 +45,7 @@ export class RegistrationRequestsComponent implements OnInit {
     this.getRequests();
   }
 
+  // tslint:disable-next-line:typedef
   getRequests(){
     this.httpClient.get<any>(this.config.registration_request_url + '/not_confirmed_requests').subscribe(
       response => {
@@ -52,17 +53,19 @@ export class RegistrationRequestsComponent implements OnInit {
         this.requests = response;
       }
 
-    )
+    );
   }
 
-  approveRequest(id:number) {
+  // tslint:disable-next-line:typedef
+  approveRequest(id: number) {
     this.approvedSnackBar();
-    return this.httpClient.get(this.config.registration_request_url + '/approve_request/' + id).subscribe(res =>{
-      console.log(res)});
+    return this.httpClient.get(this.config.registration_request_url + '/approve_request/' + id).subscribe(res => {
+      console.log(res); });
   }
 
+  // tslint:disable-next-line:typedef
   approvedSnackBar(){
-    this.snackbar.open('Request is approved','cancel');
+    this.snackbar.open('Request is approved', 'cancel');
   }
 
 }

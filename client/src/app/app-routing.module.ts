@@ -18,6 +18,7 @@ import {CottagesComponent} from './cottages/cottages.component';
 import {AdventuresComponent} from './adventures/adventures.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {CottageComponent} from './cottage/cottage.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -74,7 +75,7 @@ const routes: Routes = [
     component: RejectRequestComponent
   },
   {
-    path: 'cottages/:id',
+    path: 'cottage',
     component: CottageComponent
   },
   {
@@ -98,7 +99,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

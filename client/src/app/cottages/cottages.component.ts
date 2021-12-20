@@ -13,18 +13,14 @@ export class CottagesComponent implements OnInit {
 
 
   constructor(private cottageService: CottageService,
-              private httpClient: HttpClient) { }
+              private httpClient: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.httpClient.get<any>('http://localhost:8090/cottages').subscribe(results => {
       console.log(results);
       this.cottages = results;
     });
-    getCottageById(id:number):void {
-    return this.httpClient.get('http://localhost:8090/cottages' +  id)
-      .subscribe(res =>{
-        console.log(res)});
-    }
   }
 
 }
