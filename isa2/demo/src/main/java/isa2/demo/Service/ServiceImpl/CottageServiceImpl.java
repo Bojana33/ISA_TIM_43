@@ -31,7 +31,20 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     }
 
     @Override
+    public Cottage updateCottage(Cottage cottage) {
+        return cottageRepository.save(cottage);
+    }
+
+    @Override
     public List<Cottage> findAllCottages() {
         return cottageRepository.findAll();
+    }
+
+    @Override
+    public void deleteCottage(Integer id) {
+        Cottage cottage = cottageRepository.findByIdAndReservationsIsNull(id);
+        if(cottage != null){
+            cottageRepository.deleteById(id);
+        }
     }
 }

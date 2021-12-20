@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface CottageService {
     Cottage addNewCottage(Cottage cottage);
+    Cottage updateCottage(Cottage cottage);
     List<Cottage> findAllCottages();
+    void deleteCottage(Integer id);
 }

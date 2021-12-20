@@ -31,12 +31,17 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Cottage addNewCottage(@RequestBody CottageDTO cottageDTO){
+    public Cottage addCottage(@RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage = cottageService.addNewCottage(cottage);
         return cottage;
     }
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{cottage_id}")
+    public void deleteCottage(@PathVariable("cottage_id") Integer id){
+        cottageService.deleteCottage(id);
+    }
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
     public List<CottageDTO> getAllCottages() {
         List<Cottage> cottages = cottageService.findAllCottages();
@@ -45,5 +50,12 @@ public class CottageController {
             cottageDTOS.add(cottageMapper.mapCottageToDto(cottage));
         }
         return cottageDTOS;
+    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("")
+    public Cottage updateCottage(@RequestBody CottageDTO cottageDTO){
+        Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
+        cottage = cottageService.updateCottage(cottage);
+        return cottage;
     }
 }

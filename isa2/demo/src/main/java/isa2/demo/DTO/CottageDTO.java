@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class CottageDTO {
+    private Integer id;
     private String cottageOwner_id;
     private String cottageName;
     private String description;

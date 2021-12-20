@@ -6,6 +6,7 @@ import {AddressDTO} from '../model/address-dto.model';
 import {RoomDTO} from '../model/room-dto.model';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {HttpClient} from '@angular/common/http';
+import {CottageDTO} from '../model/cottage-dto.model';
 
 @Component({
   selector: 'app-cottage',
