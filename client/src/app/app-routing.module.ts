@@ -23,6 +23,9 @@ import { CreateAdventureComponent } from './create-adventure/create-adventure.co
 import {BoatsComponent} from './boats/boats.component';
 import {CottagesComponent} from './cottages/cottages.component';
 import {UserListComponent} from './user-list/user-list.component';
+import {MatSelectModule} from '@angular/material/select';
+import {BrowserModule} from '@angular/platform-browser';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 
 const routes: Routes = [
   {
@@ -118,7 +121,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    BrowserModule,
+    RouterModule,
+    // MaterialModule,
+    MatSelectModule,
+    [AngularYandexMapsModule]],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
