@@ -37,14 +37,13 @@ public class AdventureController {
 
     @GetMapping("/get_adventure/{id}")
     public ResponseEntity<Adventure> getAdventure(@PathVariable Integer id){
-        // TODO: Show photos of this adventure
         return new ResponseEntity<>(this.adventureService.findOne(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/add_adventure",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Adventure> addAdventure(@RequestBody AdventureDTO adventureDTO){
         Adventure adventure = adventureMapper.mapDtoToAdventure(adventureDTO);
-        // TODO: Add additional services    
+        // TODO: Add additional services
         return new ResponseEntity<>(this.adventureService.save(adventure), HttpStatus.CREATED);
     }
 
@@ -56,7 +55,7 @@ public class AdventureController {
             InputStream inputStream = imageUrl.getInputStream();
             Files.copy(inputStream, path.resolve(imageUrl.getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            adventure.getPhotos().add("./../../assets/images/"+ imageUrl.getOriginalFilename().toLowerCase());
+            adventure.getPhotos().add("./../../assets/images/"+ imageUrl.getOriginalFilename());
         } catch (Exception e) {
             e.printStackTrace();
         }
