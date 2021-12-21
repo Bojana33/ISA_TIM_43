@@ -47,4 +47,9 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
             cottageRepository.deleteById(id);
         }
     }
+
+    @Override
+    public Cottage findById(Integer id) {
+        return cottageRepository.getById(id);
+    }
 }

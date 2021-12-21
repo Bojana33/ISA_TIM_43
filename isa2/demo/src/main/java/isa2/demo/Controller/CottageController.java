@@ -41,6 +41,14 @@ public class CottageController {
     public void deleteCottage(@PathVariable("cottage_id") Integer id){
         cottageService.deleteCottage(id);
     }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{cottage_id}")
+    public CottageDTO getCottage(@PathVariable("cottage_id") Integer id){
+        CottageDTO cottageDTO = new CottageDTO();
+        Cottage cottage = cottageService.findById(id);
+        cottageDTO = cottageMapper.mapCottageToDto(cottage);
+        return cottageDTO;
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")

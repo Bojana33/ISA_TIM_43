@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CottageService} from '../service/cottage.service';
 import {CottageDTO} from '../model/cottage-dto.model';
+import {ActivatedRoute} from '@angular/router';
+import {ConfigService} from '../service/config.service';
 
 @Component({
   selector: 'app-cottages',
@@ -13,11 +15,13 @@ export class CottagesComponent implements OnInit {
 
 
   constructor(private cottageService: CottageService,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient,
+              private config: ConfigService
+  ) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<any>('http://localhost:8090/cottages').subscribe(results => {
+    this.httpClient.get<any>(this.config.cottages_url).subscribe(results => {
       console.log(results);
       this.cottages = results;
     });

@@ -2,7 +2,7 @@
   <div class = "columns">
     <div class = "column is-three-fifths is-offset-one-fifth">
       <div class = "columns">
-        <div class = "column is-4">
+        <div class = "column">
           <div class="tile is-parent">
             <article class="tile is-child notification is-info">
               <p class="title">Middle tile</p>
@@ -15,7 +15,22 @@
         </div>
         <div class = "column">
           <div class="box">
-            <p class = "item"></p>
+            <h4 class="title is-4">Name</h4>
+            <p class = "item">
+              {{cottage.cottageName}}
+            </p>
+            <h4 class="title is-4">Description</h4>
+            <p class = "item">
+              {{cottage.description}}
+            </p>
+            <h4 class="title is-4">Maximum number of guests</h4>
+            <p class = "item">
+              {{cottage.maxNumberOfGuests}}
+            </p>
+            <h4 class="title is-4">Price per day</h4>
+            <p class = "item">
+              {{cottage.pricePerDay}}
+            </p>
           </div>
         </div>
       </div>
@@ -23,3 +38,12 @@
   </div>
 </div>
 
+<!--public id!: number;-->
+<!--public cottageName: string;-->
+<!--public description: string;-->
+<!--public photos: string[];-->
+<!--public maxNumberOfGuests: number;-->
+<!--public pricePerDay: number;-->
+<!--public address: AddressDTO;-->
+<!--public rooms: RoomDTO[];-->
+<!--public reservations: ReservationDTO[];-->
