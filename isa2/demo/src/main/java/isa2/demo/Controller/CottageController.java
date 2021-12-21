@@ -41,6 +41,7 @@ public class CottageController {
     public void deleteCottage(@PathVariable("cottage_id") Integer id){
         cottageService.deleteCottage(id);
     }
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
     public List<CottageDTO> getAllCottages() {

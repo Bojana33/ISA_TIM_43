@@ -43,6 +43,7 @@ import { AdventuresComponent } from './adventures/adventures.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { CottageComponent } from './cottage/cottage.component';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { RegisterCottageComponent } from './register-cottage/register-cottage.component';
 
 
 
@@ -65,7 +66,8 @@ import { AddressFormComponent } from './address-form/address-form.component';
     AdventuresComponent,
     UserListComponent,
     CottageComponent,
-    AddressFormComponent
+    AddressFormComponent,
+    RegisterCottageComponent
   ],
   imports: [
     BrowserModule,

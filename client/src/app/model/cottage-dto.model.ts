@@ -9,9 +9,9 @@ export class CottageDTO {
   public photos: string[];
   public maxNumberOfGuests: number;
   public pricePerDay: number;
-  public addressDTO: AddressDTO;
-  public roomsDTO: RoomDTO[];
-  public reservationsDTO: ReservationDTO[];
+  public address: AddressDTO;
+  public rooms: RoomDTO[];
+  public reservations: ReservationDTO[];
 
 
   constructor(id: number, cottageName: string, description: string, photos: string[],
@@ -24,8 +24,8 @@ export class CottageDTO {
     this.photos = photos;
     this.maxNumberOfGuests = maxNumberOfGuests;
     this.pricePerDay = pricePerDay;
-    this.addressDTO = addressDTO;
-    this.roomsDTO = roomsDTO;
-    this.reservationsDTO = reservationsDTO;
+    this.address = addressDTO;
+    this.rooms = roomsDTO;
+    this.reservations = reservationsDTO;
   }
 }

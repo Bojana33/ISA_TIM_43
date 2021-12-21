@@ -1,63 +1,25 @@
-<section>
-  <div class="columns is-mobile is-centered">
-    <div class="column is-half">
-    <form [formGroup]="cottageCreationForm" (ngSubmit)="onSubmit()">
-
-      <div class = "field">
-        <label class = "label" for="cottageName">
-          Cottage name
-        </label>
-        <div class = "control">
-          <input class = "input" id="cottageName" type="text" formControlName="cottageName">
+<div class = "box">
+  <div class = "columns">
+    <div class = "column is-three-fifths is-offset-one-fifth">
+      <div class = "columns">
+        <div class = "column is-4">
+          <div class="tile is-parent">
+            <article class="tile is-child notification is-info">
+              <p class="title">Middle tile</p>
+              <p class="subtitle">With an image</p>
+              <figure class="image is-4by3">
+                <img src="https://bulma.io/images/placeholders/640x480.png">
+              </figure>
+            </article>
+          </div>
+        </div>
+        <div class = "column">
+          <div class="box">
+            <p class = "item"></p>
+          </div>
         </div>
       </div>
-
-      <div class = "field">
-        <label class = "label" for="pricePerDay">
-          Price per day
-        </label>
-        <div class = "control">
-          <input class = "input" id="pricePerDay" type="number" formControlName="pricePerDay">
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Description</label>
-        <div class="control">
-          <textarea class="textarea" placeholder="Description" formControlName="description"></textarea>
-        </div>
-      </div>
-
-      <div class = "field">
-        <label class = "label" for="pricePerDay">
-          Price per day
-        </label>
-        <div class = "control">
-          <input class = "input" id="pricePerDay" type="number" formControlName="pricePerDay">
-        </div>
-      </div>
-<!--      <div class = "field">-->
-<!--        <label class="label">Email</label>-->
-<!--        <input type="text" name="email"-->
-<!--               class = "input" [(ngModel)]="email"-->
-<!--               required email #emailInput = "ngModel">-->
-
-<!--        <div class = "help is-error" *ngIf="emailInput.invalid && emailInput.touched">-->
-<!--          Your email is required and needs to be a valid email!-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class = "field">-->
-<!--        <label class="label">Your message</label>-->
-<!--        <textarea name="message" class = "textarea" [(ngModel)]="message"></textarea>-->
-<!--      </div>-->
-
-      <button type="submit"
-              class="button is-large is-warning"
-              [disabled]="cottageCreationForm.invalid">
-        Send
-      </button>
-    </form>
     </div>
   </div>
-</section>
+</div>
+

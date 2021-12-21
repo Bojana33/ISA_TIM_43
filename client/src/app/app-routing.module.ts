@@ -19,6 +19,7 @@ import {AdventuresComponent} from './adventures/adventures.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {CottageComponent} from './cottage/cottage.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {RegisterCottageComponent} from './register-cottage/register-cottage.component';
 
 const routes: Routes = [
   {
@@ -75,8 +76,12 @@ const routes: Routes = [
     component: RejectRequestComponent
   },
   {
-    path: 'cottage',
+    path: 'cottages/:id',
     component: CottageComponent
+  },
+  {
+    path: 'register-cottage',
+    component: RegisterCottageComponent
   },
   {
     path: 'change-password',

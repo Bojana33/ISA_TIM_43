@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.util.Collection;
 @Getter
 @Setter
-public class ReservationDTO {
+public class    ReservationDTO {
 
     private Float price;
 
@@ -19,6 +19,6 @@ public class ReservationDTO {
 
     private PeriodDTO salePeriod;
 
-    private Collection<AdditionalServiceDTO> additionalServicesDTOs;
+    private Collection<AdditionalServiceDTO> additionalServices;
 
 }
