@@ -1,1 +1,32 @@
-<p>adventures works!</p>
+<!-- <h1 class="title"> Fishing Adventures</h1> -->
+    <button *ngIf="hasRole('INSTRUCTOR')" mat-flat-button color="accent" class="edit" routerLink="/create-adventure">Create</button>
+
+<div class="content">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+        <div fxFlex="25%" *ngFor="let adventure of adventures">
+            <mat-card class="mat-elevation-z4">
+                <mat-card-header class="name">
+                    <mat-card-title>{{adventure.name}}</mat-card-title>
+                </mat-card-header>
+                <div class="photo">
+                    <img height="250px auto" mat-card-image src="{{adventure.entityPhoto}}">
+                </div>
+                <mat-card-content>
+                    <p>
+                        Description: {{adventure.description}}
+                    </p>
+                    <p>
+                        Guests: max {{adventure.maxNumberOfGuests}} 
+                    </p>
+                    <p>
+                        Price: {{adventure.pricePerDay}}e
+                    </p>
+                </mat-card-content>
+                <mat-card-actions class="buttons">
+                    <a mat-stroked-button color="primary" routerLink="/adventure/{{adventure.id}}">Details</a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
+

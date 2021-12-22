@@ -61,9 +61,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // svim korisnicima dopusti da pristupe putanjama /auth/**, (/h2-console/** ako se koristi H2 baza) i /api/foo
                 .authorizeRequests().antMatchers("/auth/**").permitAll().antMatchers("/api/foo").permitAll().antMatchers("/**").permitAll()
-
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
+
+                .formLogin().loginPage("/auth/login").permitAll().and()
+
+                .logout().permitAll().and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors().and()
 

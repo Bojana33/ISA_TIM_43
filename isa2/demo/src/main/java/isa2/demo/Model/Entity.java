@@ -31,6 +31,9 @@ public class Entity implements Serializable {
     @Column(name = "price_per_day")
     private java.lang.Double pricePerDay;
 
+    @Column
+    private java.lang.String entityPhoto;
+
     @Transient
     private java.lang.Double averageGrade = 0.0;
 

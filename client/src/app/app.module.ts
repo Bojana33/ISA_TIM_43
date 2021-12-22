@@ -1,3 +1,4 @@
+import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -37,15 +38,28 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
+import { AdventuresComponent } from './adventures/adventures.component';
+import { AdventureComponent } from './adventure/adventure.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
+import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRippleModule } from '@angular/material/core';
+import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+import { MapComponent } from './map/map.component';
 import { BoatsComponent } from './boats/boats.component';
 import { CottagesComponent } from './cottages/cottages.component';
-import { AdventuresComponent } from './adventures/adventures.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { CottageComponent } from './cottage/cottage.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { RegisterCottageComponent } from './register-cottage/register-cottage.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
-
+const mapConfig: YaConfig = {
+  apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
+  lang: 'en_US',
+};
 
 @NgModule({
   declarations: [
@@ -61,13 +75,20 @@ import { RegisterCottageComponent } from './register-cottage/register-cottage.co
     HomeComponent,
     RegistrationRequestsComponent,
     RejectRequestComponent,
+    AdventuresComponent,
+    AdventureComponent,
+    ProfileComponent,
+    UpdateAdventureComponent,
+    CreateAdventureComponent,
+    MapComponent,
     BoatsComponent,
     CottagesComponent,
     AdventuresComponent,
     UserListComponent,
     CottageComponent,
     AddressFormComponent,
-    RegisterCottageComponent
+    RegisterCottageComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +108,12 @@ import { RegisterCottageComponent } from './register-cottage/register-cottage.co
     MatSelectModule,
     MatTableModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatGridListModule,
+    AngularYandexMapsModule.forRoot(mapConfig)
   ],
   exports: [
     SignupClientComponent
@@ -101,12 +127,15 @@ import { RegisterCottageComponent } from './register-cottage/register-cottage.co
     },
     LoginGuard,
     GuestGuard,
+    InstructorGuard,
     AdminGuard,
     AuthService,
     ApiService,
     UserService,
     ConfigService,
-    MatIconRegistry
+    MatIconRegistry,
+    MatNativeDateModule
+
   ],
   bootstrap: [AppComponent]
 })

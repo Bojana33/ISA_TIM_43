@@ -3,7 +3,8 @@
 
     <div class="spacer"></div>
 
-    <a mat-button routerLink="registration-requests">Registration Requests</a>
+    <a mat-button routerLink="profile">Profile</a>
+    <a mat-button routerLink="registration-requests" *ngIf="hasSignedIn() && hasRole('ADMIN')">Registration Requests</a>
     <a mat-button routerLink="home">Home</a>
     <div class="dropdown is-hoverable">
       <div class="dropdown-trigger">

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Adventure extends Entity {
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "adventure_owner_id", referencedColumnName = "id")
     private Owner owner;
 
@@ -22,5 +22,7 @@ public class Adventure extends Entity {
     private java.lang.Double cancellationFee;
     @Column(name = "house_rules")
     private java.lang.String houseRules;
+    @Column
+    private String defaultFishingEquipment;
 
 }

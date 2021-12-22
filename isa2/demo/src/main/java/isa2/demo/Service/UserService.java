@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService{
-    Optional<User> findById(Integer id);
+    User findById(Integer id);
     User findByEmail(String email) throws UsernameNotFoundException;
     List<User> findAll () throws AccessDeniedException;
     User save(UserRequest userRequest);

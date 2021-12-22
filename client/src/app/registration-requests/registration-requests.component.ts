@@ -1,10 +1,7 @@
-import { RejectRequestComponent } from './../reject-request/reject-request.component';
-import { UserType } from './../enum/user-type';
+import { OwnerType } from './../enum/owner-type';
 import { ConfigService } from './../service/config.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegistrationRequestService } from '../service/registration-request.service';
 
@@ -22,6 +19,7 @@ export class RegistrationRequestDTO {
   ){
   }
 }
+import { RegistrationRequest } from '../model/registration-request';
 
 @Component({
   selector: 'app-registration-requests',
@@ -36,9 +34,7 @@ export class RegistrationRequestsComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
-    private snackbar: MatSnackBar,
-    private dialog: MatDialog,
-    private requestService: RegistrationRequestService
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {

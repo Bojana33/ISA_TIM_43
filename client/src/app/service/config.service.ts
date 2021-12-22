@@ -8,10 +8,19 @@ export class ConfigService {
   private _api_url = 'http://localhost:8090/api';
   private _auth_url = 'http://localhost:8090/auth';
   private _user_url = this._api_url + '/user';
+<<<<<<< HEAD
   private _cottages_url = 'http://localhost:8090/cottages';
   private _registration_request_url = 'http://localhost:8090/registration_request';
+=======
+  private _registration_request_url = 'http://localhost:8090/registration_request';
+  private _adventure_url = 'http://localhost:8090/adventures';
+>>>>>>> develop
 
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get adventure_url(): string{
+    return this._adventure_url;
+  }
 
   get registration_request_url(): string{
     return this._registration_request_url;

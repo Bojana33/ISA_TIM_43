@@ -1,0 +1,45 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="75">
+        <mat-toolbar color="primary">Update Adventure</mat-toolbar>
+        <form fxLayoutAlign="stretch" fxLayout="column" class="update-adventure-form" [formGroup]="adventure" (ngSubmit)="updateAdventure()">
+            <mat-form-field>
+                <input matInput type="text" placeholder="Name" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Price" formControlName="pricePerDay" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" placeholder="City" formControlName="city" required>
+              </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Country" formControlName="country" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" placeholder="Street" formControlName="street" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="House Number" formControlName="houseNumber">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Description" formControlName="description" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Instructor Biography" formControlName="instructorBio" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Max Number Of Guests" formControlName="maxNumberOfGuests" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Rules" formControlName="houseRules" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Cancellation  Fee" formControlName="cancellationFee" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" placeholder="Fishing Equipment" formControlName="defaultFishingEquipment" required>
+              </mat-form-field>
+        
+              <button mat-raised-button type="submit">Submit</button>
+          </form>
+    </mat-card>
+</div>

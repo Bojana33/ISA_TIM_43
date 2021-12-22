@@ -5,4 +5,5 @@ import isa2.demo.Model.RegistrationRequest;
 
 public interface OwnerService {
     Owner saveOwnerFromRequest(RegistrationRequest registrationRequest);
+    Owner findById(Integer id);
 }
