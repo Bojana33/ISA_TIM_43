@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.notification = params;
       });
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     this.form = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(32)])]
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.authService.login(this.form.value)
       .subscribe(_data => {
-          this.userService.getMyInfo().subscribe();
+          this.userService.getMyInfo().subscribe(res=>{console.log(res)});
           this.router.navigate([this.returnUrl]);
         },
         _error => {
