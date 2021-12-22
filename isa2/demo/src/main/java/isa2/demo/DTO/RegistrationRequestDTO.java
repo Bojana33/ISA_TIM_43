@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class RegistrationRequestDTO {
+    private Integer id;
     private String firstName;
     private String surname;
     private String password;

@@ -4,6 +4,10 @@ import {CottageService} from '../service/cottage.service';
 import {HttpClient} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConfigService} from '../service/config.service';
+import {UserService} from '../service/user.service';
+import {CottageDTO} from '../model/cottage-dto.model';
+import {User} from '../model/user';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-register-cottage',
@@ -32,16 +36,20 @@ export class RegisterCottageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private snackbar: MatSnackBar,
-    private config: ConfigService
+    private config: ConfigService,
+    private userService: UserService
   ) {
   }
-
+  cottage: CottageDTO = ({} as any);
+  user: User = ({} as any);
   ngOnInit(): void {
-
+    this.user = this.userService.currentUser;
   }
 
   onSubmit(): void {
-    this.http.post(this.config.cottages_url, this.cottageCreationForm.getRawValue())
+    this.cottage = this.cottageCreationForm.getRawValue();
+    this.cottage.cottageOwnerId = this.userService.currentUser.id;
+    this.http.post(this.config.cottages_url, this.cottage)
       .subscribe(res => {
         console.log(res);
       });

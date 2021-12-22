@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
 import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../service/user.service';
 
 
 @Component({

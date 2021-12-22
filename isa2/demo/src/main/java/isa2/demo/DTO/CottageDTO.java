@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 public class CottageDTO {
     private Integer id;
-    private String cottageOwner_id;
+    private String cottageOwnerId;
     private String cottageName;
     private String description;
     private Set<String> photos;
