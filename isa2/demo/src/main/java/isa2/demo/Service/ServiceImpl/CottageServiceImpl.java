@@ -53,4 +53,9 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     public Optional<Cottage> findById(Integer id) {
         return cottageRepository.findById(id);
     }
+
+    @Override
+    public List<Cottage> findCottagesByName(String name) {
+        return cottageRepository.findAllByNameContainingIgnoreCase(name);
+    }
 }
