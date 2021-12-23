@@ -13,28 +13,23 @@
             </article>
           </div>
         </div>
-          <div class = "column" *ngIf ="hasSignedIn()">
+          <form *ngIf ="hasSignedIn() && loggedUserIsOwner()" [formGroup]="cottageUpdateForm">
+          <div class = "column">
             <div class="box">
               <h4 class="title is-4">Name</h4>
-              <input class = "item" value="{{cottage.cottageName}}">
+              <input class = "item" [(ngModel)]="cottage.cottageName" formControlName="cottageName">
               <h4 class="title is-4">Description</h4>
-              <p class = "item">
-                {{cottage.description}}
-              </p>
+              <input class = "item" [(ngModel)]="cottage.description" formControlName="description">
               <h4 class="title is-4">Maximum number of guests</h4>
-              <p class = "item">
-                {{cottage.maxNumberOfGuests}}
-              </p>
+              <input class = "item" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
               <h4 class="title is-4">Price per day</h4>
-              <p class = "item">
-                {{cottage.pricePerDay}}
-              </p>
+              <input class = "item" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
               <h4 class="title is-4">Rooms</h4>
               <h5 class = "subtitle">
                 number of beds:
               </h5>
               <ul *ngFor="let room of cottage.rooms">
-                <li>{{room.numberOfBeds}}</li>
+                <li> {{room.numberOfBeds}}</li>
               </ul>
             </div>
             <div class="buttons" >
@@ -42,7 +37,8 @@
               <button class="button is-danger" (click)="deleteCottage()">Delete</button>
             </div>
           </div>
-        <div class = "column">
+          </form>
+        <div class = "column" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
           <div class="box">
             <h4 class="title is-4">Name</h4>
             <p class = "item">

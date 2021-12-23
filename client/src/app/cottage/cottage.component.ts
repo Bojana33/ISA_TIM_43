@@ -40,6 +40,10 @@ export class CottageComponent implements OnInit {
       response => {
         this.cottage = response;
       });
+    // if (this.hasSignedIn() && this.loggedUserIsOwner()){
+    //   // @ts-ignore
+    //   this.cottageUpdateForm.get('cottageName')?.setValue(this.cottage.cottageName);
+    // }
   }
   // tslint:disable-next-line:typedef
   hasRole(role: string){
@@ -50,9 +54,10 @@ export class CottageComponent implements OnInit {
   hasSignedIn() {
     return !!this.userService.currentUser;
   }
+  // NE MENJAJ OVO U ===. NECE RADITI!!!!!!!
   // tslint:disable-next-line:typedef
   loggedUserIsOwner(){
-    return this.userService.currentUser.id === String(this.cottage.cottageOwnerId);
+    return this.userService.currentUser.id == this.cottage.cottageOwnerId;
   }
   // tslint:disable-next-line:typedef
   deleteCottage(){

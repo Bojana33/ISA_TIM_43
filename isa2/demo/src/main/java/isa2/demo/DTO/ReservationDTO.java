@@ -7,7 +7,9 @@ import lombok.Setter;
 import java.util.Collection;
 @Getter
 @Setter
-public class    ReservationDTO {
+public class  ReservationDTO {
+
+    private Integer id;
 
     private Float price;
 
