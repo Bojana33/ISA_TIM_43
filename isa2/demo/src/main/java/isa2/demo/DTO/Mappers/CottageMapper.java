@@ -26,7 +26,6 @@ public class CottageMapper {
         Cottage cottage = modelMapper.modelMapper().map(cottageDTO, Cottage.class);
         cottage.setRooms(getRooms(cottage));
         cottage.setReservations(getReservations(cottage));
-        //cottage.setCottageOwner();
         return cottage;
     }
     public CottageDTO mapCottageToDto(Cottage cottage){

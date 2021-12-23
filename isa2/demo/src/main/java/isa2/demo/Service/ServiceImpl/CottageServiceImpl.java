@@ -1,16 +1,11 @@
 package isa2.demo.Service.ServiceImpl;
 
-import isa2.demo.DTO.CottageDTO;
 import isa2.demo.Model.Cottage;
-import isa2.demo.Model.Reservation;
 import isa2.demo.Repository.CottageRepository;
-import isa2.demo.Repository.PeriodRepository;
-import isa2.demo.Repository.ReservationRepository;
-import isa2.demo.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CottageServiceImpl implements isa2.demo.Service.CottageService {
@@ -26,6 +21,7 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     @Override
     public Cottage addNewCottage(Cottage cottage) {
         //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom
+
         return cottageRepository.save(cottage);
 
     }
@@ -41,15 +37,18 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     }
 
     @Override
-    public void deleteCottage(Integer id) {
+    public Cottage deleteCottage(Integer id) throws Exception{
         Cottage cottage = cottageRepository.findByIdAndReservationsIsNull(id);
         if(cottage != null){
             cottageRepository.deleteById(id);
+        }else{
+            throw new Exception("Cottage doesn't exist");
         }
+        return cottage;
     }
 
     @Override
-    public Cottage findById(Integer id) {
-        return cottageRepository.getById(id);
+    public Optional<Cottage> findById(Integer id) {
+        return cottageRepository.findById(id);
     }
 }

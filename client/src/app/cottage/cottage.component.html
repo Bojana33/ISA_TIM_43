@@ -39,6 +39,11 @@
                 <li>{{room.numberOfBeds}}</li>
             </ul>
           </div>
+          {{cottage.id}}
+          <div class="buttons" *ngIf="hasSignedIn() && loggedUserIsOwner()">
+            <button class="button is-info">Update</button>
+            <a class="button is-danger" (click)="deleteCottage()">Delete</a>
+          </div>
         </div>
       </div>
     </div>

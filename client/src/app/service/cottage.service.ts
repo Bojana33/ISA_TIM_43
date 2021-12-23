@@ -20,4 +20,7 @@ export class CottageService {
   getAll() {
     return this.apiService.get(this.config.cottages_url);
   }
+  deleteCottage(id: number){
+    return this.apiService.delete(this.config.cottages_url + '/' + id);
+  }
 }

@@ -70,14 +70,14 @@ const routes: Routes = [
     component: AdventureComponent
   },
   {
-    path:'update-adventure/:id',
+    path: 'update-adventure/:id',
     component: UpdateAdventureComponent,
-    //canActivate: [InstructorGuard]
+    // canActivate: [InstructorGuard]
   },
   {
-    path:'create-adventure',
+    path: 'create-adventure',
     component: CreateAdventureComponent,
-    //canActivate: [InstructorGuard]
+    // canActivate: [InstructorGuard]
   },
   {
     path: 'boats',
@@ -86,8 +86,7 @@ const routes: Routes = [
   },
   {
     path: 'cottages',
-    component: CottagesComponent,
-    canActivate: [GuestGuard]
+    component: CottagesComponent
   },
   {
     path: 'users',
@@ -134,12 +133,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    ReactiveFormsModule],
+    ReactiveFormsModule,
     BrowserModule,
     RouterModule,
     // MaterialModule,
     MatSelectModule,
-    [AngularYandexMapsModule]],
+    AngularYandexMapsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

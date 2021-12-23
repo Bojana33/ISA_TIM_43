@@ -31,7 +31,7 @@
           </mat-form-field><br> -->
           <button mat-raised-button type="submit">Submit</button>
         </form>
-        
+
       </mat-card>
     </div>
   </div>
@@ -40,7 +40,7 @@
       <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}">Edit</button>
       <button mat-flat-button color="accent" (click)="deleteAdventure()" >Delete</button>
     </div>
-    
+
       <div class="content">
         <h1>Price</h1>
         <h3>{{adventure.pricePerDay}}e</h3>
@@ -64,7 +64,7 @@
           <input type="file" (change)="onFileChanged($event)">
           <button mat-flat-button color="accent" (click)="uploadPhoto()">Save new photo</button>
         </div>
-          
+
         </div>
         <div class="album">
           <!-- <mat-grid-list cols="4" rowHeight="150px" size="400px">
@@ -78,9 +78,9 @@
             <!-- </mat-grid-tile>
           </mat-grid-list>
         </div> -->
-        
-        
-    
+
+
+
 </div>
 
 

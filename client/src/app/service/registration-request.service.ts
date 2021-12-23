@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-import { RegistrationRequestDTO } from './../registration-requests/registration-requests.component';
-=======
+// import { RegistrationRequestDTO } from './../registration-requests/registration-requests.component';
 import { ApiService } from './api.service';
->>>>>>> develop
 import { FormControl, FormGroup } from '@angular/forms';
 import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
@@ -28,7 +25,7 @@ export class RegistrationRequestService {
     return this.httpClient.get(this.config.registration_request_url + '/get_request/' + id);
   }
 
-  rejectRequest(id:number, request:RegistrationRequestDTO){
+  rejectRequest(id:number, request: RegistrationRequest){
     return this.httpClient.put(this.config.registration_request_url + '/reject_request/' + id, request);
   }
 

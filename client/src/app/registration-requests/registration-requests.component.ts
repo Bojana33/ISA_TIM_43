@@ -1,24 +1,10 @@
-import { OwnerType } from './../enum/owner-type';
 import { ConfigService } from './../service/config.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegistrationRequestService } from '../service/registration-request.service';
 
-export class RegistrationRequestDTO {
-  constructor(
-    public id: number,
-    public firstName: string,
-    public surname: string,
-    public email: string,
-    public phoneNumber: string,
-    public registrationExplanation: string,
-    public rejectionReason: string,
-    public userType: UserType
 
-  ){
-  }
-}
 import { RegistrationRequest } from '../model/registration-request';
 
 @Component({
@@ -28,7 +14,7 @@ import { RegistrationRequest } from '../model/registration-request';
 })
 export class RegistrationRequestsComponent implements OnInit {
 
-  requests: RegistrationRequestDTO[] = [];
+  requests: RegistrationRequest[] = [];
   request: any;
 
   constructor(

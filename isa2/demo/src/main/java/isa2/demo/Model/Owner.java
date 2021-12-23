@@ -1,6 +1,6 @@
 package isa2.demo.Model;
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,13 +22,13 @@ public class Owner extends User{
 
     @Column
     private UserCategory category;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "owner")
     public java.util.Collection<Boat> boat;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
     public java.util.Collection<Cottage> cottages;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
     public java.util.Collection<Adventure> adventures;
 
