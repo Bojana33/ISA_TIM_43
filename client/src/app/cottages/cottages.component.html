@@ -1,10 +1,30 @@
-<div class="container">
-  <div class="section">
-    <div class="columns">
-    </div>
-    <div id="app" *ngFor="let cottage of cottages"
-         class="row columns is-multiline">
-      <div class="column is-4">
+
+
+
+      <form (ngSubmit)="filterCottages(cottageName.value)">
+        <div class = "column is-three-fifths is-offset-one-fifth">
+          <div class=" field">
+            <label class="label"></label>
+            <div class="control">
+              <input #cottageName class="input" type="text" placeholder="Seach">
+            </div>
+          </div>
+        </div>
+      </form>
+    <div id="app" *ngFor="let cottage of cottages" class="row column is-multiline ">
+      <div class="column is-three-fifths is-offset-one-fifth">
+<!--        <div class="columns">-->
+<!--          <form (ngSubmit)="filterCottages(cottageName.value)">-->
+<!--          <div class = "column is-three-fifths is-offset-one-fifth">-->
+<!--            <div class=" field">-->
+<!--              <label class="label"></label>-->
+<!--              <div class="control">-->
+<!--                <input #cottageName class="input" type="text" placeholder="Seach">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          </form>-->
+<!--        </div>-->
       <a routerLink="./{{cottage.id}}">
         <div class="card large">
           <div class="card-image">
@@ -36,7 +56,8 @@
           </div>
         </div>
       </a>
-</div>
+      </div>
+    </div>
 
 <script src="../js/cardsData.js"></script>
 
