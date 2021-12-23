@@ -62,6 +62,7 @@ public class CottageController {
         return cottageDTO;
     }
 
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
     public List<CottageDTO> getAllCottages() {
@@ -73,7 +74,7 @@ public class CottageController {
         return cottageDTOS;
     }
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping("")
+    @PutMapping("/{cottage_id}")
     public Cottage updateCottage(@RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage = cottageService.updateCottage(cottage);

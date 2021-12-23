@@ -13,6 +13,35 @@
             </article>
           </div>
         </div>
+          <div class = "column" *ngIf ="hasSignedIn()">
+            <div class="box">
+              <h4 class="title is-4">Name</h4>
+              <input class = "item" value="{{cottage.cottageName}}">
+              <h4 class="title is-4">Description</h4>
+              <p class = "item">
+                {{cottage.description}}
+              </p>
+              <h4 class="title is-4">Maximum number of guests</h4>
+              <p class = "item">
+                {{cottage.maxNumberOfGuests}}
+              </p>
+              <h4 class="title is-4">Price per day</h4>
+              <p class = "item">
+                {{cottage.pricePerDay}}
+              </p>
+              <h4 class="title is-4">Rooms</h4>
+              <h5 class = "subtitle">
+                number of beds:
+              </h5>
+              <ul *ngFor="let room of cottage.rooms">
+                <li>{{room.numberOfBeds}}</li>
+              </ul>
+            </div>
+            <div class="buttons" >
+              <button class="button is-info" (click)="updateCottage()">Update</button>
+              <button class="button is-danger" (click)="deleteCottage()">Delete</button>
+            </div>
+          </div>
         <div class = "column">
           <div class="box">
             <h4 class="title is-4">Name</h4>
@@ -38,11 +67,6 @@
             <ul *ngFor="let room of cottage.rooms">
                 <li>{{room.numberOfBeds}}</li>
             </ul>
-          </div>
-          {{cottage.id}}
-          <div class="buttons" *ngIf="hasSignedIn() && loggedUserIsOwner()">
-            <button class="button is-info">Update</button>
-            <a class="button is-danger" (click)="deleteCottage()">Delete</a>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ApiService} from './api.service';
 import {ConfigService} from './config.service';
 import {HttpClient} from '@angular/common/http';
+import {CottageDTO} from '../model/cottage-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,8 @@ export class CottageService {
   }
   deleteCottage(id: number){
     return this.apiService.delete(this.config.cottages_url + '/' + id);
+  }
+  updateCottage(cottage: CottageDTO){
+    return this.apiService.put(this.config.cottages_url + '/' + cottage.id, cottage);
   }
 }
