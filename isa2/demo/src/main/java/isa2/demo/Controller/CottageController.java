@@ -62,11 +62,17 @@ public class CottageController {
         return cottageDTO;
     }
 
-
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public List<CottageDTO> getAllCottages() {
-        List<Cottage> cottages = cottageService.findAllCottages();
+    public List<CottageDTO> getCottages(@RequestParam(defaultValue = "") String cottageName) {
+        List<Cottage> cottages = new ArrayList<>();
+        cottages = cottageService.findCottagesByName(cottageName);
+//        if(name.equals("")){
+//            cottages = cottageService.findCottagesByName(name);
+//        }else{
+//            cottages = cottageService.findCottagesByName();
+//        }
+
         List<CottageDTO> cottageDTOS = new ArrayList<>();
         for(Cottage cottage:cottages){
             cottageDTOS.add(cottageMapper.mapCottageToDto(cottage));
