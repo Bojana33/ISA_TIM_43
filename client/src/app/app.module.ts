@@ -52,6 +52,9 @@ import { BoatsComponent } from './boats/boats.component';
 import { CottagesComponent } from './cottages/cottages.component';
 import { UserListComponent } from './user-list/user-list.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
+import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
+import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
 
 
 const mapConfig: YaConfig = {
@@ -81,7 +84,10 @@ const mapConfig: YaConfig = {
     MapComponent,
     BoatsComponent,
     CottagesComponent,
-    UserListComponent
+    UserListComponent,
+    DeleteProfileComponent,
+    DeleteRequestsComponent,
+    DeleteRequestResponseComponent
   ],
   imports: [
     BrowserModule,

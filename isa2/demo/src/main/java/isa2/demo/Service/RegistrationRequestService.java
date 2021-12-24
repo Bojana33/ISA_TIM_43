@@ -9,7 +9,7 @@ public interface RegistrationRequestService {
 
     List<RegistrationRequest> findNotConfirmed();
 
-    RegistrationRequest approveRequest(Integer id);
+    void approveRequest(Integer id);
 
     RegistrationRequest getOne(Integer id);
 

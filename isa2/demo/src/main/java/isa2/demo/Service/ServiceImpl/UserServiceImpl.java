@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Integer id) {
 //        Optional<User> u = Optional.ofNullable(userRepository.findById(id).orElse(null));
 //        return u;
-        User u = this.userRepository.getById(id);
+        User u = this.userRepository.findById(id).get();
         return u;
     }
 
@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
 
     }
     @Override
-    public void sendEmail(RegistrationRequest registrationRequest, String subject, String content) throws AddressException, MessagingException {
+    public void sendEmail(String subject, String content) throws AddressException, MessagingException {
         try {
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("inisatim43@gmail.com", false));
 
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(registrationRequest.getEmail()));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("inisatim43@gmail.com"));
 
             msg.setSubject(subject);
             msg.setContent(content, "text/html");
@@ -181,5 +181,10 @@ public class UserServiceImpl implements UserService {
         } catch (MessagingException me) {
             System.out.println("Message exception");
         }
+    }
+
+    @Override
+    public void delete(User user) {
+        this.userRepository.delete(user);
     }
 }

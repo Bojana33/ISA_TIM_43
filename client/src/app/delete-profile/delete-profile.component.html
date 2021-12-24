@@ -1,0 +1,10 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card >
+        <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="request" (ngSubmit)="createUserDeleteRequest()">
+            <mat-form-field>
+                <input matInput type="text" placeholder="Description" formControlName="description" required>
+            </mat-form-field>
+            <button mat-raised-button type="submit">Submit</button>
+        </form>
+    </mat-card>
+</div>

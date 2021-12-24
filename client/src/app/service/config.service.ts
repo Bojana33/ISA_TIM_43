@@ -10,8 +10,17 @@ export class ConfigService {
   private _user_url = this._api_url + '/user';
   private _registration_request_url = 'http://localhost:8090/registration_request';
   private _adventure_url = 'http://localhost:8090/adventures';
+  private _user_delete_request_url = 'http://localhost:8090/user_delete_request'
 
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get user_delete_request_url(): string{
+    return this._user_delete_request_url;
+  }
+
+  get api_url(): string{
+    return this._api_url;
+  }
 
   get adventure_url(): string{
     return this._adventure_url;
