@@ -1,3 +1,4 @@
+import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { ProfileComponent } from './profile/profile.component';
 import { InstructorGuard } from './guard/instructor.guard';
@@ -29,6 +30,9 @@ import {RegisterCottageComponent} from './register-cottage/register-cottage.comp
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserModule} from '@angular/platform-browser';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
+import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
+import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+
 
 const routes: Routes = [
   {
@@ -109,6 +113,18 @@ const routes: Routes = [
   {
     path: 'register-cottage',
     component: RegisterCottageComponent
+  },
+  {
+    path: 'delete-profile',
+    component: DeleteProfileComponent
+  },
+  {
+    path: 'user-delete-requests',
+    component: DeleteRequestsComponent
+  },
+  {
+    path: 'delete-request-response/:id/:isApproved',
+    component: DeleteRequestResponseComponent
   },
   {
     path: 'change-password',

@@ -40,18 +40,18 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
     }
 
     @Override
-    public RegistrationRequest approveRequest(Integer id) {
+    public void approveRequest(Integer id) {
         RegistrationRequest request = this.registrationRequestRepository.findById(id).get();
         request.setConfirmed(true);
         this.ownerService.saveOwnerFromRequest(request);
         String subject = "Request approved";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + "Your registration request is approved";
         try {
-            this.userService.sendEmail(request,subject,content);
+            this.userService.sendEmail(subject,content);
         } catch (MessagingException me){
             System.out.println("Message exception");
         }
-        return this.registrationRequestRepository.save(request);
+        this.registrationRequestRepository.delete(request);
     }
 
 
@@ -70,7 +70,7 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
         String subject = "Request rejected";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + request.getRejectionReason();
         try {
-            this.userService.sendEmail(request,subject,content);
+            this.userService.sendEmail(subject,content);
         } catch (MessagingException me){
             System.out.println("Message exception");
         }

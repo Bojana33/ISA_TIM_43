@@ -55,6 +55,9 @@ import { CottageComponent } from './cottage/cottage.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { RegisterCottageComponent } from './register-cottage/register-cottage.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
+import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
+import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -88,7 +91,10 @@ const mapConfig: YaConfig = {
     CottageComponent,
     AddressFormComponent,
     RegisterCottageComponent,
-    UserListComponent
+    UserListComponent,
+    DeleteProfileComponent,
+    DeleteRequestsComponent,
+    DeleteRequestResponseComponent
   ],
   imports: [
     BrowserModule,

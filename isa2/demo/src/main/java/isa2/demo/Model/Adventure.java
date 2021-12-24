@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Adventure extends Entity {
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "adventure_owner_id", referencedColumnName = "id")
     private Owner owner;
 

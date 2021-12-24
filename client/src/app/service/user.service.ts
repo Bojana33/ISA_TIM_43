@@ -53,6 +53,10 @@ export class UserService {
     return this.apiService.get(this.config.users_url);
   }
 
+  getUser(id:any) {
+    return this.apiService.get(this.config.api_url + "/get_user/" + id);
+  }
+
   save(user: User) {
     return this.http.post<User>(this.usersUrl, user);
   }

@@ -26,7 +26,7 @@ public class RegistrationRequestController {
         this.registrationRequestService = registrationRequestService;
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/not_confirmed_requests")
     public List<RegistrationRequestDTO> findNotConfirmed(){
         List<RegistrationRequest> registrationRequestList = this.registrationRequestService.findNotConfirmed();
@@ -41,18 +41,19 @@ public class RegistrationRequestController {
 
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/approve_request/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RegistrationRequestDTO> approveRequest(@PathVariable Integer id){
-        return new ResponseEntity<>(registrationRequestMapper.mapRegistrationRequestToDto(this.registrationRequestService.approveRequest(id))
-                                    , HttpStatus.OK);
+    public void approveRequest(@PathVariable Integer id){
+        this.registrationRequestService.approveRequest(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/get_request/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegistrationRequest> getOne(@PathVariable Integer id){
         return new ResponseEntity<>(this.registrationRequestService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/reject_request/{id}")
     public void  rejectRequest(@PathVariable Integer id,@RequestBody String rejectionReason){
         this.registrationRequestService.rejectRequest(id,rejectionReason);

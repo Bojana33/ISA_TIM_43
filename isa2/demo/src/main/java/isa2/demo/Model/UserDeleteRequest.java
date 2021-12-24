@@ -27,10 +27,7 @@ public class UserDeleteRequest implements Serializable {
    @Column
    private String response;
 
-   @Column
-   private DeleteRequestStatus status;
-
-   @OneToOne(fetch = FetchType.LAZY)
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    @JoinColumn(name = "user_id", referencedColumnName = "id")
    private User user;
 
