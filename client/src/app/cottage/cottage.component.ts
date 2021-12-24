@@ -8,6 +8,8 @@ import {User} from '../model/user';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import * as bulmaCalendar from 'bulma-calendar';
+import {MatDatepicker} from '@angular/material/datepicker';
 
 
 @Component({
@@ -17,6 +19,9 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 })
 export class CottageComponent implements OnInit {
   cottage: CottageDTO = ({} as any);
+
+  // Initialize all input of date type.
+
 
   cottageUpdateForm = this.formBuilder.group({
     cottageName: new FormControl(this.cottage.cottageName, Validators.required),
@@ -34,8 +39,7 @@ export class CottageComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
   }
-
-  ngOnInit(): void {
+    ngOnInit(): void {
     this.httpClient.get<any>(this.config.cottages_url + '/' + this.router.snapshot.params.id).subscribe(
       response => {
         this.cottage = response;
@@ -49,6 +53,26 @@ export class CottageComponent implements OnInit {
   hasRole(role: string){
     return this.userService.loggedRole(role);
   }
+//   ngAfterViewInit(){
+//     const calendars = bulmaCalendar.attach('[type="date"]');
+//     // tslint:disable-next-line:prefer-for-of
+//     // Loop on each calendar initialized
+//     calendars.forEach(calendar => {
+//       // Add listener to select event
+//       calendar.on('select', date => {
+//         console.log(date);
+//       });
+//     });
+//
+// // To access to bulmaCalendar instance of an element
+//     const element = document.querySelector('input') as HTMLElement;
+//     if (element) {
+//       // bulmaCalendar instance is available as element.bulmaCalendar
+//       element.bulmaCalendar.on('select', datepicker => {
+//         console.log(datepicker.data.value());
+//       });
+//     }
+//   }
 
   // tslint:disable-next-line:typedef
   hasSignedIn() {

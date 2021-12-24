@@ -29,6 +29,7 @@ import {RegisterCottageComponent} from './register-cottage/register-cottage.comp
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserModule} from '@angular/platform-browser';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
+import {DatepickerComponent} from './datepicker/datepicker.component';
 
 const routes: Routes = [
   {
@@ -114,6 +115,10 @@ const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordComponent,
     canActivate: [LoginGuard]
+  },
+  {
+    path: 'datepicker',
+    component: DatepickerComponent
   },
   {
     path: '404',

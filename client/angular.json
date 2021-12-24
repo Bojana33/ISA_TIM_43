@@ -28,10 +28,12 @@
               "src/assets"
             ],
             "styles": [
+              "./src/bulma-calendar.min.css",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/bulma/css/bulma.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["./node_modules/bulma-calendar/dist/js/bulma-calendar.js"]
           },
           "configurations": {
             "production": {
@@ -92,6 +94,7 @@
               "src/assets"
             ],
             "styles": [
+              "./src/bulma-calendar.min.css",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
