@@ -1,26 +1,32 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@javax.persistence.Entity
+@Entity
+@Table(name = "registration_request")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class RegistrationRequest implements Serializable {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.AUTO)
    private Integer id;
 
    @Column
-   private String name;
+   private String firstName;
 
    @Column
    private String surname;
@@ -35,10 +41,13 @@ public class RegistrationRequest implements Serializable {
    private String phoneNumber;
 
    @Column
-   private Boolean confirmed;
+   private boolean confirmed;
 
    @Column
-   private UserType userType;
+   private String registrationExplanation;
+
+   @Column
+   private OwnerType ownerType;
 
    @Column
    private String rejectionReason;

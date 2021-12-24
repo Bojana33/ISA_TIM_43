@@ -1,0 +1,10 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="30">
+        <form fxLayoutAlign="stretch" [formGroup]="form" (submit)="submit()" fxLayout="column" class="reject-request" >
+            <mat-form-field>
+                <textarea matInput formControlName="rejectionReason" type="text" placeholder="Rejection Reason..."  required></textarea>
+            </mat-form-field>
+            <button mat-raised-button type="submit" (click)="rejectedSnackBar()" >Send On Email</button>
+        </form>
+    </mat-card>
+</div>

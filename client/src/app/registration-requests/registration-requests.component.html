@@ -1,0 +1,31 @@
+<div class="content">
+    <div fxLayout="column" fxLayoutGap="16px">
+        <div *ngFor="let request of requests">
+            <mat-card class="mat-elevation-z4">
+                <mat-card-header class="name">
+                    <mat-card-title>{{request.firstName}} {{request.surname}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-header class="photo">
+                    <img mat-card-image src="./../../assets/images/user.svg">
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        Role: {{request.ownerType}}
+                    </p>
+                    <p>
+                        Email: {{request.email}}
+                    </p>
+                    <p>
+                        Registration Explanation: {{request.registrationExplanation}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions class="buttons">
+                    {{request.id}}
+                    <a mat-stroked-button color="primary" (click)="approveRequest(request.id)">Approve</a>
+                    <a mat-stroked-button color="warn" routerLink="/reject-request/{{request.id}}">Reject</a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
+

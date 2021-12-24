@@ -1,5 +1,8 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.io.Serializable;
 import java.lang.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -22,7 +25,10 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class User implements UserDetails {
+
+   private static final long serialVersionUID = 1L;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +36,12 @@ public class User implements UserDetails {
    private Integer id;
 
    @Column(nullable = false)
-   private String username;
-
-   @Column(nullable = false)
    private String firstName;
 
    @Column(nullable = false)
    private String surname;
 
+   @JsonIgnore
    @Column(nullable = false)
    private String password;
 
@@ -77,24 +81,33 @@ public class User implements UserDetails {
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return null;
+      return this.authorities;
    }
 
    @Override
    public String getUsername() {
-      return this.username;
+      return this.email;
    }
 
+   public void setPassword(String password) {
+      Timestamp now = new Timestamp(new Date().getTime());
+      this.setLastPasswordResetDate(now);
+      this.password = password;
+   }
+
+   @JsonIgnore
    @Override
    public boolean isAccountNonExpired() {
       return true;
    }
 
+   @JsonIgnore
    @Override
    public boolean isAccountNonLocked() {
       return true;
    }
 
+   @JsonIgnore
    @Override
    public boolean isCredentialsNonExpired() {
       return true;
@@ -102,6 +115,6 @@ public class User implements UserDetails {
 
    @Override
    public boolean isEnabled() {
-      return true;
+      return this.activated;
    }
 }

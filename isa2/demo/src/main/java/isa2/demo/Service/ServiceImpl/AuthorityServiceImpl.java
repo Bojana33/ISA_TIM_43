@@ -29,4 +29,10 @@ public class AuthorityServiceImpl implements AuthorityService {
         auths.add(auth);
         return auths;
     }
+
+    @Override
+    public Authority findByName(String name) {
+        Authority auth = this.authorityRepository.findByName(name);
+        return auth;
+    }
 }

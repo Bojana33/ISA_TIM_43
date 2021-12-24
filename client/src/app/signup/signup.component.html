@@ -1,0 +1,49 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="75">
+        <mat-toolbar color="primary">Signup Form</mat-toolbar>
+        <form fxLayoutAlign="stretch" fxLayout="column" class="signup-form" [formGroup]="form" (submit)="submit()">
+            <mat-form-field>
+                <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Surname" formControlName="surname" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email" formControlName="email" required>
+              </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" formControlName="password" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="City" formControlName="city" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Country" formControlName="country" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Street" formControlName="street" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="House Number" formControlName="houseNumber" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Registration Type</mat-label>
+                <mat-select formControlName = "ownerType" required>
+                  <mat-option value="COTTAGEOWNER">Cottage Owner</mat-option>
+                  <mat-option value="BOATOWNER">Boat Owner</mat-option>
+                  <mat-option value="INSTRUCTOR">Fishing Instructor</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <textarea matInput type="text" placeholder="Registration Explanation" formControlName="registrationExplanation" required></textarea>
+              </mat-form-field>
+              <button mat-raised-button type="submit" (click)="registeredSnackBar()">Sign Up</button>
+          </form>
+    </mat-card>
+</div>

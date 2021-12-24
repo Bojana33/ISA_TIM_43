@@ -1,9 +1,11 @@
 package isa2.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -25,6 +27,7 @@ public class Reservation implements Serializable {
    private Integer id;
 
    @Column
+   @CreatedDate
    private LocalDateTime creationDate;
 
    @Column
@@ -34,23 +37,23 @@ public class Reservation implements Serializable {
    private Integer numberOfGuests;
 
    @Column
-   private ReservationStatus reservationStatus;
+   private ReservationStatus reservationStatus = ReservationStatus.FREE;
 
    @Column
    private String additionalNotes;
    
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "sale_period_id", referencedColumnName = "id")
    private Period salePeriod;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
    private Collection<AdditionalService> additionalServices;
 
-   @OneToOne(fetch = FetchType.LAZY)
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    @JoinColumn(name = "owners_review_id", referencedColumnName = "id")
    private OwnersReview ownersReview;
 
@@ -66,7 +69,8 @@ public class Reservation implements Serializable {
    @JoinColumn(name = "client_id", referencedColumnName = "id")
    private Client client;
 
-   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JsonBackReference
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
    @JoinColumn(name = "reservation_entity_id", referencedColumnName = "id")
    private isa2.demo.Model.Entity entity;
 }

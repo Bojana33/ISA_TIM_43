@@ -1,0 +1,43 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div" *ngIf="!isSuccess">
+  <mat-card fxFlex="75">
+    <mat-toolbar color="primary">Signup Form</mat-toolbar>
+    <form fxLayoutAlign="stretch" fxLayout="column" class="signup-form" [formGroup]="form" (submit)="submit()">
+      <mat-form-field>
+        <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Surname" formControlName="surname" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="email" placeholder="Email" formControlName="email" required  ngModel email="true">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="password" required ngModel>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="address" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="city" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Country" formControlName="country" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Sign Up</button>
+    </form>
+  </mat-card>
+</div>
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="75">
+    <div class="success" *ngIf="isSuccess">
+      Your registration is successful! We've sent you a verification mail to your email account.
+    </div>
+  </mat-card>
+</div>
+

@@ -1,0 +1,10 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="30">
+        <form fxLayoutAlign="stretch" [formGroup]="req" (ngSubmit)="sendResponse()" fxLayout="column" class="reject-request" >
+            <mat-form-field>
+                <textarea matInput formControlName="response" type="text" placeholder="Response..."  required></textarea>
+            </mat-form-field>
+            <button mat-raised-button type="submit" (click)="openSnackBar()" >Send On Email</button>
+        </form>
+    </mat-card>
+</div>
