@@ -80,4 +80,5 @@ public class CottageController {
         cottage = cottageService.updateCottage(cottage);
         return cottage;
     }
+
 }
