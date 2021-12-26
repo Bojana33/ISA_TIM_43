@@ -20,7 +20,6 @@ public interface UserService{
     UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException;
     void sendVerificationEmail(UserRequest userRequest) throws AddressException, MessagingException;
     boolean verify(String verificationCode);
-    void sendEmail(String subject, String content) throws AddressException, MessagingException;
+    void sendEmail(String subject, String content, String email) throws AddressException, MessagingException;
     void delete(User user);
-
 }

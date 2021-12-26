@@ -4,6 +4,8 @@ import isa2.demo.Model.Cottage;
 import isa2.demo.Repository.CottageRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     @Override
     public Cottage addNewCottage(Cottage cottage) {
         //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom
-
+        cottage.setSubscribedClients(Collections.EMPTY_LIST);
         return cottageRepository.save(cottage);
 
     }

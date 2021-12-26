@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
 
     }
     @Override
-    public void sendEmail(String subject, String content) throws AddressException, MessagingException {
+    public void sendEmail(String subject, String content, String email) throws AddressException, MessagingException {
         try {
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("inisatim43@gmail.com", false));
 
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("inisatim43@gmail.com"));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 
             msg.setSubject(subject);
             msg.setContent(content, "text/html");
