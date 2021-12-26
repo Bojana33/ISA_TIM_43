@@ -54,7 +54,7 @@ public class EntityServiceImpl implements EntityService {
             entity = entityRepository.save(entity);
             //TODO: posalji mejlove subscribovanim klijentima
             String email_content = "<h2>Special offer just for you!</h2><p>" + entity.getName()
-                    + "will be available for reservation from:</p><p><b>" +
+                    + " will be available for reservation from:</p><p><b>" +
                     reservation.getReservedPeriod().getStartDate() + "</b> to <b>" +
                     reservation.getReservedPeriod().getEndDate() + "</b></p>" +
                     "<p>This offer last from:</p><p><b>" +
