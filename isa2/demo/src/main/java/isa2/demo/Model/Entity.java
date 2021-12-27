@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @javax.persistence.Entity
@@ -22,6 +23,7 @@ public class Entity implements Serializable {
     @Column
     private java.lang.String name;
     @Column
+    @Size(min = 5, max = 511)
     private java.lang.String description;
     @ElementCollection
     private java.util.Set<String> photos;

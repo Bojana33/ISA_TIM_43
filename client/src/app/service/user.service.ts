@@ -53,12 +53,12 @@ export class UserService {
     return this.apiService.get(this.config.users_url);
   }
 
-  save(user: User) {
-    return this.http.post<User>(this.usersUrl, user);
+  getUser(id:any) {
+    return this.apiService.get(this.config.api_url + "/get_user/" + id);
   }
 
-  getUserRole(){
-    return JSON.stringify(this.currentUser.userType);
+  save(user: User) {
+    return this.http.post<User>(this.usersUrl, user);
   }
 
   loggedRole(role:string){

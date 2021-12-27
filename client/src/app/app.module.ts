@@ -47,20 +47,30 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 import { ProfileUpdateComponent } from './profile/profile-update/profile-update.component';
-import { CottagesComponent } from './user-quest/cottages/cottages.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {FilterPipe} from './user-quest/filter.pipe';
-import { BoatsComponent } from './user-quest/boats/boats.component';
 import { AdventuresUserComponent } from './user-quest/adventures-user/adventures-user.component';
 import { UserComplaintComponent } from './user-complaint/user-complaint.component';
 import { SubscriptionsComponent } from './user-quest/subscriptions/subscriptions.component';
 import { ReservationsComponent } from './user-quest/reservations/reservations.component';
 // import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+import { MapComponent } from './map/map.component';
+import { BoatsComponent } from './boats/boats.component';
+import { CottagesComponent } from './cottages/cottages.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { CottageComponent } from './cottage/cottage.component';
+import { AddressFormComponent } from './address-form/address-form.component';
+import { RegisterCottageComponent } from './register-cottage/register-cottage.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
+import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
+import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
 
-// const mapConfig: YaConfig = {
-//   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
-//   lang: 'en_US',
-// };
+const mapConfig: YaConfig = {
+  apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
+  lang: 'en_US',
+};
 
 @NgModule({
   declarations: [
@@ -89,7 +99,19 @@ import { ReservationsComponent } from './user-quest/reservations/reservations.co
     AdventuresUserComponent,
     UserComplaintComponent,
     SubscriptionsComponent,
-    ReservationsComponent
+    ReservationsComponent,
+    MapComponent,
+    BoatsComponent,
+    CottagesComponent,
+    AdventuresComponent,
+    UserListComponent,
+    CottageComponent,
+    AddressFormComponent,
+    RegisterCottageComponent,
+    UserListComponent,
+    DeleteProfileComponent,
+    DeleteRequestsComponent,
+    DeleteRequestResponseComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +135,9 @@ import { ReservationsComponent } from './user-quest/reservations/reservations.co
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    MatGridListModule,
+    AngularYandexMapsModule.forRoot(mapConfig)
   ],
   exports: [
     SignupClientComponent
@@ -135,6 +159,7 @@ import { ReservationsComponent } from './user-quest/reservations/reservations.co
     ConfigService,
     MatIconRegistry,
     MatNativeDateModule
+
   ],
   bootstrap: [AppComponent]
 })

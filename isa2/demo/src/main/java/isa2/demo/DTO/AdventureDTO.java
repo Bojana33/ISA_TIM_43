@@ -8,6 +8,8 @@ import java.util.Set;
 @Getter
 @Setter
 public class AdventureDTO {
+    private Integer id;
+    private Integer adventureOwnerId;
     private String name;
     private AddressDTO addressDTO;
     private String description;

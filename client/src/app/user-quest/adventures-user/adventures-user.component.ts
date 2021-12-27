@@ -33,8 +33,6 @@ export class AdventuresUserComponent implements OnInit {
       (data) => {
         console.log(data);
         this.adventures = data;
-        //this.address = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + '&kind=house&results=' + this.adventure.address.houseNumber;
-        //this.addressTxt = this.adventure.addressDTO.country + ' ' + this.adventure.addressDTO.city + ' '  + this.adventure.addressDTO.street + ' ' + this.adventure.addressDTO.houseNumber;
         this.allAdventures = this.adventures;
         console.log(this.addressTxt);
       });
@@ -45,9 +43,9 @@ export class AdventuresUserComponent implements OnInit {
       this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
     } else if (search === 'pricePerDay') {
       this.adventure = this.allAdventures.filter((val) => Number(val.pricePerDay) === Number(value));
-    } else if (search === 'averageGrade') {
-      this.adventure = this.allAdventures.filter((val) => Number(val.averageGrade) === Number(value));
-    }
+    } //else if (search === 'averageGrade') {
+     // this.adventure = this.allAdventures.filter((val) => Number(val.averageGrade) === Number(value));
+    //}
     // else if (search === 'location') {
     // this.cottages = this.allCottages.filter((val) => val.address.includes(value) || val.name.toLowerCase().includes(value));
     // }

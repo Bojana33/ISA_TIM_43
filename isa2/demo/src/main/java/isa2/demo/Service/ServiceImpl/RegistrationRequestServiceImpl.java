@@ -1,13 +1,10 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.RegistrationRequest;
-import isa2.demo.Model.User;
 import isa2.demo.Repository.RegistrationRequestRepository;
-import isa2.demo.Repository.UserRepository;
+import isa2.demo.Service.OwnerService;
 import isa2.demo.Service.RegistrationRequestService;
 import isa2.demo.Service.UserService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +21,13 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
 
     public final PasswordEncoder passwordEncoder;
 
-    public RegistrationRequestServiceImpl(RegistrationRequestRepository registrationRequestRepository, UserService userService, PasswordEncoder passwordEncoder){
+    public final OwnerService ownerService;
+
+    public RegistrationRequestServiceImpl(RegistrationRequestRepository registrationRequestRepository,
+                                          UserService userService,
+                                          PasswordEncoder passwordEncoder,
+                                          OwnerService ownerService){
+        this.ownerService = ownerService;
         this.registrationRequestRepository = registrationRequestRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -37,18 +40,18 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
     }
 
     @Override
-    public RegistrationRequest approveRequest(Integer id) {
+    public void approveRequest(Integer id) {
         RegistrationRequest request = this.registrationRequestRepository.findById(id).get();
         request.setConfirmed(true);
-        this.userService.save(request);
+        this.ownerService.saveOwnerFromRequest(request);
         String subject = "Request approved";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + "Your registration request is approved";
         try {
-            this.userService.sendEmail(request,subject,content);
+            this.userService.sendEmail(subject,content, request.getEmail());
         } catch (MessagingException me){
             System.out.println("Message exception");
         }
-        return this.registrationRequestRepository.save(request);
+        this.registrationRequestRepository.delete(request);
     }
 
 
@@ -60,14 +63,14 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
     }
 
     @Override
-    public void rejectRequest(Integer id, RegistrationRequest registrationRequest) {
+    public void rejectRequest(Integer id, String rejectionReason) {
         RegistrationRequest request = this.registrationRequestRepository.findById(id).get();
-        request.setRejectionReason(registrationRequest.getRejectionReason());
+        request.setRejectionReason(rejectionReason);
         this.registrationRequestRepository.save(request);
         String subject = "Request rejected";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + request.getRejectionReason();
         try {
-            this.userService.sendEmail(request,subject,content);
+            this.userService.sendEmail(subject,content, request.getEmail());
         } catch (MessagingException me){
             System.out.println("Message exception");
         }
@@ -76,16 +79,7 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
 
     @Override
     public RegistrationRequest save(RegistrationRequest registrationRequest) {
-        RegistrationRequest request = new RegistrationRequest();
-        request.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-        request.setFirstName(registrationRequest.getFirstName());
-        request.setSurname(registrationRequest.getSurname());
-        request.setEmail(registrationRequest.getEmail());
-        request.setPhoneNumber(registrationRequest.getPhoneNumber());
-        request.setConfirmed(false);
-        request.setRegistrationExplanation(registrationRequest.getRegistrationExplanation());
-        request.setUserType(registrationRequest.getUserType());
-
+        registrationRequest.setConfirmed(false);
         return this.registrationRequestRepository.save(registrationRequest);
     }
 

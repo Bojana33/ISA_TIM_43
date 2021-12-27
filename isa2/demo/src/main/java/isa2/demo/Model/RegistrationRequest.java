@@ -18,11 +18,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "registration_request")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class RegistrationRequest implements Serializable {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.AUTO)
    private Integer id;
 
    @Column
@@ -47,14 +47,14 @@ public class RegistrationRequest implements Serializable {
    private String registrationExplanation;
 
    @Column
-   private UserType userType;
+   private OwnerType ownerType;
 
    @Column
    private String rejectionReason;
    
-//   @ManyToOne(cascade = CascadeType.ALL)
-//   @JoinColumn(name = "address_id", referencedColumnName = "address_id")
-//   private Address address;
+   @ManyToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "address_id", referencedColumnName = "address_id")
+   private Address address;
 
 
 }

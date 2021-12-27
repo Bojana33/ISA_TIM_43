@@ -9,11 +9,11 @@ public interface RegistrationRequestService {
 
     List<RegistrationRequest> findNotConfirmed();
 
-    RegistrationRequest approveRequest(Integer id);
+    void approveRequest(Integer id);
 
     RegistrationRequest getOne(Integer id);
 
-    void rejectRequest(Integer id, RegistrationRequest registrationRequest);
+    void rejectRequest(Integer id, String rejectionReason);
 
     RegistrationRequest save(RegistrationRequest registrationRequest);
 

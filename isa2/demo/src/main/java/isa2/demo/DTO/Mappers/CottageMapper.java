@@ -28,7 +28,10 @@ public class CottageMapper {
         cottage.setReservations(getReservations(cottage));
         return cottage;
     }
-
+    public CottageDTO mapCottageToDto(Cottage cottage){
+        CottageDTO cottageDTO = modelMapper.modelMapper().map(cottage, CottageDTO.class);
+        return cottageDTO;
+    }
     private Collection<Room> getRooms(Cottage cottage) {
         Collection<Room> roomCollection = cottage.getRooms();
         if(roomCollection != null){

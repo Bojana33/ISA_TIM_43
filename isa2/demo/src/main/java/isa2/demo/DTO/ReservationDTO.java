@@ -9,16 +9,13 @@ import java.util.Collection;
 @Setter
 public class ReservationDTO {
 
+    private Integer id;
     private Float price;
-
     private Integer numberOfGuests;
-
     private String additionalNotes;
-
     private PeriodDTO reservedPeriod;
-
     private PeriodDTO salePeriod;
-
-    private Collection<AdditionalServiceDTO> additionalServicesDTOs;
+    private Collection<AdditionalServiceDTO> additionalServices;
+    private Integer entity_id;
 
 }

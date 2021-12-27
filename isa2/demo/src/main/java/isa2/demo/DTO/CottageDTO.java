@@ -12,13 +12,14 @@ import java.util.Set;
 @Getter
 @Setter
 public class CottageDTO {
-    private String cottageOwnerName;
+    private Integer id;
+    private String cottageOwnerId;
     private String cottageName;
     private String description;
     private Set<String> photos;
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
-    private AddressDTO addressDTO;
-    private Collection<RoomDTO> roomsDTO;
-    private Collection<ReservationDTO> reservationsDTO;
+    private AddressDTO address;
+    private Collection<RoomDTO> rooms;
+    private Collection<ReservationDTO> reservations;
 }

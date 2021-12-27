@@ -1,8 +1,10 @@
+import { DeleteProfileComponent } from './../delete-profile/delete-profile.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { UserService } from './../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../service/config.service';
 import {ActivatedRoute} from '@angular/router';
-import {UserService} from '../service/user.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Address} from '../model/address';
 
@@ -24,6 +26,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getMyInfo().subscribe((response) =>
-     this.userProfile = response);
+      this.userProfile = response);
   }
 }

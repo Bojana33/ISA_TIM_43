@@ -3,11 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdventureService {
+
+  adventure: any;
 
   constructor(
     private apiService: ApiService,
@@ -24,7 +27,7 @@ export class AdventureService {
   }
 
   saveAdventure(data:any){
-    return this.httpClient.post(this.config.adventure_url + '/add_adventure', data);
+    return this.apiService.post(this.config.adventure_url + '/add_adventure', data);
   }
 
   saveImage(data:any, id:number){

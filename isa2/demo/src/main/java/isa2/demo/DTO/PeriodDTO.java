@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class PeriodDTO {
+    private Integer id;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 }

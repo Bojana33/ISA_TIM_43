@@ -26,17 +26,15 @@ public class AdventureServiceImpl implements AdventureService {
 
     @Override
     public Adventure save(Adventure adventure) {
-        // TODO: Sacuvati ulogovanog instruktor
         return this.adventureRepository.save(adventure);
     }
 
     @Override
     public Adventure update(Integer id, Adventure adventure) {
-        Adventure adventureForUpdate = this.adventureRepository.findById(id).get();
+        Adventure adventureForUpdate = this.adventureRepository.findById(adventure.getId()).get();
         adventureForUpdate.setName(adventure.getName());
-        //adventureForUpdate.setAddress(adventure.getAddress());
+        adventureForUpdate.setAddress(adventure.getAddress());
         adventureForUpdate.setCancellationFee(adventure.getCancellationFee());
-        adventureForUpdate.setInstructor(adventure.getInstructor());
         adventureForUpdate.setHouseRules(adventure.getHouseRules());
         adventureForUpdate.setInstructorBio(adventure.getInstructorBio());
         adventureForUpdate.setDefaultFishingEquipment(adventure.getDefaultFishingEquipment());

@@ -41,9 +41,9 @@ public class Boat extends Entity {
     @Column(name = "fishing_equipment")
     private String fishingEquipment;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "boat_owner_id", referencedColumnName = "id")
-    public BoatOwner boatOwner;
+    public Owner owner;
 
     @ElementCollection
     private java.util.Set<NavigationEquipment> navigationEquipment;

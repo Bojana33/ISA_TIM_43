@@ -13,8 +13,18 @@ export class ConfigService {
   private _cottage_url = 'http://localhost:8090/cottages';
   private _boat_url = 'http://localhost:8090/boats';
   private _client_url = 'http://localhost:8090/client';
+  private _cottages_url = 'http://localhost:8090/cottages';
+  private _user_delete_request_url = 'http://localhost:8090/user_delete_request'
 
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get user_delete_request_url(): string{
+    return this._user_delete_request_url;
+  }
+
+  get api_url(): string{
+    return this._api_url;
+  }
 
   get adventure_url(): string{
     return this._adventure_url;
@@ -62,6 +72,10 @@ export class ConfigService {
 
   get users_url(): string {
     return this._users_url;
+  }
+
+  get cottages_url(): string{
+    return this._cottages_url;
   }
 
   private _foo_url = this._api_url + '/foo';

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 @Getter
 @Setter
 public class AddressDTO {
+    private java.lang.Integer id;
     private java.lang.String city;
     private java.lang.String country;
     private java.lang.String street;

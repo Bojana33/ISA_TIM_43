@@ -1,6 +1,10 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.JwtAuthenticationRequest;
+import isa2.demo.DTO.Mappers.RegistrationRequestMapper;
+import isa2.demo.DTO.Mappers.UserRequestMapper;
+import isa2.demo.DTO.RegistrationRequestDTO;
+import isa2.demo.DTO.UserRequestDTO;
 import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Exception.ResourceConflictException;
 import isa2.demo.Model.RegistrationRequest;
@@ -49,6 +53,10 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private UserRequestMapper userRequestMapper;
+
+    @Autowired
+    private RegistrationRequestMapper registrationRequestMapper;
 
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
@@ -74,9 +82,10 @@ public class AuthController {
     }
 
     // Endpoint za registraciju novog korisnika
-    @PostMapping("/signup")
-    public ResponseEntity<? extends Object> addUser(@RequestBody RegistrationRequest registrationRequest, UriComponentsBuilder ucBuilder) {
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<? extends Object> addUser(@RequestBody RegistrationRequestDTO registrationRequestDTO, UriComponentsBuilder ucBuilder) {
 
+        RegistrationRequest registrationRequest = registrationRequestMapper.mapDtoToRegistration(registrationRequestDTO);
         User existUser = this.userService.findByEmail(registrationRequest.getEmail());
         RegistrationRequest existRequest = this.registrationRequestService.findByEmail(registrationRequest.getEmail());
         if (existUser != null || existRequest != null) {
@@ -91,8 +100,9 @@ public class AuthController {
 
     // Endpoint za registraciju novog korisnika - klijenta
     @PostMapping("/signupClient")
-    public HttpEntity<? extends Object> addClientUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+    public HttpEntity<? extends Object> addClientUser(@RequestBody UserRequestDTO userRequestDTO, UriComponentsBuilder ucBuilder) {
 
+        UserRequest userRequest = userRequestMapper.mapDtoToUserRequest(userRequestDTO);
         User existUser = this.userService.findByEmail(userRequest.getEmail());
         if (existUser != null) {
             throw new ResourceConflictException(userRequest.getId(), "Email already exists");

@@ -66,9 +66,9 @@ public class User implements UserDetails {
    @Column(name = "last_password_reset_date")
    private Timestamp lastPasswordResetDate;
    
-   //@ManyToOne(cascade = CascadeType.ALL)
-   //@JoinColumn(name = "address_id", referencedColumnName = "address_id")
-   //private Address address;
+   @ManyToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "address_id", referencedColumnName = "address_id")
+   private Address address;
 
    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
    private UserDeleteRequest userDeleteRequest;

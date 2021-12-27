@@ -36,7 +36,7 @@ public class UserRequest {
     @Column
     private String verificationCode;
 
-    //@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "address_id", referencedColumnName = "address_id")
-    //private Address address;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
+    private Address address;
 }

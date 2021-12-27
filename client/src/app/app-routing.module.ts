@@ -1,3 +1,4 @@
+import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { InstructorGuard } from './guard/instructor.guard';
 import { AdventuresComponent } from './adventures/adventures.component';
@@ -22,11 +23,21 @@ import { AdventureComponent } from './adventure/adventure.component';
 import { Adventure } from './model/adventure';
 import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
 import {ProfileUpdateComponent} from './profile/profile-update/profile-update.component';
-import {CottagesComponent} from './user-quest/cottages/cottages.component';
-import {BoatsComponent} from './user-quest/boats/boats.component';
 import {AdventuresUserComponent} from './user-quest/adventures-user/adventures-user.component';
 import {UserComplaintComponent} from './user-complaint/user-complaint.component';
 import {ReservationsComponent} from './user-quest/reservations/reservations.component';
+import {BoatsComponent} from './boats/boats.component';
+import {CottagesComponent} from './cottages/cottages.component';
+import {UserListComponent} from './user-list/user-list.component';
+import {CottageComponent} from './cottage/cottage.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {RegisterCottageComponent} from './register-cottage/register-cottage.component';
+import {MatSelectModule} from '@angular/material/select';
+import {BrowserModule} from '@angular/platform-browser';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
+import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
+import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+
 
 const routes: Routes = [
   {
@@ -34,7 +45,6 @@ const routes: Routes = [
     component: HomeComponent,
     pathMatch: 'full'
   },
-
   {
     path: 'signupClient',
     component: SignupClientComponent,
@@ -78,20 +88,55 @@ const routes: Routes = [
   {
     path: 'update-adventure/:id',
     component: UpdateAdventureComponent,
-    //canActivate: [InstructorGuard]
+    // canActivate: [InstructorGuard]
   },
   {
     path: 'create-adventure',
     component: CreateAdventureComponent,
-    //canActivate: [InstructorGuard]
+    // canActivate: [InstructorGuard]
+  },
+  {
+    path: 'boats',
+    component: BoatsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'cottages',
+    component: CottagesComponent
+  },
+  {
+    path: 'users',
+    component: UserListComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'registration-requests',
-    component: RegistrationRequestsComponent
+    component: RegistrationRequestsComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'reject-request/:id',
     component: RejectRequestComponent
+  },
+  {
+    path: 'cottages/:id',
+    component: CottageComponent
+  },
+  {
+    path: 'register-cottage',
+    component: RegisterCottageComponent
+  },
+  {
+    path: 'delete-profile',
+    component: DeleteProfileComponent
+  },
+  {
+    path: 'user-delete-requests',
+    component: DeleteRequestsComponent
+  },
+  {
+    path: 'delete-request-response/:id/:isApproved',
+    component: DeleteRequestResponseComponent
   },
   {
     path: 'change-password',
@@ -127,10 +172,22 @@ const routes: Routes = [
     component: ForbiddenComponent
   },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
+
+  // {
+  //   path: '**',
+  //   redirectTo: '/404'
+  // }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule,
+    BrowserModule,
+    RouterModule,
+    // MaterialModule,
+    MatSelectModule,
+    AngularYandexMapsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
