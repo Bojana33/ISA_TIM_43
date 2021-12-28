@@ -12,7 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -58,6 +58,11 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+import * as moment from 'moment';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './calendar/calendar.component';
+
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -94,7 +99,8 @@ const mapConfig: YaConfig = {
     UserListComponent,
     DeleteProfileComponent,
     DeleteRequestsComponent,
-    DeleteRequestResponseComponent
+    DeleteRequestResponseComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,7 +125,8 @@ const mapConfig: YaConfig = {
     MatNativeDateModule,
     MatRippleModule,
     MatGridListModule,
-    AngularYandexMapsModule.forRoot(mapConfig)
+    AngularYandexMapsModule.forRoot(mapConfig),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   exports: [
     SignupClientComponent
