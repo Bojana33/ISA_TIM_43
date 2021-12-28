@@ -94,4 +94,6 @@ public class EntityServiceImpl implements EntityService {
     public boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2) {
         return (!startDate2.isAfter(endDate1) && !endDate2.isBefore(startDate1));
     }
+
+
 }

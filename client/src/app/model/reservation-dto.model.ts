@@ -16,9 +16,11 @@ export class ReservationDTO {
 
   private additionalServices: AdditionalServicesDTO[];
 
+  private entityId: number;
+
 
   constructor(id: number, price: number, numberOfGuests: number, additionalNotes: string,
-              reservedPeriod: PeriodDto, salePeriod: PeriodDto, additionalServices: AdditionalServicesDTO[]) {
+              reservedPeriod: PeriodDto, salePeriod: PeriodDto, additionalServices: AdditionalServicesDTO[], entityId: number) {
     this.id = id;
     this.price = price;
     this.numberOfGuests = numberOfGuests;
@@ -26,5 +28,6 @@ export class ReservationDTO {
     this.reservedPeriod = reservedPeriod;
     this.salePeriod = salePeriod;
     this.additionalServices = additionalServices;
+    this.entityId = entityId;
   }
 }

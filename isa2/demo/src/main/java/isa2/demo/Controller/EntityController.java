@@ -1,24 +1,18 @@
 package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
-import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.RentalTimeDTO;
 import isa2.demo.DTO.ReservationDTO;
-import isa2.demo.Model.Adventure;
 import isa2.demo.Model.RentalTime;
 import isa2.demo.Model.Reservation;
 import isa2.demo.Service.ClientService;
 import isa2.demo.Service.EntityService;
-import isa2.demo.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.persistence.criteria.CriteriaBuilder;
 
 @RestController
 @RequestMapping(value = "/entities" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +39,7 @@ public class EntityController {
     @PostMapping("/reservations")
     public ResponseEntity<ReservationDTO> addReservationToEntity(@RequestBody ReservationDTO reservationDTO) throws MessagingException {
         Reservation reservation = modelMapper.modelMapper().map(reservationDTO, Reservation.class);
-        if(entityService.addReservation(reservationDTO.getEntity_id(), reservation) == null){
+        if(entityService.addReservation(reservationDTO.getEntityId(), reservation) == null){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
         }else{
             return ResponseEntity.status(HttpStatus.CREATED).body(reservationDTO);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,10 +80,18 @@ public class CottageController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/{cottage_id}")
-    public Cottage updateCottage(@RequestBody CottageDTO cottageDTO){
-        Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
-        cottage = cottageService.updateCottage(cottage);
-        return cottage;
+    public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
+        try{
+            CottageDTO updatedCottageDTO;
+            Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
+            cottage = cottageService.updateCottage(cottage);
+            updatedCottageDTO = cottageMapper.mapCottageToDto(cottage);
+            return ResponseEntity.ok(updatedCottageDTO);
+
+        } catch (UnsupportedOperationException e){
+            return ResponseEntity.noContent().build();
+        }
+
     }
 
 }

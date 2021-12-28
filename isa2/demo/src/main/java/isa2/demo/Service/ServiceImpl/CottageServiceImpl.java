@@ -1,9 +1,11 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.Cottage;
+import isa2.demo.Model.Reservation;
 import isa2.demo.Repository.CottageRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +32,12 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
 
     @Override
     public Cottage updateCottage(Cottage cottage) {
-        return cottageRepository.save(cottage);
+        Collection<Reservation> reservations = cottage.getReservations();
+        if(reservations.isEmpty())
+            return cottageRepository.save(cottage);
+        else
+            throw new UnsupportedOperationException("Entity with active reservations can't be updated");
+
     }
 
     @Override
@@ -39,12 +46,12 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     }
 
     @Override
-    public Cottage deleteCottage(Integer id) throws Exception{
+    public Cottage deleteCottage(Integer id) throws EntityNotFoundException {
         Cottage cottage = cottageRepository.findByIdAndReservationsIsNull(id);
         if(cottage != null){
             cottageRepository.deleteById(id);
         }else{
-            throw new Exception("Cottage doesn't exist");
+            throw new EntityNotFoundException("Cottage doesn't exist");
         }
         return cottage;
     }
