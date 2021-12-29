@@ -37,42 +37,7 @@ export class CalendarComponent implements OnInit{
 
   viewDate: Date = new Date();
   refresh = new Subject<void>();
-  events: CalendarEvent[] = [
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: colors.blue,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: addHours(startOfDay(setDay(new Date(), 3)), 2),
-    //   end: subSeconds(addHours(startOfDay(setDay(new Date(), 3)), 3), 1),
-    //   title: 'An short event',
-    //   color: colors.yellow,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: addHours(startOfDay(setDay(new Date(), 3)), 5),
-    //   end: subSeconds(addHours(startOfDay(setDay(new Date(), 3)), 10), 1),
-    //   title: 'A draggable and resizable event',
-    //   color: colors.yellow,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-  ];
+  events: CalendarEvent[] = [];
 
   ngOnInit(): void {
     this.getReservationsForCottage(this.cottageId);

@@ -17,7 +17,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 })
 export class CottageComponent implements OnInit {
   cottage: CottageDTO = new CottageDTO();
-
+  showForm = 1;
   cottageUpdateForm = this.formBuilder.group({
     cottageName: new FormControl(this.cottage.cottageName, Validators.required),
     description: new FormControl(this.cottage.description, Validators.required),
@@ -31,7 +31,7 @@ export class CottageComponent implements OnInit {
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
   }
 

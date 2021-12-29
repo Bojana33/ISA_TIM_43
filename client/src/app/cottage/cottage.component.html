@@ -33,12 +33,29 @@
                 </ul>
               </div>
               <div class="buttons" >
-                <button class="button is-info" (click)="updateCottage()">Update</button>
-                <button class="button is-danger" (click)="deleteCottage()">Delete</button>
+                <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
+                <button class="button is-danger is-rounded" (click)="deleteCottage()">Delete</button>
+                <button class="button is-link is-rounded" (click)="showForm=2">Create new quick reservation</button>
+                <div class="modal is-active" *ngIf="showForm === 2">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Create new quick reservation</p>
+                      <button class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                      <app-reservation-form [entityId]="cottage.id">
+                      </app-reservation-form>
+                    </section>
+                    <footer class="modal-card-foot">
+                      <button class="button is-success">Save changes</button>
+                      <button class="button" (click)="showForm=1">Cancel</button>
+                    </footer>
+                  </div>
+                </div>
               </div>
             </div>
             </form>
-
 
             <div class = "column" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
               <div class="box">
@@ -64,11 +81,6 @@
                 </h5>
                 <ul *ngFor="let room of cottage.rooms">
                     <li>{{room.numberOfBeds}}</li>
-                </ul>
-                <ul *ngFor="let reservation of cottage.reservations">
-                  <li>
-                    {{reservation.reservedPeriod.startDate}}
-                  </li>
                 </ul>
               </div>
         </div>

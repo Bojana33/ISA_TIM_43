@@ -63,6 +63,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import {DatePipe} from '@angular/common';
+import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 
 const mapConfig: YaConfig = {
@@ -102,6 +103,7 @@ const mapConfig: YaConfig = {
     DeleteRequestsComponent,
     DeleteRequestResponseComponent,
     CalendarComponent,
+    ReservationFormComponent,
   ],
   imports: [
     BrowserModule,

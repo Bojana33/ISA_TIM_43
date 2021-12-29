@@ -1,0 +1,35 @@
+<div class="columns is-mobile is-centered">
+  <div class="column is-half">
+    <form [formGroup]="cottageReservationForm" (ngSubmit)="onSubmit()">
+
+      <div class = "field">
+        <label class = "label" for="price">
+          Pricer per day:
+        </label>
+        <div class = "control">
+          <input class = "input" id="price" type="number" formControlName="price">
+        </div>
+      </div>
+
+      <div class = "field">
+        <label class = "label" for="maxNumberOfGuests">
+          Maximum number of guests:
+        </label>
+        <div class = "control">
+          <input class = "input" id="maxNumberOfGuests" type="number" formControlName="numberOfGuests">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          Additional notes:
+        </label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Additional notes" formControlName="additionalNotes"></textarea>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
