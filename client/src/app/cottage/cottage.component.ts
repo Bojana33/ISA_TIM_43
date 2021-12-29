@@ -4,9 +4,9 @@ import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../service/user.service';
-import {User} from '../model/user';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {CalendarComponent} from '../calendar/calendar.component';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 
 
@@ -16,7 +16,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./cottage.component.css']
 })
 export class CottageComponent implements OnInit {
-  cottage: CottageDTO = ({} as any);
+  cottage: CottageDTO = new CottageDTO();
 
   cottageUpdateForm = this.formBuilder.group({
     cottageName: new FormControl(this.cottage.cottageName, Validators.required),

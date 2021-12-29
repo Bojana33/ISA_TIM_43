@@ -65,12 +65,17 @@
                 <ul *ngFor="let room of cottage.rooms">
                     <li>{{room.numberOfBeds}}</li>
                 </ul>
+                <ul *ngFor="let reservation of cottage.reservations">
+                  <li>
+                    {{reservation.reservedPeriod.startDate}}
+                  </li>
+                </ul>
               </div>
         </div>
       </div>
       </div>
-         <div class = "box">
-           <app-calendar>
+         <div class = "box" *ngIf="cottage.id != 0">
+           <app-calendar [cottageId]= "cottage.id">
            </app-calendar>
          </div>
     </div>

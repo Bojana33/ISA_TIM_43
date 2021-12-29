@@ -2,6 +2,7 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.Cottage;
 import isa2.demo.Model.Reservation;
+import isa2.demo.Model.ReservationStatus;
 import isa2.demo.Repository.CottageRepository;
 import org.springframework.stereotype.Service;
 

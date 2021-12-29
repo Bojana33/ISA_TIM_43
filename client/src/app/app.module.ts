@@ -62,6 +62,7 @@ import * as moment from 'moment';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
+import {DatePipe} from '@angular/common';
 
 
 const mapConfig: YaConfig = {
@@ -147,7 +148,8 @@ const mapConfig: YaConfig = {
     UserService,
     ConfigService,
     MatIconRegistry,
-    MatNativeDateModule
+    MatNativeDateModule,
+    DatePipe
 
   ],
   bootstrap: [AppComponent]
