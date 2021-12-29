@@ -47,7 +47,7 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
         String subject = "Request approved";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + "Your registration request is approved";
         try {
-            this.userService.sendEmail(subject,content);
+            this.userService.sendEmail(subject,content, request.getEmail());
         } catch (MessagingException me){
             System.out.println("Message exception");
         }
@@ -70,7 +70,7 @@ public class RegistrationRequestServiceImpl implements RegistrationRequestServic
         String subject = "Request rejected";
         String content = "Dear " + request.getFirstName() + " " + request.getSurname() + ",<br>" + request.getRejectionReason();
         try {
-            this.userService.sendEmail(subject,content);
+            this.userService.sendEmail(subject,content, request.getEmail());
         } catch (MessagingException me){
             System.out.println("Message exception");
         }

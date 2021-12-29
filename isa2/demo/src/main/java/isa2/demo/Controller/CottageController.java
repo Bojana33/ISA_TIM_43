@@ -1,14 +1,11 @@
 package isa2.demo.Controller;
 
-import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
-import isa2.demo.Model.Address;
 import isa2.demo.Model.Cottage;
 
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.CottageService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -65,8 +62,15 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public List<CottageDTO> getAllCottages() {
-        List<Cottage> cottages = cottageService.findAllCottages();
+    public List<CottageDTO> getCottages(@RequestParam(defaultValue = "") String cottageName) {
+        List<Cottage> cottages = new ArrayList<>();
+        cottages = cottageService.findCottagesByName(cottageName);
+//        if(name.equals("")){
+//            cottages = cottageService.findCottagesByName(name);
+//        }else{
+//            cottages = cottageService.findCottagesByName();
+//        }
+
         List<CottageDTO> cottageDTOS = new ArrayList<>();
         for(Cottage cottage:cottages){
             cottageDTOS.add(cottageMapper.mapCottageToDto(cottage));
@@ -80,4 +84,5 @@ public class CottageController {
         cottage = cottageService.updateCottage(cottage);
         return cottage;
     }
+
 }

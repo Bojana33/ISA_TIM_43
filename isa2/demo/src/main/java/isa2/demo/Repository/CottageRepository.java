@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface CottageRepository extends JpaRepository<Cottage, Integer> {
     Cottage findByIdAndReservationsIsNull(Integer id);
+    List<Cottage> findAllByNameContainingIgnoreCase(String name);
 }
