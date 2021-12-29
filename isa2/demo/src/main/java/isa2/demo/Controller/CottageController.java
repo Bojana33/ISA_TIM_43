@@ -78,20 +78,22 @@ public class CottageController {
         }
         return cottageDTOS;
     }
-    @ResponseStatus(HttpStatus.CREATED)
+
     @PutMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
+        ResponseEntity responseEntity = null;
         try{
             CottageDTO updatedCottageDTO;
             Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
             cottage = cottageService.updateCottage(cottage);
             updatedCottageDTO = cottageMapper.mapCottageToDto(cottage);
-            return ResponseEntity.ok(updatedCottageDTO);
+            responseEntity = ResponseEntity.ok(updatedCottageDTO);
 
         } catch (UnsupportedOperationException e){
-            return ResponseEntity.noContent().build();
+            responseEntity = ResponseEntity.noContent().build();
         }
 
+        return responseEntity;
     }
 
 }
