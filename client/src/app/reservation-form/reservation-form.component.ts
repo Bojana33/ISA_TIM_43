@@ -1,9 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CottageService} from '../service/cottage.service';
 import {ConfigService} from '../service/config.service';
 import {ApiService} from '../service/api.service';
 import {ReservationDTO} from '../model/reservation-dto.model';
+
+class EventEmitter<T> {
+}
 
 @Component({
   selector: 'app-reservation-form',
@@ -12,6 +15,7 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 })
 export class ReservationFormComponent{
   @Input() entityId: any;
+  @Output() newItemEvent = new EventEmitter<string>();
   cottageReservationForm = this.formBuilder.group({
     price: ['', [Validators.required]],
     numberOfGuests: ['', [Validators.required, Validators.min(1), Validators.max(300)]],

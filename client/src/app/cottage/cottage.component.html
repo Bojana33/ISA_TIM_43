@@ -31,9 +31,9 @@
                 <ul *ngFor="let room of cottage.rooms">
                   <li> {{room.numberOfBeds}}</li>
                 </ul>
+                <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
               </div>
               <div class="buttons" >
-                <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
                 <button class="button is-danger is-rounded" (click)="deleteCottage()">Delete</button>
                 <button class="button is-link is-rounded" (click)="showForm=2">Create new quick reservation</button>
                 <div class="modal is-active" *ngIf="showForm === 2">
@@ -41,7 +41,7 @@
                   <div class="modal-card">
                     <header class="modal-card-head">
                       <p class="modal-card-title">Create new quick reservation</p>
-                      <button class="delete" aria-label="close"></button>
+                      <button class="delete" (click)="showForm=1" aria-label="close"></button>
                     </header>
                     <section class="modal-card-body">
                       <app-reservation-form [entityId]="cottage.id">
@@ -83,7 +83,7 @@
                     <li>{{room.numberOfBeds}}</li>
                 </ul>
               </div>
-        </div>
+            </div>
       </div>
       </div>
          <div class = "box" *ngIf="cottage.id != 0">
@@ -91,12 +91,3 @@
            </app-calendar>
          </div>
     </div>
-<!--public id!: number;-->
-<!--public cottageName: string;-->
-<!--public description: string;-->
-<!--public photos: string[];-->
-<!--public maxNumberOfGuests: number;-->
-<!--public pricePerDay: number;-->
-<!--public address: AddressDTO;-->
-<!--public rooms: RoomDTO[];-->
-<!--public reservations: ReservationDTO[];-->

@@ -43,7 +43,7 @@ import { AdventureComponent } from './adventure/adventure.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
@@ -58,12 +58,14 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
-import * as moment from 'moment';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import {DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
+
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+
 
 
 const mapConfig: YaConfig = {
@@ -112,7 +114,6 @@ const mapConfig: YaConfig = {
     FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatCardModule,
     MatToolbarModule,
     HttpClientModule,
@@ -124,10 +125,15 @@ const mapConfig: YaConfig = {
     MatTableModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
-    MatGridListModule,
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     AngularYandexMapsModule.forRoot(mapConfig),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
@@ -151,6 +157,7 @@ const mapConfig: YaConfig = {
     ConfigService,
     MatIconRegistry,
     MatNativeDateModule,
+    MatDatepickerModule,
     DatePipe
 
   ],
