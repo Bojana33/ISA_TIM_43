@@ -44,7 +44,7 @@
                       <button class="delete" (click)="showForm=1" aria-label="close"></button>
                     </header>
                     <section class="modal-card-body">
-                      <app-reservation-form [entityId]="cottage.id">
+                      <app-reservation-form [entityId]="cottage.id" (createdReservationEvent)="createNewReservation($event)">
                       </app-reservation-form>
                     </section>
                     <footer class="modal-card-foot">

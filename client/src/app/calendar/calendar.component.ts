@@ -32,8 +32,7 @@ export class CalendarComponent implements OnInit{
 
 
   constructor(private configService: ConfigService,
-              private reservationService: ReservationService,
-              private datePipe: DatePipe) {}
+              private reservationService: ReservationService) {}
 
   viewDate: Date = new Date();
   refresh = new Subject<void>();
@@ -53,13 +52,18 @@ export class CalendarComponent implements OnInit{
           }
           this.events.push({
             id: item.reservedPeriod.id,
-            start: new Date(item.reservedPeriod.startDate),
-            end: new Date(item.reservedPeriod.endDate),
-            title: 'Termini slobodni za rezervisanje',
+            // @ts-ignore
+            // tslint:disable-next-line:max-line-length
+            start: new Date((item.reservedPeriod.startDate)[0] - 1, (item.reservedPeriod.startDate)[1], (item.reservedPeriod.startDate)[2], (item.reservedPeriod.startDate)[3], (item.reservedPeriod.startDate)[4]),
+            // @ts-ignore
+            // tslint:disable-next-line:max-line-length
+            end: new Date((item.reservedPeriod.endDate)[0] - 1, (item.reservedPeriod.endDate)[1], (item.reservedPeriod.endDate)[2], (item.reservedPeriod.endDate)[3], (item.reservedPeriod.endDate)[4]),
+            title: item.reservationStatus.toString() + ' termin',
             color: eventColor,
             draggable: true
           });
         });
+        console.log(this.events);
         this.refresh.next();
       });
   }

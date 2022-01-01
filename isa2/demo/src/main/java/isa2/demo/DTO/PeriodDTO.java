@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 public class PeriodDTO {
     private Integer id;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Belgrade")
+
     private LocalDateTime startDate;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Belgrade")
+
     private LocalDateTime endDate;
 }

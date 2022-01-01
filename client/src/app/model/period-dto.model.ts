@@ -1,12 +1,8 @@
 export class PeriodDto {
-  public id: number;
-  public startDate: Date;
-  public endDate: Date;
 
-
-  constructor(id: number, startDate: string, endDate: string) {
-    this.id = id;
-    this.startDate = new Date();
-    this.endDate = new Date();
+  constructor(
+    public id: number = 0,
+    public startDate: Date = new Date(),
+    public endDate: Date = new Date()) {
   }
 }

@@ -17,4 +17,8 @@ export class ReservationService {
   getReservationsForEntity(entityId: number): any{
     return this.api.get(this.config.entity_url + '/reservations/' + entityId);
   }
+  createNewReservationForEntity(reservation: ReservationDTO): any{
+    console.log('ovo je iz servisa:', reservation);
+    return this.api.post(this.config.entity_url + '/reservations', reservation);
+  }
 }
