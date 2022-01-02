@@ -21,11 +21,17 @@ export class ProfileComponent implements OnInit {
     private httpClient: HttpClient,
     private config: ConfigService,
     private router: ActivatedRoute,
-    private userService: UserService) {
+    private userService: UserService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.userService.getMyInfo().subscribe((response) =>
       this.userProfile = response);
+  }
+
+  openDialog(){
+    const dialogConfig = new MatDialogConfig();
+    this.dialog.open(DeleteProfileComponent, dialogConfig);
   }
 }

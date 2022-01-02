@@ -49,6 +49,9 @@ export class AdventuresUserComponent implements OnInit {
     // else if (search === 'location') {
     // this.cottages = this.allCottages.filter((val) => val.address.includes(value) || val.name.toLowerCase().includes(value));
     // }
+    else if (search === 'instructorName') {
+      this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
+    }
   }
 
 }

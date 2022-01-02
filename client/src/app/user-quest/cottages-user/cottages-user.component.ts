@@ -6,10 +6,10 @@ import {Cottage} from '../../model/cottage';
 
 @Component({
   selector: 'app-cottages',
-  templateUrl: './cottages.component.html',
-  styleUrls: ['./cottages.component.css']
+  templateUrl: './cottages-user.component.html',
+  styleUrls: ['./cottages-user.component.css']
 })
-export class CottagesComponent implements OnInit {
+export class CottagesUserComponent implements OnInit {
 
   allCottages: Cottage[] = [];
   cottages: Cottage[] = [];

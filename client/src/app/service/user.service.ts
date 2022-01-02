@@ -4,6 +4,7 @@ import {ConfigService} from './config.service';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../model/user';
+import {UserDTO} from "../model/user-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,8 @@ export class UserService {
     return false;
   }
 
-  update(data:any){
+  update(data:UserDTO){
+    console.log(data);
     return this.apiService.post('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
   }
 }

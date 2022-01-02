@@ -66,6 +66,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+import {BoatsUserComponent} from "./user-quest/boats-user/boats-user.component";
+import {CottagesUserComponent} from "./user-quest/cottages-user/cottages-user.component";
+import { OneCottageComponent } from './user-quest/one-cottage/one-cottage.component';
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -111,7 +114,10 @@ const mapConfig: YaConfig = {
     UserListComponent,
     DeleteProfileComponent,
     DeleteRequestsComponent,
-    DeleteRequestResponseComponent
+    DeleteRequestResponseComponent,
+    BoatsUserComponent,
+    CottagesUserComponent,
+    OneCottageComponent
   ],
   imports: [
     BrowserModule,

@@ -16,10 +16,26 @@
           <p>Surname:</p>
           <input matInput type="text" placeholder="{{surname}}" formControlName="surname" required>
         </mat-form-field>
-      <mat-form-field>
-        <p>Phone number:</p>
-        <input matInput type="text" placeholder="{{phoneNumber}}" formControlName="phoneNumber" required>
-      </mat-form-field>
+        <mat-form-field>
+        <p>City</p>
+        <input matInput type="text" placeholder="{{city}}" formControlName="city" required>
+        </mat-form-field>
+        <mat-form-field>
+          <p>Country</p>
+          <input matInput type="text" placeholder="{{country}}" formControlName="country" required>
+        </mat-form-field>
+        <mat-form-field>
+          <p>Street</p>
+          <input matInput type="text" placeholder="{{street}}" formControlName="street" required>
+        </mat-form-field>
+        <mat-form-field>
+          <p>House number</p>
+          <input matInput type="text" placeholder="{{houseNumber}}" formControlName="houseNumber" required>
+        </mat-form-field>
+        <mat-form-field>
+          <p>Phone number:</p>
+          <input matInput type="text" placeholder="{{phoneNumber}}" formControlName="phoneNumber" required>
+        </mat-form-field>
       </mat-card-content>
       <button mat-raised-button type="submit" (click)="onSubmit(userProfile.value)">Submit</button>
     </form>
@@ -27,5 +43,5 @@
     </div>
   </div>
 </div>
-
+<app-componentb #profileComponent></app-componentb>
 

@@ -5,10 +5,10 @@ import {ConfigService} from '../../service/config.service';
 
 @Component({
   selector: 'app-boats',
-  templateUrl: './boats.component.html',
-  styleUrls: ['./boats.component.css']
+  templateUrl: './boats-user.component.html',
+  styleUrls: ['./boats-user.component.css']
 })
-export class BoatsComponent implements OnInit {
+export class BoatsUserComponent implements OnInit {
 
   allBoats: Boat[] = [];
   boats: Boat[] = [];

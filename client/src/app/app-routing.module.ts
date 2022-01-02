@@ -37,6 +37,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+import {BoatsUserComponent} from "./user-quest/boats-user/boats-user.component";
+import {CottagesUserComponent} from "./user-quest/cottages-user/cottages-user.component";
+import {OneCottageComponent} from "./user-quest/one-cottage/one-cottage.component";
 
 
 const routes: Routes = [
@@ -64,7 +67,7 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    //canActivate: [UserService],
+    canActivate: [LoginGuard],
     pathMatch: 'full'
   },
   {
@@ -74,7 +77,14 @@ const routes: Routes = [
   },
   {
     path: 'profile/profileUpdate',
-    component: ProfileUpdateComponent
+    component: ProfileUpdateComponent,
+    canActivate: [LoginGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      }
+    ]
   },
   {
     path: 'adventures',
@@ -95,11 +105,11 @@ const routes: Routes = [
     component: CreateAdventureComponent,
     // canActivate: [InstructorGuard]
   },
-  {
-    path: 'boats',
-    component: BoatsComponent,
-    canActivate: [GuestGuard]
-  },
+  //{
+  //  path: 'boats',
+ //   component: BoatsUserComponent,
+  //  canActivate: [GuestGuard]
+ // },
   {
     path: 'cottages',
     component: CottagesComponent
@@ -145,11 +155,15 @@ const routes: Routes = [
   },
   {
     path: 'cottagesCatalog',
-    component: CottagesComponent
+    component: CottagesUserComponent
+  },
+  {
+    path: 'oneCottage/:id',
+    component: OneCottageComponent
   },
   {
     path: 'boatsCatalog',
-    component: BoatsComponent
+    component: BoatsUserComponent
   },
   {
     path: 'adventuresCatalog',
