@@ -11,13 +11,9 @@ export class ConfigService {
   private _cottages_url = 'http://localhost:8090/cottages';
   private _registration_request_url = 'http://localhost:8090/registration_request';
   private _adventure_url = 'http://localhost:8090/adventures';
-<<<<<<< HEAD
   private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
   private _user_complaint_url = 'http://localhost:8090/user_complaint';
-=======
   private _entity_url = 'http://localhost:8090/entities';
-  private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
->>>>>>> develop
 
   private _refresh_token_url = this._auth_url + '/refresh';
 

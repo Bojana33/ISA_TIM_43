@@ -1,17 +1,11 @@
 package isa2.demo.Service;
 
-import isa2.demo.DTO.RentalTimeDTO;
 import isa2.demo.Model.Entity;
 import isa2.demo.Model.RentalTime;
 import isa2.demo.Model.Reservation;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
-<<<<<<< HEAD
-import java.util.*;
-=======
-import java.util.Collection;
->>>>>>> develop
 
 public interface EntityService {
     Entity addRentalTime(Integer entity_id, RentalTime rentalTime);

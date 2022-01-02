@@ -58,9 +58,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
-<<<<<<< HEAD
 import { WriteComplaintComponent } from './write-complaint/write-complaint.component';
-=======
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -68,9 +66,6 @@ import {DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-
-
->>>>>>> develop
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -108,12 +103,9 @@ const mapConfig: YaConfig = {
     DeleteProfileComponent,
     DeleteRequestsComponent,
     DeleteRequestResponseComponent,
-<<<<<<< HEAD
-    WriteComplaintComponent
-=======
+    WriteComplaintComponent,
     CalendarComponent,
     ReservationFormComponent,
->>>>>>> develop
   ],
   imports: [
     BrowserModule,
