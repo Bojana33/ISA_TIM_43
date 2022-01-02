@@ -87,8 +87,12 @@ public class CottageController {
         return cottage;
     }
 
-    @GetMapping("/get_all")
-    public ResponseEntity<List<Cottage>> getAll(){
-        return new ResponseEntity<>(this.cottageService.findAll(), HttpStatus.OK);
+    @GetMapping(value =  "/get_all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CottageDTO>> getAll(){
+        List<Cottage> cottages = this.cottageService.findAll();
+        List<CottageDTO> cottageDTOS = new ArrayList<>();
+        for (Cottage cottage : cottages)
+            cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+        return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
     }
 }

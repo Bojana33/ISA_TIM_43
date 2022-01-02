@@ -209,6 +209,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setFirstName(userUpdate.getFirstName());
         existingUser.setSurname(userUpdate.getSurname());
         existingUser.setPhoneNumber(userUpdate.getPhoneNumber());
+        existingUser.setAddress(userUpdate.getAddress());
         return userRepository.save(existingUser);
     }
 
