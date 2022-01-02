@@ -8,4 +8,6 @@ import java.util.*;
 public interface ReservationService {
 
     List<Reservation> findByClient(Client client);
+
+    Collection<Reservation> findAllReservationsForEntity(Integer entityId);
 }

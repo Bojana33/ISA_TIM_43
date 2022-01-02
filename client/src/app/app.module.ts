@@ -12,7 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -43,7 +43,7 @@ import { AdventureComponent } from './adventure/adventure.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
@@ -58,7 +58,19 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+<<<<<<< HEAD
 import { WriteComplaintComponent } from './write-complaint/write-complaint.component';
+=======
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './calendar/calendar.component';
+import {DatePipe} from '@angular/common';
+import { ReservationFormComponent } from './reservation-form/reservation-form.component';
+
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+
+
+>>>>>>> develop
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -96,7 +108,12 @@ const mapConfig: YaConfig = {
     DeleteProfileComponent,
     DeleteRequestsComponent,
     DeleteRequestResponseComponent,
+<<<<<<< HEAD
     WriteComplaintComponent
+=======
+    CalendarComponent,
+    ReservationFormComponent,
+>>>>>>> develop
   ],
   imports: [
     BrowserModule,
@@ -105,7 +122,6 @@ const mapConfig: YaConfig = {
     FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatCardModule,
     MatToolbarModule,
     HttpClientModule,
@@ -117,11 +133,17 @@ const mapConfig: YaConfig = {
     MatTableModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
-    MatGridListModule,
-    AngularYandexMapsModule.forRoot(mapConfig)
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   exports: [
     SignupClientComponent
@@ -142,7 +164,9 @@ const mapConfig: YaConfig = {
     UserService,
     ConfigService,
     MatIconRegistry,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDatepickerModule,
+    DatePipe
 
   ],
   bootstrap: [AppComponent]

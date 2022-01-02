@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +36,7 @@ public class CottageController {
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
         cottage = cottageService.addNewCottage(cottage);
-            return cottage;
+        return cottage;
     }
     @DeleteMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> deleteCottage(@PathVariable("cottage_id") Integer id){
@@ -77,12 +78,22 @@ public class CottageController {
         }
         return cottageDTOS;
     }
-    @ResponseStatus(HttpStatus.CREATED)
+
     @PutMapping("/{cottage_id}")
-    public Cottage updateCottage(@RequestBody CottageDTO cottageDTO){
-        Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
-        cottage = cottageService.updateCottage(cottage);
-        return cottage;
+    public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
+        ResponseEntity responseEntity = null;
+        try{
+            CottageDTO updatedCottageDTO;
+            Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
+            cottage = cottageService.updateCottage(cottage);
+            updatedCottageDTO = cottageMapper.mapCottageToDto(cottage);
+            responseEntity = ResponseEntity.ok(updatedCottageDTO);
+
+        } catch (UnsupportedOperationException e){
+            responseEntity = ResponseEntity.noContent().build();
+        }
+
+        return responseEntity;
     }
 
 }

@@ -38,18 +38,20 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException {
-        Entity entity =  entityRepository.getById(entity_id);
+        Entity entity =  entityRepository.findById(entity_id).get();
         if(isReservationTimeValid(entity, reservation)){
             Collection<Reservation> reservations = entity.getReservations();
             reservation.setCreationDate(LocalDateTime.now());
             reservation.setEntity(entity);
             reservation.setReservationStatus(ReservationStatus.FREE);
             Collection<AdditionalService> additionalServices = reservation.getAdditionalServices();
-            for(AdditionalService additionalService: additionalServices){
-                additionalService.setReservation(reservation);
-                additionalService.setEntity(entity);
+            if(additionalServices != null){
+                for(AdditionalService additionalService: additionalServices){
+                    additionalService.setReservation(reservation);
+                    additionalService.setEntity(entity);
+                }
+                reservation.setAdditionalServices(additionalServices);
             }
-            reservation.setAdditionalServices(additionalServices);
             reservations.add( reservation);
             entity.setReservations(reservations);
             entity = entityRepository.save(entity);

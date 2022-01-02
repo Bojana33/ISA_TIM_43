@@ -11,4 +11,6 @@ import java.util.*;
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
     List<Reservation> findAllByClient(Client client);
+
+    Collection<Reservation> findAllByEntity_Id(Integer entityId);
 }

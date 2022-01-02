@@ -13,8 +13,9 @@ VALUES ('Belgrade', 'Serbia', '10', 'Kralja Aleksandra I');
 INSERT INTO addresses(
     city, country, house_number, street)
 VALUES ('Belgrade', 'Serbia', '110', 'Bulevar Kralja Aleksandra I'),
-       ('Novi Sad','Serbia','Janka Quelika','215'),
-       ('Krusevac','Serbia','22','Seke gasic 201');
+       ('Novi Sad','Serbia','215','Janka Quelika'),
+       ('Krusevac','Serbia','22','Seke gasic');
+--        ('Novi Sad','Serbia', '10', 'Ulice ulicic')
 
 
 -- password - password
@@ -39,6 +40,8 @@ values (1,'This is instructor biography', 10, 'Some house rules');
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo,address_id)
 values ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2);
+--        ('Novi Sad | Lux Vikendica','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+--         5,15,'',4);
 
 insert into
     adventure(id, instructor_bio, cancellation_fee, house_rules)
@@ -49,4 +52,3 @@ insert into owner (category, loyalty_points, owner_type, id)
 
 insert into client (category, loyalty_points, penalty, id)
 values (0,0,0,3);
-

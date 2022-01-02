@@ -32,6 +32,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+import {CalendarComponent} from './calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -109,6 +110,10 @@ const routes: Routes = [
   {
     path: 'cottages/:id',
     component: CottageComponent
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent
   },
   {
     path: 'register-cottage',
