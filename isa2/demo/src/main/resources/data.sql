@@ -52,3 +52,32 @@ insert into owner (category, loyalty_points, owner_type, id)
 
 insert into client (category, loyalty_points, penalty, id)
 values (0,0,0,3);
+
+insert into
+    entities(name, description,  max_guests, price_per_day, entity_photo, average_grade, address_id)
+values ('VIKENDICA 1', 'This is a beautiful cottage', 10, 10, './../../assets/images/cottage1.jpg', 2, 1);
+
+INSERT INTO COTTAGE (id) VALUES (3);
+INSERT INTO ROOM (id, number_of_beds, cottage_id) VALUES (1, 2, 3);
+
+insert into
+    entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
+values ('VIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1);
+
+INSERT INTO COTTAGE (id) VALUES (4);
+INSERT INTO ROOM (id, number_of_beds, cottage_id) VALUES (2, 2, 4);
+
+insert into
+    entities(name, description,  max_guests, price_per_day, entity_photo,  address_id)
+values ('BROD 1', 'Incredible', 10, 10, './../../assets/images/yacht.jpg',  1);
+
+INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
+VALUES (5, 0, 20.0, 12.3, 200, 15, 15, 20, 'no rules', null);
+
+insert into
+    entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
+values ('BROD 2', 'Perfect rest day on our boat', 10, 9, './../../assets/images/fishing-boat.jpg',  1);
+
+INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
+VALUES (6, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel');
+

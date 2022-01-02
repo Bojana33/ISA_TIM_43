@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,8 +33,12 @@ public class AdventureController {
     }
 
     @GetMapping(value = "/get_all_adventures", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Adventure>> getAllAdventures(){
-        return new ResponseEntity<>(this.adventureService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<AdventureDTO>> getAllAdventures(){
+        List<Adventure> adventures = this.adventureService.findAll();
+        List<AdventureDTO> adventureDTOS = new ArrayList<>();
+        for(Adventure adventure : adventures)
+            adventureDTOS.add(adventureMapper.mapAdventureToDTO(adventure));
+        return new ResponseEntity<>(adventureDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/get_adventure/{id}")

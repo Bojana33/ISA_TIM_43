@@ -1,7 +1,7 @@
 import { RegistrationRequestService } from './../service/registration-request.service';
 import { OwnerType } from '../enum/owner-type';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup,Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomValidationService } from '../service/custom-validation.service';
@@ -22,25 +22,25 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackbar: MatSnackBar,
     private customValidator: CustomValidationService,
-    private requestService:RegistrationRequestService
-    ) { }
+    private requestService: RegistrationRequestService
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      firstName: '',
-      surname: '',
-      email: '',
-      password: ['',Validators.compose([ Validators.required,Validators.minLength(3), Validators.maxLength(64)])],
-      repeatPassword: ['', Validators.compose([ Validators.required,Validators.minLength(3), Validators.maxLength(64)])],
-      street: '',
-      city: '',
-      country: '',
-      houseNumber: '',
-      phoneNumber: '',
-      registrationExplanation: '',
-      ownerType: OwnerType
-    },
-    {validator: this.customValidator.passwordMatchValidator('password', 'repeatPassword')});
+        firstName: '',
+        surname: '',
+        email: '',
+        password: ['', Validators.compose([ Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
+        repeatPassword: ['', Validators.compose([ Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
+        street: '',
+        city: '',
+        country: '',
+        houseNumber: '',
+        phoneNumber: '',
+        registrationExplanation: '',
+        ownerType: OwnerType
+      },
+      {validator: this.customValidator.passwordMatchValidator('password', 'repeatPassword')});
   }
 
   submit() : void{

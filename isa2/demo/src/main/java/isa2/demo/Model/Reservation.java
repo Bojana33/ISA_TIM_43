@@ -1,6 +1,9 @@
 package isa2.demo.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +23,8 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "reservations")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Reservation implements Serializable {
 
    @Id
@@ -34,23 +39,24 @@ public class Reservation implements Serializable {
    @Column
    private Float price;
 
-   @Column
+   @Column(name = "number_of_guests")
    private Integer numberOfGuests;
 
-   @Column
+   @Column(name = "reservation_status")
    private ReservationStatus reservationStatus = ReservationStatus.FREE;
 
-   @Column
+   @Column(name = "additional_notes")
    private String additionalNotes;
    
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "sale_period_id", referencedColumnName = "id")
    private Period salePeriod;
 
+   @JsonManagedReference
    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
    private Collection<AdditionalService> additionalServices;
 
@@ -66,12 +72,13 @@ public class Reservation implements Serializable {
    @JoinColumn(name = "user_complaint_id", referencedColumnName = "id")
    private UserComplaint userComplaint;
 
+   @JsonBackReference
    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
    @JoinColumn(name = "client_id", referencedColumnName = "id")
    private Client client;
 
    @JsonBackReference
-   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+   @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
    @JoinColumn(name = "reservation_entity_id", referencedColumnName = "id")
    private isa2.demo.Model.Entity entity;
 }

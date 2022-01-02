@@ -22,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -49,6 +50,9 @@ public class AuthController {
 
     @Autowired
     private RegistrationRequestService registrationRequestService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRequestMapper userRequestMapper;
@@ -106,6 +110,7 @@ public class AuthController {
             throw new ResourceConflictException(userRequest.getId(), "Email already exists");
         }
         try {
+            userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             UserRequest userRequest1 = this.userService.saveUserRequest(userRequest);
             return new ResponseEntity<UserRequest>(userRequest1, HttpStatus.CREATED);
         } catch (MessagingException me) {

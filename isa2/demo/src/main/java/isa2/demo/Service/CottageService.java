@@ -12,4 +12,5 @@ public interface CottageService {
     List<Cottage> findAllCottages();
     List<Cottage> findCottagesByName(String name);
     Cottage deleteCottage(Integer id) throws Exception;
+    List<Cottage> findAll();
 }

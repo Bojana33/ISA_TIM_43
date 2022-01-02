@@ -1,0 +1,44 @@
+<select class="select" ng-model="searchFilter" ng-change="selectAction()">
+  <option>Search By ...</option>
+  <option value="name">Cottage Name</option>
+  <option value="pricePerDay">Price per day</option>
+  <option value="averageGrade">Average grade</option>
+  <option value="location">Location</option>
+</select>
+<input #box class="searchForm" type="text" placeholder="Search by name, price per day or description :"  [(ngModel)]="searchTerm"  (input)="search(searchFilter,box.value)">
+
+
+<div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div *ngFor="let item of cottages | filter: searchTerm">
+      <mat-card class="mat-elevation-z4"  style="width: 520px;">
+        <a routerLink="/oneCottage/{{item.id}}" routerLinkActive="active">
+        <mat-card-header class="name">
+          <mat-card-title>{{item.cottageName}}</mat-card-title>
+        </mat-card-header>
+        </a>
+        <div class="photo">
+          <img  height="250px auto" mat-card-image src="{{item.entityPhoto}}">
+        </div>
+        <mat-card-content>
+          <p>
+            Description: {{item.description}}
+          </p>
+          <p>
+            Guests: max {{item.maxNumberOfGuests}}
+          </p>
+          <p>
+            Price: {{item.pricePerDay}}
+          </p>
+          <p>
+            Address: {{item.address.country}}, {{item.address.city}}, {{item.address.street}}, {{item.address.houseNumber}}
+          </p>
+          <p>
+            Average grade: {{item.averageGrade}}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+

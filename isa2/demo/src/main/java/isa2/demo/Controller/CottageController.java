@@ -2,6 +2,8 @@ package isa2.demo.Controller;
 
 import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
+import isa2.demo.Model.Address;
+import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
 
 import isa2.demo.Repository.OwnerRepository;
@@ -96,4 +98,12 @@ public class CottageController {
         return responseEntity;
     }
 
+    @GetMapping(value =  "/get_all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CottageDTO>> getAll(){
+        List<Cottage> cottages = this.cottageService.findAll();
+        List<CottageDTO> cottageDTOS = new ArrayList<>();
+        for (Cottage cottage : cottages)
+            cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+        return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+    }
 }

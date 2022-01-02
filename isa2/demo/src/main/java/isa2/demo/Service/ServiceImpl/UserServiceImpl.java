@@ -1,6 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Exception.EmailAlreadyInUseException;
+import isa2.demo.Exception.EmailNotExistsException;
 import isa2.demo.Model.Authority;
 import isa2.demo.Model.User;
 import isa2.demo.Model.UserRequest;
@@ -50,9 +51,15 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
+    @Override
+    public User findByUsername(String email) throws UsernameNotFoundException {
+        User u = userRepository.findByEmail(email);
+        return u;
+    }
+
     public User findById(Integer id) {
-//        Optional<User> u = Optional.ofNullable(userRepository.findById(id).orElse(null));
-//        return u;
+    //        Optional<User> u = Optional.ofNullable(userRepository.findById(id).orElse(null));
+    //        return u;
         User u = this.userRepository.findById(id).get();
         return u;
     }
@@ -134,7 +141,7 @@ public class UserServiceImpl implements UserService {
             return false;
         } else {
             //Create user
-            User user = new User();
+            Client user = new Client();
             user.setFirstName(userRequest.getFirstName());
             user.setSurname(userRequest.getSurname());
             user.setPassword(userRequest.getPassword());
@@ -144,15 +151,26 @@ public class UserServiceImpl implements UserService {
             user.setActivated(true);
             user.setDeleted(false);
             user.setIsAdmin(false);
+            user.setLoyaltyPoints(0.0);
+            user.setCategory(UserCategory.REGULAR);
+            user.setPenalty(0);
+
+            List<Authority> auth;
+            auth = authService.findByname("ROLE_USER");
+            user.setAuthorities(auth);
+
             userRepository.save(user);
 
             //disable ability to verified 2 times same account
-            userRequest.setVerificationCode(null);
-            userRequestRepository.save(userRequest);
+            //userRequest.setVerificationCode(null);
+            //userRequestRepository.save(userRequest);
+
+            //delete user request
+            userRequestRepository.delete(userRequest);
             return true;
         }
-
     }
+
     @Override
     public void sendEmail(String subject, String content, String email) throws AddressException, MessagingException {
         try {
@@ -184,6 +202,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateUser(User userUpdate, String user) throws EmailNotExistsException {
+        User existingUser = this.findByUsername(user);
+        if(existingUser == null)
+            throw new EmailNotExistsException("User not exists");
+        existingUser.setFirstName(userUpdate.getFirstName());
+        existingUser.setSurname(userUpdate.getSurname());
+        existingUser.setPhoneNumber(userUpdate.getPhoneNumber());
+        existingUser.setAddress(userUpdate.getAddress());
+        return userRepository.save(existingUser);
+    }
+
     public void delete(User user) {
         this.userRepository.delete(user);
     }
