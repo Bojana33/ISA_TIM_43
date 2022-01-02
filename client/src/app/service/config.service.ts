@@ -14,8 +14,8 @@ export class ConfigService {
   private _boat_url = 'http://localhost:8090/boats';
   private _client_url = 'http://localhost:8090/client';
   private _cottages_url = 'http://localhost:8090/cottages';
-  private _user_delete_request_url = 'http://localhost:8090/user_delete_request'
-
+  private _entity_url = 'http://localhost:8090/entities';
+  private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
   private _refresh_token_url = this._auth_url + '/refresh';
 
   get user_delete_request_url(): string{
@@ -48,6 +48,10 @@ export class ConfigService {
 
   get refresh_token_url(): string {
     return this._refresh_token_url;
+  }
+
+  get entity_url(): string {
+    return this._entity_url;
   }
 
   private _login_url = this._auth_url + '/login';

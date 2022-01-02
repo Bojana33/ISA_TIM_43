@@ -66,6 +66,8 @@ export class ProfileUpdateComponent implements OnInit {
     this.user.address.city = values.city;
     this.user.address.houseNumber = values.houseNumber;
     this.userService.update(this.user);
-    this.router2.navigate(['/profile']);
+    this.router2.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router2.navigate(['/profile'])
+    });
   }
 }

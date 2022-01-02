@@ -4,10 +4,13 @@ import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../service/user.service';
-import {User} from '../model/user';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {CalendarComponent} from '../calendar/calendar.component';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {ReservationDTO} from '../model/reservation-dto.model';
+import {ReservationService} from '../service/reservation.service';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -16,8 +19,8 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./cottage.component.css']
 })
 export class CottageComponent implements OnInit {
-  cottage: CottageDTO = ({} as any);
-
+  cottage: CottageDTO = new CottageDTO();
+  showForm = 1;
   cottageUpdateForm = this.formBuilder.group({
     cottageName: new FormControl(this.cottage.cottageName, Validators.required),
     description: new FormControl(this.cottage.description, Validators.required),
@@ -31,7 +34,10 @@ export class CottageComponent implements OnInit {
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
-    private formBuilder: FormBuilder
+    private reservationService: ReservationService,
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe
+
   ) {
   }
 
@@ -75,6 +81,29 @@ export class CottageComponent implements OnInit {
     return this.cottageService.updateCottage(this.cottage).subscribe(
       res => {
         this.cottage = res;
+      });
+  }
+
+  createNewReservation($event: ReservationDTO){
+    const datepipe = new DatePipe('en-US');
+    let formatedReservationStartDate = datepipe.transform($event.reservedPeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
+    let formatedReservationEndDate = datepipe.transform($event.reservedPeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
+    let formatedSaleStartDate = datepipe.transform($event.salePeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
+    let formatedSaleEndDate = datepipe.transform($event.salePeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
+    console.log($event.reservedPeriod.startDate);
+    console.log(formatedReservationStartDate);
+    // @ts-ignore
+    $event.reservedPeriod.startDate = new Date(formatedReservationStartDate.toString());
+    console.log($event.reservedPeriod.startDate);
+    // @ts-ignore
+    $event.reservedPeriod.endDate = new Date(formatedReservationEndDate.toString());
+    // @ts-ignore
+    $event.salePeriod.startDate = new Date(formatedSaleStartDate.toString());
+    // @ts-ignore
+    $event.salePeriod.endDate = new Date(formatedSaleEndDate.toString());
+    this.reservationService.createNewReservationForEntity($event).subscribe(
+        (res: any) => {
+        console.log(res);
       });
   }
 }

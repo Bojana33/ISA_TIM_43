@@ -1,0 +1,162 @@
+<div class="columns is-mobile is-centered">
+  <div class="column is-half">
+    <form [formGroup]="cottageReservationForm">
+
+      <div class = "field">
+        <label class = "label" for="price">
+          Pricer per day:
+        </label>
+        <div class = "control">
+          <input class = "input" id="price" type="number" formControlName="price">
+        </div>
+      </div>
+
+      <div class = "field">
+        <label class = "label" for="maxNumberOfGuests">
+          Maximum number of guests:
+        </label>
+        <div class = "control">
+          <input class = "input" id="maxNumberOfGuests" type="number" formControlName="numberOfGuests">
+        </div>
+      </div>
+      salePeriodStartDate
+
+      <div class="field">
+        <label class="label">
+          Additional notes:
+        </label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Additional notes" formControlName="additionalNotes"></textarea>
+        </div>
+      </div>
+
+      <div formGroupName="reservedPeriod">
+
+        <div class = "field">
+          <label class = "label" for="reservationStartDate">
+            Reservation start:
+          </label>
+          <div class = "control">
+            <input id="reservationStartDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                   placeholder="Date Time" formControlName="startDate">
+            <owl-date-time #dt1></owl-date-time>
+          </div>
+        </div>
+
+        <div class = "field">
+          <label class = "label" for="reservationEndDate">
+            Reservation end:
+          </label>
+          <div class = "control">
+            <input id="reservationEndDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                   placeholder="Date Time" formControlName="endDate">
+            <owl-date-time #dt2></owl-date-time>
+          </div>
+        </div>
+<!--        <label for="street">Street: </label>-->
+<!--        <input id="street" type="text" formControlName="street">-->
+
+<!--        <label for="city">City: </label>-->
+<!--        <input id="city" type="text" formControlName="city">-->
+
+<!--        <label for="state">State: </label>-->
+<!--        <input id="state" type="text" formControlName="state">-->
+
+<!--        <label for="zip">Zip Code: </label>-->
+<!--        <input id="zip" type="text" formControlName="zip">-->
+      </div>
+      <div formGroupName="salePeriod">
+
+        <div class = "field">
+          <label class = "label" for="startDate">
+            Sale start:
+          </label>
+          <div class = "control">
+            <input id="startDate" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3"
+                   placeholder="Date Time" formControlName="startDate">
+            <owl-date-time #dt3></owl-date-time>
+          </div>
+        </div>
+
+        <div class = "field">
+          <label class = "label" for="endDate">
+            Sale end:
+          </label>
+          <div class = "control">
+            <input id="endDate" [owlDateTime]="dt4" [owlDateTimeTrigger]="dt4"
+                   placeholder="Date Time" formControlName="endDate">
+            <owl-date-time #dt4></owl-date-time>
+          </div>
+        </div>
+        <!--        <label for="street">Street: </label>-->
+        <!--        <input id="street" type="text" formControlName="street">-->
+
+        <!--        <label for="city">City: </label>-->
+        <!--        <input id="city" type="text" formControlName="city">-->
+
+        <!--        <label for="state">State: </label>-->
+        <!--        <input id="state" type="text" formControlName="state">-->
+
+        <!--        <label for="zip">Zip Code: </label>-->
+        <!--        <input id="zip" type="text" formControlName="zip">-->
+      </div>
+<!--      <div formGroupName="additionalServices">-->
+
+<!--        <div class = "field">-->
+<!--          <label class = "label" for="name">-->
+<!--            Additional service name:-->
+<!--          </label>-->
+<!--          <div class = "control">-->
+<!--            <input class = "input" id="name" type="text" formControlName="name">-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <<div class = "field">-->
+<!--        <label class = "label" for="additionalServicePrice">-->
+<!--          Additional service price:-->
+<!--        </label>-->
+<!--        <div class = "control">-->
+<!--          <input class = "input" id="additionalServicePrice" type="number" formControlName="price">-->
+<!--        </div>-->
+<!--        </div>-->
+<!--      </div>-->
+        <!--        <label for="street">Street: </label>-->
+        <!--        <input id="street" type="text" formControlName="street">-->
+
+        <!--        <label for="city">City: </label>-->
+        <!--        <input id="city" type="text" formControlName="city">-->
+
+        <!--        <label for="state">State: </label>-->
+        <!--        <input id="state" type="text" formControlName="state">-->
+
+        <!--        <label for="zip">Zip Code: </label>-->
+        <!--        <input id="zip" type="text" formControlName="zip">-->
+
+<!--      <div class = "field">-->
+<!--        <label class = "label" for="saleStart">-->
+<!--          Sale start:-->
+<!--        </label>-->
+<!--        <div class = "control">-->
+<!--          <input id="saleStart" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3"-->
+<!--                 placeholder="Date Time" formControlName="salePeriodStartDate">-->
+<!--          <owl-date-time #dt3></owl-date-time>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class = "field">-->
+<!--        <label class = "label" for="saleEnd">-->
+<!--          Sale end:-->
+<!--        </label>-->
+<!--        <div class = "control">-->
+<!--          <input id="saleEnd" [owlDateTime]="dt4" [owlDateTimeTrigger]="dt4"-->
+<!--                 placeholder="Date Time" formControlName="salePeriodEndDate">-->
+<!--          <owl-date-time #dt4></owl-date-time>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <button class="button is-success" (click)="makeReservation()" >Save changes</button>
+
+    </form>
+  </div>
+</div>
+

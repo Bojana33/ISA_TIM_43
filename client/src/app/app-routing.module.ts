@@ -37,9 +37,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
-import {BoatsUserComponent} from "./user-quest/boats-user/boats-user.component";
-import {CottagesUserComponent} from "./user-quest/cottages-user/cottages-user.component";
-import {OneCottageComponent} from "./user-quest/one-cottage/one-cottage.component";
+import {BoatsUserComponent} from './user-quest/boats-user/boats-user.component';
+import {CottagesUserComponent} from './user-quest/cottages-user/cottages-user.component';
+import {OneCottageComponent} from './user-quest/cottages-user/one-cottage/one-cottage.component';
+import {CalendarComponent} from './calendar/calendar.component';
+import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
+import {OneBoatUserComponent} from "./user-quest/boats-user/one-boat-user/one-boat-user.component";
 
 
 const routes: Routes = [
@@ -133,6 +136,10 @@ const routes: Routes = [
     component: CottageComponent
   },
   {
+    path: 'calendar',
+    component: CalendarComponent
+  },
+  {
     path: 'register-cottage',
     component: RegisterCottageComponent
   },
@@ -160,6 +167,14 @@ const routes: Routes = [
   {
     path: 'oneCottage/:id',
     component: OneCottageComponent
+  },
+  {
+    path: 'oneAdventure/:id',
+    component: OneAdventureComponent
+  },
+  {
+    path: 'oneBoat/:id',
+    component: OneBoatUserComponent
   },
   {
     path: 'boatsCatalog',

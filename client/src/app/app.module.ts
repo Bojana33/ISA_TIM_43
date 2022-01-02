@@ -43,7 +43,7 @@ import { AdventuresComponent } from './adventures/adventures.component';
 import { AdventureComponent } from './adventure/adventure.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
 import { ProfileUpdateComponent } from './profile/profile-update/profile-update.component';
@@ -66,9 +66,19 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
-import {BoatsUserComponent} from "./user-quest/boats-user/boats-user.component";
-import {CottagesUserComponent} from "./user-quest/cottages-user/cottages-user.component";
-import { OneCottageComponent } from './user-quest/one-cottage/one-cottage.component';
+import {BoatsUserComponent} from './user-quest/boats-user/boats-user.component';
+import {CottagesUserComponent} from './user-quest/cottages-user/cottages-user.component';
+import { OneCottageComponent } from './user-quest/cottages-user/one-cottage/one-cottage.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './calendar/calendar.component';
+import {DatePipe} from '@angular/common';
+import { ReservationFormComponent } from './reservation-form/reservation-form.component';
+
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
+import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
+
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -117,7 +127,11 @@ const mapConfig: YaConfig = {
     DeleteRequestResponseComponent,
     BoatsUserComponent,
     CottagesUserComponent,
-    OneCottageComponent
+    OneCottageComponent,
+    CalendarComponent,
+    ReservationFormComponent,
+    OneAdventureComponent,
+    OneBoatUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -126,7 +140,6 @@ const mapConfig: YaConfig = {
     FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatCardModule,
     MatToolbarModule,
     HttpClientModule,
@@ -138,12 +151,20 @@ const mapConfig: YaConfig = {
     MatTableModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
     Ng2SearchPipeModule,
     MatGridListModule,
-    AngularYandexMapsModule.forRoot(mapConfig)
+    AngularYandexMapsModule.forRoot(mapConfig),
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   exports: [
     SignupClientComponent
@@ -164,7 +185,9 @@ const mapConfig: YaConfig = {
     UserService,
     ConfigService,
     MatIconRegistry,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDatepickerModule,
+    DatePipe
 
   ],
   bootstrap: [AppComponent]

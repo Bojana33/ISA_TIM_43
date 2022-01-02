@@ -1,5 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
 import isa2.demo.Repository.BoatRepository;
 import isa2.demo.Service.BoatService;
@@ -16,5 +17,10 @@ public class BoatServiceImpl implements BoatService {
     @Override
     public List<Boat> findAll() {
         return this.boatRepository.findAll();
+    }
+
+    @Override
+    public Boat findOne(Integer id) {
+        return this.boatRepository.findById(id).get();
     }
 }
