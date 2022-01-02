@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class EntityServiceImpl implements EntityService {
@@ -93,5 +94,10 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2) {
         return (!startDate2.isAfter(endDate1) && !endDate2.isBefore(startDate1));
+    }
+
+    @Override
+    public Entity findByReservations(Reservation reservation) {
+        return this.entityRepository.findByReservations(reservation);
     }
 }
