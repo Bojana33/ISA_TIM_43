@@ -9,6 +9,7 @@ import {ConfigService} from '../service/config.service';
 import {ReservationService} from '../service/reservation.service';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationStatus} from '../enum/ReservationStatus';
+import {Moment} from 'moment';
 
 
 @Component({
@@ -37,7 +38,6 @@ export class CalendarComponent implements OnInit{
   viewDate: Date = new Date();
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
-
   ngOnInit(): void {
     this.getReservationsForCottage(this.cottageId);
   }
@@ -54,16 +54,15 @@ export class CalendarComponent implements OnInit{
             id: item.reservedPeriod.id,
             // @ts-ignore
             // tslint:disable-next-line:max-line-length
-            start: new Date((item.reservedPeriod.startDate)[0] - 1, (item.reservedPeriod.startDate)[1], (item.reservedPeriod.startDate)[2], (item.reservedPeriod.startDate)[3], (item.reservedPeriod.startDate)[4]),
+            start: new Date((item.reservedPeriod.startDate)[0], (item.reservedPeriod.startDate)[1] - 1, (item.reservedPeriod.startDate)[2], (item.reservedPeriod.startDate)[3], (item.reservedPeriod.startDate)[4], (item.reservedPeriod.startDate)[5]),
             // @ts-ignore
             // tslint:disable-next-line:max-line-length
-            end: new Date((item.reservedPeriod.endDate)[0] - 1, (item.reservedPeriod.endDate)[1], (item.reservedPeriod.endDate)[2], (item.reservedPeriod.endDate)[3], (item.reservedPeriod.endDate)[4]),
+            end: new Date((item.reservedPeriod.endDate)[0], (item.reservedPeriod.endDate)[1] - 1, (item.reservedPeriod.endDate)[2], (item.reservedPeriod.endDate)[3], (item.reservedPeriod.endDate)[4], (item.reservedPeriod.endDate)[5]),
             title: item.reservationStatus.toString() + ' termin',
             color: eventColor,
             draggable: true
           });
         });
-        console.log(this.events);
         this.refresh.next();
       });
   }

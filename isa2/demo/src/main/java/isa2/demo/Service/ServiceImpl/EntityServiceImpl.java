@@ -37,7 +37,7 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException {
-        Entity entity =  entityRepository.getById(entity_id);
+        Entity entity =  entityRepository.findById(entity_id).get();
         if(isReservationTimeValid(entity, reservation)){
             Collection<Reservation> reservations = entity.getReservations();
             reservation.setCreationDate(LocalDateTime.now());
