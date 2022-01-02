@@ -11,6 +11,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 import {DatePipe} from '@angular/common';
+import {Subject} from 'rxjs';
 
 
 @Component({
@@ -22,10 +23,23 @@ export class CottageComponent implements OnInit {
   cottage: CottageDTO = new CottageDTO();
   showForm = 1;
   cottageUpdateForm = this.formBuilder.group({
-    cottageName: new FormControl(this.cottage.cottageName, Validators.required),
-    description: new FormControl(this.cottage.description, Validators.required),
-    pricePerDay: new FormControl(this.cottage.pricePerDay, [Validators.min(0), Validators.required]),
-    maxNumberOfGuests: new FormControl(this.cottage.maxNumberOfGuests, [Validators.required, Validators.min(0)])
+    cottageName: new FormControl(this.cottage.cottageName, [
+      Validators.required,
+      Validators.minLength(5)]
+    ),
+    description: new FormControl(this.cottage.description,[
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(511)]
+    ),
+    pricePerDay: new FormControl(this.cottage.pricePerDay, [
+      Validators.min(0),
+      Validators.required]
+    ),
+    maxNumberOfGuests: new FormControl(this.cottage.maxNumberOfGuests, [
+      Validators.required,
+      Validators.min(0)]
+    )
   });
   constructor(
     private httpClient: HttpClient,
@@ -40,7 +54,6 @@ export class CottageComponent implements OnInit {
 
   ) {
   }
-
   ngOnInit(): void {
     this.httpClient.get<any>(this.config.cottages_url + '/' + this.router.snapshot.params.id).subscribe(
       response => {
@@ -81,26 +94,27 @@ export class CottageComponent implements OnInit {
     return this.cottageService.updateCottage(this.cottage).subscribe(
       res => {
         this.cottage = res;
+        this.ngOnInit();
       });
   }
 
   createNewReservation($event: ReservationDTO){
-    const datepipe = new DatePipe('en-US');
-    let formatedReservationStartDate = datepipe.transform($event.reservedPeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
-    let formatedReservationEndDate = datepipe.transform($event.reservedPeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
-    let formatedSaleStartDate = datepipe.transform($event.salePeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
-    let formatedSaleEndDate = datepipe.transform($event.salePeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
-    console.log($event.reservedPeriod.startDate);
-    console.log(formatedReservationStartDate);
-    // @ts-ignore
-    $event.reservedPeriod.startDate = new Date(formatedReservationStartDate.toString());
-    console.log($event.reservedPeriod.startDate);
-    // @ts-ignore
-    $event.reservedPeriod.endDate = new Date(formatedReservationEndDate.toString());
-    // @ts-ignore
-    $event.salePeriod.startDate = new Date(formatedSaleStartDate.toString());
-    // @ts-ignore
-    $event.salePeriod.endDate = new Date(formatedSaleEndDate.toString());
+    // const datepipe = new DatePipe('en-US');
+    // let formatedReservationStartDate = datepipe.transform($event.reservedPeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
+    // let formatedReservationEndDate = datepipe.transform($event.reservedPeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
+    // let formatedSaleStartDate = datepipe.transform($event.salePeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
+    // let formatedSaleEndDate = datepipe.transform($event.salePeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
+    // console.log($event.reservedPeriod.startDate);
+    // console.log(formatedReservationStartDate);
+    // // @ts-ignore
+    // $event.reservedPeriod.startDate = new Date(formatedReservationStartDate.toString());
+    // console.log($event.reservedPeriod.startDate);
+    // // @ts-ignore
+    // $event.reservedPeriod.endDate = new Date(formatedReservationEndDate.toString());
+    // // @ts-ignore
+    // $event.salePeriod.startDate = new Date(formatedSaleStartDate.toString());
+    // // @ts-ignore
+    // $event.salePeriod.endDate = new Date(formatedSaleEndDate.toString());
     this.reservationService.createNewReservationForEntity($event).subscribe(
         (res: any) => {
         console.log(res);

@@ -13,6 +13,7 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 })
 export class ReservationFormComponent{
   @Input() entityId: any;
+  @Input()
   @Output() createdReservationEvent = new EventEmitter<ReservationDTO>();
   cottageReservationForm = this.formBuilder.group({
     price: ['', [Validators.required]],

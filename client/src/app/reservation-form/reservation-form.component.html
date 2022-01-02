@@ -1,5 +1,4 @@
 <div class="columns is-mobile is-centered">
-  <div class="column is-half">
     <form [formGroup]="cottageReservationForm">
 
       <div class = "field">
@@ -154,9 +153,10 @@
 <!--        </div>-->
 <!--      </div>-->
 
-      <button class="button is-success" (click)="makeReservation()" >Save changes</button>
+      <footer class="modal-card-foot is-fullwidth">
+        <button class="button is-success" (click)="makeReservation()" >Save changes</button>
+      </footer>
 
     </form>
-  </div>
 </div>
 
