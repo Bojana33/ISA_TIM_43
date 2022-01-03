@@ -53,6 +53,6 @@ public class Entity implements Serializable {
     private java.util.Collection<Client> subscribedClients;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity")
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity", orphanRemoval = true)
     public java.util.Collection<Reservation> reservations;
 }

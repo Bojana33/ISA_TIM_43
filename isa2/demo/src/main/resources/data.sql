@@ -58,14 +58,14 @@ insert into
 values ('VIKENDICA 1', 'This is a beautiful cottage', 10, 10, './../../assets/images/cottage1.jpg', 2, 1);
 
 INSERT INTO COTTAGE (id) VALUES (3);
-INSERT INTO ROOM (id, number_of_beds, cottage_id) VALUES (1, 2, 3);
+INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 3);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
 values ('VIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1);
 
 INSERT INTO COTTAGE (id) VALUES (4);
-INSERT INTO ROOM (id, number_of_beds, cottage_id) VALUES (2, 2, 4);
+INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 4);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo,  address_id)

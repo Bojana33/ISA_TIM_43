@@ -48,11 +48,11 @@ public class Reservation implements Serializable {
    @Column(name = "additional_notes")
    private String additionalNotes;
    
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
 
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(fetch =FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "sale_period_id", referencedColumnName = "id")
    private Period salePeriod;
 

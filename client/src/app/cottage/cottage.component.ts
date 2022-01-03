@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../service/user.service';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -30,19 +30,20 @@ export class CottageComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
-    private router: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
+    private router: Router,
     private datePipe: DatePipe
 
   ) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<any>(this.config.cottages_url + '/' + this.router.snapshot.params.id).subscribe(
+    this.httpClient.get<any>(this.config.cottages_url + '/' + this.activatedRoute.snapshot.params.id).subscribe(
       response => {
         this.cottage = response;
       });
@@ -78,10 +79,11 @@ export class CottageComponent implements OnInit {
   // tslint:disable-next-line:typedef
   updateCottage(){
     // this.snackbar.open('cottage delete request sent', 'cancel');
-    return this.cottageService.updateCottage(this.cottage).subscribe(
-      res => {
-        this.cottage = res;
-      });
+    this.cottageService.updateCottage(this.cottage).subscribe(
+    res => {
+      this.cottage = res;
+      // this.router.navigate(['/cottages']);
+    });
   }
 
   createNewReservation($event: ReservationDTO){
