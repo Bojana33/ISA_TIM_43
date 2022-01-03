@@ -38,7 +38,7 @@ public class Boat extends Entity {
     @Column(name = "house_rules")
     private java.lang.String houseRules;
 
-    @Column
+    @Column(name = "fishing_equipment")
     private String fishingEquipment;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

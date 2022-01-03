@@ -38,14 +38,22 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AdventuresComponent } from './adventures/adventures.component';
 import { AdventureComponent } from './adventure/adventure.component';
-import { ProfileComponent } from './profile/profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { CreateAdventureComponent } from './create-adventure/create-adventure.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRippleModule } from '@angular/material/core';
+import { ProfileUpdateComponent } from './profile/profile-update/profile-update.component';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {FilterPipe} from './user-quest/filter.pipe';
+import { AdventuresUserComponent } from './user-quest/adventures-user/adventures-user.component';
+import { UserComplaintComponent } from './user-complaint/user-complaint.component';
+import { SubscriptionsComponent } from './user-quest/subscriptions/subscriptions.component';
+import { ReservationsComponent } from './user-quest/reservations/reservations.component';
+// import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 import { MapComponent } from './map/map.component';
 import { BoatsComponent } from './boats/boats.component';
@@ -58,6 +66,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
+import {BoatsUserComponent} from './user-quest/boats-user/boats-user.component';
+import {CottagesUserComponent} from './user-quest/cottages-user/cottages-user.component';
+import { OneCottageComponent } from './user-quest/cottages-user/one-cottage/one-cottage.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -65,7 +76,8 @@ import {DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
-
+import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
+import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 
 
 const mapConfig: YaConfig = {
@@ -87,11 +99,20 @@ const mapConfig: YaConfig = {
     HomeComponent,
     RegistrationRequestsComponent,
     RejectRequestComponent,
+    ProfileComponent,
     AdventuresComponent,
     AdventureComponent,
     ProfileComponent,
     UpdateAdventureComponent,
     CreateAdventureComponent,
+    ProfileUpdateComponent,
+    CottagesComponent,
+    FilterPipe,
+    BoatsComponent,
+    AdventuresUserComponent,
+    UserComplaintComponent,
+    SubscriptionsComponent,
+    ReservationsComponent,
     MapComponent,
     BoatsComponent,
     CottagesComponent,
@@ -104,8 +125,13 @@ const mapConfig: YaConfig = {
     DeleteProfileComponent,
     DeleteRequestsComponent,
     DeleteRequestResponseComponent,
+    BoatsUserComponent,
+    CottagesUserComponent,
+    OneCottageComponent,
     CalendarComponent,
     ReservationFormComponent,
+    OneAdventureComponent,
+    OneBoatUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,6 +153,9 @@ const mapConfig: YaConfig = {
     MatSnackBarModule,
     MatNativeDateModule,
     MatRippleModule,
+    Ng2SearchPipeModule,
+    MatGridListModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

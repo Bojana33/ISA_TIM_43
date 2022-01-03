@@ -14,7 +14,6 @@ public class AdventureServiceImpl implements AdventureService {
     @Autowired
     private AdventureRepository adventureRepository;
 
-
     @Override
     public List<Adventure> findAll() {
         return this.adventureRepository.findAll();

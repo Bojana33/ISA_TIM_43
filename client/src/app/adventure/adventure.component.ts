@@ -48,7 +48,7 @@ export class AdventureComponent implements OnInit {
     private config: ConfigService,
     private router: ActivatedRoute,
     private userService: UserService,
-    private adventureService:AdventureService,
+    private adventureService: AdventureService,
     private dialog: MatDialog
   ) { }
 
@@ -56,7 +56,7 @@ export class AdventureComponent implements OnInit {
     this.album;
     this.getAdventure();
   }
-  
+
 
   getAdventure(){
     return this.adventureService.getAdventure(this.router.snapshot.params.id)
@@ -67,7 +67,7 @@ export class AdventureComponent implements OnInit {
       this.addressTxt = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + ' '+ this.adventure.address.houseNumber;
     });
   }
-  
+
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }
