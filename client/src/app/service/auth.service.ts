@@ -35,7 +35,9 @@ export class AuthService {
     };
     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
-        console.log('Login success');
+        console.log(res.body.accessToken);
+        localStorage.setItem("access_token", res.body.accessToken);
+        localStorage.setItem("id_token", res.body.idToken);
         this.access_token = res['body'].accessToken;
       }));
   }
@@ -52,8 +54,10 @@ export class AuthService {
   }
 
   logout() {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("id_token");
       this.userService.currentUser = null;
-      this.access_token = null; 
+      this.access_token = null;
       this.router.navigate(['/login']);
   }
 
@@ -69,10 +73,20 @@ export class AuthService {
   }
 
   tokenIsPresent() {
-    return this.access_token != undefined && this.access_token != null;
+    if (this.access_token != undefined && this.access_token != null)
+      return true;
+    return localStorage.getItem("access_token") != undefined && localStorage.getItem("access_token") != null;
   }
 
   getToken() {
-    return this.access_token;
+    if (this.access_token != undefined  && this.access_token != null)
+    {
+      return this.access_token;
+    }
+    else {
+      console.log(localStorage.getItem("access_token"));
+      return this.access_token;
+    }
   }
+
 }

@@ -55,6 +55,17 @@ export class UserService {
   }
 
   getUser(id:any) {
+    if(this.currentUser) {
+      return this.apiService.get(this.config.api_url + "/get_user/" + id);
+    }
+    var storageUser = window.localStorage.getItem('user');
+    if (storageUser) {
+      try {
+        this.currentUser =  JSON.parse(storageUser);
+      } catch (e) {
+        window.localStorage.removeItem('user');
+      }
+    }
     return this.apiService.get(this.config.api_url + "/get_user/" + id);
   }
 
