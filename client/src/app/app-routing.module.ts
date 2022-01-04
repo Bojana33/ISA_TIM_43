@@ -43,6 +43,7 @@ import {OneCottageComponent} from './user-quest/cottages-user/one-cottage/one-co
 import {CalendarComponent} from './calendar/calendar.component';
 import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import {OneBoatUserComponent} from "./user-quest/boats-user/one-boat-user/one-boat-user.component";
+import {CottageReservationsTableComponent} from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
 
 
 const routes: Routes = [
@@ -134,6 +135,10 @@ const routes: Routes = [
   {
     path: 'cottages/:id',
     component: CottageComponent
+  },
+  {
+    path: 'cottages/:id/reservations',
+    component: CottageReservationsTableComponent
   },
   {
     path: 'calendar',

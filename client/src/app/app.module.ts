@@ -78,6 +78,7 @@ import { ReservationFormComponent } from './reservation-form/reservation-form.co
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
+import { CottageReservationsTableComponent } from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
 
 
 const mapConfig: YaConfig = {
@@ -132,6 +133,7 @@ const mapConfig: YaConfig = {
     ReservationFormComponent,
     OneAdventureComponent,
     OneBoatUserComponent,
+    CottageReservationsTableComponent,
   ],
   imports: [
     BrowserModule,

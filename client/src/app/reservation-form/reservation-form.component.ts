@@ -55,6 +55,8 @@ export class ReservationFormComponent implements OnInit{
     this.reservation = this.cottageReservationForm.getRawValue();
     console.log(this.reservation);
     // @ts-ignore
+    console.log(this.reservation.reservedPeriod.startDate.toISOString());
+    // @ts-ignore
     this.reservation.entityId = this.entityId;
     this.createdReservationEvent.emit(this.reservation);
   }
