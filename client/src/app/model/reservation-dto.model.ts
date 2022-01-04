@@ -14,6 +14,7 @@ export class ReservationDTO {
     public salePeriod: PeriodDto,
     public additionalServices: AdditionalServicesDTO[],
     public entityId: number,
+    public isQuick: boolean
 ) {
   }
 }

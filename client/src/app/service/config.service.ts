@@ -13,8 +13,13 @@ export class ConfigService {
   private _adventure_url = 'http://localhost:8090/adventures';
   private _entity_url = 'http://localhost:8090/entities';
   private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
+  private _reservation_url = 'http://localhost:8090/reservations';
 
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get reservation_url(): string{
+    return this.reservation_url;
+  }
 
   get user_delete_request_url(): string{
     return this._user_delete_request_url;

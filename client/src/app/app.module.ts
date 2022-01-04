@@ -65,6 +65,7 @@ import {DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
 
 
 
@@ -106,6 +107,7 @@ const mapConfig: YaConfig = {
     DeleteRequestResponseComponent,
     CalendarComponent,
     ReservationFormComponent,
+    InstructorCalendarComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 package isa2.demo.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,6 +51,7 @@ public class Entity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "subscriptions")
     private java.util.Collection<Client> subscribedClients;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity")
     public java.util.Collection<Reservation> reservations;
 }

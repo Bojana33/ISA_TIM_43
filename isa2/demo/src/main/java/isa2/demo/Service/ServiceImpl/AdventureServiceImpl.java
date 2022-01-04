@@ -1,6 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.Adventure;
+import isa2.demo.Model.Owner;
 import isa2.demo.Repository.AdventureRepository;
 import isa2.demo.Service.AdventureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,10 @@ public class AdventureServiceImpl implements AdventureService {
     @Override
     public void delete(Integer id) {
         this.adventureRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Adventure> findAdventuresByInstructor(Owner owner) {
+        return this.adventureRepository.findAllByOwner(owner);
     }
 }
