@@ -21,6 +21,7 @@ import {Subject} from 'rxjs';
 })
 export class CottageComponent implements OnInit {
   cottage: CottageDTO = new CottageDTO();
+  addressFormated: any;
   showForm = 1;
   cottageUpdateForm = this.formBuilder.group({
     cottageName: new FormControl(this.cottage.cottageName, [
@@ -55,10 +56,13 @@ export class CottageComponent implements OnInit {
 
   ) {
   }
+
   ngOnInit(): void {
     this.httpClient.get<any>(this.config.cottages_url + '/' + this.activatedRoute.snapshot.params.id).subscribe(
       response => {
         this.cottage = response;
+        console.log(this.cottage.address.street);
+        this.addressFormated = this.cottage.address.country + ' ' + this.cottage.address.city + ' '  + this.cottage.address.street + '&kind=house&results=' + this.cottage.address.houseNumber;
       });
     // if (this.hasSignedIn() && this.loggedUserIsOwner()){
     //   // @ts-ignore
