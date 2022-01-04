@@ -13,7 +13,8 @@ public interface EntityService {
     Entity addRentalTime(Integer entity_id, RentalTime rentalTime);
     Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException;
 
+    boolean isReservationTimeInvalid(Reservation reservation);
     boolean isRentalTimeDateValid(Entity entity, RentalTime rentalTime);
-    boolean isReservationTimeValid(Entity entity, Reservation reservation);
+    boolean isReservationOverlaping(Entity entity, Reservation reservation);
     boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2);
 }
