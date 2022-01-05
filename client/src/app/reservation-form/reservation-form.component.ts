@@ -1,8 +1,5 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {CottageService} from '../service/cottage.service';
-import {ConfigService} from '../service/config.service';
-import {ApiService} from '../service/api.service';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 
 
@@ -11,46 +8,57 @@ import {ReservationDTO} from '../model/reservation-dto.model';
   templateUrl: './reservation-form.component.html',
   styleUrls: ['./reservation-form.component.css']
 })
-export class ReservationFormComponent{
+export class ReservationFormComponent implements OnInit{
   @Input() entityId: any;
   @Output() createdReservationEvent = new EventEmitter<ReservationDTO>();
-  cottageReservationForm = this.formBuilder.group({
-    price: ['', [Validators.required]],
-    numberOfGuests: ['', [Validators.required, Validators.min(1), Validators.max(300)]],
-    additionalNotes: ['', [Validators.required]],
-    reservedPeriod: new FormGroup({
-      startDate: new FormControl(['', [Validators.required]]),
-      endDate: new FormControl(['', [Validators.required]])
-    }),
-    salePeriod: new FormGroup({
-      startDate: new FormControl(['', [Validators.required]]),
-      endDate: new FormControl(['', [Validators.required]])
-    })
-    // additionalServices: new FormGroup({
-    //   name: new FormControl([''], [Validators.required]),
-    //   price: new FormControl([''], [Validators.min(0)])
-    // })
-      // reservationPeriodStartDate: ['', [Validators.required]],
-      // reservationPeriodEndDate: ['', [Validators.required]],
-      // salePeriodStartDate: ['', [Validators.required]],
-      // salePeriodEndDate: ['', [Validators.required]]
-  });
-  constructor(
-    private formBuilder: FormBuilder,
-    private cottageService: CottageService,
-    private configService: ConfigService,
-    private apiService: ApiService
-  ) {}
+  cottageReservationForm!: FormGroup;
+  private _additionalServices!: FormArray;
+
+  constructor(private formBuilder: FormBuilder) {}
 
   private reservation: ReservationDTO | undefined;
 
+  ngOnInit(): void {
+    this.cottageReservationForm = this.formBuilder.group({
+      price: ['', [Validators.required]],
+      numberOfGuests: ['', [Validators.required, Validators.min(1), Validators.max(300)]],
+      additionalNotes: ['', [Validators.required]],
+      reservedPeriod: new FormGroup({
+        startDate: new FormControl(['', [Validators.required]]),
+        endDate: new FormControl(['', [Validators.required]])
+      }),
+      salePeriod: new FormGroup({
+        startDate: new FormControl(['', [Validators.required]]),
+        endDate: new FormControl(['', [Validators.required]])
+      }),
+      additionalServices: this.formBuilder.array([this.createAdditionalServices()])
+    });
+    console.log('ngInitOver');
+  }
+
+  createAdditionalServices(): FormGroup{
+    console.log('createAdditionalService');
+    return this.formBuilder.group({
+      name: '',
+      price: ''
+    });
+  }
+  addService(): void{
+    this._additionalServices = this.cottageReservationForm.get('additionalServices') as FormArray;
+    this._additionalServices.push(this.createAdditionalServices());
+  }
+  deleteService(index: number): void {
+    this._additionalServices = this.cottageReservationForm.get('additionalServices') as FormArray;
+    this._additionalServices.removeAt(index);
+  }
   makeReservation(): void {
     this.reservation = this.cottageReservationForm.getRawValue();
     console.log(this.reservation);
     // @ts-ignore
     this.reservation.entityId = this.entityId;
-    // console.log(this.reservation, 'pre emita');
     this.createdReservationEvent.emit(this.reservation);
   }
-
+  get additionalServices(): FormArray {
+    return this.cottageReservationForm.get('additionalServices') as FormArray;
+  }
 }

@@ -22,4 +22,5 @@ public class CottageDTO {
     private AddressDTO address;
     private Collection<RoomDTO> rooms;
     private Collection<ReservationDTO> reservations;
+    private String entityPhoto;
 }

@@ -1,15 +1,12 @@
- <div class = "column is-three-fifths is-offset-one-fifth">
+ <div class = "column is-10 is-offset-1">
         <div class = "box">
           <div class = "columns">
 
             <div class = "column">
-              <div class="tile is-parent">
-                <article class="tile is-child notification is-info">
-                  <p class="title">Middle tile</p>
-                  <figure class="image is-square">
-                    <img src="https://bulma.io/images/placeholders/640x480.png">
-                  </figure>
-                </article>
+              <div class="box">
+                <figure class="image is-5by3">
+                  <img src="{{cottage.entityPhoto}}">
+                </figure>
               </div>
             </div>
 
@@ -24,12 +21,9 @@
                 <input class = "item" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
                 <h4 class="title is-4">Price per day</h4>
                 <input class = "item" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
-                <h4 class="title is-4">Rooms</h4>
-                <h5 class = "subtitle">
-                  number of beds:
-                </h5>
-                <ul *ngFor="let room of cottage.rooms">
-                  <li> {{room.numberOfBeds}}</li>
+                <h4 class="title is-4">Number of beds</h4>
+                <ul *ngFor="let room of cottage.rooms; let i=index;">
+                  <li>Room {{i+1}}: {{room.numberOfBeds}}</li>
                 </ul>
                 <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
               </div>
@@ -47,10 +41,6 @@
                       <app-reservation-form [entityId]="cottage.id" (createdReservationEvent)="createNewReservation($event)">
                       </app-reservation-form>
                     </section>
-                    <footer class="modal-card-foot">
-                      <button class="button is-success">Save changes</button>
-                      <button class="button" (click)="showForm=1">Cancel</button>
-                    </footer>
                   </div>
                 </div>
               </div>
@@ -75,19 +65,20 @@
                 <p class = "item">
                   {{cottage.pricePerDay}}
                 </p>
-                <h4 class="title is-4">Rooms</h4>
-                <h5 class = "subtitle">
-                  number of beds:
-                </h5>
-                <ul *ngFor="let room of cottage.rooms">
-                    <li>{{room.numberOfBeds}}</li>
+                <h4 class="title is-4">Number of beds</h4>
+                <ul *ngFor="let room of cottage.rooms; let i=index;">
+                  <li>Room {{i+1}}: {{room.numberOfBeds}}</li>
                 </ul>
               </div>
             </div>
-      </div>
-      </div>
-         <div class = "box" *ngIf="cottage.id != 0">
-           <app-calendar [entityId]= "cottage.id">
-           </app-calendar>
          </div>
+      </div>
+     <div class = "box" *ngIf="cottage.id != 0">
+       <app-calendar [entityId]= "cottage.id">
+       </app-calendar>
+     </div>
+     <div class = "box" *ngIf="addressFormated != null">
+       {{addressFormated}}
+       <app-map [address]="addressFormated"></app-map>
+     </div>
     </div>

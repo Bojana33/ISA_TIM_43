@@ -74,7 +74,7 @@ export class CalendarComponent implements OnInit{
     if (event.allDay) {
       return true;
     }
-
+    console.log(newStart, newEnd);
     delete event.cssClass;
     // don't allow dragging or resizing events to different days
     // @ts-ignore

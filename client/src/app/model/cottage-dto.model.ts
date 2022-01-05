@@ -13,6 +13,7 @@ export class CottageDTO {
     public pricePerDay: number = 0,
     public address: AddressDTO = new AddressDTO('', '', '', ''),
     public rooms: RoomDTO[] = [],
-    public reservations: ReservationDTO[] = []
+    public reservations: ReservationDTO[] = [],
+    public entityPhoto: string = ''
   ) {}
 }

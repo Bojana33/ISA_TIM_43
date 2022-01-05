@@ -32,13 +32,14 @@ export class AdventureComponent implements OnInit {
     private router: ActivatedRoute,
     private userService: UserService,
     private adventureService:AdventureService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.getAdventure();
   }
-  
+
 
   getAdventure(){
     return this.adventureService.getAdventure(this.router.snapshot.params.id)
@@ -49,7 +50,7 @@ export class AdventureComponent implements OnInit {
       this.addressTxt = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + ' '+ this.adventure.address.houseNumber;
     });
   }
-  
+
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }

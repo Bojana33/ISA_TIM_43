@@ -38,7 +38,7 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException {
         Entity entity =  entityRepository.findById(entity_id).get();
-        if(isReservationTimeValid(entity, reservation)){
+        if(isReservationOverlaping(entity, reservation)){
             Collection<Reservation> reservations = entity.getReservations();
             reservation.setCreationDate(LocalDateTime.now());
             reservation.setEntity(entity);
@@ -82,14 +82,23 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public boolean isReservationTimeValid(Entity entity, Reservation reservation) {
+    public boolean isReservationOverlaping(Entity entity, Reservation reservation) {
         Collection<Reservation> reservationCollection = entity.getReservations();
+        if (isReservationTimeInvalid(reservation)) return false;
         for (Reservation reservationTemp : reservationCollection) {
             if (doTimeIntervalsIntersect(reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(),
                     reservationTemp.getReservedPeriod().getStartDate(), reservationTemp.getReservedPeriod().getEndDate()))
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean isReservationTimeInvalid(Reservation reservation) {
+        return reservation.getReservedPeriod().getStartDate().isAfter(reservation.getReservedPeriod().getEndDate()) ||
+                reservation.getReservedPeriod().getStartDate().isEqual(reservation.getReservedPeriod().getEndDate()) ||
+                reservation.getSalePeriod().getStartDate().isAfter(reservation.getSalePeriod().getEndDate()) ||
+                reservation.getSalePeriod().getStartDate().isEqual(reservation.getSalePeriod().getEndDate());
     }
 
     @Override

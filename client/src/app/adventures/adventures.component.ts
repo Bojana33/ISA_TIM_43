@@ -33,7 +33,6 @@ export class AdventuresComponent implements OnInit {
         console.log(response);
         this.adventures = response;
       }
-        
     )
   }
 

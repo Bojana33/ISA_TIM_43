@@ -1,5 +1,9 @@
 package isa2.demo.Model;
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+>>>>>>> develop
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,7 +39,8 @@ public class Entity implements Serializable {
     @Column
     private java.lang.String entityPhoto;
 
-    @Transient
+    //TO DO: return this to transient, it is only a temporary column
+    @Column(name = "average_grade")
     private java.lang.Double averageGrade = 0.0;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -51,7 +56,12 @@ public class Entity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "subscriptions")
     private java.util.Collection<Client> subscribedClients;
 
+<<<<<<< HEAD
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity")
+=======
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity", orphanRemoval = true)
+>>>>>>> develop
     public java.util.Collection<Reservation> reservations;
 }
