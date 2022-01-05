@@ -59,8 +59,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
-    canActivate: [GuestGuard]
+    component: LoginComponent
+    //canActivate: [GuestGuard]
   },
   {
     path: 'signup',
@@ -82,13 +82,7 @@ const routes: Routes = [
   {
     path: 'profile/profileUpdate',
     component: ProfileUpdateComponent,
-    canActivate: [LoginGuard],
-    children: [
-      {
-        path: 'profile',
-        component: ProfileComponent
-      }
-    ]
+    canActivate: [LoginGuard]
   },
   {
     path: 'adventures',
@@ -121,7 +115,7 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [GuestGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'registration-requests',
