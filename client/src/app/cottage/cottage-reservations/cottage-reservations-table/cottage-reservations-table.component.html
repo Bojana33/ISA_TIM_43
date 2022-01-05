@@ -12,6 +12,7 @@
       <th><abbr title="Sale start">Sale start</abbr></th>
       <th><abbr title="Sale end">Sale end</abbr></th>
       <th><abbr title="Client id">Client id</abbr></th>
+      <th><abbr title="Additional services"> Service : Price</abbr></th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,11 @@
       <td>{{res.salePeriod.startDate}}</td>
       <td>{{res.salePeriod.endDate}}</td>
       <td>{{res.clientId}}</td>
+      <td>
+        <li *ngFor="let addService of res.additionalServices">
+          {{addService['name']}} : {{addService['price']}}
+        </li>
+      </td>
     </tr>
     </tbody>
   </table>

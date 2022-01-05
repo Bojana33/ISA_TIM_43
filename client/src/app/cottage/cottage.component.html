@@ -14,22 +14,36 @@
             <div class = "column">
               <div class="box">
                 <h4 class="title is-4">Name</h4>
-                <input class = "item" [(ngModel)]="cottage.cottageName" formControlName="cottageName">
+                <input class = "input is-small is-rounded" [(ngModel)]="cottage.cottageName" formControlName="cottageName">
                 <h4 class="title is-4">Description</h4>
-                <input class = "item" [(ngModel)]="cottage.description" formControlName="description">
+                <input class = "input is-small is-rounded" [(ngModel)]="cottage.description" formControlName="description">
                 <h4 class="title is-4">Maximum number of guests</h4>
-                <input class = "item" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
+                <input class = "input is-small is-rounded" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
                 <h4 class="title is-4">Price per day</h4>
-                <input class = "item" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
-                <h4 class="title is-4">Number of beds</h4>
-                <ul *ngFor="let room of cottage.rooms; let i=index;">
-                  <li>Room {{i+1}}: {{room.numberOfBeds}}</li>
-                </ul>
+                <input class = "input is-small is-rounded" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
+                <h4 class="title is-4">Rooms</h4>
+                <table class="table is-narrow">
+                  <thead>
+                  <tr>
+                    <th>Room</th>
+                    <th>Num. of beds</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let room of cottage.rooms; let i=index;">
+                    <th>{{i+1}}</th>
+                    <td>{{room.numberOfBeds}}</td>
+                  </tr>
+                  </tbody>
+                </table>
                 <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
+
+
+
               </div>
-              <div class="buttons" >
-                <button class="button is-danger is-rounded" (click)="deleteCottage()">Delete</button>
+              <div class="buttons block">
                 <button class="button is-link is-rounded" (click)="showForm=2">Create new quick reservation</button>
+                <button class="button is-danger is-rounded" (click)="deleteCottage()">Delete</button>
                 <div class="modal is-active" *ngIf="showForm === 2">
                   <div class="modal-background"></div>
                   <div class="modal-card">
@@ -65,10 +79,21 @@
                 <p class = "item">
                   {{cottage.pricePerDay}}
                 </p>
-                <h4 class="title is-4">Number of beds</h4>
-                <ul *ngFor="let room of cottage.rooms; let i=index;">
-                  <li>Room {{i+1}}: {{room.numberOfBeds}}</li>
-                </ul>
+                <h4 class="title is-4">Rooms</h4>
+                <table class="table is-narrow">
+                  <thead>
+                  <tr>
+                    <th>Room</th>
+                    <th>Num. of beds</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let room of cottage.rooms; let i=index;">
+                    <th>{{i+1}}</th>
+                    <td>{{room.numberOfBeds}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
          </div>
