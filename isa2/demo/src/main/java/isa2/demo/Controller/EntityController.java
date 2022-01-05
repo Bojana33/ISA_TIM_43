@@ -39,13 +39,18 @@ public class EntityController {
     }
 
     @PostMapping("/rentalTime")
-    public ResponseEntity<RentalTimeDTO> addRentalTimeToEntity(@RequestBody RentalTimeDTO rentalTimeDTO){
+    public ResponseEntity<RentalTimeDTO> addRentalTimeToEntity(@RequestBody RentalTimeDTO rentalTimeDTO) throws MessagingException {
         RentalTime rentalTime = modelMapper.modelMapper().map(rentalTimeDTO, RentalTime.class);
-        if(entityService.addRentalTime(rentalTimeDTO.getEntity_id(), rentalTime) == null){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
-        }else{
-            return ResponseEntity.status(HttpStatus.CREATED).body(rentalTimeDTO);
+        ResponseEntity responseEntity = null;
+
+        try{
+            entityService.addRentalTime(rentalTimeDTO.getEntity_id(), rentalTime);
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(rentalTimeDTO);
         }
+        catch (MessagingException e){
+            responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+        }
+        return responseEntity;
     }
     @PostMapping("/reservations")
     public ResponseEntity<ReservationDTO> addReservationToEntity(@RequestBody ReservationDTO reservationDTO) throws MessagingException {

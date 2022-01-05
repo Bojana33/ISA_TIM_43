@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 public interface EntityService {
-    Entity addRentalTime(Integer entity_id, RentalTime rentalTime);
+    Entity addRentalTime(Integer entity_id, RentalTime rentalTime) throws MessagingException;
     Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException;
 
     boolean isReservationTimeInvalid(Reservation reservation);

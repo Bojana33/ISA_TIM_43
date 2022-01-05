@@ -30,11 +30,4 @@ public class Period implements Serializable {
    @Column(name = "end_date")
    private LocalDateTime endDate;
 
-//   //TODO: NE ZNAM STA OVDE DA STAVIM ZA MAPPEDBY
-//   @OneToOne(mappedBy = "reservedPeriod")
-//   public Reservation reservation;
-//
-//   @OneToOne(mappedBy = "salePeriod")
-//   public Reservation reservation1;
-
 }

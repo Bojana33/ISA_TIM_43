@@ -73,7 +73,7 @@ public class Reservation implements Serializable {
    private UserComplaint userComplaint;
 
    @JsonBackReference
-   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
    @JoinColumn(name = "client_id", referencedColumnName = "id")
    private Client client;
 
