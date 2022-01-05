@@ -48,11 +48,11 @@ public class Reservation implements Serializable {
    @Column(name = "additional_notes")
    private String additionalNotes;
    
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
 
-   @OneToOne(cascade = CascadeType.ALL)
+   @OneToOne(fetch =FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "sale_period_id", referencedColumnName = "id")
    private Period salePeriod;
 
@@ -73,7 +73,7 @@ public class Reservation implements Serializable {
    private UserComplaint userComplaint;
 
    @JsonBackReference
-   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
    @JoinColumn(name = "client_id", referencedColumnName = "id")
    private Client client;
 

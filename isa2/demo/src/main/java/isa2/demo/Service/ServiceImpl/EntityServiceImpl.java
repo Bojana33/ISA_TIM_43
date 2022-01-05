@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class EntityServiceImpl implements EntityService {
@@ -21,7 +23,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public Entity addRentalTime(Integer entity_id, RentalTime rentalTime) {
+    public Entity addRentalTime(Integer entity_id, RentalTime rentalTime) throws MessagingException {
         Entity entity =  entityRepository.getById(entity_id);
         if(isRentalTimeDateValid(entity,rentalTime)){
             Collection<RentalTime> rentalTimeList = entity.getRentalTimes();
@@ -29,6 +31,7 @@ public class EntityServiceImpl implements EntityService {
             rentalTimeList.add( rentalTime);
             entity.setRentalTimes(rentalTimeList);
             entity = entityRepository.save(entity);
+            sendEmailsToSubscribers(entity ,rentalTime.getStart_date(),rentalTime.getEnd_date(),Optional.empty(),Optional.empty());
             return entity;
         }else{
             return null;
@@ -37,8 +40,9 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException {
+        //TODO: ako imas vremena, resi ovo da bude sa optional
         Entity entity =  entityRepository.findById(entity_id).get();
-        if(isReservationTimeValid(entity, reservation)){
+        if(isReservationOverlaping(entity, reservation)){
             Collection<Reservation> reservations = entity.getReservations();
             reservation.setCreationDate(LocalDateTime.now());
             reservation.setEntity(entity);
@@ -55,16 +59,8 @@ public class EntityServiceImpl implements EntityService {
             entity.setReservations(reservations);
             entity = entityRepository.save(entity);
             //TODO: posalji mejlove subscribovanim klijentima
-            String email_content = "<h2>Special offer just for you!</h2><p>" + entity.getName()
-                    + " will be available for reservation from:</p><p><b>" +
-                    reservation.getReservedPeriod().getStartDate() + "</b> to <b>" +
-                    reservation.getReservedPeriod().getEndDate() + "</b></p>" +
-                    "<p>This offer last from:</p><p><b>" +
-                    reservation.getSalePeriod().getStartDate() + "</b> to <b>" +
-                    reservation.getSalePeriod().getEndDate() + "</b></p>";
-            for(User user: entity.getSubscribedClients()){
-                userService.sendEmail("Special offer", email_content, user.getEmail());
-            }
+            sendEmailsToSubscribers(entity,reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(),
+                                    Optional.of(reservation.getSalePeriod().getStartDate()), Optional.of(reservation.getSalePeriod().getEndDate()));
             return entity;
         }
         return null;
@@ -82,8 +78,9 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public boolean isReservationTimeValid(Entity entity, Reservation reservation) {
+    public boolean isReservationOverlaping(Entity entity, Reservation reservation) {
         Collection<Reservation> reservationCollection = entity.getReservations();
+        if (isReservationTimeInvalid(reservation)) return false;
         for (Reservation reservationTemp : reservationCollection) {
             if (doTimeIntervalsIntersect(reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(),
                     reservationTemp.getReservedPeriod().getStartDate(), reservationTemp.getReservedPeriod().getEndDate()))
@@ -93,9 +90,36 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
+    public boolean isReservationTimeInvalid(Reservation reservation) {
+        return reservation.getReservedPeriod().getStartDate().isAfter(reservation.getReservedPeriod().getEndDate()) ||
+                reservation.getReservedPeriod().getStartDate().isEqual(reservation.getReservedPeriod().getEndDate()) ||
+                reservation.getSalePeriod().getStartDate().isAfter(reservation.getSalePeriod().getEndDate()) ||
+                reservation.getSalePeriod().getStartDate().isEqual(reservation.getSalePeriod().getEndDate());
+    }
+
+    @Override
     public boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2) {
         return (!startDate2.isAfter(endDate1) && !endDate2.isBefore(startDate1));
     }
 
+    private void sendEmailsToSubscribers(Entity entity,
+                                         LocalDateTime offerStartDate,
+                                         LocalDateTime offerEndDate,
+                                         Optional<LocalDateTime> saleStartDate,
+                                         Optional<LocalDateTime> saleEndDate) throws MessagingException {
 
+        String offerDuration = "<h2>Special offer just for you!</h2><p>" + entity.getName()
+                + " will be available for reservation from:</p><p><b>" +
+                offerStartDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "</b> to <b>" +
+                offerEndDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "</b></p>";
+
+        if(saleStartDate.isPresent() && saleEndDate.isPresent()){
+            offerDuration = offerDuration.concat("<p>This offer last from:</p><p><b>" + saleStartDate.get().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                    + "</b> to <b>" + saleEndDate.get().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "</b></p>");
+        }
+
+        for(User user: entity.getSubscribedClients()){
+            userService.sendEmail("Special offer", offerDuration, user.getEmail());
+        }
+    }
 }

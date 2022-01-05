@@ -45,6 +45,7 @@ public class CottageController {
         CottageDTO cottageDTO = new CottageDTO();
         try{
             Cottage cottage = cottageService.deleteCottage(id);
+            cottage.setPhotos(null);
             //TODO: popravi ovaj exception u mapperu
             cottageDTO = cottageMapper.mapCottageToDto(cottage);
         }catch (Exception e){
@@ -92,7 +93,7 @@ public class CottageController {
             responseEntity = ResponseEntity.ok(updatedCottageDTO);
 
         } catch (UnsupportedOperationException e){
-            responseEntity = ResponseEntity.noContent().build();
+            responseEntity = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
         }
 
         return responseEntity;

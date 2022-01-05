@@ -26,17 +26,13 @@ import java.util.Optional;
 @Service
 public class CottageServiceImpl implements CottageService {
 
-    //TO DO: Resolve this
-    //final
-    //CottageRepository cottageRepository;
-
-
-    //public CottageServiceImpl(CottageRepository cottageRepository) {
-      //  this.cottageRepository = cottageRepository;
-    //}
-
-    @Autowired
+    final
     CottageRepository cottageRepository;
+
+
+    public CottageServiceImpl(CottageRepository cottageRepository) {
+        this.cottageRepository = cottageRepository;
+    }
 
     @Override
     public List<Cottage> findAll() {
@@ -54,6 +50,7 @@ public class CottageServiceImpl implements CottageService {
     @Override
     public Cottage updateCottage(Cottage cottage) {
         Collection<Reservation> reservations = cottage.getReservations();
+        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
         if(reservations.isEmpty())
             return cottageRepository.save(cottage);
         else
@@ -68,11 +65,16 @@ public class CottageServiceImpl implements CottageService {
 
     @Override
     public Cottage deleteCottage(Integer id) throws EntityNotFoundException {
-        Cottage cottage = cottageRepository.findByIdAndReservationsIsNull(id);
-        if(cottage != null){
-            cottageRepository.deleteById(id);
+        Cottage cottage = cottageRepository.findById(id).orElse(null);
+        if (cottage != null){
+            Collection<Reservation> reservations = cottage.getReservations();
+            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+            if(reservations.isEmpty())
+                cottageRepository.deleteById(id);
+            else
+                throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
         }else{
-            throw new EntityNotFoundException("Cottage doesn't exist");
+            throw new EntityNotFoundException(id.toString());
         }
         return cottage;
     }
