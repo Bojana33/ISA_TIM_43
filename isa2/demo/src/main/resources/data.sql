@@ -27,7 +27,8 @@ VALUES (true, false, 'user@userovic.com', false, false, null, '$2a$10$OyHff7x9UR
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
                                                           (1, 2),
-                                                          (2,5);
+                                                          (2,5),
+                                                          (3,1);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
