@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
@@ -6,12 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../service/user.service';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {CalendarComponent} from '../calendar/calendar.component';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
-import {DatePipe} from '@angular/common';
-import {Subject} from 'rxjs';
 
 
 @Component({
@@ -19,7 +16,7 @@ import {Subject} from 'rxjs';
   templateUrl: './cottage.component.html',
   styleUrls: ['./cottage.component.css']
 })
-export class CottageComponent implements OnInit {
+export class CottageComponent implements OnInit{
   cottage: CottageDTO = new CottageDTO();
   addressFormated: any;
   showForm = 1;
@@ -51,9 +48,6 @@ export class CottageComponent implements OnInit {
     private cottageService: CottageService,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private datePipe: DatePipe
-
   ) {
   }
 
