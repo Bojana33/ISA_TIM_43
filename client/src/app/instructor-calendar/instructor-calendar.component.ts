@@ -47,7 +47,7 @@ export class InstructorCalendarComponent implements OnInit {
           if (item.reservationStatus.toString() === 'RESERVED'){
             eventColor = colors.red;
           }
-          if (item.salePeriod.toString() === 'null' && item.reservationStatus.toString() === 'FREE'){
+          if (item.salePeriod.toString() !== 'null' && item.reservationStatus.toString() === 'FREE'){
             eventColor = colors.yellow;
             eventTitle = 'Quick reservation - FREE termin'
           }

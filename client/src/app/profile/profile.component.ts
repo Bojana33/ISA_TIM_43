@@ -34,4 +34,8 @@ export class ProfileComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     this.dialog.open(DeleteProfileComponent, dialogConfig);
   }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
+  }
 }

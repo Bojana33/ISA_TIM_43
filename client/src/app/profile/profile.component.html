@@ -40,8 +40,15 @@
         </mat-card-content>
           <div> <button style="width:330px;" mat-raised-button type="submit" routerLink="profileUpdate">Update information</button> </div>
           <div> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Delete request</button> </div>
+          <div *ngIf="hasRole('INSTRUCTOR')"> 
+            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Set Available Period</button>
+            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Set Unavailable Period</button> 
+          </div>
         </form>
       </mat-card>
     </div>
   </div>
+</div>
+<div class="calendar" *ngIf="hasRole('INSTRUCTOR')">
+  <app-instructor-calendar [instructorId]="userProfile.id"></app-instructor-calendar>
 </div>

@@ -13,8 +13,7 @@ export class ReservationDTO {
     public reservedPeriod: PeriodDto,
     public salePeriod: PeriodDto,
     public additionalServices: AdditionalServicesDTO[],
-    public entityId: number,
-    public isQuick: boolean
+    public entityId: number
 ) {
   }
 }

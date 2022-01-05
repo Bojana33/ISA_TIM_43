@@ -50,7 +50,7 @@ export class AdventureComponent implements OnInit {
       this.addressTxt = this.adventure.addressDTO.country + ' ' + this.adventure.addressDTO.city + ' '  + this.adventure.addressDTO.street + ' '+ this.adventure.addressDTO.houseNumber;
     });
   }
-
+  
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }

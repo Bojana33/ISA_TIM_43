@@ -21,7 +21,7 @@ export class ConfigService {
   private _refresh_token_url = this._auth_url + '/refresh';
 
   get reservation_url(): string{
-    return this.reservation_url;
+    return this._reservation_url;
   }
 
   get user_delete_request_url(): string{

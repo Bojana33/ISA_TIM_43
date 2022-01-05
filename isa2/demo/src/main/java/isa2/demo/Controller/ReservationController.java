@@ -7,6 +7,7 @@ import isa2.demo.Model.Reservation;
 import isa2.demo.Service.ServiceImpl.OwnerServiceImpl;
 import isa2.demo.Service.ServiceImpl.ReservationServiceImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/reservations")
+@RequestMapping(value = "/reservations", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReservationController {
 
     private final ReservationServiceImpl reservationService;

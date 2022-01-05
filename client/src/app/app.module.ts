@@ -80,6 +80,7 @@ import { InstructorCalendarComponent } from './instructor-calendar/instructor-ca
 
 import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
+import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
 
 
 const mapConfig: YaConfig = {
@@ -135,6 +136,7 @@ const mapConfig: YaConfig = {
     InstructorCalendarComponent,
     OneAdventureComponent,
     OneBoatUserComponent,
+    InstructorAvailabilityFormComponent,
   ],
   imports: [
     BrowserModule,
