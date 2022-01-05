@@ -37,7 +37,6 @@ public class Period implements Serializable {
 //   @OneToOne(mappedBy = "salePeriod")
 //   public Reservation reservation1;
 
-<<<<<<< HEAD
    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    @JoinColumn(name = "available_instructor_id", referencedColumnName = "id")
    private Owner instructorAvailable;
@@ -47,6 +46,3 @@ public class Period implements Serializable {
    private Owner instructorUnavailable;
 
 }
-=======
-}
->>>>>>> develop

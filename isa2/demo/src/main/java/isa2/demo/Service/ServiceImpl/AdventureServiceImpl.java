@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdventureServiceImpl implements AdventureService {
@@ -21,8 +22,8 @@ public class AdventureServiceImpl implements AdventureService {
     }
 
     @Override
-    public Adventure findOne(Integer id) {
-        return this.adventureRepository.findById(id).get();
+    public Optional<Adventure> findOne(Integer id) {
+        return this.adventureRepository.findById(id);
     }
 
     @Override

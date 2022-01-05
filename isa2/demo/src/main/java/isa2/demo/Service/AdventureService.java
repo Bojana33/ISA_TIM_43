@@ -5,12 +5,13 @@ import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Owner;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdventureService {
 
     List<Adventure> findAll();
 
-    Adventure findOne(Integer id);
+    Optional<Adventure> findOne(Integer id);
 
     Adventure save(Adventure adventure);
 

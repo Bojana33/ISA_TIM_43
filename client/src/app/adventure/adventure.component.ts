@@ -46,8 +46,8 @@ export class AdventureComponent implements OnInit {
     .subscribe(response =>{
       console.log(response);
       this.adventure = response;
-      this.address = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + '&kind=house&results=' + this.adventure.address.houseNumber;
-      this.addressTxt = this.adventure.address.country + ' ' + this.adventure.address.city + ' '  + this.adventure.address.street + ' '+ this.adventure.address.houseNumber;
+      this.address = this.adventure.addressDTO.country + ' ' + this.adventure.addressDTO.city + ' '  + this.adventure.addressDTO.street + '&kind=house&results=' + this.adventure.addressDTO.houseNumber;
+      this.addressTxt = this.adventure.addressDTO.country + ' ' + this.adventure.addressDTO.city + ' '  + this.adventure.addressDTO.street + ' '+ this.adventure.addressDTO.houseNumber;
     });
   }
 
