@@ -23,6 +23,7 @@ export class UserService {
   }
 
   initUser() {
+    console.log('dosao u init user');
     const promise = this.apiService.get(this.config.refresh_token_url).toPromise()
       .then(res => {
         if (res.access_token !== null) {
@@ -30,7 +31,13 @@ export class UserService {
             .then(user => {
               this.currentUser = user;
             });
-        }else{
+        }else if(localStorage.getItem("access_token") !== null) {
+          return this.getMyInfo().toPromise()
+            .then(user => {
+              this.currentUser = user;
+            });
+        }
+        else {
           return null;
         }
       })
@@ -55,6 +62,7 @@ export class UserService {
   }
 
   getUser(id:any) {
+    console.log('dosao u get user');
     if(this.currentUser) {
       return this.apiService.get(this.config.api_url + "/get_user/" + id);
     }

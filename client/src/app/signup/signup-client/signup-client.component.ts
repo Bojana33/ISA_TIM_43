@@ -49,12 +49,12 @@ export class SignupClientComponent implements OnInit {
     console.log();
     this.http.post('http://localhost:8090/auth/signupClient', this.request)
       .subscribe(res => {
-        console.log(res);
-        this.isSuccess = true;
-        this.snackBar.open('Your registration is successful! We\'ve sent you a verification mail to your email account.', 'cancel');
+          if (res instanceof ErrorEvent)
+            this.snackBar.open('Lose.', 'cancel');
+          console.log(res);
+          this.isSuccess = true;
+          this.snackBar.open('Your registration is successful! We\'ve sent you a verification mail to your email account.', 'cancel');
       });
-    if (!this.isSuccess)
-      this.snackBar.open('Something went wrong. Make sure that this email is not already in use.', 'cancel');
   }
 
   saveRequest(form:any) {

@@ -8,6 +8,7 @@ import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,9 +36,8 @@ export class AuthService {
     };
     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
-        console.log(res.body.accessToken);
-        localStorage.setItem("access_token", res.body.accessToken);
-        localStorage.setItem("id_token", res.body.idToken);
+        window.localStorage.setItem("accessToken", res['body'].accessToken);
+        window.localStorage.setItem("id_token", res['body'].idToken);
         this.access_token = res['body'].accessToken;
       }));
   }
@@ -54,8 +54,8 @@ export class AuthService {
   }
 
   logout() {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("id_token");
+      window.localStorage.removeItem("accessToken");
+      window.localStorage.removeItem("id_token");
       this.userService.currentUser = null;
       this.access_token = null;
       this.router.navigate(['/login']);
@@ -75,18 +75,15 @@ export class AuthService {
   tokenIsPresent() {
     if (this.access_token != undefined && this.access_token != null)
       return true;
-    return localStorage.getItem("access_token") != undefined && localStorage.getItem("access_token") != null;
+    return window.localStorage.getItem("accessToken") != undefined && localStorage.getItem("accessToken") != null;
   }
 
   getToken() {
-    if (this.access_token != undefined  && this.access_token != null)
+   if (this.access_token != undefined  && this.access_token != null)
     {
       return this.access_token;
     }
-    else {
-      console.log(localStorage.getItem("access_token"));
-      return this.access_token;
-    }
+      return window.localStorage.getItem("accessToken");
   }
 
 }
