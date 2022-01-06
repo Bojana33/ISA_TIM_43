@@ -1,5 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.PeriodDTO;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.AuthorityService;
@@ -61,5 +62,10 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public Owner findById(Integer id) {
         return this.ownerRepository.findById(id).get();
+    }
+
+    @Override
+    public void setAvailability(Owner owner, PeriodDTO periodDTO, Integer status) {
+        //TODO : sacuvati dostupnost
     }
 }

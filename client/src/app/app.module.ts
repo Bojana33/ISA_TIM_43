@@ -81,6 +81,8 @@ import { InstructorCalendarComponent } from './instructor-calendar/instructor-ca
 import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 const mapConfig: YaConfig = {
@@ -136,7 +138,7 @@ const mapConfig: YaConfig = {
     InstructorCalendarComponent,
     OneAdventureComponent,
     OneBoatUserComponent,
-    InstructorAvailabilityFormComponent,
+    InstructorAvailabilityFormComponent
   ],
   imports: [
     BrowserModule,
@@ -169,7 +171,9 @@ const mapConfig: YaConfig = {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     AngularYandexMapsModule.forRoot(mapConfig),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    MatCheckboxModule,
+    MatRadioModule
   ],
   exports: [
     SignupClientComponent

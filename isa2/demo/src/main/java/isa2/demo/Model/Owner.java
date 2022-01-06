@@ -34,10 +34,10 @@ public class Owner extends User{
 
     private OwnerType ownerType;
 
-    //za potrebe dostupnosti instruktora
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "instructorAvailable")
-    private java.util.Collection<Period> availablePeriods;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
+    public java.util.Collection<Period> availabilityPeriods;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "instructorUnavailable")
-    private java.util.Collection<Period> unavailablePeriods;
+
+
+
 }

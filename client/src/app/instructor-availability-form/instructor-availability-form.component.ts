@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-instructor-availability-form',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstructorAvailabilityFormComponent implements OnInit {
 
-  constructor() { }
+  @Input() showForm: any;
+  form!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      reservedPeriod: new FormGroup({
+        startDate: new FormControl(['', [Validators.required]]),
+        endDate: new FormControl(['', [Validators.required]])
+      })
+    });
   }
 
 }

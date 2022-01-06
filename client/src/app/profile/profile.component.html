@@ -39,16 +39,42 @@
           </p>
         </mat-card-content>
           <div> <button style="width:330px;" mat-raised-button type="submit" routerLink="profileUpdate">Update information</button> </div>
-          <div> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Delete request</button> </div>
+          <div> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()"> Send delete request</button> </div>
           <div *ngIf="hasRole('INSTRUCTOR')"> 
-            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Set Available Period</button>
-            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Set Unavailable Period</button> 
+            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=2">Set Available Period</button>
+            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=3">Set Unavailable Period</button>
+            <div class="modal is-active" *ngIf="showForm === 2 || showForm === 3">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Set (un)availability period</p>
+                  <button class="delete" (click)="showForm=1" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <app-instructor-availability-form [showForm]="showForm">
+                  </app-instructor-availability-form>
+                </section>
+              </div>
+            </div>
           </div>
         </form>
       </mat-card>
     </div>
   </div>
 </div>
-<div class="calendar" *ngIf="hasRole('INSTRUCTOR')">
-  <app-instructor-calendar [instructorId]="userProfile.id"></app-instructor-calendar>
+<div style="width:auto; margin-left:20%; margin-top:5%; margin-right: 20%">
+  <mat-card class="mat-elevation-z4">
+    <section class="example-section">
+      <label class="example-margin">Show:</label>
+      <mat-radio-group [(ngModel)]="choosed">
+        <mat-radio-button class="example-radio-button" *ngFor="let choice of choices" [value]="choice">
+          {{choice}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </section>
+    <div>You choosed: {{choosed}}</div>
+  <div class="calendar" *ngIf="hasRole('INSTRUCTOR')">
+    <app-instructor-calendar [instructorId]="userProfile.id"></app-instructor-calendar>
+  </div>
+  </mat-card>
 </div>

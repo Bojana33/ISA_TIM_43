@@ -16,6 +16,9 @@ import {Address} from '../model/address';
 export class ProfileComponent implements OnInit {
 
   userProfile: any;
+  showForm = 1;
+  choosed!: string;
+  choices: string[] = ['Reservations', 'Availability'];
 
   constructor(
     private httpClient: HttpClient,
