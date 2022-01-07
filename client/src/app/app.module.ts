@@ -78,6 +78,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
 import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import { CottageReservationsTableComponent } from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
 
 
 const mapConfig: YaConfig = {
@@ -133,6 +134,7 @@ const mapConfig: YaConfig = {
     OneAdventureComponent,
     OneBoatUserComponent,
     CottageReservationsTableComponent,
+    CalendarHeaderComponent,
   ],
   imports: [
     BrowserModule,
