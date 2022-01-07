@@ -70,8 +70,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserRequest userRequest) {
-        return null;
+    public User saveAdmin(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException{
+        User user = new User();
+        user.setFirstName(userRequest.getFirstName());
+        user.setSurname(userRequest.getSurname());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        user.setEmail(userRequest.getEmail());
+        user.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setAddress(userRequest.getAddress());
+        user.setActivated(true);
+        user.setDeleted(false);
+        user.setIsAdmin(true);
+        user.setFirstLogIn(true);
+
+        List<Authority> auth;
+        auth = authService.findByname("ROLE_ADMIN");
+        user.setAuthorities(auth);
+
+        String subject = "You are registered as ADMIN";
+        String content = "Dear " + userRequest.getFirstName() + ",<br><br>"
+                + "Your email and initial password for our site are: <br><p> Email - " + userRequest.getEmail() +
+                "<br> Password - " + userRequest.getPassword() + "</p>" +
+                "<br> After first login, you must change initial password! <br><br> Best regards,<br> ISA TIM 43";
+
+        sendEmail(subject,content,userRequest.getEmail());
+
+        return userRepository.save(user);
     }
 
     @Override

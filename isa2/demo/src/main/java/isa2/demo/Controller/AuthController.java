@@ -123,6 +123,29 @@ public class AuthController {
         }
     }
 
+    // Endpoint za registraciju novog korisnika - klijenta
+    @PostMapping("/signupAdmin")
+    public HttpEntity<? extends Object> addAdmin(@RequestBody UserRequestDTO userRequestDTO, UriComponentsBuilder ucBuilder) {
+
+        UserRequest userRequest = userRequestMapper.mapDtoToUserRequest(userRequestDTO);
+        User existUser = this.userService.findByEmail(userRequest.getEmail());
+        RegistrationRequest existRequest = this.registrationRequestService.findByEmail(userRequest.getEmail());
+        if (existUser != null || existRequest != null) {
+            throw new ResourceConflictException(userRequest.getId(), "Email already exists");
+        }
+        try {
+            User user = this.userService.saveAdmin(userRequest);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (MessagingException me) {
+            System.out.println("Message exception");
+            return new ResponseEntity<MessagingException>(new MessagingException(), HttpStatus.FORBIDDEN);
+        }
+        catch (EmailAlreadyInUseException e) {
+            System.out.println("Email already in use");
+            return new ResponseEntity<EmailAlreadyInUseException>(new EmailAlreadyInUseException("Email already in use"), HttpStatus.FORBIDDEN);
+        }
+    }
+
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
     @GetMapping(value = "/refresh")
     public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
