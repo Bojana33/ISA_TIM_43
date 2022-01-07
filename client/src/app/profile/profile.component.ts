@@ -16,6 +16,9 @@ import {Address} from '../model/address';
 export class ProfileComponent implements OnInit {
 
   userProfile: any;
+  showForm = 1;
+  choosed!: string;
+  choices: string[] = ['Reservations', 'Availability'];
 
   constructor(
     private httpClient: HttpClient,
@@ -33,5 +36,13 @@ export class ProfileComponent implements OnInit {
   openDialog(){
     const dialogConfig = new MatDialogConfig();
     this.dialog.open(DeleteProfileComponent, dialogConfig);
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
+  }
+
+  onItemChange(event:any){
+    this.choosed = event.taget.value;
   }
 }

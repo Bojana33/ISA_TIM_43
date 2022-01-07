@@ -16,5 +16,21 @@
   margin: auto;
 }
 
+.calendar{
+    width: 100%;
+    display: block;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
 
 

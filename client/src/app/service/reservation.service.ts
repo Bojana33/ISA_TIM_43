@@ -20,4 +20,8 @@ export class ReservationService {
   createNewReservationForEntity(reservation: ReservationDTO): any{
     return this.api.post(this.config.entity_url + '/reservations', reservation);
   }
+
+  getInstructorReservations(instructorId:number){
+    return this.api.get(this.config.reservation_url + '/get_instructor_reservations/' + instructorId);
+  }
 }

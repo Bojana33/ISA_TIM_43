@@ -45,10 +45,10 @@ export class UpdateAdventureComponent implements OnInit {
     .subscribe((res:any)=>{console.log(res);
       this.adventure = new FormGroup({
         name: new FormControl(res['name']),
-        city: new FormControl(res.address['city']),
-        country: new FormControl(res.address['country']),
-        street: new FormControl(res.address['street']),
-        houseNumber: new FormControl(res.address['houseNumber']),
+        city: new FormControl(res.addressDTO['city']),
+        country: new FormControl(res.addressDTO['country']),
+        street: new FormControl(res.addressDTO['street']),
+        houseNumber: new FormControl(res.addressDTO['houseNumber']),
         description: new FormControl(res['description']),
         instructorBio: new FormControl(res['instructorBio']),
         //photos: string[],
@@ -59,7 +59,7 @@ export class UpdateAdventureComponent implements OnInit {
         cancellationFee: new FormControl(res['cancellationFee']),
         entityPhoto: new FormControl(res['entityPhoto']),
         defaultFishingEquipment: new FormControl(res['defaultFishingEquipment']),
-        addresId : new FormControl(res.address['id']),
+        addresId : new FormControl(res.addressDTO['id']),
         id : new FormControl(res['id'])
     });
     });
@@ -82,7 +82,7 @@ export class UpdateAdventureComponent implements OnInit {
     this.adventureObj.entityPhoto = form.value.entityPhoto;
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
     this.adventureObj.id = form.value.id;
-    this.adventureObj.addressDTO.id= form.value.id;
+    this.adventureObj.addressDTO.id= form.value.addressDTOid;
   }
 
   updateAdventure(){

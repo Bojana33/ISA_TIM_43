@@ -27,7 +27,7 @@ public class UserDeleteRequestController {
     }
 
     @PostMapping(value = "/add_delete_request",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('COTTAGEOWNER','BOATOWNER','INSTRUCTOR','ADMIN', 'CLIENT')")
+    @PreAuthorize("hasAnyRole('COTTAGEOWNER','BOATOWNER','INSTRUCTOR','ADMIN', 'CLIENT', 'USER')")
     public ResponseEntity<UserDeleteRequestDTO> addRequest(@RequestBody UserDeleteRequestDTO userDeleteRequestDTO) throws Exception {
         UserDeleteRequest userDeleteRequest = userDeleteRequestMapper.mapDtoToUserDeleteRequest(userDeleteRequestDTO);
         UserDeleteRequest existUserDeleteRequest = this.userDeleteRequestService.findByUser(userDeleteRequest.getUser());

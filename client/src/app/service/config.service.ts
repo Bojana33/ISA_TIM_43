@@ -16,7 +16,20 @@ export class ConfigService {
   private _cottages_url = 'http://localhost:8090/cottages';
   private _entity_url = 'http://localhost:8090/entities';
   private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
+  private _reservation_url = 'http://localhost:8090/reservations';
+  private _owner_url = 'http://localhost:8090/owner';
+
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  
+  get owner_url() : string {
+    return this._owner_url;
+  }
+  
+
+  get reservation_url(): string{
+    return this._reservation_url;
+  }
 
   get user_delete_request_url(): string{
     return this._user_delete_request_url;

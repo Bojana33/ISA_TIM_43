@@ -75,9 +75,14 @@ import { DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
+
 import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import { CottageReservationsTableComponent } from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 const mapConfig: YaConfig = {
@@ -130,9 +135,11 @@ const mapConfig: YaConfig = {
     OneCottageComponent,
     CalendarComponent,
     ReservationFormComponent,
+    InstructorCalendarComponent,
     OneAdventureComponent,
     OneBoatUserComponent,
     CottageReservationsTableComponent,
+    InstructorAvailabilityFormComponent
   ],
   imports: [
     BrowserModule,
@@ -165,7 +172,9 @@ const mapConfig: YaConfig = {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     AngularYandexMapsModule.forRoot(mapConfig),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    MatCheckboxModule,
+    MatRadioModule
   ],
   exports: [
     SignupClientComponent

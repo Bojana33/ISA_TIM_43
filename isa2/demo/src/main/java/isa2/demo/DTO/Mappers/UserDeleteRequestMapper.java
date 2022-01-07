@@ -21,9 +21,9 @@ public class UserDeleteRequestMapper {
 
     public UserDeleteRequest mapDtoToUserDeleteRequest(UserDeleteRequestDTO userDeleteRequestDTO){
         UserDeleteRequest userDeleteRequest = modelMapper.modelMapper().map(userDeleteRequestDTO, UserDeleteRequest.class);
-        //User user = this.userService.findById(userDeleteRequestDTO.getUserId());
-        //userDeleteRequest.setUser(user);
-       // user.setUserDeleteRequest(userDeleteRequest);
+        User user = this.userService.findById(userDeleteRequestDTO.getUserId());
+        userDeleteRequest.setUser(user);
+        user.setUserDeleteRequest(userDeleteRequest);
         return userDeleteRequest;
     }
 
