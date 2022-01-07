@@ -30,19 +30,4 @@ public class Period implements Serializable {
    @Column(name = "end_date")
    private LocalDateTime endDate;
 
-//   //TODO: NE ZNAM STA OVDE DA STAVIM ZA MAPPEDBY
-//   @OneToOne(mappedBy = "reservedPeriod")
-//   public Reservation reservation;
-//
-//   @OneToOne(mappedBy = "salePeriod")
-//   public Reservation reservation1;
-
-   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "available_instructor_id", referencedColumnName = "id")
-   private Owner instructorAvailable;
-
-   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "unavailable_instructor_id", referencedColumnName = "id")
-   private Owner instructorUnavailable;
-
 }

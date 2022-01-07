@@ -1,13 +1,13 @@
 <div class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html">
     <form [formGroup]="form">
       
-      <div formGroupName="reservedPeriod">
+      <div formGroupName="periodDTO">
         <div class = "field">
           <label class = "label" for="reservationStartDate">
             Start date:
           </label>
           <div class = "control">
-            <input id="reservationStartDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+            <input id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
                    placeholder="Date Time" formControlName="startDate">
             <owl-date-time #dt1></owl-date-time>
           </div>
@@ -17,12 +17,12 @@
             End date:
           </label>
           <div class = "control">
-            <input id="reservationEndDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+            <input id="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
                    placeholder="Date Time" formControlName="endDate">
             <owl-date-time #dt2></owl-date-time>
           </div>
         </div>
-        <button class="button is-success is-right" >Save changes</button>
+        <button class="button is-success is-right" (click)="saveInstructorAvailability()">Save changes</button>
       </div>
     </form>
 </div>

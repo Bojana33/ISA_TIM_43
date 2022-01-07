@@ -41,4 +41,8 @@ export class ProfileComponent implements OnInit {
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }
+
+  onItemChange(event:any){
+    this.choosed = event.taget.value;
+  }
 }

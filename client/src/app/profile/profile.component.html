@@ -62,19 +62,22 @@
     </div>
   </div>
 </div>
-<div style="width:auto; margin-left:20%; margin-top:5%; margin-right: 20%">
+<div *ngIf="hasRole('INSTRUCTOR')" style="width:auto; margin-left:20%; margin-top:5%; margin-right: 20%">
   <mat-card class="mat-elevation-z4">
+    <mat-card-title>Calendar</mat-card-title>
     <section class="example-section">
       <label class="example-margin">Show:</label>
       <mat-radio-group [(ngModel)]="choosed">
-        <mat-radio-button class="example-radio-button" *ngFor="let choice of choices" [value]="choice">
+        <mat-radio-button  *ngFor="let choice of choices" [value]="choice" (change)="onItemChange($event)">
           {{choice}}
         </mat-radio-button>
       </mat-radio-group>
     </section>
-    <div>You choosed: {{choosed}}</div>
-  <div class="calendar" *ngIf="hasRole('INSTRUCTOR')">
-    <app-instructor-calendar [instructorId]="userProfile.id"></app-instructor-calendar>
+  <div *ngIf="choosed == 'Reservations'" class="calendar" >
+    <app-instructor-calendar [instructorId]="userProfile.id" [showType]="'Reservations'"></app-instructor-calendar>
+  </div>
+  <div *ngIf="choosed == 'Availability'" class="calendar" >
+    <app-instructor-calendar [instructorId]="userProfile.id" [showType]="'Availability'"></app-instructor-calendar>
   </div>
   </mat-card>
 </div>

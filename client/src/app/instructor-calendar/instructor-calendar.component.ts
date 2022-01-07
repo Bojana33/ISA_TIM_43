@@ -1,8 +1,10 @@
+import { InstructorAvailabilityDto } from './../model/instructor-availability-dto';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { ReservationDTO } from '../model/reservation-dto.model';
 import { ConfigService } from '../service/config.service';
+import { OwnerService } from '../service/owner.service';
 import { ReservationService } from '../service/reservation.service';
 import { colors } from '../utils/colors';
 
@@ -25,16 +27,23 @@ export class InstructorCalendarComponent implements OnInit {
 
   view: CalendarView = CalendarView.Week;
   @Input() instructorId: any;
+  @Input() showType: string = 'Reservations';
 
 
   constructor(private configService: ConfigService,
-              private reservationService: ReservationService) {}
+              private reservationService: ReservationService,
+              private ownerService: OwnerService) {}
 
   viewDate: Date = new Date();
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
   ngOnInit(): void {
-    this.getReservationsForInstructor(this.instructorId);
+    if( this.showType === 'Reservations'){
+      this.getReservationsForInstructor(this.instructorId);
+    }else{
+      this.getInstructorAvailability(this.instructorId);
+    }
+    
   }
 
   getReservationsForInstructor(instructorId: number): void{
@@ -59,6 +68,33 @@ export class InstructorCalendarComponent implements OnInit {
             // @ts-ignore
             // tslint:disable-next-line:max-line-length
             end: new Date((item.reservedPeriod.endDate)[0], (item.reservedPeriod.endDate)[1] - 1, (item.reservedPeriod.endDate)[2], (item.reservedPeriod.endDate)[3], (item.reservedPeriod.endDate)[4], (item.reservedPeriod.endDate)[5]),
+            title: eventTitle,
+            color: eventColor,
+            draggable: true
+          });
+        });
+        this.refresh.next();
+      });
+  }
+
+  getInstructorAvailability(instructorId: number): void{
+
+    this.ownerService.getInstructorAvailability(instructorId).subscribe(
+      (modelData: InstructorAvailabilityDto[]) => {
+        modelData.forEach((item) => {
+          let eventColor = colors.green;
+          let eventTitle = item.availabilityType.toString();
+          if (item.availabilityType.toString() === 'UNAVAILABLE'){
+            eventColor = colors.red;
+          }
+          this.events.push({
+            id: item.periodDTO.id,
+            // @ts-ignore
+            // tslint:disable-next-line:max-line-length
+            start: new Date((item.periodDTO.startDate)[0], (item.periodDTO.startDate)[1] - 1, (item.periodDTO.startDate)[2], (item.periodDTO.startDate)[3], (item.periodDTO.startDate)[4], (item.periodDTO.startDate)[5]),
+            // @ts-ignore
+            // tslint:disable-next-line:max-line-length
+            end: new Date((item.periodDTO.endDate)[0], (item.periodDTO.endDate)[1] - 1, (item.periodDTO.endDate)[2], (item.periodDTO.endDate)[3], (item.periodDTO.endDate)[4], (item.periodDTO.endDate)[5]),
             title: eventTitle,
             color: eventColor,
             draggable: true
