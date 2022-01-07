@@ -20,7 +20,7 @@ VALUES ('Belgrade', 'Serbia', '110', 'Bulevar Kralja Aleksandra I'),
 
 -- password - password
 INSERT INTO public.users(
-    activated, deleted, email, first_log_in, is_admin, last_password_reset_date, password, phone_number, first_name,surname, address_id)
+    activated, deleted, email, first_login, is_admin, last_password_reset_date, password, phone_number, first_name,surname, address_id)
 VALUES (true, false, 'user@userovic.com', false, false, null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC', '04203050236', 'userovic', 'Pera', 1),
        (true,false,'user1@userovic.com',false,false,null,'$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC','06060xxxxxx','cottage','owner', 2),
        (true,false,'arhitekturaracunara111@gmail.com',false,false ,null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC','094i9234kdf','arhi','tektura','3');

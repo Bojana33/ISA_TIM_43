@@ -11,7 +11,7 @@ import { SignupComponent } from './signup/signup.component';
 import {SignupClientComponent} from './signup/signup-client/signup-client.component';
 import { AdminGuard } from './guard/admin.guard';
 import { AdminComponent } from './admin/admin.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { LoginGuard } from './guard/login.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
@@ -44,6 +44,7 @@ import {CalendarComponent} from './calendar/calendar.component';
 import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import {OneBoatUserComponent} from "./user-quest/boats-user/one-boat-user/one-boat-user.component";
 import {CottageReservationsTableComponent} from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 
 
 const routes: Routes = [
@@ -67,6 +68,11 @@ const routes: Routes = [
     component: SignupComponent,
     canActivate: [GuestGuard],
     pathMatch: 'full'
+  },
+  {
+    path: 'signupAdmin',
+    component: SignupAdminComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'profile',

@@ -95,4 +95,8 @@ export class UserService {
     console.log(data);
     return this.apiService.post('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
   }
+
+  saveAdmin(data:any){
+    return this.apiService.post(this.config.auth_url + '/signupAdmin',JSON.parse(JSON.stringify(data)));
+  }
 }

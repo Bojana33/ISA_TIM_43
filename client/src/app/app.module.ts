@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,7 +19,6 @@ import { MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { SignupComponent } from './signup/signup.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ApiService } from './service/api.service';
 import { UserService } from './service/user.service';
 import { ConfigService } from './service/config.service';
@@ -83,6 +83,7 @@ import { CottageReservationsTableComponent } from './cottage/cottage-reservation
 import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 
 
 const mapConfig: YaConfig = {
@@ -139,7 +140,8 @@ const mapConfig: YaConfig = {
     OneAdventureComponent,
     OneBoatUserComponent,
     CottageReservationsTableComponent,
-    InstructorAvailabilityFormComponent
+    InstructorAvailabilityFormComponent,
+    SignupAdminComponent
   ],
   imports: [
     BrowserModule,

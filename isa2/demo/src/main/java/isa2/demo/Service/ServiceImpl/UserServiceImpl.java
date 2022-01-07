@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         user.setActivated(true);
         user.setDeleted(false);
         user.setIsAdmin(true);
-        user.setFirstLogIn(true);
+        user.setFirstLogin(true);
 
         List<Authority> auth;
         auth = authService.findByname("ROLE_ADMIN");

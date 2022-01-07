@@ -35,7 +35,7 @@ public class OwnerServiceImpl implements OwnerService {
         owner.setEmail(registrationRequest.getEmail());
         owner.setPhoneNumber(registrationRequest.getPhoneNumber());
         owner.setAddress(registrationRequest.getAddress());
-        owner.setFirstLogIn(true);
+        owner.setFirstLogin(true);
         owner.setDeleted(false);
         owner.setIsAdmin(false);
         owner.setActivated(true);

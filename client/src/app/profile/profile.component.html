@@ -40,6 +40,22 @@
         </mat-card-content>
           <div> <button style="width:330px;" mat-raised-button type="submit" routerLink="profileUpdate">Update information</button> </div>
           <div> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()"> Send delete request</button> </div>
+          <div> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=4">Change Password</button> </div>
+
+          <div class="modal is-active" *ngIf="showForm === 4">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Change Password</p>
+                <button class="delete" (click)="showForm=1" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <app-change-password [showForm]="showForm">
+                </app-change-password>
+              </section>
+            </div>
+          </div>
+
           <div *ngIf="hasRole('INSTRUCTOR')"> 
             <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=2">Set Available Period</button>
             <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=3">Set Unavailable Period</button>
@@ -56,6 +72,7 @@
                 </section>
               </div>
             </div>
+
           </div>
         </form>
       </mat-card>

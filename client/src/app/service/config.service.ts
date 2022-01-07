@@ -25,6 +25,10 @@ export class ConfigService {
   get owner_url() : string {
     return this._owner_url;
   }
+
+  get auth_url(): string {
+    return this._auth_url;
+  }
   
 
   get reservation_url(): string{
