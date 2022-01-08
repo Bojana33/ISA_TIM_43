@@ -1,6 +1,7 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.CottageDTO;
+import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
 import isa2.demo.Model.Address;
 import isa2.demo.Model.Adventure;
@@ -14,7 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,5 +109,14 @@ public class CottageController {
         for (Cottage cottage : cottages)
             cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
         return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/findFree", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<CottageDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
+         Collection<Cottage> cottages = this.cottageService.findFreeCottages(request.getStartDate(), request.getEndDate());
+         Collection<CottageDTO> cottageDTOS = new ArrayList<>();
+         for (Cottage cottage : cottages)
+             cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+         return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.Model.Entity;
 import isa2.demo.Model.Reservation;
 import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Service.ReservationService;

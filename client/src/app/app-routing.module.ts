@@ -42,14 +42,26 @@ import {CottagesUserComponent} from './user-quest/cottages-user/cottages-user.co
 import {OneCottageComponent} from './user-quest/cottages-user/one-cottage/one-cottage.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
-import {OneBoatUserComponent} from "./user-quest/boats-user/one-boat-user/one-boat-user.component";
+import {OneBoatUserComponent} from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import {CottageReservationsTableComponent} from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+import {ReservationFormComponent} from './reservation-form/reservation-form.component';
+import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'reservationForm',
+    component: ReservationFormComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'createReservation',
+    component: ClientReservationsComponent,
     pathMatch: 'full'
   },
   {
@@ -60,7 +72,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-    //canActivate: [GuestGuard]
   },
   {
     path: 'signup',

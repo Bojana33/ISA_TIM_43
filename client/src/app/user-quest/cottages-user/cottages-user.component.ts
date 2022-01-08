@@ -16,14 +16,18 @@ export class CottagesUserComponent implements OnInit {
   cottage: any;
   searchTerm: any;
   searchFilter: any;
+  showAll!: boolean;
 
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService
-  ) { }
+  ) {
+    this.showAll = true;
+  }
 
   ngOnInit(): void {
-    this.getCottages();
+    if(this.showAll)
+      this.getCottages();
   }
 
   // tslint:disable-next-line:typedef
@@ -31,8 +35,12 @@ export class CottagesUserComponent implements OnInit {
     this.httpClient.get<any>(this.config.cottage_url + '/get_all').subscribe(
       (data) => {
         this.cottages = data;
-        this.allCottages = this.cottages;
       });
+  }
+
+  showCottages(cottagesToDisplay: Cottage[]){
+    this.showAll = false;
+    this.cottages = cottagesToDisplay;
   }
 
   search(search: any, value: any): void {

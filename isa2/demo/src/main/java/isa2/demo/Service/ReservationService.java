@@ -6,4 +6,5 @@ import java.util.Collection;
 
 public interface ReservationService {
     Collection<Reservation> findAllReservationsForEntity(Integer entityId);
+
 }

@@ -61,6 +61,8 @@ values ('VIKENDICA 1', 'This is a beautiful cottage', 10, 10, './../../assets/im
 INSERT INTO COTTAGE (id) VALUES (3);
 INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 3);
 
+insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',3);
+
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
 values ('VIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1);
