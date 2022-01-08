@@ -70,11 +70,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User save(User user) {
+        return this.userRepository.save(user);
+    }
+
+    @Override
     public User saveAdmin(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException{
         User user = new User();
         user.setFirstName(userRequest.getFirstName());
         user.setSurname(userRequest.getSurname());
-        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        user.setPassword(passwordEncoder.encode("admin"));
         user.setEmail(userRequest.getEmail());
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setAddress(userRequest.getAddress());

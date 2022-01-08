@@ -25,6 +25,7 @@ export class ChangePasswordComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private snackbar: MatSnackBar,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +55,7 @@ export class ChangePasswordComponent implements OnInit {
 
   setPasswordChanger(form:any){
     this.passwordChanger = new PasswordChanger();
+    this.passwordChanger.userId = this.userService.currentUser.id;
     this.passwordChanger.oldPassword = form.value.oldPassword;
     this.passwordChanger.newPassword = form.value.newPassword;
   }

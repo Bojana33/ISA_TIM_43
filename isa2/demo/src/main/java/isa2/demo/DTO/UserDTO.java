@@ -14,4 +14,5 @@ public class UserDTO {
     private String phoneNumber;
     private AddressDTO address;
     private Boolean firstLogin;
+    private Boolean isAdmin;
 }

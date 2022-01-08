@@ -13,6 +13,8 @@ export class UserService {
 
   currentUser:any;
   private usersUrl: string;
+  public isAdmin!: boolean;
+  public isFirstLoggedIn!: boolean;
 
   constructor(
     private apiService: ApiService,

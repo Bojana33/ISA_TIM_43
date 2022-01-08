@@ -29,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.cert.TrustAnchor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -165,8 +166,13 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'BOATOWNER', 'COTTAGEOWNER', 'ADMIN', 'CLIENT', 'INSTRUCTOR')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
+        User user = userService.findById(passwordChanger.userId);
+        if(user.getFirstLogin() == Boolean.TRUE){
+            user.setFirstLogin(Boolean.FALSE);
+            userService.save(user);
+        }
         userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
 
         Map<String, String> result = new HashMap<>();
@@ -175,6 +181,7 @@ public class AuthController {
     }
 
     static class PasswordChanger {
+        public Integer userId;
         public String oldPassword;
         public String newPassword;
     }

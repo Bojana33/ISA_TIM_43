@@ -9,5 +9,6 @@ export class User {
   public phoneNumber!: string;
   public addressDTO: Address = new Address();
   public firstLogin!: boolean;
+  public isAdmin!: boolean;
 
 }

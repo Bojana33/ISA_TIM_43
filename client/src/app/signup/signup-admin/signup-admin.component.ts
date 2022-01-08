@@ -30,8 +30,6 @@ export class SignupAdminComponent implements OnInit {
         firstName: '',
         surname: '',
         email: '',
-        password: ['', Validators.compose([ Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
-        repeatPassword: ['', Validators.compose([ Validators.required, Validators.minLength(3), Validators.maxLength(64)])],
         street: '',
         city: '',
         country: '',
@@ -39,8 +37,7 @@ export class SignupAdminComponent implements OnInit {
         phoneNumber: '',
         registrationExplanation: '',
         ownerType: OwnerType
-      },
-      {validator: this.customValidator.passwordMatchValidator('password', 'repeatPassword')});
+      });
   }
 
   submit() : void{
@@ -59,7 +56,6 @@ export class SignupAdminComponent implements OnInit {
     this.request.addressDTO.houseNumber = form.value.houseNumber;
     this.request.addressDTO.street = form.value.street;
     this.request.email = form.value.email;
-    this.request.password = form.value.password;
     this.request.phoneNumber = form.value.phoneNumber;
   }
 
