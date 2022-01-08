@@ -83,6 +83,7 @@ import { CottageReservationsTableComponent } from './cottage/cottage-reservation
 import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
 
 
 const mapConfig: YaConfig = {
@@ -139,7 +140,8 @@ const mapConfig: YaConfig = {
     OneAdventureComponent,
     OneBoatUserComponent,
     CottageReservationsTableComponent,
-    InstructorAvailabilityFormComponent
+    InstructorAvailabilityFormComponent,
+    CalendarHeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -202,4 +204,5 @@ const mapConfig: YaConfig = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

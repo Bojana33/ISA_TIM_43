@@ -13,15 +13,15 @@
             <form *ngIf ="hasSignedIn() && loggedUserIsOwner()" [formGroup]="cottageUpdateForm">
             <div class = "column">
               <div class="box">
-                <h4 class="title is-4">Name</h4>
+                <h4 class="title is-4 my-2">Name</h4>
                 <input class = "input is-small is-rounded" [(ngModel)]="cottage.cottageName" formControlName="cottageName">
-                <h4 class="title is-4">Description</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.description" formControlName="description">
-                <h4 class="title is-4">Maximum number of guests</h4>
+                <h4 class="title is-4 my-2">Description</h4>
+                <textarea class = "is-rounded textarea" [(ngModel)]="cottage.description" formControlName="description"></textarea>
+                <h4 class="title is-4 my-2">Maximum number of guests</h4>
                 <input class = "input is-small is-rounded" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
-                <h4 class="title is-4">Price per day</h4>
+                <h4 class="title is-4 my-2">Price per day</h4>
                 <input class = "input is-small is-rounded" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
-                <h4 class="title is-4">Rooms</h4>
+                <h4 class="title is-4 my-2">Rooms</h4>
                 <table class="table is-narrow">
                   <thead>
                   <tr>
@@ -39,11 +39,11 @@
                 <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
 
 
-
               </div>
               <div class="buttons block">
-                <button class="button is-link is-rounded" (click)="showForm=2">Create new quick reservation</button>
-                <button class="button is-danger is-rounded" (click)="deleteCottage()">Delete</button>
+                <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
+                <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
+                <button class="button is-danger is-rounded is-light"  (click)="deleteCottage()">Delete</button>
                 <div class="modal is-active" *ngIf="showForm === 2">
                   <div class="modal-background"></div>
                   <div class="modal-card">
@@ -63,23 +63,23 @@
 
             <div class = "column" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
               <div class="box">
-                <h4 class="title is-4">Name</h4>
+                <h4 class="title is-4 my-2">Name</h4>
                 <p class = "item">
                   {{cottage.cottageName}}
                 </p>
-                <h4 class="title is-4">Description</h4>
+                <h4 class="title is-4 my-2">Description</h4>
                 <p class = "item">
                   {{cottage.description}}
                 </p>
-                <h4 class="title is-4">Maximum number of guests</h4>
+                <h4 class="title is-4 my-2">Maximum number of guests</h4>
                 <p class = "item">
                   {{cottage.maxNumberOfGuests}}
                 </p>
-                <h4 class="title is-4">Price per day</h4>
+                <h4 class="title is-4 my-2">Price per day</h4>
                 <p class = "item">
                   {{cottage.pricePerDay}}
                 </p>
-                <h4 class="title is-4">Rooms</h4>
+                <h4 class="title is-4 my-2">Rooms</h4>
                 <table class="table is-narrow">
                   <thead>
                   <tr>
@@ -94,6 +94,7 @@
                   </tr>
                   </tbody>
                 </table>
+                <i class="fab fa-500px"></i>
               </div>
             </div>
          </div>
