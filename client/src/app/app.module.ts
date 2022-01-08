@@ -195,4 +195,5 @@ const mapConfig: YaConfig = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
