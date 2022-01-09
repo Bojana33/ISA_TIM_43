@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> findAll() throws AccessDeniedException {
-        List<User> result = userRepository.findAll();
+        List<User> result = userRepository.findAllByIsAdminFalse();
         return result;
     }
 

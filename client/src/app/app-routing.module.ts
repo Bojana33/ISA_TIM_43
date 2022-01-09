@@ -124,7 +124,7 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [AdminGuard, GuestGuard]
+    canActivate: [ GuestGuard]
   },
   {
     path: 'registration-requests',

@@ -55,6 +55,10 @@ export class AdventureComponent implements OnInit {
     return this.userService.loggedRole(role);
   }
 
+  isOwner(adventureOwnerId:number){
+    return this.userService.currentUser.id == adventureOwnerId;
+  }
+
   hasSignedIn() {
     return !!this.userService.currentUser;
   }

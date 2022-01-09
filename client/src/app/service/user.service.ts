@@ -101,4 +101,8 @@ export class UserService {
   saveAdmin(data:any){
     return this.apiService.post(this.config.auth_url + '/signupAdmin',JSON.parse(JSON.stringify(data)));
   }
+
+  delete(id:number){
+    this.apiService.delete(this.config.user_url + '/delete_user/' + id).subscribe(res => console.log(res));
+  }
 }

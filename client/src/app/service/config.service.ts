@@ -29,6 +29,10 @@ export class ConfigService {
   get auth_url(): string {
     return this._auth_url;
   }
+
+  get user_url(): string{
+    return this._user_url;
+  }
   
 
   get reservation_url(): string{
@@ -89,7 +93,7 @@ export class ConfigService {
     return this._whoami_url;
   }
 
-  private _users_url = this._user_url + '/all';
+  private _users_url = this._api_url + '/user/all';
 
   get users_url(): string {
     return this._users_url;

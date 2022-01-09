@@ -1,9 +1,9 @@
 <div >
     <img class="entity_photo" src="{{adventure.entityPhoto}}">
     <h1 class="info">{{adventure.name}}</h1>
-    <div fxLayout="row" fxLayoutGap="20px" *ngIf="hasSignedIn() && (hasRole('INSTRUCTOR') || hasRole('ADMIN'))" class="buttons">
-      <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}">Edit</button>
-      <button mat-flat-button color="accent" (click)="deleteAdventure()" >Delete</button>
+    <div fxLayout="row" fxLayoutGap="20px" class="buttons">
+      <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}" *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)">Edit</button>
+      <button mat-flat-button color="accent" (click)="deleteAdventure()"  *ngIf="hasRole('ADMIN') || (hasRole('INSTRUCTOR')&& isOwner(adventure.adventureOwnerId))">Delete</button>
     </div>
 
     <div class="content">
@@ -27,7 +27,7 @@
         <h1>Photos of previous adventures</h1>
         <div  fxLayout="row" fxLayoutGap="20px">
           <input type="file" (change)="onFileChanged($event)">
-          <button mat-flat-button color="accent" (click)="uploadPhoto()">Save new photo</button>
+          <button mat-flat-button color="accent" (click)="uploadPhoto()" *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)">Save new photo</button>
         </div>
         <div class="album">
           <!-- <mat-grid-list cols="4" rowHeight="150px" size="400px">
@@ -42,7 +42,7 @@
           </mat-grid-list> -->
         </div>
         <h1>Adventure Calendar</h1>
-        <button class="button is-link is-rounded" (click)="showForm=2">Create new quick reservation</button>
+        <button class="button is-link is-rounded" (click)="showForm=2" *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)">Create new quick reservation</button>
                 <div class="modal is-active" *ngIf="showForm === 2">
                   <div class="modal-background"></div>
                   <div class="modal-card">

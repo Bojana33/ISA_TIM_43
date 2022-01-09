@@ -94,6 +94,9 @@
                   </tr>
                   </tbody>
                 </table>
+                <div class="buttons block">
+                  <button class="button is-danger is-rounded" *ngIf="hasRole('ADMIN')" (click)="deleteCottage()">Delete</button>
+                </div>
               </div>
             </div>
          </div>
