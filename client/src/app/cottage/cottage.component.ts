@@ -56,7 +56,8 @@ export class CottageComponent implements OnInit{
       response => {
         this.cottage = response;
         console.log(this.cottage.address.street);
-        this.addressFormated = this.cottage.address.country + ' ' + this.cottage.address.city + ' '  + this.cottage.address.street + '&kind=house&results=' + this.cottage.address.houseNumber;
+        this.addressFormated = this.cottage.address.city + ', '  + this.cottage.address.street
+          + ', ' + this.cottage.address.houseNumber;
       });
     // if (this.hasSignedIn() && this.loggedUserIsOwner()){
     //   // @ts-ignore
@@ -79,7 +80,6 @@ export class CottageComponent implements OnInit{
   }
   // tslint:disable-next-line:typedef
   deleteCottage(){
-    // return this.httpClient.delete(this.config.cottages_url + '/' + this.cottage.id);
     // this.snackbar.open('cottage delete request sent', 'cancel');
     return this.cottageService.deleteCottage(this.cottage.id).subscribe(
       res => {
@@ -98,22 +98,6 @@ export class CottageComponent implements OnInit{
   }
 
   createNewReservation($event: ReservationDTO){
-    // const datepipe = new DatePipe('en-US');
-    // let formatedReservationStartDate = datepipe.transform($event.reservedPeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
-    // let formatedReservationEndDate = datepipe.transform($event.reservedPeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
-    // let formatedSaleStartDate = datepipe.transform($event.salePeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
-    // let formatedSaleEndDate = datepipe.transform($event.salePeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
-    // console.log($event.reservedPeriod.startDate);
-    // console.log(formatedReservationStartDate);
-    // // @ts-ignore
-    // $event.reservedPeriod.startDate = new Date(formatedReservationStartDate.toString());
-    // console.log($event.reservedPeriod.startDate);
-    // // @ts-ignore
-    // $event.reservedPeriod.endDate = new Date(formatedReservationEndDate.toString());
-    // // @ts-ignore
-    // $event.salePeriod.startDate = new Date(formatedSaleStartDate.toString());
-    // // @ts-ignore
-    // $event.salePeriod.endDate = new Date(formatedSaleEndDate.toString());
     this.reservationService.createNewReservationForEntity($event).subscribe(
         (res: any) => {
         console.log(res);

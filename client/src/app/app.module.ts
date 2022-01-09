@@ -84,6 +84,7 @@ import { InstructorAvailabilityFormComponent } from './instructor-availability-f
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
+import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
 
 
 const mapConfig: YaConfig = {
@@ -141,7 +142,8 @@ const mapConfig: YaConfig = {
     OneBoatUserComponent,
     CottageReservationsTableComponent,
     InstructorAvailabilityFormComponent,
-    SignupAdminComponent
+    SignupAdminComponent,
+    CalendarHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -204,4 +206,5 @@ const mapConfig: YaConfig = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
