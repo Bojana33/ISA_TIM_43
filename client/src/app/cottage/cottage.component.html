@@ -43,7 +43,7 @@
               <div class="buttons block">
                 <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
                 <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
-                <button class="button is-danger is-rounded is-light"  (click)="deleteCottage()">Delete</button>
+                <button class="button is-danger is-rounded is-light"  routerLink="cottages" (click)="deleteCottage()">Delete</button>
                 <div class="modal is-active" *ngIf="showForm === 2">
                   <div class="modal-background"></div>
                   <div class="modal-card">

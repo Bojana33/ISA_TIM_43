@@ -23,7 +23,7 @@ export class UserService {
   }
 
   initUser() {
-    console.log('dosao u init user');
+    // console.log('dosao u init user');
     const promise = this.apiService.get(this.config.refresh_token_url).toPromise()
       .then(res => {
         if (res.access_token !== null) {
@@ -81,11 +81,11 @@ export class UserService {
     return this.http.post<User>(this.usersUrl, user);
   }
 
-  loggedRole(role:string){
+  loggedRole(role: string){
     if (this.currentUser == null){
       return false;
     }
-    if (JSON.stringify(this.currentUser.authorities).search('ROLE_'+role) !== -1){
+    if (JSON.stringify(this.currentUser.authorities).search('ROLE_' + role) !== -1){
       return true;
     }
     return false;

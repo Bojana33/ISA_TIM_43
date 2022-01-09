@@ -8,6 +8,7 @@ import {UserService} from '../service/user.service';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {User} from '../model/user';
 import {Observable} from 'rxjs';
+import {ReservationDTO} from '../model/reservation-dto.model';
 
 @Component({
   selector: 'app-register-cottage',
@@ -40,7 +41,7 @@ export class RegisterCottageComponent implements OnInit {
     private userService: UserService
   ) {
   }
-  cottage: CottageDTO = ({} as any);
+  cottage: CottageDTO = new CottageDTO();
   user: User = ({} as any);
   ngOnInit(): void {
     this.user = this.userService.currentUser;
@@ -48,6 +49,7 @@ export class RegisterCottageComponent implements OnInit {
 
   onSubmit(): void {
     this.cottage = this.cottageCreationForm.getRawValue();
+    this.cottage.reservations = [];
     this.cottage.cottageOwnerId = this.userService.currentUser.id;
     this.http.post(this.config.cottages_url, this.cottage)
       .subscribe(res => {

@@ -12,7 +12,7 @@ import java.util.Set;
 @Setter
 public class BoatDTO {
     private Integer id;
-    //private Integer boatOwnerId;
+    private Integer boatOwnerId;
     private String name;
     private String description;
     private Integer maxNumberOfGuests;
