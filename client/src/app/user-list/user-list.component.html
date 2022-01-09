@@ -4,7 +4,7 @@
     <ng-container matColumnDef="firstName">
       <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
       <mat-cell class="description-cell"
-                *matCellDef="let res"><a routerLink="/users/{{ res.firstName }}">
+                *matCellDef="let res"><a routerLink="/profile/{{ res.id }}">
                   {{res.firstName}}
                 </a></mat-cell>
 

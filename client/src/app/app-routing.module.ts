@@ -76,7 +76,7 @@ const routes: Routes = [
     canActivate: [AdminGuard,GuestGuard]
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     component: ProfileComponent,
     canActivate: [LoginGuard, GuestGuard],
     pathMatch: 'full'

@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getMyInfo().subscribe((response) =>
+    this.userService.getUser(this.router.snapshot.params.id).subscribe((response)=>
       this.userProfile = response);
   }
 
@@ -44,5 +44,9 @@ export class ProfileComponent implements OnInit {
 
   onItemChange(event:any){
     this.choosed = event.taget.value;
+  }
+
+  isLoggedIdEqualToProfileId(id:number){
+    return this.userService.currentUser.id == id;
   }
 }
