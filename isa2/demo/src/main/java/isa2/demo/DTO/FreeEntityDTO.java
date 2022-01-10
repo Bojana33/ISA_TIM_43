@@ -10,10 +10,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class FreeEntityDTO {
-    //private Integer id;
+    private Integer numberOfGuests;
     private String type;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime startDate;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime endDate;
+    //private AddressDTO address;
+    private String country;
+    private String city;
+    private Integer grade;
 }

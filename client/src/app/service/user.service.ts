@@ -13,16 +13,12 @@ export class UserService {
 
   currentUser:any;
   private usersUrl: string;
-  public isAdmin: boolean;
-  public isFirstLoggedIn: boolean;
   constructor(
     private apiService: ApiService,
     private config: ConfigService,
     private http: HttpClient
   ) {
     this.usersUrl = 'http://localhost:8090/auth/signup';
-    this.isAdmin = false;
-    this.isFirstLoggedIn = false;
   }
 
   initUser() {

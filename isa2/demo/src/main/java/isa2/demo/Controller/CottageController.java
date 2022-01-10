@@ -3,6 +3,7 @@ package isa2.demo.Controller;
 import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
+import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Address;
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
@@ -113,10 +114,26 @@ public class CottageController {
 
     @RequestMapping(value = "/findFree", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<CottageDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
-         Collection<Cottage> cottages = this.cottageService.findFreeCottages(request.getStartDate(), request.getEndDate());
-         Collection<CottageDTO> cottageDTOS = new ArrayList<>();
-         for (Cottage cottage : cottages)
-             cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
-         return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+        try {
+            Collection<Cottage> cottages = this.cottageService.findFreeCottages(request);
+            List<Cottage> cottagesSorted = this.cottageService.sortCottages(cottages, 0, true);
+            Collection<CottageDTO> cottageDTOS = new ArrayList<>();
+            for (Cottage cottage : cottagesSorted)
+                cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+            return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+        }
+        catch (InvalidInputException e){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
+
+ //   @GetMapping(value = "/sorted", produces = MediaType.APPLICATION_JSON_VALUE)
+   // public ResponseEntity<List<CottageDTO>> getSorted(@RequestParam Integer criterion, @RequestParam boolean asc, @RequestBody Collection<Cottage> cottages){
+     //   List<Cottage> cottagesSorted = this.cottageService.sortCottages(cottages, criterion, asc);
+      //  List<CottageDTO> cottageDTOS = new ArrayList<>();
+        //for (Cottage cottage : cottagesSorted)
+          //  cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+        //return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+    //}
+
 }

@@ -61,8 +61,7 @@ const routes: Routes = [
   },
   {
     path: 'createReservation',
-    component: ClientReservationsComponent,
-    pathMatch: 'full'
+    component: ClientReservationsComponent
   },
   {
     path: 'signupClient',

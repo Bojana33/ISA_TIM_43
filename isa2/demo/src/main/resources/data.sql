@@ -65,14 +65,16 @@ insert into rental_time(start_date, end_date, reservation_entity_id) values ('20
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
-values ('VIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1);
+values ('VIKENDICA 2', 'Incredible', 10, 9, './../../assets/images/cottage2.jpg', 1);
 
 INSERT INTO COTTAGE (id) VALUES (4);
 INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 4);
 
+insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',4);
+
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo,  address_id)
-values ('BROD 1', 'Incredible', 10, 10, './../../assets/images/yacht.jpg',  1);
+values ('BROD 1', 'Incredible', 10, 9, './../../assets/images/yacht.jpg',  1);
 
 INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
 VALUES (5, 0, 20.0, 12.3, 200, 15, 15, 20, 'no rules', null);

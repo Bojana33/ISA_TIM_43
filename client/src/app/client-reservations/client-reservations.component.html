@@ -15,14 +15,33 @@
         </mat-radio-group>
     </div>
 
-    <div class = "field">
+    <div class = "field" style="margin-top: 4%">
       <label class = "label" formControlName="numberOfGuests">
         Number of guests:
       </label>
       <div class = "control">
-        <input class = "input" id="maxNumberOfGuests" type="number" formControlName="numberOfGuests">
+        <input class = "input" type="number" formControlName="numberOfGuests" min="1">
       </div>
     </div>
+      <div class = "field">
+        <label class = "label" formControlName="numberOfGuests">
+          Address:
+        </label>
+        <div class = "control">
+          <input class = "input" placeholder="Country" type="text" formControlName="country">
+        </div>
+        <div class = "control"  style="margin-top:3%;">
+          <input class = "input" placeholder="City" type="text" formControlName="city">
+        </div>
+      </div>
+      <div class = "field">
+        <label class = "label" formControlName="grade">
+          Entities with minimum average grade:
+        </label>
+        <div class = "control">
+          <input class = "input" id="minGrade" type="number" formControlName="grade" min="0">
+        </div>
+      </div>
 
       <div class = "field">
         <label class = "label">
@@ -30,7 +49,7 @@
         </label>
         <div class = "control">
           <input id="reservationStartDate" formControlName="reservationStartDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
-                 placeholder="Date Time">
+                 placeholder="Date Time" required>
           <owl-date-time #dt1></owl-date-time>
         </div>
       </div>
@@ -40,10 +59,53 @@
         </label>
         <div class = "control">
           <input id="reservationEndDate" formControlName="reservationEndDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
-                 placeholder="Date Time">
+                 placeholder="Date Time" required>
           <owl-date-time #dt2></owl-date-time>
         </div>
       </div>
     <br/>
       <button mat-raised-button type="submit">See options</button>
 
+      <div>
+        <button color="accent" mat-raised-button type="submit" (click)="openDialog()" style = "margin-top: 5%" *ngIf="show">Sort</button>
+        <div class="radioButton-control">
+          <ul class="list-group">
+            <li class="list-group-item"  *ngFor="let item of sortMethod">
+              <input type="radio" [(ngModel)]="value" name="list_name" value="{{item}}" (change)="onItemChange(item)"/>
+              {{item}}
+            </li>
+          </ul>
+        </div>
+      <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div *ngFor="let item of entity">
+            <mat-card class="mat-elevation-z4"  style="width: 520px;">
+              <a routerLink="/oneCottage/{{item.id}}" routerLinkActive="active">
+                <mat-card-header class="name">
+                  <mat-card-title>{{item.cottageName}}</mat-card-title>
+                </mat-card-header>
+              </a>
+              <div class="photo" style="margin-top: 1%">
+                <img  height="250px auto" mat-card-image src="{{item.entityPhoto}}">
+              </div>
+              <mat-card-content>
+                <p>
+                  Description: {{item.description}}
+                </p>
+                <p>
+                  Guests: max {{item.maxNumberOfGuests}}
+                </p>
+                <p>
+                  Price: {{item.pricePerDay}}
+                </p>
+                <p>
+                  Address: {{item.address.country}}, {{item.address.city}}, {{item.address.street}}, {{item.address.houseNumber}}
+                </p>
+                <p>
+                  Average grade: {{item.averageGrade}}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
