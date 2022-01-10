@@ -1,10 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.DTO.CottageDTO;
-import isa2.demo.Model.Adventure;
-import isa2.demo.Model.Cottage;
-import isa2.demo.Model.Reservation;
-import isa2.demo.Model.ReservationStatus;
+import isa2.demo.Model.*;
 import isa2.demo.Repository.CottageRepository;
 import isa2.demo.Repository.PeriodRepository;
 import isa2.demo.Repository.ReservationRepository;
@@ -37,6 +34,11 @@ public class CottageServiceImpl implements CottageService {
     @Override
     public List<Cottage> findAll() {
         return this.cottageRepository.findAll();
+    }
+
+    @Override
+    public List<Cottage> findCottagesByOwner(Owner owner) {
+        return this.cottageRepository.findAllByOwner(owner);
     }
 
     @Override

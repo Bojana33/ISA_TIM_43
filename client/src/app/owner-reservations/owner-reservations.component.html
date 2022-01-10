@@ -1,0 +1,56 @@
+<div class = "column is-10 is-offset-1">
+    <form [formGroup]= "reservationsDateRangeForm">
+      <div class=" field">
+        <label class="label"></label>
+        <div class="control">
+          <div class = "control">
+            <input id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                   placeholder="From" formControlName="startDate">
+            <owl-date-time #dt1></owl-date-time>
+          </div>
+          <div class = "control">
+            <input id="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                   placeholder="To" formControlName="endDate">
+            <owl-date-time #dt2 ></owl-date-time>
+          </div>
+        </div>
+      </div>
+      <button class="button is-success is-right" [disabled]="" (click) = "findReservationsInDateRange()" >Search</button>
+    </form>
+    <table class="table is-striped">
+      <thead>
+      <tr>
+        <th><abbr title="Id">Id</abbr></th>
+        <th><abbr title="Creation date">Creation date</abbr></th>
+        <th><abbr title="Price">Price</abbr></th>
+        <th><abbr title="Number of guests"># of guests</abbr></th>
+        <th><abbr title="Reservation status">Status</abbr></th>
+        <th><abbr title="Reservation start">Start</abbr></th>
+        <th><abbr title="Reservation end">End</abbr></th>
+        <th><abbr title="Sale start">Sale start</abbr></th>
+        <th><abbr title="Sale end">Sale end</abbr></th>
+        <th><abbr title="Client">Client </abbr></th>
+        <th><abbr title="Additional services"> Service : Price</abbr></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let res of reservations;">
+        <th>{{res.id}}</th>
+        <td>{{res.creationDate}}</td>
+        <td>{{res.price}}</td>
+        <td>{{res.numberOfGuests}}</td>
+        <td>{{res.reservationStatus.toString()}}</td>
+        <td>{{res.reservedPeriod.startDate}}</td>
+        <td>{{res.reservedPeriod.endDate}}</td>
+        <td>{{res.salePeriod.startDate}}</td>
+        <td>{{res.salePeriod.endDate}}</td>
+        <td><a *ngFor="let name of clientNames"> {{name}}</a></td>
+        <td>
+          <li *ngFor="let addService of res.additionalServices">
+            {{addService['name']}} : {{addService['price']}}
+          </li>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>

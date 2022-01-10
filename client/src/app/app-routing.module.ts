@@ -1,3 +1,4 @@
+import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { InstructorGuard } from './guard/instructor.guard';
@@ -213,6 +214,11 @@ const routes: Routes = [
   {
     path: 'userReservations',
     component: ReservationsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'owner-reservations/:id',
+    component: OwnerReservationsComponent,
     canActivate: [GuestGuard]
   },
   {

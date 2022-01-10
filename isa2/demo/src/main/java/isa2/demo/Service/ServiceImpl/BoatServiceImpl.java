@@ -2,6 +2,7 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
+import isa2.demo.Model.Owner;
 import isa2.demo.Repository.BoatRepository;
 import isa2.demo.Service.BoatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class BoatServiceImpl implements BoatService {
     @Override
     public Boat findOne(Integer id) {
         return this.boatRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Boat> findBoatsByOwner(Owner owner) {
+        return this.boatRepository.findAllByOwner(owner);
     }
 }

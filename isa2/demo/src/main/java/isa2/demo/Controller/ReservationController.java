@@ -31,11 +31,11 @@ public class ReservationController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/get_instructor_reservations/{instructorId}")
-    public ResponseEntity<Collection<ReservationDTO>> getReservationsForInstructor(@PathVariable Integer instructorId){
-        Owner instructor = this.ownerService.findById(instructorId);
+    @GetMapping("/get_owner_reservations/{ownerId}")
+    public ResponseEntity<Collection<ReservationDTO>> getReservationsForOwner(@PathVariable Integer ownerId){
+        Owner owner = this.ownerService.findById(ownerId);
         Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
-        Collection<Reservation> reservations = this.reservationService.findAllReservationsForInstructor(instructor);
+        Collection<Reservation> reservations = this.reservationService.findAllReservationsForOwner(owner);
         for(Reservation reservation:reservations){
             reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
         }

@@ -23,8 +23,8 @@ export class ReservationService {
   }
 
 
-  getInstructorReservations(instructorId:number) {
-    return this.api.get(this.config.reservation_url + '/get_instructor_reservations/' + instructorId);
+  getOwnerReservations(ownerId:number) {
+    return this.api.get(this.config.reservation_url + '/get_owner_reservations/' + ownerId);
   }
   getReservationsInDateRange(periodDTO: PeriodDto): any{
     return this.api.get(this.config.entity_url + '/reservations/' + periodDTO.id, periodDTO);

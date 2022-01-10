@@ -85,6 +85,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
+import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 
 
 const mapConfig: YaConfig = {
@@ -143,7 +144,8 @@ const mapConfig: YaConfig = {
     CottageReservationsTableComponent,
     InstructorAvailabilityFormComponent,
     SignupAdminComponent,
-    CalendarHeaderComponent
+    CalendarHeaderComponent,
+    OwnerReservationsComponent
   ],
   imports: [
     BrowserModule,

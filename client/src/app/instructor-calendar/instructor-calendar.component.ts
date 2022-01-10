@@ -48,7 +48,7 @@ export class InstructorCalendarComponent implements OnInit {
 
   getReservationsForInstructor(instructorId: number): void{
 
-    this.reservationService.getInstructorReservations(instructorId).subscribe(
+    this.reservationService.getOwnerReservations(instructorId).subscribe(
       (modelData: ReservationDTO[]) => {
         modelData.forEach((item) => {
           let eventColor = colors.green;
@@ -64,10 +64,8 @@ export class InstructorCalendarComponent implements OnInit {
             id: item.reservedPeriod.id,
             // @ts-ignore
             // tslint:disable-next-line:max-line-length
-            start: new Date((item.reservedPeriod.startDate)[0], (item.reservedPeriod.startDate)[1] - 1, (item.reservedPeriod.startDate)[2], (item.reservedPeriod.startDate)[3], (item.reservedPeriod.startDate)[4], (item.reservedPeriod.startDate)[5]),
-            // @ts-ignore
-            // tslint:disable-next-line:max-line-length
-            end: new Date((item.reservedPeriod.endDate)[0], (item.reservedPeriod.endDate)[1] - 1, (item.reservedPeriod.endDate)[2], (item.reservedPeriod.endDate)[3], (item.reservedPeriod.endDate)[4], (item.reservedPeriod.endDate)[5]),
+            start: new Date(item.reservedPeriod.startDate),
+            end: new Date(item.reservedPeriod.endDate),
             title: eventTitle,
             color: eventColor,
             draggable: true
@@ -91,10 +89,8 @@ export class InstructorCalendarComponent implements OnInit {
             id: item.periodDTO.id,
             // @ts-ignore
             // tslint:disable-next-line:max-line-length
-            start: new Date((item.periodDTO.startDate)[0], (item.periodDTO.startDate)[1] - 1, (item.periodDTO.startDate)[2], (item.periodDTO.startDate)[3], (item.periodDTO.startDate)[4], (item.periodDTO.startDate)[5]),
-            // @ts-ignore
-            // tslint:disable-next-line:max-line-length
-            end: new Date((item.periodDTO.endDate)[0], (item.periodDTO.endDate)[1] - 1, (item.periodDTO.endDate)[2], (item.periodDTO.endDate)[3], (item.periodDTO.endDate)[4], (item.periodDTO.endDate)[5]),
+            start: new Date(item.periodDTO.startDate),
+            end: new Date(item.periodDTO.endDate),
             title: eventTitle,
             color: eventColor,
             draggable: true

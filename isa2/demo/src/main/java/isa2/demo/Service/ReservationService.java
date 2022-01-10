@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ReservationService {
 //    Collection<Reservation> findAllReservationsForEntity(Integer entityId);
 
-    Collection<Reservation> findAllReservationsForInstructor(Owner owner);
+    Collection<Reservation> findAllReservationsForOwner(Owner owner);
 
     Collection<Reservation> findAllReservationsForEntity(Integer entityId, Optional<Period> periodOptional);
 
