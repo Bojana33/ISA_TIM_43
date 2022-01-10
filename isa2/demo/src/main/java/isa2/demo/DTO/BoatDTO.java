@@ -18,6 +18,7 @@ public class BoatDTO {
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
     private AddressDTO address;
+    private Double avgGrade;
     //private Collection<RoomDTO> rooms;
     private Collection<ReservationDTO> reservations;
     private String entityPhoto;

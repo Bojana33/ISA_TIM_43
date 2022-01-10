@@ -145,6 +145,10 @@ const routes: Routes = [
     component: CottageReservationsTableComponent
   },
   {
+    path: 'boats/:id/reservations',
+    component: CottageReservationsTableComponent
+  },
+  {
     path: 'calendar',
     component: CalendarComponent
   },

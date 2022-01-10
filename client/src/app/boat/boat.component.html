@@ -2,11 +2,20 @@
   <div class = "box">
     <div class = "columns">
 
-      <div class = "column">
+      <div class = "column" *ngIf="boat.entityPhoto != null || boat.photos.length != 0">
         <div class="box">
-          <figure class="image is-5by3">
-            <img src="{{boat.entityPhoto}}">
-          </figure>
+          <ngb-carousel>
+            <ng-template ngbSlide>
+              <div class="picsum-img-wrapper image is-5by3">
+                <img [src]="boat.entityPhoto" alt="Random first slide">
+              </div>
+            </ng-template>
+            <ng-template ngbSlide *ngFor="let img of boat.photos">
+              <div class="picsum-img-wrapper image is-5by3">
+                <img [src]="img" alt="Random first slide">
+              </div>
+            </ng-template>
+          </ngb-carousel>
         </div>
       </div>
 
@@ -82,6 +91,9 @@
             {{boat.fishingEquipment}}
           </p>
         </div>
+        <ngb-rating [readonly]="true" [(rate)]="boat.averageGrade"></ngb-rating>
+        <hr>
+        <pre>Rate: <b>{{boat.averageGrade}}</b></pre>
       </div>
     </div>
   </div>
@@ -92,13 +104,5 @@
   <div class = "box" *ngIf="addressFormated != null">
     {{addressFormated}}
     <app-map [address]="addressFormated"></app-map>
-  </div>
-  <div class="keen-slider" #sliderRef>
-    <div class="keen-slider__slide number-slide1">1</div>
-    <div class="keen-slider__slide number-slide2">2</div>
-    <div class="keen-slider__slide number-slide3">3</div>
-    <div class="keen-slider__slide number-slide4">4</div>
-    <div class="keen-slider__slide number-slide5">5</div>
-    <div class="keen-slider__slide number-slide6">6</div>
   </div>
 </div>

@@ -15,6 +15,7 @@ export class BoatDTO {
     public houseRules: string = '',
     public photos: string[] = [],
     public maxSpeed: number = 0,
+    public averageGrade: number = 0,
     public capacity: number = 0,
     public cancellationFee: number = 0,
     public maxNumberOfGuests: number = 0,
