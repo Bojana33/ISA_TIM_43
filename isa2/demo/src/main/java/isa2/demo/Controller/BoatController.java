@@ -68,7 +68,7 @@ public class BoatController {
             Boat boat = boatService.deleteBoat(id);
             boat.setPhotos(null);
             boatDTO = boatMapper.mapBoatToDTO(boat);
-        }catch (Exception e){
+        }catch (UnsupportedOperationException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(boatDTO);
         }
         return ResponseEntity.status(HttpStatus.OK).body(boatDTO);

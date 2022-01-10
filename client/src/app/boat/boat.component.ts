@@ -9,13 +9,14 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 import {BoatDTO} from '../model/boat-dto';
+import KeenSlider, {KeenSliderInstance} from 'keen-slider';
 
 @Component({
   selector: 'app-boat',
   templateUrl: './boat.component.html',
   styleUrls: ['./boat.component.css']
 })
-export class BoatComponent implements OnInit {
+export class BoatComponent implements OnInit, AfterViewInit, OnDestroy {
   boat: BoatDTO = new BoatDTO();
   addressFormated: any;
   showForm = 1;
@@ -38,7 +39,10 @@ export class BoatComponent implements OnInit {
       Validators.min(0)]
     )
   });
+  @ViewChild('sliderRef') sliderRef: ElementRef<HTMLElement> | undefined;
 
+  // @ts-ignore
+  slider: KeenSliderInstance;
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
@@ -106,5 +110,15 @@ export class BoatComponent implements OnInit {
       (res: any) => {
         console.log(res);
       });
+  }
+  // tslint:disable-next-line:typedef
+  ngAfterViewInit() {
+    // @ts-ignore
+    this.slider = new KeenSlider( this.sliderRef.nativeElement);
+  }
+
+  // tslint:disable-next-line:typedef
+  ngOnDestroy() {
+    if (this.slider) { this.slider.destroy(); }
   }
 }

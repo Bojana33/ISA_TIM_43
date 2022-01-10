@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
@@ -54,7 +54,8 @@ export class CottageComponent implements OnInit{
   ngOnInit(): void {
     this.httpClient.get<any>(this.config.cottages_url + '/' + this.activatedRoute.snapshot.params.id).subscribe(
       response => {
-        this.cottage = response;``
+        this.cottage = response;
+        console.log(this.cottage.photos);
         this.addressFormated = this.cottage.address.city + ', '  + this.cottage.address.street
           + ', ' + this.cottage.address.houseNumber;
       });
@@ -96,6 +97,7 @@ export class CottageComponent implements OnInit{
       });
   }
 
+  // tslint:disable-next-line:typedef
   createNewReservation($event: ReservationDTO){
     this.reservationService.createNewReservationForEntity($event).subscribe(
         (res: any) => {

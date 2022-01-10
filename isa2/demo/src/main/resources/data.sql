@@ -28,7 +28,7 @@ VALUES (true, false, 'user@userovic.com', false, false, null, '$2a$10$OyHff7x9UR
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
                                                           (1, 2),
-                                                          (2,5),
+                                                          (2,3),
                                                           (3,1),
                                                           (4,3);
 
@@ -60,6 +60,10 @@ values (0,0,0,3);
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, average_grade, address_id)
 values ('VIKENDICA 1', 'This is a beautiful cottage', 10, 10, './../../assets/images/cottage1.jpg', 2, 1);
+
+insert into entity_photos (entity_id, photos)
+values (3, './../../assets/images/cottage1.jpg'),
+       (3, './../../assets/images/cottage2.jpg');
 
 INSERT INTO COTTAGE (id) VALUES (3);
 INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 3);

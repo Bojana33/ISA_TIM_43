@@ -39,7 +39,6 @@ export class CalendarComponent implements OnInit{
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
   ngOnInit(): void {
-    console.log('ovo je iz ngInita calendara', this.entityId);
     this.getReservationsForEntity(this.entityId);
   }
   getReservationsForEntity(entityId: number): void{

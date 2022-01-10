@@ -2,11 +2,23 @@
         <div class = "box">
           <div class = "columns">
 
-            <div class = "column">
+            <div class = "column" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
               <div class="box">
-                <figure class="image is-5by3">
-                  <img src="{{cottage.entityPhoto}}">
-                </figure>
+                <ngb-carousel>
+                  <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper image is-5by3">
+                      <img [src]="cottage.entityPhoto" alt="Random first slide">
+                    </div>
+                  </ng-template>
+                  <ng-template ngbSlide *ngFor="let img of cottage.photos">
+                    <div class="picsum-img-wrapper image is-5by3">
+                      <img [src]="img" alt="Random first slide">
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+<!--                <figure class="image is-5by3">-->
+<!--                  <img src="{{cottage.entityPhoto}}">-->
+<!--                </figure>-->
               </div>
             </div>
 

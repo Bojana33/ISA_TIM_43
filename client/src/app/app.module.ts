@@ -85,6 +85,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
 import { BoatComponent } from './boat/boat.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const mapConfig: YaConfig = {
@@ -143,7 +144,7 @@ const mapConfig: YaConfig = {
     CottageReservationsTableComponent,
     InstructorAvailabilityFormComponent,
     CalendarHeaderComponent,
-    BoatComponent,
+    BoatComponent
   ],
   imports: [
     BrowserModule,
@@ -178,7 +179,8 @@ const mapConfig: YaConfig = {
     AngularYandexMapsModule.forRoot(mapConfig),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    NgbModule
   ],
   exports: [
     SignupClientComponent
