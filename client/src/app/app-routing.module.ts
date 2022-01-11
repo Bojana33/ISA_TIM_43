@@ -42,9 +42,14 @@ import {CottagesUserComponent} from './user-quest/cottages-user/cottages-user.co
 import {OneCottageComponent} from './user-quest/cottages-user/one-cottage/one-cottage.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
-import {OneBoatUserComponent} from "./user-quest/boats-user/one-boat-user/one-boat-user.component";
+import {OneBoatUserComponent} from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import {CottageReservationsTableComponent} from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+<<<<<<< HEAD
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
+=======
+import {Boat} from './model/boat';
+import {BoatComponent} from './boat/boat.component';
+>>>>>>> reservations_filter
 
 
 const routes: Routes = [
@@ -61,8 +66,13 @@ const routes: Routes = [
   },
   {
     path: 'login',
+<<<<<<< HEAD
     component: LoginComponent,
     canActivate: [GuestGuard]
+=======
+    component: LoginComponent
+    // canActivate: [GuestGuard]
+>>>>>>> reservations_filter
   },
   {
     path: 'signup',
@@ -111,7 +121,7 @@ const routes: Routes = [
     component: CreateAdventureComponent,
     canActivate: [InstructorGuard,GuestGuard]
   },
-  //{
+  // {
   //  path: 'boats',
  //   component: BoatsUserComponent,
   //  canActivate: [GuestGuard]
@@ -120,6 +130,10 @@ const routes: Routes = [
     path: 'cottages',
     component: CottagesComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'boats',
+    component: BoatsComponent
   },
   {
     path: 'users',
@@ -142,9 +156,17 @@ const routes: Routes = [
     canActivate: [GuestGuard]
   },
   {
+    path: 'boats/:id',
+    component: BoatComponent
+  },
+  {
     path: 'cottages/:id/reservations',
     component: CottageReservationsTableComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'boats/:id/reservations',
+    component: CottageReservationsTableComponent
   },
   {
     path: 'calendar',

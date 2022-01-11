@@ -2,8 +2,6 @@ package isa2.demo.Controller;
 
 import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
-import isa2.demo.Model.Address;
-import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
 
 import isa2.demo.Repository.OwnerRepository;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -86,11 +83,10 @@ public class CottageController {
     public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
         try{
-            CottageDTO updatedCottageDTO;
             Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
             cottage = cottageService.updateCottage(cottage);
-            updatedCottageDTO = cottageMapper.mapCottageToDto(cottage);
-            responseEntity = ResponseEntity.ok(updatedCottageDTO);
+            cottageDTO = cottageMapper.mapCottageToDto(cottage);
+            responseEntity = ResponseEntity.ok(cottageDTO);
 
         } catch (UnsupportedOperationException e){
             responseEntity = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
