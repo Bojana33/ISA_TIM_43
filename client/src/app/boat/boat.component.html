@@ -45,8 +45,11 @@
                 <option value=1 >Fishing boat</option>
               </select>
             </div>
+            <div class = 'block'>
+              <button class="button is-info is-rounded" [disabled]="boatUpdateForm.invalid" (click)="updateboat(boatUpdateForm)">Update</button>
+            </div>
           </div>
-          <button class="button is-info is-rounded" [disabled]="boatUpdateForm.invalid" (click)="updateboat(boatUpdateForm)">Update</button>
+
           <div class="buttons block">
             <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
             <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
