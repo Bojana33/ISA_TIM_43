@@ -13,7 +13,7 @@ import { Adventure } from '../model/adventure';
 export class UpdateAdventureComponent implements OnInit {
 
   adventureObj! : Adventure;
-  
+
   adventure = new FormGroup({
       name: new FormControl(''),
       city: new FormControl(''),
@@ -63,7 +63,6 @@ export class UpdateAdventureComponent implements OnInit {
         id : new FormControl(res['id'])
     });
     });
-    
   }
 
   addAdventure(form:any){

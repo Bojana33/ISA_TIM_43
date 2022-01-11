@@ -28,7 +28,7 @@ VALUES (true, false, 'user@userovic.com', false, false, null, '$2a$10$OyHff7x9UR
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
                                                           (1, 2),
-                                                          (2,3),
+                                                          (2,5),
                                                           (3,1),
                                                           (4,3);
 

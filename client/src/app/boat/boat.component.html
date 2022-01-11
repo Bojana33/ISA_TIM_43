@@ -23,18 +23,30 @@
         <div class = "column">
           <div class="box">
             <h4 class="title is-4 my-2">Name</h4>
-            <input class = "input is-small is-rounded" [(ngModel)]="boat.name" formControlName="boatName">
+            <input class = "input is-small is-rounded" formControlName="boatName">
             <h4 class="title is-4 my-2">Description</h4>
-            <textarea class = "is-rounded textarea" [(ngModel)]="boat.description" formControlName="description"></textarea>
+            <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
             <h4 class="title is-4 my-2">Maximum number of guests</h4>
-            <input class = "input is-small is-rounded" [(ngModel)]="boat.maxNumberOfGuests" formControlName="maxNumberOfGuests">
+            <input class = "input is-small is-rounded" formControlName="maxNumberOfGuests">
             <h4 class="title is-4 my-2">Price per day</h4>
-            <input class = "input is-small is-rounded" [(ngModel)]="boat.pricePerDay" formControlName="pricePerDay">
-            <h4 class="title is-4 my-2">Rooms</h4>
-            <button class="button is-info is-rounded" (click)="updateboat()">Update</button>
-
-
+            <input class = "input is-small is-rounded" formControlName="pricePerDay">
+            <h4 class="title is-4 my-2">Length</h4>
+            <input class = "input is-small is-rounded" formControlName="length">
+            <h4 class="title is-4 my-2">Engine power</h4>
+            <input class = "input is-small is-rounded" formControlName="enginePower">
+            <h4 class="title is-4 my-2">Maximum speed</h4>
+            <input class = "input is-small is-rounded" formControlName="maxSpeed">
+            <h4 class="title is-4 my-2">Capacity</h4>
+            <input class = "input is-small is-rounded" formControlName="capacity">
+            <h4 class="title is-4 my-2">Boat type: {{boat.type.toString()}} </h4>
+            <div class="select is-rounded">
+              <select formControlName="boatType">
+                <option value=0 >Yacht</option>
+                <option value=1 >Fishing boat</option>
+              </select>
+            </div>
           </div>
+          <button class="button is-info is-rounded" [disabled]="boatUpdateForm.invalid" (click)="updateboat(boatUpdateForm)">Update</button>
           <div class="buttons block">
             <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
             <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
@@ -78,9 +90,21 @@
           <p class = "item">
             {{boat.type}}
           </p>
+          <h4 class="title is-4 my-2">Engine power</h4>
+          <p class = "item">
+            {{boat.enginePower}}
+          </p>
           <h4 class="title is-4 my-2">Length</h4>
           <p class = "item">
             {{boat.length}}
+          </p>
+          <h4 class="title is-4 my-2">Maximum speed</h4>
+          <p class = "item">
+            {{boat.maxSpeed}}
+          </p>
+          <h4 class="title is-4 my-2">Capacity</h4>
+          <p class = "item">
+            {{boat.capacity}}
           </p>
           <h4 class="title is-4 my-2">House rules</h4>
           <p class = "item">

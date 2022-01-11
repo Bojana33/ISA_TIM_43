@@ -80,7 +80,7 @@ public class CottageController {
     }
 
     @PutMapping("/{cottage_id}")
-    public ResponseEntity<CottageDTO> mapDtoToCottageForCreation(@RequestBody CottageDTO cottageDTO){
+    public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
         try{
             Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);

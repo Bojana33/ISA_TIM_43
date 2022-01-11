@@ -8,4 +8,5 @@ public interface BoatService {
     Boat findOne(Integer id);
     Boat addNewBoat(Boat boat);
     Boat deleteBoat(Integer boat_id);
+    Boat updateBoat(Boat boat);
 }

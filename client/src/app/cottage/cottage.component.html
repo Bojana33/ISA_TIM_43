@@ -26,13 +26,13 @@
             <div class = "column">
               <div class="box">
                 <h4 class="title is-4 my-2">Name</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.cottageName" formControlName="cottageName">
+                <input class = "input is-small is-rounded" formControlName="cottageName">
                 <h4 class="title is-4 my-2">Description</h4>
-                <textarea class = "is-rounded textarea" [(ngModel)]="cottage.description" formControlName="description"></textarea>
+                <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
                 <h4 class="title is-4 my-2">Maximum number of guests</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
+                <input class = "input is-small is-rounded"  formControlName="maxNumberOfGuests">
                 <h4 class="title is-4 my-2">Price per day</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
+                <input class = "input is-small is-rounded" formControlName="pricePerDay">
                 <h4 class="title is-4 my-2">Rooms</h4>
                 <table class="table is-narrow">
                   <thead>
@@ -48,7 +48,7 @@
                   </tr>
                   </tbody>
                 </table>
-                <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
+                <button class="button is-info is-rounded" [disabled]="cottageUpdateForm.invalid" (click)="updateCottage(cottageUpdateForm)">Update</button>
 
 
               </div>

@@ -6,7 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../service/user.service';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 
@@ -20,25 +20,8 @@ export class CottageComponent implements OnInit{
   cottage: CottageDTO = new CottageDTO();
   addressFormated: any;
   showForm = 1;
-  cottageUpdateForm = this.formBuilder.group({
-    cottageName: new FormControl(this.cottage.cottageName, [
-      Validators.required,
-      Validators.minLength(5)]
-    ),
-    description: new FormControl(this.cottage.description, [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(511)]
-    ),
-    pricePerDay: new FormControl(this.cottage.pricePerDay, [
-      Validators.min(0),
-      Validators.required]
-    ),
-    maxNumberOfGuests: new FormControl(this.cottage.maxNumberOfGuests, [
-      Validators.required,
-      Validators.min(0)]
-    )
-  });
+  // @ts-ignore
+  cottageUpdateForm: FormGroup;
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
@@ -52,19 +35,43 @@ export class CottageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.httpClient.get<any>(this.config.cottages_url + '/' + this.activatedRoute.snapshot.params.id).subscribe(
-      response => {
-        this.cottage = response;
-        console.log(this.cottage.photos);
-        this.addressFormated = this.cottage.address.city + ', '  + this.cottage.address.street
-          + ', ' + this.cottage.address.houseNumber;
-      });
+    this.loadData();
     // if (this.hasSignedIn() && this.loggedUserIsOwner()){
     //   // @ts-ignore
     //   this.cottageUpdateForm.get('cottageName')?.setValue(this.cottage.cottageName);
     // }
   }
-  // tslint:disable-next-line:typedef
+
+  private loadData(): void {
+    this.httpClient.get<any>(this.config.cottages_url + '/' + this.activatedRoute.snapshot.params.id).subscribe(
+      response => {
+        this.cottage = response;
+        this.cottageUpdateForm = this.formBuilder.group({
+          cottageName: new FormControl(this.cottage.cottageName, [
+            Validators.required,
+            Validators.minLength(5)]
+          ),
+          description: new FormControl(this.cottage.description, [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(511)]
+          ),
+          pricePerDay: new FormControl(this.cottage.pricePerDay, [
+            Validators.min(0),
+            Validators.required]
+          ),
+          maxNumberOfGuests: new FormControl(this.cottage.maxNumberOfGuests, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(300)]
+          )
+        });
+        this.addressFormated = this.cottage.address.city + ', ' + this.cottage.address.street
+          + ', ' + this.cottage.address.houseNumber;
+      });
+  }
+
+// tslint:disable-next-line:typedef
   hasRole(role: string){
     return this.userService.loggedRole(role);
   }
@@ -88,12 +95,19 @@ export class CottageComponent implements OnInit{
     );
   }
   // tslint:disable-next-line:typedef
-  updateCottage(){
-    // this.snackbar.open('cottage delete request sent', 'cancel');
+  updateCottage(form: FormGroup){
+    this.cottage.cottageName = form.value.cottageName;
+    this.cottage.description = form.value.description;
+    this.cottage.maxNumberOfGuests = form.value.maxNumberOfGuests;
+    this.cottage.pricePerDay = form.value.pricePerDay;
     return this.cottageService.updateCottage(this.cottage).subscribe(
       res => {
-        this.cottage = res;
-        this.ngOnInit();
+        if (res.status === 200){
+          this.snackbar.open('Cottage update successful', 'cancel');
+        }else{
+          this.snackbar.open(`There's a problem with update`, 'cancel');
+        }
+        this.loadData();
       });
   }
 

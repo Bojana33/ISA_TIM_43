@@ -73,4 +73,19 @@ public class BoatController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(boatDTO);
     }
+    @PutMapping("/{boat_id}")
+    public ResponseEntity<BoatDTO> updateCottage(@RequestBody BoatDTO boatDTO){
+        ResponseEntity responseEntity = null;
+        try{
+            Boat boat = boatMapper.mapDtoToBoat(boatDTO);
+            boat = boatService.updateBoat(boat);
+            boatDTO = boatMapper.mapBoatToDTO(boat);
+            responseEntity = ResponseEntity.ok(boatDTO);
+
+        } catch (UnsupportedOperationException e){
+            responseEntity = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+
+        return responseEntity;
+    }
 }

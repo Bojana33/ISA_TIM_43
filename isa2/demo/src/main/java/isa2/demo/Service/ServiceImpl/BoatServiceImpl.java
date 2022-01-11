@@ -39,22 +39,6 @@ public class BoatServiceImpl implements BoatService {
         boat.setReservations(reservationsCollection);
         return boatRepository.save(boat);
     }
-
-//    @Override
-//    public Cottage deleteCottage(Integer id) throws EntityNotFoundException {
-//        Cottage cottage = cottageRepository.findById(id).orElse(null);
-//        if (cottage != null){
-//            Collection<Reservation> reservations = cottage.getReservations();
-//            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-//            if(reservations.isEmpty())
-//                cottageRepository.deleteById(id);
-//            else
-//                throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
-//        }else{
-//            throw new EntityNotFoundException(id.toString());
-//        }
-//        return cottage;
-//    }
     @Override
     public Boat deleteBoat(Integer boat_id) {
         Boat boat = boatRepository.findById(boat_id).orElse(null);
@@ -69,5 +53,15 @@ public class BoatServiceImpl implements BoatService {
             throw new EntityNotFoundException(boat_id.toString());
         }
         return boat;
+    }
+
+    @Override
+    public Boat updateBoat(Boat boat) {
+        Collection<Reservation> reservations = new ArrayList<>(boat.getReservations());
+        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+        if(reservations.isEmpty())
+            return boatRepository.save(boat);
+        else
+            throw new UnsupportedOperationException("Entity with active reservations can't be updated");
     }
 }
