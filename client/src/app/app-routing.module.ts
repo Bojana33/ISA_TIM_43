@@ -44,12 +44,10 @@ import {CalendarComponent} from './calendar/calendar.component';
 import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import {OneBoatUserComponent} from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import {CottageReservationsTableComponent} from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
-<<<<<<< HEAD
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
-=======
 import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
->>>>>>> reservations_filter
+
 
 
 const routes: Routes = [
@@ -66,13 +64,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-<<<<<<< HEAD
     component: LoginComponent,
     canActivate: [GuestGuard]
-=======
-    component: LoginComponent
-    // canActivate: [GuestGuard]
->>>>>>> reservations_filter
   },
   {
     path: 'signup',
