@@ -19,6 +19,7 @@ export class OwnerReservationsComponent implements OnInit {
   reservations: ReservationDTO[];
   clientNames: string[];
   ownerId = -1;
+  name!: string;
   constructor(private config: ConfigService,
               private activatedRoute: ActivatedRoute,
               private httpClient: HttpClient,
@@ -57,12 +58,11 @@ export class OwnerReservationsComponent implements OnInit {
   }
 
   getClientName(id: number) : string{
-    let name: string;
     let firstName: string ='';
     let surname: string = '';
-    this.userService.getUser(id).subscribe(res=>{firstName= res.firstName; surname = res.surname});
-    name = firstName + ' ' + surname;
-    return  name;
+    this.userService.getUser(id).subscribe(res=>{console.log(res);firstName= res.firstName; surname = res.surname});
+    this.name = firstName + ' ' + surname;
+    return  this.name;
   }
 
   getClientNames(){

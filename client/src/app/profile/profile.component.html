@@ -74,7 +74,7 @@
             </div>
           </div>
 
-          <div  *ngIf="hasRole('INSTRUCTOR') || hasRole('BOATOWNER') || hasRole('COTTAGEOWNER')"> <button class="button is-link  is-light" style="width:330px; margin-top:5%;" mat-raised-button type="submit" routerLink="/owner-reservations/{{userProfile.id}}">Reservations History</button> </div>
+          <div  *ngIf="(hasRole('INSTRUCTOR') || hasRole('BOATOWNER') || hasRole('COTTAGEOWNER')) && isLoggedIdEqualToProfileId(userProfile.id)"> <button class="button is-link  is-light" style="width:330px; margin-top:5%;" mat-raised-button type="submit" routerLink="/owner-reservations/{{userProfile.id}}">Reservations History</button> </div>
         </form>
       </mat-card>
     </div>

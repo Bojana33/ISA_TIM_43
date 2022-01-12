@@ -30,8 +30,9 @@ export class UpdateAdventureComponent implements OnInit {
       cancellationFee: new FormControl(0),
       entityPhoto: new FormControl(''),
       defaultFishingEquipment: new FormControl(''),
-      addresId : new FormControl(0),
+      addressId : new FormControl(0),
       id : new FormControl(0),
+      adventureOwnerId: new FormControl(0)
   })
 
   constructor(
@@ -59,8 +60,9 @@ export class UpdateAdventureComponent implements OnInit {
         cancellationFee: new FormControl(res['cancellationFee']),
         entityPhoto: new FormControl(res['entityPhoto']),
         defaultFishingEquipment: new FormControl(res['defaultFishingEquipment']),
-        addresId : new FormControl(res.addressDTO['id']),
-        id : new FormControl(res['id'])
+        addressId : new FormControl(res.addressDTO['id']),
+        id : new FormControl(res['id']),
+        adventureOwnerId: new FormControl(res['adventureOwnerId'])
     });
     });
     
@@ -82,7 +84,8 @@ export class UpdateAdventureComponent implements OnInit {
     this.adventureObj.entityPhoto = form.value.entityPhoto;
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
     this.adventureObj.id = form.value.id;
-    this.adventureObj.addressDTO.id= form.value.addressDTOid;
+    this.adventureObj.addressDTO.id= form.value.addressId;
+    this.adventureObj.adventureOwnerId = form.value.adventureOwnerId;
   }
 
   updateAdventure(){

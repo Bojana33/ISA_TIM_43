@@ -64,7 +64,7 @@ export class AdventureComponent implements OnInit {
   }
 
   deleteAdventure(){
-    return this.adventureService.deleteAdventure(this.adventure.id);
+    return this.adventureService.deleteAdventure(this.adventure.id).subscribe(res=>console.log(res));
   }
 
   public onFileChanged(event:any) {

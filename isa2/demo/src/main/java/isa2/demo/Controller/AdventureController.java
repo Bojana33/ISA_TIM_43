@@ -68,17 +68,17 @@ public class AdventureController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(this.adventureService.update(id,adventure), HttpStatus.OK);
+        return new ResponseEntity<>(this.adventureService.update(adventure), HttpStatus.OK);
     }
 
     @PostMapping("/update_adventure/{id}")
     @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Adventure> updateAdventure(@RequestBody AdventureDTO adventureDTO, @PathVariable Integer id){
         Adventure adventure = adventureMapper.mapDtoToAdventure(adventureDTO);
-        return new ResponseEntity<>(this.adventureService.update(id,adventure), HttpStatus.OK);
+        return new ResponseEntity<>(this.adventureService.update(adventure), HttpStatus.OK);
     }
 
-    @GetMapping("/delete_adventure/{id}")
+    @DeleteMapping("/delete_adventure/{id}")
     @PreAuthorize("hasAnyRole('INSTRUCTOR','ADMIN')")
     public void deleteAdventure(@PathVariable Integer id){
         this.adventureService.delete(id);

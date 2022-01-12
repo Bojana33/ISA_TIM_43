@@ -15,7 +15,7 @@ public interface AdventureService {
 
     Adventure save(Adventure adventure);
 
-    Adventure update(Integer id, Adventure adventure);
+    Adventure update(Adventure adventure);
 
     void delete(Integer id);
 

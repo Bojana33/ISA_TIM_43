@@ -31,7 +31,6 @@ public class AdventureMapper {
         Owner owner = ownerService.findById(adventureDTO.getAdventureOwnerId());
         adventure.setOwner(owner);
         Collection<Adventure> adventures = owner.getAdventures();
-        adventures.add(adventure);
         owner.setAdventures(adventures);
         Address address = adventure.getAddress();
         address.setEntity(adventure);

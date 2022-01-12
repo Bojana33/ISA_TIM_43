@@ -2,11 +2,14 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Owner;
+import isa2.demo.Model.Reservation;
+import isa2.demo.Model.ReservationStatus;
 import isa2.demo.Repository.AdventureRepository;
 import isa2.demo.Service.AdventureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,32 +35,28 @@ public class AdventureServiceImpl implements AdventureService {
     }
 
     @Override
-    public Adventure update(Integer id, Adventure adventure) {
-        Adventure adventureForUpdate = this.adventureRepository.findById(adventure.getId()).get();
-        adventureForUpdate.setName(adventure.getName());
-        adventureForUpdate.setAddress(adventure.getAddress());
-        adventureForUpdate.setCancellationFee(adventure.getCancellationFee());
-        adventureForUpdate.setHouseRules(adventure.getHouseRules());
-        adventureForUpdate.setInstructorBio(adventure.getInstructorBio());
-        adventureForUpdate.setDefaultFishingEquipment(adventure.getDefaultFishingEquipment());
-        adventureForUpdate.setAdditionalServices(adventure.getAdditionalServices());
-        adventureForUpdate.setDescription(adventure.getDescription());
-        adventureForUpdate.setEntityPhoto(adventure.getEntityPhoto());
-        adventureForUpdate.setPhotos(adventure.getPhotos());
-        adventureForUpdate.setPricePerDay(adventure.getPricePerDay());
-        adventureForUpdate.setRentalTimes(adventure.getRentalTimes());
-        adventureForUpdate.setSubscribedClients(adventure.getSubscribedClients());
-        adventureForUpdate.setAdditionalServices(adventure.getAdditionalServices());
-        adventureForUpdate.setReservations(adventure.getReservations());
-        adventureForUpdate.setAverageGrade(adventure.getAverageGrade());
-        adventureForUpdate.setMaxNumberOfGuests(adventure.getMaxNumberOfGuests());
+    public Adventure update(Adventure adventure) {
+        Collection<Reservation> reservations = adventure.getReservations();
+        if (reservations != null) {
+            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+            if(reservations.isEmpty())
+                return this.adventureRepository.save(adventure);
+            else
+                throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
+        }
+        return this.adventureRepository.save(adventure);
 
-        return this.adventureRepository.save(adventureForUpdate);
     }
 
     @Override
     public void delete(Integer id) {
-        this.adventureRepository.deleteById(id);
+        Adventure adventure = this.adventureRepository.findById(id).orElse(null);
+        Collection<Reservation> reservations = adventure.getReservations();
+        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+        if(reservations.isEmpty())
+            this.adventureRepository.deleteById(id);
+        else
+            throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
     }
 
     @Override
