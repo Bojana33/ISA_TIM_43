@@ -32,7 +32,7 @@ public class UserDeleteRequestServiceImpl implements UserDeleteRequestService {
         String subject = "Delete Profile Request approved";
         String content = "Dear " + user.getFirstName() + " " + user.getSurname() + ",<br>" + userDeleteRequest.getResponse();
         try {
-            this.userService.sendEmail(subject,content);
+            this.userService.sendEmail(subject,content, userDeleteRequest.getUser().getEmail());
         } catch (MessagingException me){
             System.out.println("Message exception");
         }
@@ -47,7 +47,7 @@ public class UserDeleteRequestServiceImpl implements UserDeleteRequestService {
         String subject = "Delete Profile Request rejected";
         String content = "Dear " + user.getFirstName() + " " + user.getSurname() + ",<br>" + userDeleteRequest.getResponse();
         try {
-            this.userService.sendEmail(subject,content);
+            this.userService.sendEmail(subject,content, userDeleteRequest.getUser().getEmail());
         } catch (MessagingException me){
             System.out.println("Message exception");
         }

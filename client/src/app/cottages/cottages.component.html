@@ -1,21 +1,41 @@
-<div class="container">
-  <div class="section">
-    <div class="columns">
-    </div>
-    <div id="app" *ngFor="let cottage of cottages"
-         class="row columns is-multiline">
-      <div class="column is-4">
+
+
+
+      <form (ngSubmit)="filterCottages(cottageName.value)">
+        <div class = "column is-three-fifths is-offset-one-fifth">
+          <div class=" field">
+            <label class="label"></label>
+            <div class="control">
+              <input #cottageName class="input" type="text" placeholder="Seach">
+            </div>
+          </div>
+        </div>
+      </form>
+    <div id="app" *ngFor="let cottage of cottages" class="row column is-multiline ">
+      <div class="column is-three-fifths is-offset-one-fifth">
+<!--        <div class="columns">-->
+<!--          <form (ngSubmit)="filterCottages(cottageName.value)">-->
+<!--          <div class = "column is-three-fifths is-offset-one-fifth">-->
+<!--            <div class=" field">-->
+<!--              <label class="label"></label>-->
+<!--              <div class="control">-->
+<!--                <input #cottageName class="input" type="text" placeholder="Seach">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          </form>-->
+<!--        </div>-->
       <a routerLink="./{{cottage.id}}">
         <div class="card large">
           <div class="card-image">
             <figure class="image is-16by9">
-              <img src="https://source.unsplash.com/h-ACUrBngrw/1280x720" alt="Image">
+              <img src="{{cottage.entityPhoto}}" alt="Image">
             </figure></div>
           <div class="card-content">
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
-                  <img src="https://avatars.dicebear.com/api/initials/john%20doe.svg" alt="Image">
+                  <img class ="is-rounded" src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="Image">
                 </figure>
               </div>
               <div class="media-content">
@@ -23,7 +43,8 @@
                 <p><span class="title is-6">
                   </span>
                 </p>
-                <p class="subtitle is-6">Lead Developer
+                <p class="subtitle is-6">
+                  {{cottage.address.city}}
                 </p>
               </div>
             </div>
@@ -36,7 +57,8 @@
           </div>
         </div>
       </a>
-</div>
+      </div>
+    </div>
 
 <script src="../js/cardsData.js"></script>
 

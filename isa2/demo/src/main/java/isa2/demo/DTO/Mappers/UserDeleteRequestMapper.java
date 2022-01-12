@@ -2,10 +2,10 @@ package isa2.demo.DTO.Mappers;
 
 import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.UserDeleteRequestDTO;
-import isa2.demo.Model.User;
 import isa2.demo.Model.UserDeleteRequest;
 import isa2.demo.Service.ServiceImpl.UserServiceImpl;
 import org.springframework.stereotype.Component;
+import isa2.demo.Model.User;
 
 @Component
 public class UserDeleteRequestMapper {

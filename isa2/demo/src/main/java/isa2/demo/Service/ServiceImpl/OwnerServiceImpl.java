@@ -1,5 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.PeriodDTO;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.AuthorityService;
@@ -34,7 +35,7 @@ public class OwnerServiceImpl implements OwnerService {
         owner.setEmail(registrationRequest.getEmail());
         owner.setPhoneNumber(registrationRequest.getPhoneNumber());
         owner.setAddress(registrationRequest.getAddress());
-        owner.setFirstLogIn(true);
+        owner.setFirstLogin(true);
         owner.setDeleted(false);
         owner.setIsAdmin(false);
         owner.setActivated(true);

@@ -1,0 +1,46 @@
+<mat-card class="mat-elevation-z4" style="width:1200px; margin-left:15%; margin-top:2%; margin-right: 2%; position: center">
+  <mat-toolbar color="primary">All reservations</mat-toolbar>
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="allReservations">
+    <ng-container matColumnDef="guests">
+      <mat-header-cell *matHeaderCellDef>Number of guests</mat-header-cell>
+      <mat-cell class="description-cell"
+                *matCellDef="let res">{{res.numberOfGuests}}</mat-cell>
+
+    </ng-container>
+
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let res">{{res.price}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="notes">
+      <mat-header-cell *matHeaderCellDef>Additional notes</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let res">{{res.additionalNotes}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef>Start date</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let res">{{res.reservedPeriod.startDate[2]}}.{{res.reservedPeriod.startDate[1]}}.{{res.reservedPeriod.startDate[0]}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="end">
+      <mat-header-cell *matHeaderCellDef>End date</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let res">{{res.reservedPeriod.endDate[2]}}.{{res.reservedPeriod.endDate[1]}}.{{res.reservedPeriod.endDate[0]}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Reservation status</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let res">{{res.reservationStatus}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+</mat-card>

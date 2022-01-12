@@ -1,14 +1,11 @@
 package isa2.demo.Controller;
 
-import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
-import isa2.demo.Model.Address;
 import isa2.demo.Model.Cottage;
 
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.CottageService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,13 +35,14 @@ public class CottageController {
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
         cottage = cottageService.addNewCottage(cottage);
-            return cottage;
+        return cottage;
     }
     @DeleteMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> deleteCottage(@PathVariable("cottage_id") Integer id){
         CottageDTO cottageDTO = new CottageDTO();
         try{
             Cottage cottage = cottageService.deleteCottage(id);
+            cottage.setPhotos(null);
             //TODO: popravi ovaj exception u mapperu
             cottageDTO = cottageMapper.mapCottageToDto(cottage);
         }catch (Exception e){
@@ -65,19 +63,44 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public List<CottageDTO> getAllCottages() {
-        List<Cottage> cottages = cottageService.findAllCottages();
+    public List<CottageDTO> getCottages(@RequestParam(defaultValue = "") String cottageName) {
+        List<Cottage> cottages = new ArrayList<>();
+        cottages = cottageService.findCottagesByName(cottageName);
+//        if(name.equals("")){
+//            cottages = cottageService.findCottagesByName(name);
+//        }else{
+//            cottages = cottageService.findCottagesByName();
+//        }
+
         List<CottageDTO> cottageDTOS = new ArrayList<>();
         for(Cottage cottage:cottages){
             cottageDTOS.add(cottageMapper.mapCottageToDto(cottage));
         }
         return cottageDTOS;
     }
-    @ResponseStatus(HttpStatus.CREATED)
+
     @PutMapping("/{cottage_id}")
-    public Cottage updateCottage(@RequestBody CottageDTO cottageDTO){
-        Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
-        cottage = cottageService.updateCottage(cottage);
-        return cottage;
+    public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
+        ResponseEntity responseEntity = null;
+        try{
+            Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
+            cottage = cottageService.updateCottage(cottage);
+            cottageDTO = cottageMapper.mapCottageToDto(cottage);
+            responseEntity = ResponseEntity.ok(cottageDTO);
+
+        } catch (UnsupportedOperationException e){
+            responseEntity = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+
+        return responseEntity;
+    }
+
+    @GetMapping(value =  "/get_all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CottageDTO>> getAll(){
+        List<Cottage> cottages = this.cottageService.findAll();
+        List<CottageDTO> cottageDTOS = new ArrayList<>();
+        for (Cottage cottage : cottages)
+            cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+        return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
     }
 }

@@ -1,12 +1,14 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.Adventure;
+import isa2.demo.Model.Owner;
 import isa2.demo.Repository.AdventureRepository;
 import isa2.demo.Service.AdventureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdventureServiceImpl implements AdventureService {
@@ -14,15 +16,14 @@ public class AdventureServiceImpl implements AdventureService {
     @Autowired
     private AdventureRepository adventureRepository;
 
-
     @Override
     public List<Adventure> findAll() {
         return this.adventureRepository.findAll();
     }
 
     @Override
-    public Adventure findOne(Integer id) {
-        return this.adventureRepository.findById(id).get();
+    public Optional<Adventure> findOne(Integer id) {
+        return this.adventureRepository.findById(id);
     }
 
     @Override
@@ -57,5 +58,10 @@ public class AdventureServiceImpl implements AdventureService {
     @Override
     public void delete(Integer id) {
         this.adventureRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Adventure> findAdventuresByInstructor(Owner owner) {
+        return this.adventureRepository.findAllByOwner(owner);
     }
 }

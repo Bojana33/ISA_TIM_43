@@ -1,0 +1,98 @@
+<div class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html">
+    <form [formGroup]="cottageReservationForm">
+      <div class = "field">
+        <label class = "label" for="price">
+          Pricer per day:
+        </label>
+        <div class = "control">
+          <input class = "input" id="price" type="number" formControlName="price">
+        </div>
+      </div>
+
+      <div class = "field">
+        <label class = "label" for="maxNumberOfGuests">
+          Maximum number of guests:
+        </label>
+        <div class = "control">
+          <input class = "input" id="maxNumberOfGuests" type="number" formControlName="numberOfGuests">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          Additional notes:
+        </label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Additional notes" formControlName="additionalNotes"></textarea>
+        </div>
+      </div>
+
+      <div formGroupName="reservedPeriod">
+        <div class = "field">
+          <label class = "label" for="reservationStartDate">
+            Reservation start:
+          </label>
+          <div class = "control">
+            <input id="reservationStartDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                   placeholder="Date Time" formControlName="startDate">
+            <owl-date-time #dt1></owl-date-time>
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="reservationEndDate">
+            Reservation end:
+          </label>
+          <div class = "control">
+            <input id="reservationEndDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                   placeholder="Date Time" formControlName="endDate">
+            <owl-date-time #dt2></owl-date-time>
+          </div>
+        </div>
+      </div>
+
+      <div formGroupName="salePeriod">
+        <div class = "field">
+          <label class = "label" for="startDate">
+            Sale start:
+          </label>
+          <div class = "control">
+            <input id="startDate" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3"
+                   placeholder="Date Time" formControlName="startDate">
+            <owl-date-time #dt3></owl-date-time>
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="endDate">
+            Sale end:
+          </label>
+          <div class = "control">
+            <input id="endDate" [owlDateTime]="dt4" [owlDateTimeTrigger]="dt4"
+                   placeholder="Date Time" formControlName="endDate">
+            <owl-date-time #dt4></owl-date-time>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class = "block">
+        <label class = "label" for="addServ">
+          Additional services
+        </label>
+        <div *ngIf="additionalServices.controls">
+          <div formArrayName="additionalServices" *ngFor="let service of additionalServices.controls; let i=index;" id="addServ">
+            <div class="field is-grouped">
+              <div [formGroupName]="i">
+                <input formControlName="name" placeholder="Name">
+                <input formControlName="price" placeholder="Price">
+                <button class="button is-danger is-rounded is-small" (click)="deleteService(i)">X</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="addService" (click) = "addService()">Add another service</button>
+        </div>
+      </div>
+      <div>
+        <button class="button is-success is-right" (click)="makeReservation()" >Save changes</button>
+      </div>
+    </form>
+</div>
+

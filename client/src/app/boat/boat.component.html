@@ -1,0 +1,135 @@
+<div class = "column is-10 is-offset-1">
+  <div class = "box">
+    <div class = "columns">
+
+      <div class = "column" *ngIf="boat.entityPhoto != null || boat.photos.length != 0">
+        <div class="box">
+          <ngb-carousel>
+            <ng-template ngbSlide>
+              <div class="picsum-img-wrapper image is-5by3">
+                <img [src]="boat.entityPhoto" alt="Random first slide">
+              </div>
+            </ng-template>
+            <ng-template ngbSlide *ngFor="let img of boat.photos">
+              <div class="picsum-img-wrapper image is-5by3">
+                <img [src]="img" alt="Random first slide">
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+      </div>
+
+      <form *ngIf ="hasSignedIn() && loggedUserIsOwner()" [formGroup]="boatUpdateForm">
+        <div class = "column">
+          <div class="box">
+            <h4 class="title is-4 my-2">Name</h4>
+            <input class = "input is-small is-rounded" formControlName="boatName">
+            <h4 class="title is-4 my-2">Description</h4>
+            <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
+            <h4 class="title is-4 my-2">Maximum number of guests</h4>
+            <input class = "input is-small is-rounded" formControlName="maxNumberOfGuests">
+            <h4 class="title is-4 my-2">Price per day</h4>
+            <input class = "input is-small is-rounded" formControlName="pricePerDay">
+            <h4 class="title is-4 my-2">Length</h4>
+            <input class = "input is-small is-rounded" formControlName="length">
+            <h4 class="title is-4 my-2">Engine power</h4>
+            <input class = "input is-small is-rounded" formControlName="enginePower">
+            <h4 class="title is-4 my-2">Maximum speed</h4>
+            <input class = "input is-small is-rounded" formControlName="maxSpeed">
+            <h4 class="title is-4 my-2">Capacity</h4>
+            <input class = "input is-small is-rounded" formControlName="capacity">
+            <h4 class="title is-4 my-2">Boat type: {{boat.type.toString()}} </h4>
+            <div class="select is-rounded">
+              <select formControlName="boatType">
+                <option value=0 >Yacht</option>
+                <option value=1 >Fishing boat</option>
+              </select>
+            </div>
+            <div class = 'block'>
+              <button class="button is-info is-rounded" [disabled]="boatUpdateForm.invalid" (click)="updateboat(boatUpdateForm)">Update</button>
+            </div>
+          </div>
+
+          <div class="buttons block">
+            <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
+            <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
+            <button class="button is-danger is-rounded is-light"  routerLink="boats" (click)="deleteboat()">Delete</button>
+            <div class="modal is-active" *ngIf="showForm === 2">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Create new quick reservation</p>
+                  <button class="delete" (click)="showForm=1" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <app-reservation-form [entityId]="boat.id" (createdReservationEvent)="createNewReservation($event)">
+                  </app-reservation-form>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class = "column" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
+        <div class="box">
+          <h4 class="title is-4 my-2">Name</h4>
+          <p class = "item">
+            {{boat.name}}
+          </p>
+          <h4 class="title is-4 my-2">Description</h4>
+          <p class = "item">
+            {{boat.description}}
+          </p>
+          <h4 class="title is-4 my-2">Maximum number of guests</h4>
+          <p class = "item">
+            {{boat.maxNumberOfGuests}}
+          </p>
+          <h4 class="title is-4 my-2">Price per day</h4>
+          <p class = "item">
+            {{boat.pricePerDay}}
+          </p>
+          <h4 class="title is-4 my-2">Boat type:</h4>
+          <p class = "item">
+            {{boat.type}}
+          </p>
+          <h4 class="title is-4 my-2">Engine power</h4>
+          <p class = "item">
+            {{boat.enginePower}}
+          </p>
+          <h4 class="title is-4 my-2">Length</h4>
+          <p class = "item">
+            {{boat.length}}
+          </p>
+          <h4 class="title is-4 my-2">Maximum speed</h4>
+          <p class = "item">
+            {{boat.maxSpeed}}
+          </p>
+          <h4 class="title is-4 my-2">Capacity</h4>
+          <p class = "item">
+            {{boat.capacity}}
+          </p>
+          <h4 class="title is-4 my-2">House rules</h4>
+          <p class = "item">
+            {{boat.houseRules}}
+          </p>
+          <h4 class="title is-4 my-2">Fishing equipment</h4>
+          <p class = "item">
+            {{boat.fishingEquipment}}
+          </p>
+        </div>
+        <ngb-rating [readonly]="true" [(rate)]="boat.averageGrade"></ngb-rating>
+        <hr>
+        <pre>Rate: <b>{{boat.averageGrade}}</b></pre>
+      </div>
+    </div>
+  </div>
+  <div class = "box" *ngIf="boat.id != 0">
+    <app-calendar [entityId]= "boat.id">
+    </app-calendar>
+  </div>
+  <div class = "box" *ngIf="addressFormated != null">
+    {{addressFormated}}
+    <app-map [address]="addressFormated"></app-map>
+  </div>
+</div>

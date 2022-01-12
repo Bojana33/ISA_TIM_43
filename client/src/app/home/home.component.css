@@ -1,0 +1,34 @@
+.content {
+  margin-top: 30px;
+  padding: 16px;
+}
+
+.photo {
+  width: 100%;
+  margin-top: 5%;
+}
+
+.name {
+  margin: auto;
+}
+
+.buttons {
+  margin: auto;
+}
+
+.searchForm {
+  margin-left: 0.4%;
+  padding: 20px;
+  width: 1000px;
+  height: 5px;
+  fxFlex: 55%;
+}
+
+.select {
+  margin-top: 3%;
+  margin-left: 5%;
+  fxFlex: 55%;
+  width: 120px;
+  height: 25px;
+}
+
