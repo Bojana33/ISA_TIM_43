@@ -25,9 +25,9 @@
       <p>{{addressTxt}}</p>
         <app-map [address]="address"></app-map>
         <h1>Photos of previous adventures</h1>
-        <div  fxLayout="row" fxLayoutGap="20px">
+        <div *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)" fxLayout="row" fxLayoutGap="20px">
           <input type="file" (change)="onFileChanged($event)">
-          <button mat-flat-button color="accent" (click)="uploadPhoto()" *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)">Save new photo</button>
+          <button mat-flat-button color="accent" (click)="uploadPhoto()" >Save new photo</button>
         </div>
 
         <div class = "column" *ngIf="adventure.entityPhoto != null || adventure.photos.length != 0">

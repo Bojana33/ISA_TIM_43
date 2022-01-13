@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,7 +59,7 @@ public class AdventureController {
     @PostMapping(value = "/save_adventure_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Adventure> saveImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl){
-        Path path = Paths.get("E:\\Internet_Softverske_Arhitekture\\projekat2\\Git\\ISA_TIM_43\\client\\src\\assets\\images");
+        Path path = Paths.get("client/src/assets/images");
         Adventure adventure = this.adventureService.findOne(id).orElse(null);
         try{
             InputStream inputStream = imageUrl.getInputStream();
