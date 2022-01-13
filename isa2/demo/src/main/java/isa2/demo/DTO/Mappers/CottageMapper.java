@@ -29,7 +29,7 @@ public class CottageMapper {
     public Cottage mapDtoToCottage(CottageDTO cottageDTO){
         Cottage cottage = modelMapper.modelMapper().map(cottageDTO, Cottage.class);
         Collection<Reservation> reservationCollection = cottage.getReservations();
-        if(reservationCollection != null) {
+        if(!reservationCollection.isEmpty() || reservationCollection != null) {
             Iterator<Reservation> iterator1 = reservationCollection.iterator();
             Iterator<ReservationDTO> iterator2 = cottageDTO.getReservations().iterator();
             while (iterator1.hasNext() && iterator2.hasNext()) {
@@ -40,7 +40,9 @@ public class CottageMapper {
                     temp_reservation.setClient(clientService.findById(temp_reservationDTO.getClientId()));
 
                 temp_reservation.setEntity(cottage);
-                temp_reservation.setCreationDate(LocalDateTime.now());
+                //zasto je ovo u mapperu?
+                if(temp_reservation.getCreationDate() == null)
+                    temp_reservation.setCreationDate(LocalDateTime.now());
                 Collection<AdditionalService> additionalServices = temp_reservation.getAdditionalServices();
                 if (additionalServices != null) {
                     for (AdditionalService additionalService : additionalServices) {

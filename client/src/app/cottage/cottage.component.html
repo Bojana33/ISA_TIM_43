@@ -2,11 +2,23 @@
         <div class = "box">
           <div class = "columns">
 
-            <div class = "column">
+            <div class = "column" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
               <div class="box">
-                <figure class="image is-5by3">
-                  <img src="{{cottage.entityPhoto}}">
-                </figure>
+                <ngb-carousel>
+                  <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper image is-5by3">
+                      <img [src]="cottage.entityPhoto" alt="Random first slide">
+                    </div>
+                  </ng-template>
+                  <ng-template ngbSlide *ngFor="let img of cottage.photos">
+                    <div class="picsum-img-wrapper image is-5by3">
+                      <img [src]="img" alt="Random first slide">
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+<!--                <figure class="image is-5by3">-->
+<!--                  <img src="{{cottage.entityPhoto}}">-->
+<!--                </figure>-->
               </div>
             </div>
 
@@ -14,13 +26,13 @@
             <div class = "column">
               <div class="box">
                 <h4 class="title is-4 my-2">Name</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.cottageName" formControlName="cottageName">
+                <input class = "input is-small is-rounded" formControlName="cottageName">
                 <h4 class="title is-4 my-2">Description</h4>
-                <textarea class = "is-rounded textarea" [(ngModel)]="cottage.description" formControlName="description"></textarea>
+                <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
                 <h4 class="title is-4 my-2">Maximum number of guests</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.maxNumberOfGuests" formControlName="maxNumberOfGuests">
+                <input class = "input is-small is-rounded"  formControlName="maxNumberOfGuests">
                 <h4 class="title is-4 my-2">Price per day</h4>
-                <input class = "input is-small is-rounded" [(ngModel)]="cottage.pricePerDay" formControlName="pricePerDay">
+                <input class = "input is-small is-rounded" formControlName="pricePerDay">
                 <h4 class="title is-4 my-2">Rooms</h4>
                 <table class="table is-narrow">
                   <thead>
@@ -36,14 +48,30 @@
                   </tr>
                   </tbody>
                 </table>
-                <button class="button is-info is-rounded" (click)="updateCottage()">Update</button>
+                <button class="button is-info is-rounded" [disabled]="cottageUpdateForm.invalid" (click)="updateCottage(cottageUpdateForm)">Update</button>
 
 
               </div>
               <div class="buttons block">
                 <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
                 <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
-                <button class="button is-danger is-rounded is-light"  (click)="deleteCottage()">Delete</button>
+                <button class="button is-danger is-rounded is-light"  routerLink="cottages" (click)="deleteCottage()">Delete</button>
+                <div class="modal">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Modal title</p>
+                      <button class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                      <!-- Content ... -->
+                    </section>
+                    <footer class="modal-card-foot">
+                      <button class="button is-success">Save changes</button>
+                      <button class="button">Cancel</button>
+                    </footer>
+                  </div>
+                </div>
                 <div class="modal is-active" *ngIf="showForm === 2">
                   <div class="modal-background"></div>
                   <div class="modal-card">

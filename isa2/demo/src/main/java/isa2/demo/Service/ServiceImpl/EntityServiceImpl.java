@@ -2,6 +2,7 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.*;
 import isa2.demo.Repository.EntityRepository;
+import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Service.EntityService;
 import isa2.demo.Service.UserService;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class EntityServiceImpl implements EntityService {
     private final EntityRepository entityRepository;
     private final UserService userService;
+    private final ReservationRepository reservationRepository;
 
-    public EntityServiceImpl(EntityRepository entityRepository, UserService userService) {
+    public EntityServiceImpl(EntityRepository entityRepository, UserService userService, ReservationRepository reservationRepository) {
         this.entityRepository = entityRepository;
         this.userService = userService;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -121,5 +124,21 @@ public class EntityServiceImpl implements EntityService {
         for(User user: entity.getSubscribedClients()){
             userService.sendEmail("Special offer", offerDuration, user.getEmail());
         }
+    }
+
+    @Override
+    public Double findAverageGrade(Integer entity_id) {
+        Optional<Entity> entity = entityRepository.findById(entity_id);
+        Double avgGrade = 0.0;
+        if(entity.isPresent()){
+            Collection<Reservation> reservations= reservationRepository.findAllByEntity_idAndClientsReviewNotNull(entity_id);
+            if(!reservations.isEmpty()){
+                for(Reservation reservation: reservations){
+                    avgGrade += reservation.getClientsReview().getGrade();
+                }
+                avgGrade =  avgGrade/reservations.size();
+            }
+        }
+        return avgGrade;
     }
 }
