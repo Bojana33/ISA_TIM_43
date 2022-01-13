@@ -1,10 +1,11 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReservationService } from './../service/reservation.service';
 import { ApiService } from './../service/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AdventureService } from './../service/adventure.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from '../service/config.service';
 import { UserService } from '../service/user.service';
 import { ReservationDTO } from '../model/reservation-dto.model';
@@ -30,10 +31,11 @@ export class AdventureComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
+    private route: Router,
     private userService: UserService,
     private adventureService:AdventureService,
     private reservationService: ReservationService,
-    private dialog: MatDialog
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class AdventureComponent implements OnInit {
   }
 
   deleteAdventure(){
-    return this.adventureService.deleteAdventure(this.adventure.id).subscribe(res=>console.log(res));
+    return this.adventureService.deleteAdventure(this.adventure.id).subscribe(res=>{console.log(res); this.snackbar.open('Adventure deleted', 'cancel'); this.route.navigate(['/adventures'])});
   }
 
   public onFileChanged(event:any) {

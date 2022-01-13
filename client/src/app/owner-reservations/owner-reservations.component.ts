@@ -17,6 +17,8 @@ export class OwnerReservationsComponent implements OnInit {
 
   reservationsDateRangeForm!: FormGroup;
   reservations: ReservationDTO[];
+  allReservations: ReservationDTO[] = [];
+  filterStatus = 0;
   clientNames: string[];
   ownerId = -1;
   name!: string;
@@ -37,18 +39,34 @@ export class OwnerReservationsComponent implements OnInit {
     });
     this.reservationService.getOwnerReservations(this.ownerId).subscribe((params: ReservationDTO[]) => {
       this.reservations = params;
+      this.allReservations= this.reservations;
     });
     this.reservationsDateRangeForm = this.formBuilder.group({
-      startDate: new FormControl([null, [Validators.required]]),
-      endDate: new FormControl([null, [Validators.required]])
+      startDate: new FormControl(null),
+      endDate: new FormControl(null)
     });
     this.getClientNames();
   }
 
-  findReservationsInDateRange(): void {
+  filterReservationsByStatus(status: string): void{
+    this.reservations = this.allReservations.filter((val) => val.reservationStatus.toString() === status);
+  }
+
+  findReservationsInDateRange(form: FormGroup): void {
+    const maxDate = new Date(8640000000000000);
+    const minDate = new Date(-8640000000000000);
     let timePeriod = new PeriodDto();
-    timePeriod = this.reservationsDateRangeForm.getRawValue();
-    this.reservations = this.reservations.filter((val) => new Date(val.reservedPeriod.startDate) >= timePeriod.startDate &&
+    // timePeriod = this.reservationsDateRangeForm.getRawValue();
+    timePeriod.startDate = form.value.startDate;
+    timePeriod.endDate = form.value.endDate;
+    console.log(timePeriod);
+    if (timePeriod.startDate == null){
+      timePeriod.startDate = minDate;
+    }
+    if (timePeriod.endDate == null){
+      timePeriod.endDate = maxDate;
+    }
+    this.reservations = this.allReservations.filter((val) => new Date(val.reservedPeriod.startDate) >= timePeriod.startDate &&
       new Date(val.reservedPeriod.endDate) <= timePeriod.endDate);
     // this.reservations = this.reservationService.getReservationsInDateRange(timePeriod).subscribe(
     //     (res: ReservationDTO[]) => {

@@ -1,22 +1,49 @@
 <div class = "column is-10 is-offset-1">
-    <form [formGroup]= "reservationsDateRangeForm">
-      <div class=" field">
-        <label class="label"></label>
-        <div class="control">
-          <div class = "control">
-            <input id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+  <nav class="level">
+    <!-- Left side -->
+    <div class="level-left">
+      <div class="level-item">
+        <p class="subtitle is-5">
+          <strong>{{reservations.length}}</strong> posts
+        </p>
+      </div>
+      <div class="level-item">
+        <form [formGroup]= "reservationsDateRangeForm">
+          <div class=" field has-addons">
+            <div class = "control">
+            <input class = "input" id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
                    placeholder="From" formControlName="startDate">
             <owl-date-time #dt1></owl-date-time>
-          </div>
-          <div class = "control">
-            <input id="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+            </div>
+            <div class = "control">
+            <input class = "input" id="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
                    placeholder="To" formControlName="endDate">
             <owl-date-time #dt2 ></owl-date-time>
+            </div>
+            <div class = "control">
+              <button class="button is-success is-right" (click) = "findReservationsInDateRange(reservationsDateRangeForm)">Search</button>
+            </div>
           </div>
-        </div>
+        </form>
+<!--          <p class="control">-->
+<!--            <input class="input" type="text" placeholder="Find a post">-->
+<!--          </p>-->
+<!--          <p class="control">-->
+<!--            <button class="button">-->
+<!--              Search-->
+<!--            </button>-->
+<!--          </p>-->
       </div>
-      <button class="button is-success is-right" [disabled]="" (click) = "findReservationsInDateRange()" >Search</button>
-    </form>
+    </div>
+
+    <!-- Right side -->
+    <div class="level-right">
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 1 }" (click)="filterReservationsByStatus('FREE'); filterStatus = 1">Free</span></p>
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 2 }" (click)="filterReservationsByStatus('RESERVED'); filterStatus = 2">Reserved</span></p>
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 3 }" (click)="filterReservationsByStatus('COMPLETED'); filterStatus = 3">Completed</span></p>
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-danger is-light': filterStatus == 4 }" (click)="filterReservationsByStatus('CANCELED'); filterStatus = 4">Canceled</span></p>
+    </div>
+  </nav>
     <table class="table is-striped">
       <thead>
       <tr>

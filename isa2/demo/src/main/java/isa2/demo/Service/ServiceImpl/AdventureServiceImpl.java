@@ -9,6 +9,7 @@ import isa2.demo.Service.AdventureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -36,22 +37,20 @@ public class AdventureServiceImpl implements AdventureService {
 
     @Override
     public Adventure update(Adventure adventure) {
-        Collection<Reservation> reservations = adventure.getReservations();
-        if (reservations != null) {
-            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-            if(reservations.isEmpty())
-                return this.adventureRepository.save(adventure);
-            else
-                throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
-        }
-        return this.adventureRepository.save(adventure);
+        Collection<Reservation> reservations = new ArrayList<>(adventure.getReservations());
+        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+        if(reservations.isEmpty())
+            return this.adventureRepository.save(adventure);
+        else
+            throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
+
 
     }
 
     @Override
     public void delete(Integer id) {
         Adventure adventure = this.adventureRepository.findById(id).orElse(null);
-        Collection<Reservation> reservations = adventure.getReservations();
+        Collection<Reservation> reservations = new ArrayList<>(adventure.getReservations());
         reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
         if(reservations.isEmpty())
             this.adventureRepository.deleteById(id);

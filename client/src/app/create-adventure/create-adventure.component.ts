@@ -1,8 +1,9 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from './../service/user.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { __param } from 'tslib';
 import { Address } from '../model/address';
 import { Adventure } from '../model/adventure';
@@ -16,6 +17,7 @@ import { AdventureService } from '../service/adventure.service';
 export class CreateAdventureComponent implements OnInit {
   
   adventureObj! : Adventure;
+  success!: boolean;
 
   adventure = new FormGroup({
     name: new FormControl(''),
@@ -36,8 +38,10 @@ export class CreateAdventureComponent implements OnInit {
 
 constructor(
   private router: ActivatedRoute,
+  private route: Router,
   private adventureService: AdventureService,
-  private userService: UserService
+  private userService: UserService,
+  private snackbar: MatSnackBar
 ) { }
 
   ngOnInit(): void {
@@ -63,7 +67,21 @@ constructor(
 
   createAdventure(){
     this.addAdventure(this.adventure);
-    this.adventureService.saveAdventure(JSON.parse(JSON.stringify(this.adventureObj))).subscribe(res=>{console.log(res)});
+    this.adventureService.saveAdventure(JSON.parse(JSON.stringify(this.adventureObj))).subscribe(res=>{console.log(res); this.success= true; this.route.navigate(['/adventures']); this.openSnackBar();},
+      error => {
+        this.success = false;
+        this.openSnackBar();
+      });
+  }
+
+  openSnackBar(){
+    let message: string;
+    if( this.success == true){
+      message = 'Adventure created!';
+    } else{
+      message = 'Adventure creation failed';
+    }
+    this.snackbar.open(message,'cancel');
   }
 
 }
