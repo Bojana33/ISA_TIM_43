@@ -71,17 +71,7 @@ public class EntityController {
         return ResponseEntity.ok().body(reservationDTOS);
 
     }
-//    @GetMapping("/reservations/{entityId}")
-//    public ResponseEntity<Collection<ReservationDTO>> getReservationsInDateRange(@RequestBody PeriodDTO periodDTO){
-//        Collection<Reservation> reservations = reservationService.findAllReservationsForEntity(entityId);
-//        Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
-//
-//        for(Reservation reservation:reservations){
-//            reservationDTOS.add(modelMapper.modelMapper().map(reservation,ReservationDTO.class));
-//        }
-//        return ResponseEntity.ok().body(reservationDTOS);
-//
-//    }
+
     @PostMapping("/{entity_id}")
     public String subscribe(@PathVariable("entity_id") Integer entity_id, @RequestParam("user_id") Integer user_id){
         if(clientService.subscribeToEntity(user_id, entity_id))
