@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.time.LocalDateTime;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
@@ -13,4 +14,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     List<Reservation> findAllByClient(Client client);
 
     Collection<Reservation> findAllByEntity_Id(Integer entityId);
+    Collection<Reservation> findAllByEntity_IdAndReservedPeriod_StartDateAfterAndReservedPeriod_EndDateBefore(Integer entity_id, LocalDateTime reservedPeriod_startDate, LocalDateTime reservedPeriod_endDate);
+    Collection<Reservation> findAllByEntity_idAndClientsReviewNotNull(Integer entityId);
 }

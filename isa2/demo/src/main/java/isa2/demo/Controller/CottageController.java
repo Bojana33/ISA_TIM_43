@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,6 +42,7 @@ public class CottageController {
         CottageDTO cottageDTO = new CottageDTO();
         try{
             Cottage cottage = cottageService.deleteCottage(id);
+            cottage.setPhotos(null);
             //TODO: popravi ovaj exception u mapperu
             cottageDTO = cottageMapper.mapCottageToDto(cottage);
         }catch (Exception e){
@@ -83,17 +83,24 @@ public class CottageController {
     public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
         try{
-            CottageDTO updatedCottageDTO;
             Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
             cottage = cottageService.updateCottage(cottage);
-            updatedCottageDTO = cottageMapper.mapCottageToDto(cottage);
-            responseEntity = ResponseEntity.ok(updatedCottageDTO);
+            cottageDTO = cottageMapper.mapCottageToDto(cottage);
+            responseEntity = ResponseEntity.ok(cottageDTO);
 
         } catch (UnsupportedOperationException e){
-            responseEntity = ResponseEntity.noContent().build();
+            responseEntity = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
         }
 
         return responseEntity;
     }
 
+    @GetMapping(value =  "/get_all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CottageDTO>> getAll(){
+        List<Cottage> cottages = this.cottageService.findAll();
+        List<CottageDTO> cottageDTOS = new ArrayList<>();
+        for (Cottage cottage : cottages)
+            cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+        return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+    }
 }

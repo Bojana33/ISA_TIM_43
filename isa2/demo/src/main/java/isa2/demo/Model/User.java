@@ -55,7 +55,7 @@ public class User implements UserDetails {
    private Boolean activated;
 
    @Column
-   private Boolean firstLogIn;
+   private Boolean firstLogin;
 
    @Column
    private Boolean deleted;
@@ -70,7 +70,7 @@ public class User implements UserDetails {
    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
    private Address address;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+   @OneToOne(fetch = FetchType.LAZY,  mappedBy = "user")
    private UserDeleteRequest userDeleteRequest;
 
    @ManyToMany(fetch = FetchType.EAGER)

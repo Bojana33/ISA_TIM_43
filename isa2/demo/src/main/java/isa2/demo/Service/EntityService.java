@@ -8,11 +8,13 @@ import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 
 public interface EntityService {
-    Entity addRentalTime(Integer entity_id, RentalTime rentalTime);
+    Entity addRentalTime(Integer entity_id, RentalTime rentalTime) throws MessagingException;
     Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException;
 
+    boolean isReservationTimeInvalid(Reservation reservation);
     boolean isRentalTimeDateValid(Entity entity, RentalTime rentalTime);
-    boolean isReservationTimeValid(Entity entity, Reservation reservation);
+    boolean isReservationOverlaping(Entity entity, Reservation reservation);
     boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2);
     Entity findByReservations(Reservation reservation);
+    Double  findAverageGrade(Integer entity_id);
 }

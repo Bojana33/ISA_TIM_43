@@ -11,4 +11,5 @@ export class AddressDTO {
     this.street = street;
     this.houseNumber = houseNumber;
   }
+
 }

@@ -35,7 +35,7 @@ export class AdventureService {
   }
 
   deleteAdventure(id:number){
-    return this.httpClient.get(this.config.adventure_url + '/delete_adventure/'+id);
+    return this.apiService.delete(this.config.adventure_url + '/delete_adventure/'+id);
   }
 
 

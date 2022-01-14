@@ -16,10 +16,12 @@ public class CottageDTO {
     private String cottageOwnerId;
     private String cottageName;
     private String description;
+    private Double avgGrade;
     private Set<String> photos;
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
     private AddressDTO address;
     private Collection<RoomDTO> rooms;
     private Collection<ReservationDTO> reservations;
+    private String entityPhoto;
 }

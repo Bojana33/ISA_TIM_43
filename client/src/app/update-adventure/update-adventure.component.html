@@ -1,7 +1,7 @@
 <div fxLayoutAlign="center center" fxFlexFill class="main-div">
     <mat-card fxFlex="75">
         <mat-toolbar color="primary">Update Adventure</mat-toolbar>
-        <form fxLayoutAlign="stretch" fxLayout="column" class="update-adventure-form" [formGroup]="adventure" (ngSubmit)="updateAdventure()">
+        <form *ngIf="adventure" fxLayoutAlign="stretch" fxLayout="column" class="update-adventure-form" [formGroup]="adventure" (ngSubmit)="updateAdventure()">
             <mat-form-field>
                 <input matInput type="text" placeholder="Name" formControlName="name" required>
             </mat-form-field>
@@ -27,7 +27,7 @@
                 <input matInput placeholder="Instructor Biography" formControlName="instructorBio" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Max Number Of Guests" formControlName="maxNumberOfGuests" required>
+                <input matInput type="number" placeholder="Max Number Of Guests" formControlName="maxNumberOfGuests" required>
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="Rules" formControlName="houseRules" required>

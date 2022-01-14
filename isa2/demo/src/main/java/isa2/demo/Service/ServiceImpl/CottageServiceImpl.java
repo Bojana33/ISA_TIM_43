@@ -1,19 +1,27 @@
 package isa2.demo.Service.ServiceImpl;
 
-import isa2.demo.Model.Cottage;
-import isa2.demo.Model.Reservation;
-import isa2.demo.Model.ReservationStatus;
+import isa2.demo.DTO.CottageDTO;
+import isa2.demo.DTO.ReservationDTO;
+import isa2.demo.Model.*;
 import isa2.demo.Repository.CottageRepository;
+import isa2.demo.Repository.PeriodRepository;
+import isa2.demo.Repository.ReservationRepository;
+import isa2.demo.Repository.UserRepository;
+import isa2.demo.Service.CottageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.*;
+
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class CottageServiceImpl implements isa2.demo.Service.CottageService {
+public class CottageServiceImpl implements CottageService {
 
     final
     CottageRepository cottageRepository;
@@ -24,8 +32,17 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     }
 
     @Override
+    public List<Cottage> findAll() {
+        return this.cottageRepository.findAll();
+    }
+
+    @Override
+    public List<Cottage> findCottagesByOwner(Owner owner) {
+        return this.cottageRepository.findAllByOwner(owner);
+    }
+
+    @Override
     public Cottage addNewCottage(Cottage cottage) {
-        //TODO: uvezati cottageOwnera(Ulogovani user) sa vikendicom
         cottage.setSubscribedClients(Collections.EMPTY_LIST);
         return cottageRepository.save(cottage);
 
@@ -33,7 +50,8 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
 
     @Override
     public Cottage updateCottage(Cottage cottage) {
-        Collection<Reservation> reservations = cottage.getReservations();
+        Collection<Reservation> reservations = new ArrayList<>(cottage.getReservations());
+        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
         if(reservations.isEmpty())
             return cottageRepository.save(cottage);
         else
@@ -48,11 +66,16 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
 
     @Override
     public Cottage deleteCottage(Integer id) throws EntityNotFoundException {
-        Cottage cottage = cottageRepository.findByIdAndReservationsIsNull(id);
-        if(cottage != null){
-            cottageRepository.deleteById(id);
+        Cottage cottage = cottageRepository.findById(id).orElse(null);
+        if (cottage != null){
+            Collection<Reservation> reservations = new ArrayList<>(cottage.getReservations());
+            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+            if(reservations.isEmpty())
+                cottageRepository.deleteById(id);
+            else
+                throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
         }else{
-            throw new EntityNotFoundException("Cottage doesn't exist");
+            throw new EntityNotFoundException(id.toString());
         }
         return cottage;
     }
@@ -66,4 +89,5 @@ public class CottageServiceImpl implements isa2.demo.Service.CottageService {
     public List<Cottage> findCottagesByName(String name) {
         return cottageRepository.findAllByNameContainingIgnoreCase(name);
     }
+
 }

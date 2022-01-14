@@ -29,7 +29,7 @@ import {Moment} from 'moment';
 })
 export class CalendarComponent implements OnInit{
   view: CalendarView = CalendarView.Week;
-  @Input() cottageId: any;
+  @Input() entityId: any;
 
 
   constructor(private configService: ConfigService,
@@ -39,30 +39,33 @@ export class CalendarComponent implements OnInit{
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
   ngOnInit(): void {
-    this.getReservationsForCottage(this.cottageId);
+    this.getReservationsForEntity(this.entityId);
   }
-  getReservationsForCottage(cottageId: number): void{
+  getReservationsForEntity(entityId: number): void{
 
-    this.reservationService.getReservationsForEntity(cottageId).subscribe(
+    this.reservationService.getReservationsForEntity(entityId).subscribe(
       (modelData: ReservationDTO[]) => {
         modelData.forEach((item) => {
+          console.log(item.reservedPeriod.startDate);
           let eventColor = colors.green;
           if (item.reservationStatus.toString() === 'RESERVED'){
+            eventColor = colors.yellow;
+          } else if (item.reservationStatus.toString() === 'CANCELED') {
             eventColor = colors.red;
+          } else if (item.reservationStatus.toString() === 'COMPLETED'){
+            eventColor = colors.blue;
           }
+
           this.events.push({
             id: item.reservedPeriod.id,
-            // @ts-ignore
-            // tslint:disable-next-line:max-line-length
-            start: new Date((item.reservedPeriod.startDate)[0], (item.reservedPeriod.startDate)[1] - 1, (item.reservedPeriod.startDate)[2], (item.reservedPeriod.startDate)[3], (item.reservedPeriod.startDate)[4], (item.reservedPeriod.startDate)[5]),
-            // @ts-ignore
-            // tslint:disable-next-line:max-line-length
-            end: new Date((item.reservedPeriod.endDate)[0], (item.reservedPeriod.endDate)[1] - 1, (item.reservedPeriod.endDate)[2], (item.reservedPeriod.endDate)[3], (item.reservedPeriod.endDate)[4], (item.reservedPeriod.endDate)[5]),
+            start: new Date(item.reservedPeriod.startDate),
+            end: new Date(item.reservedPeriod.endDate),
             title: item.reservationStatus.toString() + ' termin',
             color: eventColor,
-            draggable: true
+            draggable: false
           });
         });
+        console.log(this.events);
         this.refresh.next();
       });
   }
@@ -74,7 +77,6 @@ export class CalendarComponent implements OnInit{
     if (event.allDay) {
       return true;
     }
-
     delete event.cssClass;
     // don't allow dragging or resizing events to different days
     // @ts-ignore
