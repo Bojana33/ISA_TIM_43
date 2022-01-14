@@ -10,5 +10,6 @@ public class UserComplaintDTO {
     String description;
     String response;
     Boolean processed;
-    Integer reservationId;
+    //Integer reservationId;
+    ReservationDTO reservationDTO;
 }

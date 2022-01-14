@@ -65,7 +65,6 @@ import { MatGridListModule} from '@angular/material/grid-list';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { DeleteRequestsComponent } from './delete-requests/delete-requests.component';
 import { DeleteRequestResponseComponent } from './delete-request-response/delete-request-response.component';
-import { WriteComplaintComponent } from './write-complaint/write-complaint.component';
 import { BoatsUserComponent} from './user-quest/boats-user/boats-user.component';
 import { CottagesUserComponent} from './user-quest/cottages-user/cottages-user.component';
 import { OneCottageComponent } from './user-quest/cottages-user/one-cottage/one-cottage.component';
@@ -89,6 +88,7 @@ import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-hea
 import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 import { BoatComponent } from './boat/boat.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComplaintsComponent } from './complaints/complaints.component';
 
 
 const mapConfig: YaConfig = {
@@ -136,7 +136,6 @@ const mapConfig: YaConfig = {
     DeleteProfileComponent,
     DeleteRequestsComponent,
     DeleteRequestResponseComponent,
-    WriteComplaintComponent,
     BoatsUserComponent,
     CottagesUserComponent,
     OneCottageComponent,
@@ -150,7 +149,8 @@ const mapConfig: YaConfig = {
     SignupAdminComponent,
     CalendarHeaderComponent,
     OwnerReservationsComponent,
-    BoatComponent
+    BoatComponent,
+    ComplaintsComponent
   ],
   imports: [
     BrowserModule,

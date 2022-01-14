@@ -1,15 +1,16 @@
 package isa2.demo.Controller;
 
+import isa2.demo.DTO.Mappers.UserComplaintMapper;
+import isa2.demo.DTO.UserComplaintDTO;
 import isa2.demo.Model.Client;
 import isa2.demo.Model.Reservation;
-import isa2.demo.Service.ServiceImpl.UserComplaintServiceImpl;
+import isa2.demo.Model.UserComplaint;
+import isa2.demo.Service.UserComplaintService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -17,14 +18,38 @@ import java.util.*;
 @RequestMapping(value = "/user_complaint", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserComplaintController {
 
-    public final UserComplaintServiceImpl userComplaintService;
+    public final UserComplaintService userComplaintService;
 
-    public UserComplaintController(UserComplaintServiceImpl userComplaintService){
+    public final UserComplaintMapper userComplaintMapper;
+
+    public UserComplaintController(UserComplaintService userComplaintService, UserComplaintMapper userComplaintMapper){
         this.userComplaintService = userComplaintService;
+        this.userComplaintMapper = userComplaintMapper;
     }
 
     @GetMapping("/get_list_of_reservations")
     public ResponseEntity<List<Reservation>> getListOfReservations(@RequestBody Client client){
         return new ResponseEntity<>(this.userComplaintService.createClientsList(client), HttpStatus.OK);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping(value = "/save_complaint")
+    public UserComplaint createUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO){
+        UserComplaint userComplaint = this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO);
+        return this.userComplaintService.save(userComplaint);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update_complaint")
+    public ResponseEntity<UserComplaintDTO> updateUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO){
+        try {
+            UserComplaint userComplaint = this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO);
+            userComplaint = this.userComplaintService.update(userComplaint);
+            userComplaintDTO = this.userComplaintMapper.mapUserComplaintToDto(userComplaint);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(userComplaintDTO,HttpStatus.OK);
     }
 }
