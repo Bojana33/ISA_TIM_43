@@ -52,4 +52,21 @@ public class UserComplaintController {
         }
         return new ResponseEntity<>(userComplaintDTO,HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/get_complaints")
+    public ResponseEntity<List<UserComplaintDTO>> getUnprocessedUserComplaints(){
+        List<UserComplaint> userComplaints = this.userComplaintService.findAllUnprocessedComplaints();
+        List<UserComplaintDTO> userComplaintDTOS = new ArrayList<>();
+        for(UserComplaint userComplaint: userComplaints){
+            userComplaintDTOS.add(this.userComplaintMapper.mapUserComplaintToDto(userComplaint));
+        }
+        return new ResponseEntity<>(userComplaintDTOS,HttpStatus.OK);
+    }
+
+    @PostMapping("/send_response")
+    public void sendResponse(@RequestBody UserComplaintDTO userComplaintDTO){
+        this.userComplaintService.sendResponse(this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO));
+    }
+
 }

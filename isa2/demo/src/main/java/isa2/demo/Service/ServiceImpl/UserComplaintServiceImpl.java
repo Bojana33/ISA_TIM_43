@@ -2,7 +2,9 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.*;
 import isa2.demo.Repository.UserComplaintRepository;
+import isa2.demo.Service.OwnerService;
 import isa2.demo.Service.UserComplaintService;
+import isa2.demo.Service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +19,16 @@ public class UserComplaintServiceImpl implements UserComplaintService {
 
     public final UserComplaintRepository userComplaintRepository;
 
-    public UserComplaintServiceImpl(ReservationServiceImpl reservationService, EntityServiceImpl entityService,UserComplaintRepository userComplaintRepository){
+    public final UserService userService;
+
+    public final OwnerService ownerService;
+
+    public UserComplaintServiceImpl(ReservationServiceImpl reservationService, EntityServiceImpl entityService,UserComplaintRepository userComplaintRepository, UserService userService, OwnerService ownerService){
         this.entityService = entityService;
         this.reservationService = reservationService;
         this.userComplaintRepository = userComplaintRepository;
+        this.userService = userService;
+        this.ownerService = ownerService;
     }
 
     @Override
@@ -50,5 +58,30 @@ public class UserComplaintServiceImpl implements UserComplaintService {
         }
         userComplaintToUpdate.setResponse(userComplaint.getResponse());
         return this.userComplaintRepository.save(userComplaintToUpdate);
+    }
+
+    @Override
+    public List<UserComplaint> findAllUnprocessedComplaints() {
+        return this.userComplaintRepository.findAllByProcessedIsFalse();
+    }
+
+    @Override
+    public void sendResponse(UserComplaint userComplaint) {
+        try {
+            Client client = userComplaint.getReservation().getClient();
+            Entity entity = userComplaint.getReservation().getEntity();
+            Owner owner = this.ownerService.findByEntity(entity);
+
+            userComplaint = update(userComplaint);
+
+            String subject = "User complaint";
+            String content = userComplaint.getResponse();
+
+            this.userService.sendEmail(subject,content, client.getEmail());
+            this.userService.sendEmail(subject,content, owner.getEmail());
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -14,4 +14,8 @@ public interface UserComplaintService {
     UserComplaint save(UserComplaint userComplaint);
 
     UserComplaint update(UserComplaint userComplaint) throws Exception;
+
+    List<UserComplaint> findAllUnprocessedComplaints();
+
+    void sendResponse(UserComplaint userComplaint);
 }
