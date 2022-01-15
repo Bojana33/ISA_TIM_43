@@ -17,7 +17,8 @@ public interface UserService{
     User findById(Integer id);
     User findByEmail(String email) throws UsernameNotFoundException;
     List<User> findAll () throws AccessDeniedException;
-    User save(UserRequest userRequest);
+    User save(User user);
+    User saveAdmin(UserRequest userRequest) throws AddressException, MessagingException;;
     UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException;
     void sendVerificationEmail(UserRequest userRequest) throws AddressException, MessagingException;
     boolean verify(String verificationCode);

@@ -16,6 +16,7 @@ public class CottageDTO {
     private String cottageOwnerId;
     private String cottageName;
     private String description;
+    private Double avgGrade;
     private Set<String> photos;
     private Integer maxNumberOfGuests;
     private Double pricePerDay;

@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Address } from './../model/address';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdventureService } from '../service/adventure.service';
 import { Adventure } from '../model/adventure';
 
@@ -12,62 +14,80 @@ import { Adventure } from '../model/adventure';
 })
 export class UpdateAdventureComponent implements OnInit {
 
-  adventureObj! : Adventure;
+  adventureObj : Adventure = new Adventure();
+
+  // @ts-ignore
+  adventure: FormGroup;
+  success!: boolean;
   
-  adventure = new FormGroup({
-      name: new FormControl(''),
-      city: new FormControl(''),
-      country: new FormControl(''),
-      street: new FormControl(''),
-      houseNumber: new FormControl(''),
-      description: new FormControl(''),
-      instructorBio: new FormControl(''),
-      //photos: string[],
-      maxNumberOfGuests: new FormControl(0),
-      houseRules: new FormControl(''),
-      //public additionalServices: AdditionalService,
-      pricePerDay: new FormControl(0.0),
-      cancellationFee: new FormControl(0),
-      entityPhoto: new FormControl(''),
-      defaultFishingEquipment: new FormControl(''),
-      addresId : new FormControl(0),
-      id : new FormControl(0),
-  })
+  // new FormGroup({
+  //     name: new FormControl(''),
+  //     city: new FormControl(''),
+  //     country: new FormControl(''),
+  //     street: new FormControl(''),
+  //     houseNumber: new FormControl(''),
+  //     description: new FormControl(''),
+  //     instructorBio: new FormControl(''),
+  //     //photos: string[],
+  //     maxNumberOfGuests: new FormControl(0),
+  //     houseRules: new FormControl(''),
+  //     //public additionalServices: AdditionalService,
+  //     pricePerDay: new FormControl(0.0),
+  //     cancellationFee: new FormControl(0),
+  //     entityPhoto: new FormControl(''),
+  //     defaultFishingEquipment: new FormControl(''),
+  //     addressId : new FormControl(0),
+  //     id : new FormControl(0),
+  //     adventureOwnerId: new FormControl(0)
+  // })
 
   constructor(
     private router: ActivatedRoute,
-    private adventureService: AdventureService
+    private route: Router,
+    private adventureService: AdventureService,
+    private formBuilder: FormBuilder,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    console.log(this.router.snapshot.params.id);
+    this.loadData();
+  }
+
+  loadData(){
     this.adventureService.getAdventure(this.router.snapshot.params.id)
     .subscribe((res:any)=>{console.log(res);
-      this.adventure = new FormGroup({
-        name: new FormControl(res['name']),
-        city: new FormControl(res.address['city']),
-        country: new FormControl(res.address['country']),
-        street: new FormControl(res.address['street']),
-        houseNumber: new FormControl(res.address['houseNumber']),
-        description: new FormControl(res['description']),
-        instructorBio: new FormControl(res['instructorBio']),
-        //photos: string[],
-        maxNumberOfGuests: new FormControl(res['maxNumberOfGuests']),
-        houseRules: new FormControl(res['houseRules']),
-        //public additionalServices: AdditionalService,
-        pricePerDay: new FormControl(res['pricePerDay']),
-        cancellationFee: new FormControl(res['cancellationFee']),
-        entityPhoto: new FormControl(res['entityPhoto']),
-        defaultFishingEquipment: new FormControl(res['defaultFishingEquipment']),
-        addresId : new FormControl(res.address['id']),
-        id : new FormControl(res['id'])
+      this.adventureObj = res;
+      this.adventure = this.formBuilder.group({
+        name: new FormControl(this.adventureObj.name,[
+          Validators.required,
+          Validators.minLength(5)]),
+        pricePerDay: new FormControl(this.adventureObj.pricePerDay,[
+          Validators.required]),
+        city: new FormControl(this.adventureObj.addressDTO.city,[
+          Validators.required]),
+        country: new FormControl(this.adventureObj.addressDTO.country,[
+          Validators.required]),
+        street: new FormControl(this.adventureObj.addressDTO.street,[
+          Validators.required]),
+        houseNumber: new FormControl(this.adventureObj.addressDTO.houseNumber,[
+          Validators.required]),
+        description: new FormControl(this.adventureObj.description,[
+          Validators.required]),
+        instructorBio: new FormControl(this.adventureObj.instructorBio,[
+          Validators.required]),
+        maxNumberOfGuests: new FormControl(this.adventureObj.maxNumberOfGuests,[
+          Validators.required]),
+        houseRules: new FormControl(this.adventureObj.houseRules,[
+          Validators.required]),
+        cancellationFee: new FormControl(this.adventureObj.cancellationFee,[
+          Validators.required]),
+        defaultFishingEquipment: new FormControl(this.adventureObj.defaultFishingEquipment,[
+          Validators.required])
+      })
     });
-    });
-    
   }
 
   addAdventure(form:any){
-    this.adventureObj = new Adventure();
     this.adventureObj.name = form.value.name;
     this.adventureObj.addressDTO.city = form.value.city;
     this.adventureObj.addressDTO.country = form.value.country;
@@ -79,17 +99,27 @@ export class UpdateAdventureComponent implements OnInit {
     this.adventureObj.houseRules = form.value.houseRules;
     this.adventureObj.pricePerDay = form.value.pricePerDay;
     this.adventureObj.cancellationFee = form.value.cancellationFee;
-    this.adventureObj.entityPhoto = form.value.entityPhoto;
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
-    this.adventureObj.id = form.value.id;
-    this.adventureObj.addressDTO.id= form.value.id;
   }
 
   updateAdventure(){
-    console.log(this.adventure.value);
     this.addAdventure(this.adventure);
     this.adventureService.updateAdventure(this.router.snapshot.params.id,JSON.parse(JSON.stringify(this.adventureObj)))
-    .subscribe((res)=>{console.log(res)});
+    .subscribe((res)=>{console.log(res); this.loadData(); this.success=true; this.openSnackBar(); this.route.navigate(['/adventure/',this.adventureObj.id])}
+      , error => {
+        this.success = false;
+        this.openSnackBar();
+      });
+  }
+
+  openSnackBar(){
+    let message: string;
+    if( this.success == true){
+      message = 'Update successful';
+    } else{
+      message = 'Update failed';
+    }
+    this.snackbar.open(message,'cancel');
   }
 
 }

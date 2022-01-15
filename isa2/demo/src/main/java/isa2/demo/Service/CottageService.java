@@ -4,6 +4,7 @@ import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Cottage;
+import isa2.demo.Model.Owner;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,4 +22,5 @@ public interface CottageService {
     List<Cottage> findAll();
     Collection<Cottage> findFreeCottages(FreeEntityDTO request) throws InvalidInputException;
     ArrayList<CottageDTO> sortCottages(Collection<CottageDTO> cottages, String criterion, boolean asc);
+    List<Cottage> findCottagesByOwner(Owner owner);
 }

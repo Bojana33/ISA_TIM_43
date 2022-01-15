@@ -5,19 +5,24 @@ import isa2.demo.DTO.*;
 import isa2.demo.DTO.Mappers.AdditionalServiceMapper;
 import isa2.demo.Exception.InvalidReservationException;
 import isa2.demo.Model.*;
+import isa2.demo.DTO.PeriodDTO;
+import isa2.demo.DTO.RentalTimeDTO;
+import isa2.demo.DTO.ReservationDTO;
+import isa2.demo.Model.*;
 import isa2.demo.Service.ClientService;
 import isa2.demo.Service.EntityService;
 import isa2.demo.Service.ReservationService;
+import isa2.demo.Utils.FileUploadUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/entities" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,8 +66,12 @@ public class EntityController {
         }
     }
     @GetMapping("/reservations/{entityId}")
-    public ResponseEntity<Collection<ReservationDTO>> getReservations(@PathVariable Integer entityId){
-        Collection<Reservation> reservations = reservationService.findAllReservationsForEntity(entityId);
+    public ResponseEntity<Collection<ReservationDTO>> getReservations(@PathVariable Integer entityId, @RequestBody Optional<PeriodDTO> periodDTO){
+        Optional<Period> periodOptional = Optional.empty();
+        if(periodDTO.isPresent()){
+            periodOptional = Optional.of(modelMapper.modelMapper().map(periodDTO.get(),Period.class));
+        }
+        Collection<Reservation> reservations = reservationService.findAllReservationsForEntity(entityId,periodOptional);
         Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
 
         for(Reservation reservation:reservations){
@@ -71,12 +80,23 @@ public class EntityController {
         return ResponseEntity.ok().body(reservationDTOS);
 
     }
+
     @PostMapping("/{entity_id}")
     public String subscribe(@PathVariable("entity_id") Integer entity_id, @RequestParam("user_id") Integer user_id){
         if(clientService.subscribeToEntity(user_id, entity_id))
             return "created";
         else
             return "not created";
+    }
+    @PostMapping(value = "/save_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @PreAuthorize("hasRole('COTTAGEOWNER')")
+    public void saveImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
+        String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
+
+        String uploadDir = "../../client/src/assets/images";
+        entityService.uploadEntityPhoto(id,"./../../assets/images/" + fileName);
+        FileUploadUtil.saveFile(uploadDir, fileName, imageUrl);
+
     }
 
     @RequestMapping(value = "/reserve", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

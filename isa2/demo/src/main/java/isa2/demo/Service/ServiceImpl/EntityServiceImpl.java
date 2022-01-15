@@ -9,6 +9,7 @@ import isa2.demo.Exception.InvalidReservationException;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.ClientRepository;
 import isa2.demo.Repository.EntityRepository;
+import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Repository.PeriodRepository;
 import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Service.ClientService;
@@ -35,17 +36,20 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class EntityServiceImpl implements EntityService {
     private final EntityRepository entityRepository;
     private final UserService userService;
+    private final ReservationRepository reservationRepository;
     private final ClientService clientService;
     private final ReservationRepository reservationRepository;
     private final ModelMapperConfig modelMapper;
     private final ClientRepository clientRepository;
     private final PeriodRepository periodRepository;
 
+    public EntityServiceImpl(EntityRepository entityRepository, UserService userService, ReservationRepository reservationRepository) {
     public EntityServiceImpl(EntityRepository entityRepository, UserService userService, ClientService clientService,
                              ReservationRepository reservationRepository, ModelMapperConfig modelMapperConfig,
                              ClientRepository clientRepository, PeriodRepository periodRepository) {
         this.entityRepository = entityRepository;
         this.userService = userService;
+        this.reservationRepository = reservationRepository;
         this.clientService = clientService;
         this.reservationRepository = reservationRepository;
         this.modelMapper = modelMapperConfig;
@@ -152,6 +156,29 @@ public class EntityServiceImpl implements EntityService {
         for(User user: entity.getSubscribedClients()){
             userService.sendEmail("Special offer", offerDuration, user.getEmail());
         }
+    }
+
+    @Override
+    public Double findAverageGrade(Integer entity_id) {
+        Optional<Entity> entity = entityRepository.findById(entity_id);
+        Double avgGrade = 0.0;
+        if(entity.isPresent()){
+            Collection<Reservation> reservations= reservationRepository.findAllByEntity_idAndClientsReviewNotNull(entity_id);
+            if(!reservations.isEmpty()){
+                for(Reservation reservation: reservations){
+                    avgGrade += reservation.getClientsReview().getGrade();
+                }
+                avgGrade =  avgGrade/reservations.size();
+            }
+        }
+        return avgGrade;
+    }
+
+    @Override
+    public void uploadEntityPhoto(Integer id, String fileName) {
+        Entity entity = entityRepository.findById(id).get();
+        entity.setEntityPhoto(fileName);
+        entityRepository.save(entity);
     }
 
     private void sendEmailForReservation(Reservation reservation) throws MessagingException{

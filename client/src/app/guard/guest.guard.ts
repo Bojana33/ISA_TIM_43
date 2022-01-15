@@ -11,12 +11,19 @@ export class GuestGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    this.currentUser = this.userService.initUser();
-    if (this.currentUser) {
-      this.router.navigate(['/']);
+    this.currentUser = this.userService.currentUser;
+    if( this.currentUser != null && this.currentUser.isAdmin && this.currentUser.firstLogin)
+    {
+      this.router.navigate(['/change-password']);
       return false;
-    } else {
-      return true;
     }
+    return true;
+    //this.currentUser = this.userService.initUser();
+    //if (this.currentUser) {
+      //this.router.navigate(['/']);
+      //return false;
+    //} else {
+      //return true;
+    //}
   }
 }

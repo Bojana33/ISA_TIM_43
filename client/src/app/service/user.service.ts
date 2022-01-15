@@ -13,6 +13,9 @@ export class UserService {
 
   currentUser:any;
   private usersUrl: string;
+  public isAdmin!: boolean;
+  public isFirstLoggedIn!: boolean;
+
   constructor(
     private apiService: ApiService,
     private config: ConfigService,
@@ -78,11 +81,11 @@ export class UserService {
     return this.http.post<User>(this.usersUrl, user);
   }
 
-  loggedRole(role:string){
+  loggedRole(role: string){
     if (this.currentUser == null){
       return false;
     }
-    if (JSON.stringify(this.currentUser.authorities).search('ROLE_'+role) !== -1){
+    if (JSON.stringify(this.currentUser.authorities).search('ROLE_' + role) !== -1){
       return true;
     }
     return false;
@@ -90,5 +93,13 @@ export class UserService {
 
   update(data:UserDTO){
     return this.apiService.post('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
+  }
+
+  saveAdmin(data:any){
+    return this.apiService.post(this.config.auth_url + '/signupAdmin',JSON.parse(JSON.stringify(data)));
+  }
+
+  delete(id:number){
+    this.apiService.delete(this.config.user_url + '/delete_user/' + id).subscribe(res => console.log(res));
   }
 }

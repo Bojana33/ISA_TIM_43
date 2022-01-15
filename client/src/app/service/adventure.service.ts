@@ -36,7 +36,7 @@ export class AdventureService {
   }
 
   deleteAdventure(id:number){
-    return this.httpClient.get(this.config.adventure_url + '/delete_adventure/'+id);
+    return this.apiService.delete(this.config.adventure_url + '/delete_adventure/'+id);
   }
   getFreeAdventures(request: FreeEntityDTO) {
     return this.apiService.post(this.config.adventure_url + '/findFree',  JSON.parse(JSON.stringify(request)));

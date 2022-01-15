@@ -1,3 +1,4 @@
+import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 import { DeleteProfileComponent } from './delete-profile/delete-profile.component';
 import { UpdateAdventureComponent } from './update-adventure/update-adventure.component';
 import { InstructorGuard } from './guard/instructor.guard';
@@ -11,7 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import {SignupClientComponent} from './signup/signup-client/signup-client.component';
 import { AdminGuard } from './guard/admin.guard';
 import { AdminComponent } from './admin/admin.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { LoginGuard } from './guard/login.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
@@ -44,6 +45,11 @@ import {CalendarComponent} from './calendar/calendar.component';
 import {OneAdventureComponent} from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import {OneBoatUserComponent} from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import {CottageReservationsTableComponent} from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
+import {Boat} from './model/boat';
+import {BoatComponent} from './boat/boat.component';
+import {CottageownerGuard} from './guard/cottageowner.guard';
+
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 
@@ -52,7 +58,7 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    pathMatch: 'full'
+    canActivate: [GuestGuard]
   },
   {
     path: 'reservationForm',
@@ -66,11 +72,13 @@ const routes: Routes = [
   {
     path: 'signupClient',
     component: SignupClientComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard],
+    pathMatch:'full'
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'signup',
@@ -79,9 +87,14 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'profile',
+    path: 'signupAdmin',
+    component: SignupAdminComponent,
+    canActivate: [AdminGuard,GuestGuard]
+  },
+  {
+    path: 'profile/:id',
     component: ProfileComponent,
-    canActivate: [LoginGuard],
+    canActivate: [LoginGuard, GuestGuard],
     pathMatch: 'full'
   },
   {
@@ -92,114 +105,148 @@ const routes: Routes = [
   {
     path: 'profile/profileUpdate',
     component: ProfileUpdateComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard,GuestGuard]
   },
   {
     path: 'adventures',
     component: AdventuresComponent,
-    // canActivate: [InstructorGuard]
+    canActivate: [GuestGuard]
   },
   {
     path: 'adventure/:id',
-    component: AdventureComponent
+    component: AdventureComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'update-adventure/:id',
     component: UpdateAdventureComponent,
-    // canActivate: [InstructorGuard]
+    canActivate: [InstructorGuard, GuestGuard]
   },
   {
     path: 'create-adventure',
     component: CreateAdventureComponent,
-    // canActivate: [InstructorGuard]
+    canActivate: [InstructorGuard,GuestGuard]
   },
-  //{
+  // {
   //  path: 'boats',
  //   component: BoatsUserComponent,
   //  canActivate: [GuestGuard]
  // },
   {
     path: 'cottages',
-    component: CottagesComponent
+    component: CottagesComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'boats',
+    component: BoatsComponent
   },
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [AdminGuard]
+    canActivate: [ GuestGuard]
   },
   {
     path: 'registration-requests',
     component: RegistrationRequestsComponent,
-    canActivate: [AdminGuard]
+    canActivate: [AdminGuard,GuestGuard]
   },
   {
     path: 'reject-request/:id',
-    component: RejectRequestComponent
+    component: RejectRequestComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'cottages/:id',
-    component: CottageComponent
+    component: CottageComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'boats/:id',
+    component: BoatComponent
   },
   {
     path: 'cottages/:id/reservations',
+    component: CottageReservationsTableComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'boats/:id/reservations',
     component: CottageReservationsTableComponent
   },
   {
     path: 'calendar',
-    component: CalendarComponent
+    component: CalendarComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'register-cottage',
-    component: RegisterCottageComponent
+    component: RegisterCottageComponent,
+    canActivate: [CottageownerGuard]
   },
   {
     path: 'delete-profile',
-    component: DeleteProfileComponent
+    component: DeleteProfileComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'user-delete-requests',
-    component: DeleteRequestsComponent
+    component: DeleteRequestsComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'delete-request-response/:id/:isApproved',
-    component: DeleteRequestResponseComponent
+    component: DeleteRequestResponseComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'change-password',
-    component: ChangePasswordComponent,
-    canActivate: [LoginGuard]
+    component: ChangePasswordComponent
   },
   {
     path: 'cottagesCatalog',
-    component: CottagesUserComponent
+    component: CottagesUserComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'oneCottage/:id',
-    component: OneCottageComponent
+    component: OneCottageComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'oneAdventure/:id',
-    component: OneAdventureComponent
+    component: OneAdventureComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'oneBoat/:id',
-    component: OneBoatUserComponent
+    component: OneBoatUserComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'boatsCatalog',
-    component: BoatsUserComponent
+    component: BoatsUserComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'adventuresCatalog',
-    component: AdventuresUserComponent
+    component: AdventuresUserComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'userComplaint',
-    component: UserComplaintComponent
+    component: UserComplaintComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'userReservations',
-    component: ReservationsComponent
+    component: ReservationsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'owner-reservations/:id',
+    component: OwnerReservationsComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: '404',

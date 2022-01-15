@@ -1,5 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.Model.*;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;
@@ -10,9 +11,13 @@ import isa2.demo.Repository.BoatRepository;
 import isa2.demo.Repository.CottageRepository;
 import isa2.demo.Service.BoatService;
 import isa2.demo.Service.EntityService;
+import isa2.demo.Service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +43,51 @@ public class BoatServiceImpl implements BoatService {
     @Override
     public Boat findOne(Integer id) {
         return this.boatRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Boat> findBoatsByOwner(Owner owner) {
+        return this.boatRepository.findAllByOwner(owner);
+    }
+
+    @Override
+    public Boat addNewBoat(Boat boat) {
+        boat.setSubscribedClients(Collections.EMPTY_LIST);
+        Collection<Reservation> reservationsCollection = new HashSet<>();
+        Collection<Reservation> boatReservations = boat.getReservations();
+        if (!boatReservations.isEmpty()){
+            for(Reservation reservation:boatReservations){
+                reservation.setCreationDate(LocalDateTime.now());
+                reservationsCollection.add(reservation);
+            }
+        }
+        boat.setReservations(reservationsCollection);
+        return boatRepository.save(boat);
+    }
+    @Override
+    public Boat deleteBoat(Integer boat_id) {
+        Boat boat = boatRepository.findById(boat_id).orElse(null);
+        if (boat != null){
+            Collection<Reservation> reservations = new ArrayList<>(boat.getReservations());
+            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+            if(reservations.isEmpty())
+                boatRepository.deleteById(boat_id);
+            else
+                throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
+        }else {
+            throw new EntityNotFoundException(boat_id.toString());
+        }
+        return boat;
+    }
+
+    @Override
+    public Boat updateBoat(Boat boat) {
+        Collection<Reservation> reservations = new ArrayList<>(boat.getReservations());
+        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
+        if(reservations.isEmpty())
+            return boatRepository.save(boat);
+        else
+            throw new UnsupportedOperationException("Entity with active reservations can't be updated");
     }
 
     @Override

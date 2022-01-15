@@ -16,7 +16,6 @@ export class InstructorGuard implements CanActivate {
       this.currentUser = this.userService.initUser();
       if (this.currentUser) {
         if (this.userService.loggedRole('INSTRUCTOR')) {
-          this.router.navigate(['/home']);
           return true;
         } else {
           this.router.navigate(['/403']);

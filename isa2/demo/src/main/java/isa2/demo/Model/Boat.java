@@ -41,7 +41,7 @@ public class Boat extends Entity {
     @Column(name = "fishing_equipment")
     private String fishingEquipment;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "boat_owner_id", referencedColumnName = "id")
     public Owner owner;
 

@@ -12,12 +12,15 @@ import isa2.demo.Service.EntityService;
 import isa2.demo.Service.ReservationService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Properties;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -31,12 +34,22 @@ public class ReservationServiceImpl implements ReservationService {
     private final ModelMapperConfig modelMapper;
     private final ClientRepository clientRepository;
 
+    private final AdventureServiceImpl adventureService;
+
+    private final CottageServiceImpl cottageService;
+
+    private final BoatServiceImpl boatService;
+
+    public ReservationServiceImpl(ReservationRepository reservationRepository, AdventureServiceImpl adventureService, CottageServiceImpl cottageService, BoatServiceImpl boatService) {
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EntityRepository entityRepository,
                                   EntityService entityService,
                                   ModelMapperConfig modelMapperConfig,
                                   ClientRepository clientRepository) {
         this.reservationRepository = reservationRepository;
+        this.adventureService = adventureService;
+        this.cottageService = cottageService;
+        this.boatService = boatService;
         this.entityRepository = entityRepository;
         this.entityService = entityService;
         this.modelMapper = modelMapperConfig;
@@ -44,9 +57,44 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Collection<Reservation> findAllReservationsForEntity(Integer entityId) {
-        return reservationRepository.findAllByEntity_Id(entityId);
+    public Collection<Reservation> findAllReservationsForEntity(Integer entityId, Optional<Period> period) {
+        Collection<Reservation> reservations = new ArrayList<>();
+        if(period.isPresent()){
+            reservations = reservationRepository.findAllByEntity_IdAndReservedPeriod_StartDateAfterAndReservedPeriod_EndDateBefore(entityId,period.get().getStartDate(),period.get().getEndDate());
+        }else{
+            reservations = reservationRepository.findAllByEntity_Id(entityId);
+        }
+        return reservations;
     }
+
+    @Override
+    public Collection<Reservation> findAllReservationsForOwner(Owner owner) {
+        Collection<Adventure> adventures = this.adventureService.findAdventuresByInstructor(owner);
+        Collection<Cottage> cottages = this.cottageService.findCottagesByOwner(owner);
+        Collection<Boat> boats = this.boatService.findBoatsByOwner(owner);
+        Collection<Reservation> reservations = new HashSet<>();
+        if (owner.getOwnerType() == OwnerType.INSTRUCTOR) {
+            for (Adventure adventure : adventures) {
+                Collection<Reservation> reservationsForAdventure = findAllReservationsForEntity(adventure.getId(), Optional.empty());
+                reservations.addAll(reservationsForAdventure);
+            }
+        }
+        if (owner.getOwnerType() == OwnerType.COTTAGEOWNER) {
+            for (Cottage cottage : cottages) {
+                Collection<Reservation> reservationsForCottage = findAllReservationsForEntity(cottage.getId(), Optional.empty());
+                reservations.addAll(reservationsForCottage);
+            }
+        }
+        if (owner.getOwnerType() == OwnerType.BOATOWNER) {
+            for (Boat boat : boats) {
+                Collection<Reservation> reservationsForBoat = findAllReservationsForEntity(boat.getId(), Optional.empty());
+                reservations.addAll(reservationsForBoat);
+            }
+        }
+        return reservations;
+    }
+
+
 
     @Override
     public Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException {

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
    * and is awaiting a response
    */
   submitted = false;
+  user:any;
 
   /**
    * Notification message from received
@@ -71,12 +72,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(this.form.value)
       .subscribe(_data => {
           this.userService.getMyInfo().subscribe(res=>{console.log(res)});
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['/']);
         },
         _error => {
           this.submitted = false;
           this.notification = {msgType: 'error', msgBody: 'Incorrect email or password.'};
         });
 
+  }
+
+  isAdminFirstLogin(){
+    if(this.userService.currentUser != null){
+      this.user = this.userService.currentUser;
+      if (this.user.isAdmin && this.user.firstLogin){
+        this.router.navigate(['/change-password']);
+        return true;
+      }
+      return false;
+    }
+    return false;
   }
 }

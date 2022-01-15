@@ -27,6 +27,9 @@ export class CottageService {
   updateCottage(cottage: CottageDTO){
     return this.apiService.put(this.config.cottages_url + '/' + cottage.id, cottage);
   }
+  saveImage(data: FormData, cottageId: number){
+    return this.http.post(this.config.cottage_url + '/save_image/' + cottageId, data);
+  }
   getFreeCottages(request: FreeEntityDTO) {
     return this.apiService.post('http://localhost:8090/cottages/findFree',  JSON.parse(JSON.stringify(request)));
   }

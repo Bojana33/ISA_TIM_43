@@ -12,7 +12,7 @@ export class LoginGuard implements CanActivate {
 
   canActivate(): boolean {
     this.currentUser = this.userService.initUser();
-    if (this.userService.loggedRole('USER')) {
+    if (this.userService.currentUser != null) {
       return true;
     } else {
       this.router.navigate(['/']);
