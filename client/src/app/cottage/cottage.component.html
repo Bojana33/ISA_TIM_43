@@ -48,9 +48,14 @@
                   </tr>
                   </tbody>
                 </table>
-                <button class="button is-info is-rounded" [disabled]="cottageUpdateForm.invalid" (click)="updateCottage(cottageUpdateForm)">Update</button>
-
-
+                <nav class="level">
+                  <div class="level-left">
+                  </div>
+                  <div class="level-right">
+                    <button class="button is-info is-rounded level-item" [disabled]="cottageUpdateForm.invalid"
+                            (click)="updateCottage(cottageUpdateForm)">Update</button>
+                  </div>
+                </nav>
               </div>
               <div class="buttons block">
                 <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
