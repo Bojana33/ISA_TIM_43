@@ -4,6 +4,7 @@ import { ConfigService } from './config.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import {FreeEntityDTO} from "../model/free-entity-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,8 @@ export class AdventureService {
   deleteAdventure(id:number){
     return this.httpClient.get(this.config.adventure_url + '/delete_adventure/'+id);
   }
-
+  getFreeAdventures(request: FreeEntityDTO) {
+    return this.apiService.post(this.config.adventure_url + '/findFree',  JSON.parse(JSON.stringify(request)));
+  }
 
 }

@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface ClientService {
     Client findByUsername(String email) throws UsernameNotFoundException;
-    Client findById(Integer id);
+    //Client findById(String id);
     Collection<Reservation> findAllReservations(String email);
     boolean subscribeToEntity(Integer client_id,Integer entity_id);
 }

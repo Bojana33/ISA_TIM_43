@@ -1,4 +1,4 @@
-export class PeriodDto {
+export class PeriodDTO {
 
   constructor(
     public id: number = 0,

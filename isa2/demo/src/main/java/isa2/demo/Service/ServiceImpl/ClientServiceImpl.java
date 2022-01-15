@@ -23,10 +23,10 @@ public class ClientServiceImpl implements ClientService {
     private final EntityRepository entityRepository;
     private final ClientRepository clientRepository;
 
-    @Override
-    public Client findById(Integer id) {
-        return clientRepository.findById(id).orElse(null);
-    }
+    //@Override
+    //public Client findById(String id) {
+    //    return clientRepository.findById(id).orElse(null);
+    //}
 
     @Override
     public Client findByUsername(String email) throws UsernameNotFoundException {

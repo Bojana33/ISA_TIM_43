@@ -1,5 +1,6 @@
 package isa2.demo.Service;
 
+import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Cottage;
@@ -19,5 +20,5 @@ public interface CottageService {
     Cottage deleteCottage(Integer id) throws Exception;
     List<Cottage> findAll();
     Collection<Cottage> findFreeCottages(FreeEntityDTO request) throws InvalidInputException;
-    ArrayList<Cottage> sortCottages(Collection<Cottage> cottages, Integer criterion, boolean asc);
+    ArrayList<CottageDTO> sortCottages(Collection<CottageDTO> cottages, String criterion, boolean asc);
 }

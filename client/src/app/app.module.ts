@@ -79,7 +79,10 @@ import { OneAdventureComponent } from './user-quest/adventures-user/one-adventur
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import { CottageReservationsTableComponent } from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
 import { ClientReservationsComponent } from './client-reservations/client-reservations.component';
-import {MatRadioModule} from "@angular/material/radio";
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { EntityService } from './service/entity.service';
+import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -136,6 +139,7 @@ const mapConfig: YaConfig = {
     OneBoatUserComponent,
     CottageReservationsTableComponent,
     ClientReservationsComponent,
+    ReservationDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -169,7 +173,8 @@ const mapConfig: YaConfig = {
         OwlNativeDateTimeModule,
         AngularYandexMapsModule.forRoot(mapConfig),
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
-        MatRadioModule
+        MatRadioModule,
+        MatCheckboxModule
     ],
   exports: [
     SignupClientComponent
@@ -189,6 +194,7 @@ const mapConfig: YaConfig = {
     ApiService,
     UserService,
     ConfigService,
+    EntityService,
     MatIconRegistry,
     MatNativeDateModule,
     MatDatepickerModule,

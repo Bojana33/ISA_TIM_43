@@ -8,6 +8,7 @@ import isa2.demo.Model.Address;
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
 
+import isa2.demo.Model.Reservation;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.CottageService;
 
@@ -116,9 +117,9 @@ public class CottageController {
     public ResponseEntity<Collection<CottageDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
         try {
             Collection<Cottage> cottages = this.cottageService.findFreeCottages(request);
-            List<Cottage> cottagesSorted = this.cottageService.sortCottages(cottages, 0, true);
+         ///   List<Cottage> cottagesSorted = this.cottageService.sortCottages(cottages, 0, true);
             Collection<CottageDTO> cottageDTOS = new ArrayList<>();
-            for (Cottage cottage : cottagesSorted)
+            for (Cottage cottage : cottages)
                 cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
             return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
         }
@@ -127,13 +128,9 @@ public class CottageController {
         }
     }
 
- //   @GetMapping(value = "/sorted", produces = MediaType.APPLICATION_JSON_VALUE)
-   // public ResponseEntity<List<CottageDTO>> getSorted(@RequestParam Integer criterion, @RequestParam boolean asc, @RequestBody Collection<Cottage> cottages){
-     //   List<Cottage> cottagesSorted = this.cottageService.sortCottages(cottages, criterion, asc);
-      //  List<CottageDTO> cottageDTOS = new ArrayList<>();
-        //for (Cottage cottage : cottagesSorted)
-          //  cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
-        //return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
-    //}
-
+    @RequestMapping(value = "/sorted/{criterion}/{asc}",  method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CottageDTO>> getSorted(@PathVariable("criterion")String criterion, @PathVariable("asc") Boolean asc,@RequestBody Collection<CottageDTO> cottages){
+        List<CottageDTO> cottagesSorted = this.cottageService.sortCottages(cottages, criterion, asc);
+        return new ResponseEntity<>(cottagesSorted, HttpStatus.OK);
+    }
 }

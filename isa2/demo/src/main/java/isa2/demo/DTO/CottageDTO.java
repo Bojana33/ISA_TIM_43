@@ -24,4 +24,5 @@ public class CottageDTO {
     private Collection<ReservationDTO> reservations;
     private String entityPhoto;
     private Double averageGrade;
+    private Collection<AdditionalServiceDTO> additionalServices;
 }

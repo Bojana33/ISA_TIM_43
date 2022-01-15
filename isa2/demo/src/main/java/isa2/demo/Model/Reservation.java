@@ -37,7 +37,7 @@ public class Reservation implements Serializable {
    private LocalDateTime creationDate;
 
    @Column
-   private Float price;
+   private Double price;
 
    @Column(name = "number_of_guests")
    private Integer numberOfGuests;
@@ -48,7 +48,7 @@ public class Reservation implements Serializable {
    @Column(name = "additional_notes")
    private String additionalNotes;
    
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
 
@@ -57,7 +57,7 @@ public class Reservation implements Serializable {
    private Period salePeriod;
 
    @JsonManagedReference
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
    private Collection<AdditionalService> additionalServices;
 
    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -81,4 +81,8 @@ public class Reservation implements Serializable {
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
    @JoinColumn(name = "reservation_entity_id", referencedColumnName = "id")
    private isa2.demo.Model.Entity entity;
+
+   public void setReservedPeriod(Period reservedPeriod) {
+      this.reservedPeriod = reservedPeriod;
+   }
 }

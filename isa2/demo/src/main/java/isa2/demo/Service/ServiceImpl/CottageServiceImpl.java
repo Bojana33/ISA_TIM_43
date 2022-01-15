@@ -96,11 +96,6 @@ public class CottageServiceImpl implements CottageService {
 
     @Override
     public Collection<Cottage> findFreeCottages(FreeEntityDTO request) throws InvalidInputException {
-        //TO DO: fix this check
-        if (request.getCountry() != null && request.getCountry().equals(""))
-            request.setCountry(null);
-        if (request.getCity() != null && request.getCity().equals(""))
-            request.setCity(null);
         if (request.getStartDate().isAfter(request.getEndDate()) || request.getStartDate().isEqual(request.getEndDate()))
             throw new InvalidInputException("Invalid start and end date");
         Collection<Cottage> cottages = cottageRepository.findAll();
@@ -112,10 +107,10 @@ public class CottageServiceImpl implements CottageService {
         for (Cottage cottage : cottages) {
             if ((request.getNumberOfGuests() != null && cottage.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (cottage.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && cottage.getAverageGrade() < request.getGrade()))
                 break;
-            if (request.getCountry() != null)
+            if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!checkLocation(request.getCountry(), cottage.getAddress().getCountry()))
                     break;
-            if (request.getCity() != null)
+            if (request.getCity() != null && !request.getCity().equals(""))
                 if (!checkLocation(request.getCity(), cottage.getAddress().getCity()))
                     break;
             if (!isPeriodInRentalTime(cottage, request.getStartDate(), request.getEndDate()))
@@ -148,28 +143,28 @@ public class CottageServiceImpl implements CottageService {
         return true;
     }
 
-    Comparator<Cottage> compareByPrice = new Comparator<Cottage>() {
+    Comparator<CottageDTO> compareByPrice = new Comparator<CottageDTO>() {
         @Override
-        public int compare(Cottage o1, Cottage o2) {
+        public int compare(CottageDTO o1, CottageDTO o2) {
             return o1.getPricePerDay().compareTo(o2.getPricePerDay());
         }
     };
 
-    Comparator<Cottage> compareByAverageGrade = new Comparator<Cottage>() {
+    Comparator<CottageDTO> compareByAverageGrade = new Comparator<CottageDTO>() {
         @Override
-        public int compare(Cottage o1, Cottage o2) {
+        public int compare(CottageDTO o1, CottageDTO o2) {
             return o1.getAverageGrade().compareTo(o2.getAverageGrade());
         }
     };
 
     @Override
-    public ArrayList<Cottage> sortCottages(Collection<Cottage> cottages, Integer criterion, boolean asc){
-        ArrayList<Cottage> newList = new ArrayList<>(cottages);
-        if (criterion == 0 && asc)
+    public ArrayList<CottageDTO> sortCottages(Collection<CottageDTO> cottages, String criterion, boolean asc){
+        ArrayList<CottageDTO> newList = new ArrayList<>(cottages);
+        if (criterion.equals("price") && asc)
             Collections.sort(newList, compareByPrice);
-        else if (criterion == 1 && asc)
+        else if (criterion.equals("grade") && asc)
             Collections.sort(newList, compareByAverageGrade);
-        else if (criterion == 0)
+        else if (criterion.equals("price") && !asc)
             Collections.sort(newList, compareByPrice.reversed());
         else
             Collections.sort(newList, compareByAverageGrade.reversed());
