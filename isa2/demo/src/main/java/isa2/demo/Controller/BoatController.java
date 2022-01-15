@@ -1,6 +1,7 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.BoatDTO;
+import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.BoatMapper;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;

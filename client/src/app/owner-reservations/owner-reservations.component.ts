@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { PeriodDto } from '../model/period-dto.model';
+import { PeriodDTO } from '../model/period-dto.model';
 import { ConfigService } from '../service/config.service';
 import { ReservationService } from '../service/reservation.service';
 
@@ -55,7 +55,7 @@ export class OwnerReservationsComponent implements OnInit {
   findReservationsInDateRange(form: FormGroup): void {
     const maxDate = new Date(8640000000000000);
     const minDate = new Date(-8640000000000000);
-    let timePeriod = new PeriodDto();
+    let timePeriod = new PeriodDTO();
     // timePeriod = this.reservationsDateRangeForm.getRawValue();
     timePeriod.startDate = form.value.startDate;
     timePeriod.endDate = form.value.endDate;

@@ -8,8 +8,7 @@ import isa2.demo.Model.*;
 import isa2.demo.Repository.ClientRepository;
 import isa2.demo.Repository.EntityRepository;
 import isa2.demo.Repository.ReservationRepository;
-import isa2.demo.Service.EntityService;
-import isa2.demo.Service.ReservationService;
+import isa2.demo.Service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,19 +32,18 @@ public class ReservationServiceImpl implements ReservationService {
     private final EntityService entityService;
     private final ModelMapperConfig modelMapper;
     private final ClientRepository clientRepository;
+    private final AdventureService adventureService;
+    private final CottageService cottageService;
+    private final BoatService boatService;
 
-    private final AdventureServiceImpl adventureService;
-
-    private final CottageServiceImpl cottageService;
-
-    private final BoatServiceImpl boatService;
-
-    public ReservationServiceImpl(ReservationRepository reservationRepository, AdventureServiceImpl adventureService, CottageServiceImpl cottageService, BoatServiceImpl boatService) {
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EntityRepository entityRepository,
                                   EntityService entityService,
                                   ModelMapperConfig modelMapperConfig,
-                                  ClientRepository clientRepository) {
+                                  ClientRepository clientRepository,
+                                  BoatService boatService,
+                                  CottageService cottageService,
+                                  AdventureService adventureService) {
         this.reservationRepository = reservationRepository;
         this.adventureService = adventureService;
         this.cottageService = cottageService;
@@ -94,8 +92,6 @@ public class ReservationServiceImpl implements ReservationService {
         return reservations;
     }
 
-
-
     @Override
     public Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException {
         Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
@@ -123,7 +119,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
-        reservation.setClient(clientRepository.getById(Integer.parseInt(reservationDTO.getClientId())));
+        reservation.setClient(clientRepository.findById(reservationDTO.getClientId()).get());
         reservation = reservationRepository.save(reservation);
 
         //send email

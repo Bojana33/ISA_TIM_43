@@ -16,6 +16,7 @@ import isa2.demo.Utils.FileUploadUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +57,7 @@ public class EntityController {
         }
         return responseEntity;
     }
+
     @PostMapping("/reservations")
     public ResponseEntity<ReservationDTO> addReservationToEntity(@RequestBody ReservationDTO reservationDTO) throws MessagingException {
         Reservation reservation = modelMapper.modelMapper().map(reservationDTO, Reservation.class);
@@ -65,6 +67,7 @@ public class EntityController {
             return ResponseEntity.status(HttpStatus.CREATED).body(reservationDTO);
         }
     }
+
     @GetMapping("/reservations/{entityId}")
     public ResponseEntity<Collection<ReservationDTO>> getReservations(@PathVariable Integer entityId, @RequestBody Optional<PeriodDTO> periodDTO){
         Optional<Period> periodOptional = Optional.empty();
@@ -78,7 +81,6 @@ public class EntityController {
             reservationDTOS.add(modelMapper.modelMapper().map(reservation,ReservationDTO.class));
         }
         return ResponseEntity.ok().body(reservationDTOS);
-
     }
 
     @PostMapping("/{entity_id}")
@@ -99,6 +101,7 @@ public class EntityController {
 
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @RequestMapping(value = "/reserve", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReservationDTO> reserve(@RequestBody ReservationDTO request){
         try{
@@ -108,6 +111,5 @@ public class EntityController {
         catch(InvalidReservationException e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-//        return new ResponseEntity<>(request, HttpStatus.OK);
     }
 }

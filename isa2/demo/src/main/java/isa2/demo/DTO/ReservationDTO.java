@@ -27,5 +27,5 @@ public class ReservationDTO {
     private PeriodDTO salePeriod;
     private Collection<AdditionalServiceDTO> additionalServices;
     private Integer entityId;
-    private String clientId;
+    private Integer clientId;
 }

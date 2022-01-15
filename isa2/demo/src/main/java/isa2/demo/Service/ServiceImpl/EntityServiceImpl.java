@@ -38,18 +38,15 @@ public class EntityServiceImpl implements EntityService {
     private final UserService userService;
     private final ReservationRepository reservationRepository;
     private final ClientService clientService;
-    private final ReservationRepository reservationRepository;
     private final ModelMapperConfig modelMapper;
     private final ClientRepository clientRepository;
     private final PeriodRepository periodRepository;
 
-    public EntityServiceImpl(EntityRepository entityRepository, UserService userService, ReservationRepository reservationRepository) {
     public EntityServiceImpl(EntityRepository entityRepository, UserService userService, ClientService clientService,
                              ReservationRepository reservationRepository, ModelMapperConfig modelMapperConfig,
                              ClientRepository clientRepository, PeriodRepository periodRepository) {
         this.entityRepository = entityRepository;
         this.userService = userService;
-        this.reservationRepository = reservationRepository;
         this.clientService = clientService;
         this.reservationRepository = reservationRepository;
         this.modelMapper = modelMapperConfig;

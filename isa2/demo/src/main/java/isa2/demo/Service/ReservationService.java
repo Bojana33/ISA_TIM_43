@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface ReservationService {
-    Collection<Reservation> findAllReservationsForEntity(Integer entityId);
+    //Collection<Reservation> findAllReservationsForEntity(Integer entityId);
     Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException;
 //    Collection<Reservation> findAllReservationsForEntity(Integer entityId);
 

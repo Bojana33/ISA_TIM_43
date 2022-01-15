@@ -3,6 +3,7 @@ package isa2.demo.Service;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Boat;
+import isa2.demo.Model.Owner;
 
 import java.util.Collection;
 import java.util.List;

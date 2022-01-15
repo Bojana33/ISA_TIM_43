@@ -13,7 +13,7 @@ export class ReservationDTO {
   public salePeriod!: PeriodDTO;
   public additionalServices!: AdditionalServicesDTO[];
   public entityId!: number;
-  public clientId!: string;
+  public clientId!: number;
 
   //constructor(
     //public id: number,
