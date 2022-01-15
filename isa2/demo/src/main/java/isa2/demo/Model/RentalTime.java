@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @javax.persistence.Entity
+@Table(name="rental_time")
 public class RentalTime implements Serializable {
 
    @Id

@@ -1,6 +1,9 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.DTO.CottageDTO;
+import isa2.demo.DTO.FreeEntityDTO;
+import isa2.demo.Exception.InvalidInputException;
+import isa2.demo.Model.*;
 import isa2.demo.DTO.ReservationDTO;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.CottageRepository;
@@ -8,6 +11,7 @@ import isa2.demo.Repository.PeriodRepository;
 import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Repository.UserRepository;
 import isa2.demo.Service.CottageService;
+import isa2.demo.Service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +30,12 @@ public class CottageServiceImpl implements CottageService {
     final
     CottageRepository cottageRepository;
 
+    final
+    EntityService entityService;
 
-    public CottageServiceImpl(CottageRepository cottageRepository) {
+    public CottageServiceImpl(CottageRepository cottageRepository, EntityService entityService) {
         this.cottageRepository = cottageRepository;
+        this.entityService = entityService;
     }
 
     @Override
@@ -88,6 +95,83 @@ public class CottageServiceImpl implements CottageService {
     @Override
     public List<Cottage> findCottagesByName(String name) {
         return cottageRepository.findAllByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public Collection<Cottage> findFreeCottages(FreeEntityDTO request) throws InvalidInputException {
+        if (request.getStartDate().isAfter(request.getEndDate()) || request.getStartDate().isEqual(request.getEndDate()))
+            throw new InvalidInputException("Invalid start and end date");
+        Collection<Cottage> cottages = cottageRepository.findAll();
+        Collection<Cottage> freeCottages = new ArrayList<Cottage>();
+        if (request.getGrade() != null && request.getGrade() < 0)
+            throw new InvalidInputException("Grade needs to be positive");
+        if (request.getNumberOfGuests() != null && request.getNumberOfGuests() < 1)
+            throw new InvalidInputException("Number of guests needs to be at least 1");
+        for (Cottage cottage : cottages) {
+            if ((request.getNumberOfGuests() != null && cottage.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (cottage.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && cottage.getAverageGrade() < request.getGrade()))
+                break;
+            if (request.getCountry() != null && !request.getCountry().equals(""))
+                if (!checkLocation(request.getCountry(), cottage.getAddress().getCountry()))
+                    break;
+            if (request.getCity() != null && !request.getCity().equals(""))
+                if (!checkLocation(request.getCity(), cottage.getAddress().getCity()))
+                    break;
+            if (!isPeriodInRentalTime(cottage, request.getStartDate(), request.getEndDate()))
+                break;
+            else
+                freeCottages.add(cottage);
+            Collection<Reservation> reservations = cottage.getReservations();
+            for (Reservation reservation : reservations) {
+                if (entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
+                    freeCottages.remove(cottage);
+                    break;
+                }
+            }
+        }
+        return freeCottages;
+    }
+
+    private boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate) {
+        Collection<RentalTime> rentalTimes = entity.getRentalTimes();
+        for (RentalTime rentalTime : rentalTimes) {
+            if(rentalTime.getStart_date().isBefore(startDate) && rentalTime.getEnd_date().isAfter(endDate))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean checkLocation(String address1, String address2){
+        if(!address1.equals(address2))
+            return false;
+        return true;
+    }
+
+    Comparator<CottageDTO> compareByPrice = new Comparator<CottageDTO>() {
+        @Override
+        public int compare(CottageDTO o1, CottageDTO o2) {
+            return o1.getPricePerDay().compareTo(o2.getPricePerDay());
+        }
+    };
+
+    Comparator<CottageDTO> compareByAverageGrade = new Comparator<CottageDTO>() {
+        @Override
+        public int compare(CottageDTO o1, CottageDTO o2) {
+            return o1.getAverageGrade().compareTo(o2.getAverageGrade());
+        }
+    };
+
+    @Override
+    public ArrayList<CottageDTO> sortCottages(Collection<CottageDTO> cottages, String criterion, boolean asc){
+        ArrayList<CottageDTO> newList = new ArrayList<>(cottages);
+        if (criterion.equals("price") && asc)
+            Collections.sort(newList, compareByPrice);
+        else if (criterion.equals("grade") && asc)
+            Collections.sort(newList, compareByAverageGrade);
+        else if (criterion.equals("price") && !asc)
+            Collections.sort(newList, compareByPrice.reversed());
+        else
+            Collections.sort(newList, compareByAverageGrade.reversed());
+        return newList;
     }
 
 }

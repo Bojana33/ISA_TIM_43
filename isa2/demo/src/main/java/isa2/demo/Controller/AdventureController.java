@@ -1,8 +1,12 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.AdventureDTO;
+import isa2.demo.DTO.BoatDTO;
+import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.AdventureMapper;
+import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;
+import isa2.demo.Model.Boat;
 import isa2.demo.Service.AdventureService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -83,5 +88,19 @@ public class AdventureController {
     @PreAuthorize("hasAnyRole('INSTRUCTOR','ADMIN')")
     public void deleteAdventure(@PathVariable Integer id){
         this.adventureService.delete(id);
+    }
+
+    @RequestMapping(value = "/findFree", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<AdventureDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
+        try {
+            Collection<Adventure> adventures = this.adventureService.findFreeAdventures(request);
+            Collection<AdventureDTO> adventureDTOS = new ArrayList<>();
+            for (Adventure adventure : adventures)
+                adventureDTOS.add(this.adventureMapper.mapAdventureToDTO(adventure));
+            return new ResponseEntity<>(adventureDTOS, HttpStatus.OK);
+        }
+        catch (InvalidInputException e){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }

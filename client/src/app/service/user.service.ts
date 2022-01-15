@@ -25,7 +25,6 @@ export class UserService {
   }
 
   initUser() {
-    // console.log('dosao u init user');
     const promise = this.apiService.get(this.config.refresh_token_url).toPromise()
       .then(res => {
         if (res.access_token !== null) {
@@ -64,7 +63,6 @@ export class UserService {
   }
 
   getUser(id:any) {
-    console.log('dosao u get user');
     if(this.currentUser) {
       return this.apiService.get(this.config.api_url + "/get_user/" + id);
     }
@@ -94,7 +92,6 @@ export class UserService {
   }
 
   update(data:UserDTO){
-    console.log(data);
     return this.apiService.post('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
   }
 

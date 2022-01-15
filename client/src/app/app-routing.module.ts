@@ -50,6 +50,8 @@ import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
 import {CottageownerGuard} from './guard/cottageowner.guard';
 
+import {ReservationFormComponent} from './reservation-form/reservation-form.component';
+import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 
 
 const routes: Routes = [
@@ -57,6 +59,15 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'reservationForm',
+    component: ReservationFormComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'createReservation',
+    component: ClientReservationsComponent
   },
   {
     path: 'signupClient',

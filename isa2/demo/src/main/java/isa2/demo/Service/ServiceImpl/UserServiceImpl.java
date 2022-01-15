@@ -156,8 +156,8 @@ public class UserServiceImpl implements UserService {
         } catch (MessagingException me) {
             System.out.println("Message exception");
         }
-
     }
+
     private String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");

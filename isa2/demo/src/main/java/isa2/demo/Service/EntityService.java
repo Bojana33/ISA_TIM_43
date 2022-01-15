@@ -1,6 +1,10 @@
 package isa2.demo.Service;
 
+import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.RentalTimeDTO;
+import isa2.demo.DTO.ReservationDTO;
+import isa2.demo.Exception.InvalidReservationException;
+import isa2.demo.Model.AdditionalService;
 import isa2.demo.Model.Entity;
 import isa2.demo.Model.RentalTime;
 import isa2.demo.Model.Reservation;
@@ -20,4 +24,5 @@ public interface EntityService {
     Double  findAverageGrade(Integer entity_id);
 
     void uploadEntityPhoto(Integer id, String fileName);
+    boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate);
 }

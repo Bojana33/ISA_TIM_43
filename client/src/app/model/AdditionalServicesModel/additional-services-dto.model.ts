@@ -1,7 +1,7 @@
 export class AdditionalServicesDTO {
-  private id: number;
-  private name: string;
-  private price: number;
+  public id: number;
+  public name: string;
+  public price: number;
 
 
   constructor(id: number, name: string, price: number) {
