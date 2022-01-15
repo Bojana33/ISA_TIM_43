@@ -86,5 +86,4 @@ export class RegisterCottageComponent implements OnInit {
       }),
       rooms: this.formBuilder.array([this.createRooms()])
     });
-  }
-}
+  }}
