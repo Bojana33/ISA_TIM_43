@@ -47,6 +47,7 @@ import {CottageReservationsTableComponent} from './cottage/cottage-reservations/
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
+import {CottageownerGuard} from './guard/cottageowner.guard';
 
 
 
@@ -169,7 +170,7 @@ const routes: Routes = [
   {
     path: 'register-cottage',
     component: RegisterCottageComponent,
-    canActivate: [GuestGuard]
+    canActivate: [CottageownerGuard]
   },
   {
     path: 'delete-profile',

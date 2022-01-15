@@ -27,4 +27,7 @@ export class CottageService {
   updateCottage(cottage: CottageDTO){
     return this.apiService.put(this.config.cottages_url + '/' + cottage.id, cottage);
   }
+  saveImage(data: FormData, cottageId: number){
+    return this.http.post(this.config.cottage_url + '/save_image/' + cottageId, data);
+  }
 }

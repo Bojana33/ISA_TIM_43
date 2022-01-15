@@ -9,12 +9,22 @@ import isa2.demo.Model.*;
 import isa2.demo.Service.ClientService;
 import isa2.demo.Service.EntityService;
 import isa2.demo.Service.ReservationService;
+import isa2.demo.Utils.FileUploadUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @RestController
@@ -78,5 +88,15 @@ public class EntityController {
             return "created";
         else
             return "not created";
+    }
+    @PostMapping(value = "/save_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @PreAuthorize("hasRole('COTTAGEOWNER')")
+    public void saveImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
+        String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
+
+        String uploadDir = "../../client/src/assets/images";
+        entityService.uploadImage(id,"./../../assets/images/" + fileName);
+        FileUploadUtil.saveFile(uploadDir, fileName, imageUrl);
+
     }
 }

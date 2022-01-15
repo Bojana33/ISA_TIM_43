@@ -5,7 +5,7 @@
 
       <div class = "field">
         <label class = "label" for="cottageName">
-          Price
+          Name
         </label>
         <div class = "control">
           <input class = "input" id="cottageName" type="text" formControlName="cottageName">
@@ -36,27 +36,47 @@
           <input class = "input" id="pricePerDay" type="number" formControlName="pricePerDay">
         </div>
       </div>
-      <!--      <div class = "field">-->
-      <!--        <label class="label">Email</label>-->
-      <!--        <input type="text" name="email"-->
-      <!--               class = "input" [(ngModel)]="email"-->
-      <!--               required email #emailInput = "ngModel">-->
-
-      <!--        <div class = "help is-error" *ngIf="emailInput.invalid && emailInput.touched">-->
-      <!--          Your email is required and needs to be a valid email!-->
-      <!--        </div>-->
-      <!--      </div>-->
-
-      <!--      <div class = "field">-->
-      <!--        <label class="label">Your message</label>-->
-      <!--        <textarea name="message" class = "textarea" [(ngModel)]="message"></textarea>-->
-      <!--      </div>-->
-
+      <div formGroupName="address">
+        <div class = "field">
+          <label class = "label" for="country">
+            Country
+          </label>
+          <div class = "control">
+            <input class = "input" id="country" type="text" formControlName="country">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="city">
+            City
+          </label>
+          <div class = "control">
+            <input class = "input" id="city" type="text" formControlName="city">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="street">
+            Street
+          </label>
+          <div class = "control">
+            <input class = "input" id="street" type="text" formControlName="street">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="houseNumber">
+            House number
+          </label>
+          <div class = "control">
+            <input class = "input" id="houseNumber" type="text" formControlName="houseNumber">
+          </div>
+        </div>
+        <input type="file" (change)="onFileChanged($event)">
+      </div>
       <button type="submit"
               class="button is-large is-warning"
               [disabled]="cottageCreationForm.invalid">
         Send
       </button>
+      sdadasads
     </form>
   </div>
 </div>

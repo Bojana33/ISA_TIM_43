@@ -141,4 +141,11 @@ public class EntityServiceImpl implements EntityService {
         }
         return avgGrade;
     }
+
+    @Override
+    public void uploadImage(Integer id, String fileName) {
+        Entity entity = entityRepository.findById(id).get();
+        entity.setEntityPhoto(fileName);
+        entityRepository.save(entity);
+    }
 }
