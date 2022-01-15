@@ -143,7 +143,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public void uploadImage(Integer id, String fileName) {
+    public void uploadEntityPhoto(Integer id, String fileName) {
         Entity entity = entityRepository.findById(id).get();
         entity.setEntityPhoto(fileName);
         entityRepository.save(entity);

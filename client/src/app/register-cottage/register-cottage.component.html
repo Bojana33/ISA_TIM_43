@@ -71,12 +71,27 @@
         </div>
         <input type="file" (change)="onFileChanged($event)">
       </div>
+      <div class = "block">
+        <label class = "label" for="addServ">
+          Rooms
+        </label>
+        <div *ngIf="getRooms.controls">
+          <div formArrayName="rooms" *ngFor="let room of getRooms.controls; let i=index;" id="addRoom">
+            <div class="field is-grouped">
+              <div [formGroupName]="i">
+                <input type='number' formControlName="numberOfBeds" placeholder="Beds">
+                <button class="button is-danger is-rounded is-small" (click)="deleteRoom(i)">X</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="addService" (click) = "addRoom()">Add another room</button>
+        </div>
+      </div>
       <button type="submit"
               class="button is-large is-warning"
               [disabled]="cottageCreationForm.invalid">
         Send
       </button>
-      sdadasads
     </form>
   </div>
 </div>

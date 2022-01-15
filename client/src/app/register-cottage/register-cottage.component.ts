@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CottageService} from '../service/cottage.service';
 import {HttpClient} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -17,6 +17,7 @@ import {EntityService} from '../service/entity.service';
 export class RegisterCottageComponent implements OnInit {
   cottageCreationForm!: FormGroup;
   private selectedFile!: File;
+  private _rooms!: FormArray;
   constructor(
     private cottageService: CottageService,
     private formBuilder: FormBuilder,
@@ -55,6 +56,22 @@ export class RegisterCottageComponent implements OnInit {
     data.append('imageUrl', this.selectedFile, this.selectedFile.name);
     this.entityService.saveImage(data, id).subscribe(res => {console.log(res); });
   }
+  createRooms(): FormGroup {
+    return this.formBuilder.group({
+      numberOfBeds: 0,
+    });
+  }
+  get getRooms(): FormArray {
+    return this.cottageCreationForm.get('rooms') as FormArray;
+  }
+  addRoom(): void{
+    this._rooms = this.cottageCreationForm.get('rooms') as FormArray;
+    this._rooms.push(this.createRooms());
+  }
+  deleteRoom(index: number): void {
+    this._rooms = this.cottageCreationForm.get('rooms') as FormArray;
+    this._rooms.removeAt(index);
+  }
   private initializeForm(): void {
     this.cottageCreationForm = this.formBuilder.group({
       cottageName: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -66,7 +83,8 @@ export class RegisterCottageComponent implements OnInit {
         city: new FormControl('', [Validators.required]),
         street: new FormControl('', [Validators.required]),
         houseNumber: new FormControl('', [Validators.required])
-      })
+      }),
+      rooms: this.formBuilder.array([this.createRooms()])
     });
   }
 }

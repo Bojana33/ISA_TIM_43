@@ -1,7 +1,6 @@
 package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
-import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.PeriodDTO;
 import isa2.demo.DTO.RentalTimeDTO;
 import isa2.demo.DTO.ReservationDTO;
@@ -13,18 +12,12 @@ import isa2.demo.Utils.FileUploadUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @RestController
@@ -95,7 +88,7 @@ public class EntityController {
         String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
 
         String uploadDir = "../../client/src/assets/images";
-        entityService.uploadImage(id,"./../../assets/images/" + fileName);
+        entityService.uploadEntityPhoto(id,"./../../assets/images/" + fileName);
         FileUploadUtil.saveFile(uploadDir, fileName, imageUrl);
 
     }
