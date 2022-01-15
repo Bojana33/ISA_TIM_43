@@ -18,4 +18,6 @@ public interface EntityService {
     boolean isReservationOverlaping(Entity entity, Reservation reservation);
     boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2);
     Double  findAverageGrade(Integer entity_id);
+
+    void uploadEntityPhoto(Integer id, String fileName);
 }

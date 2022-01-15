@@ -31,11 +31,12 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Cottage addCottage(@RequestBody CottageDTO cottageDTO){
+    public ResponseEntity<CottageDTO> addCottage(@RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
         cottage = cottageService.addNewCottage(cottage);
-        return cottage;
+        cottageDTO = cottageMapper.mapCottageToDto(cottage);
+        return ResponseEntity.status(HttpStatus.OK).body(cottageDTO);
     }
     @DeleteMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> deleteCottage(@PathVariable("cottage_id") Integer id){
