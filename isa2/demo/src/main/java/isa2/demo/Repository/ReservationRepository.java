@@ -19,4 +19,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     Collection<Reservation> findAllByEntity_idAndClientsReviewNotNull(Integer entityId);
 
     Reservation findByUserComplaint(UserComplaint userComplaint);
+    Collection<Reservation> findAllBySalePeriod_StartDateAfter(LocalDateTime salePeriod_startDate);
 }

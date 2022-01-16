@@ -41,4 +41,13 @@ public class ReservationController {
         }
         return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
     }
+
+    @GetMapping("/getAllFutureReservationsOnSale")
+    public ResponseEntity<Collection<ReservationDTO>> getFutureReservationsOnSale(){
+        Collection<Reservation> reservations = this.reservationService.findAllFutureReservationsOnSale();
+        Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation : reservations)
+            reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
+        return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
+    }
 }

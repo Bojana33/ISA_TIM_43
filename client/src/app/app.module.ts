@@ -92,6 +92,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { EntityService } from './service/entity.service';
 import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
+import { FastReservationComponent } from './fast-reservation/fast-reservation.component';
+import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -156,6 +158,8 @@ const mapConfig: YaConfig = {
     ComplaintsComponent,
     ClientReservationsComponent,
     ReservationDialogComponent,
+    FastReservationComponent,
+    FastReservationDialogComponent,
   ],
   imports: [
     BrowserModule,

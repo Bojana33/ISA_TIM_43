@@ -21,5 +21,6 @@ public interface ReservationService {
     Collection<Reservation> findAllReservationsForOwner(Owner owner);
 
     Collection<Reservation> findAllReservationsForEntity(Integer entityId, Optional<Period> periodOptional);
-
+    Collection<Reservation> findAllFutureReservationsOnSale();
+    Reservation fastReservation(ReservationDTO reservationDTO) throws  InvalidReservationException;
 }

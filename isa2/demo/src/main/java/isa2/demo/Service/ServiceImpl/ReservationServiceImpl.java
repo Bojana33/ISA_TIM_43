@@ -96,15 +96,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException {
         Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
-        if (reservationDTO.getReservedPeriod().getEndDate().isBefore(reservationDTO.getReservedPeriod().getStartDate()))
-            throw new InvalidReservationException("End date can't be before start day");
-        for (Reservation reservation : entity.getReservations())
-            if (entityService.doTimeIntervalsIntersect(reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(), reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()))
-                throw new InvalidReservationException("Requested reservation for this entity has an overlapping already existing reservation");
-        if (!entityService.isPeriodInRentalTime(entity, reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()))
-            throw new InvalidReservationException("Entity has no rental time in requested time");
-        if (reservationDTO.getNumberOfGuests() < 1 || reservationDTO.getNumberOfGuests() > entity.getMaxNumberOfGuests())
-            throw new InvalidReservationException("Invalid number of guests");
+        if(!checkReservation(reservationDTO, entity, false))
+            throw new InvalidReservationException("Invalid reservation input");
         Reservation reservation = new Reservation();
         reservation.setEntity(entity);
         reservation.setReservationStatus(ReservationStatus.RESERVED);
@@ -132,6 +125,66 @@ public class ReservationServiceImpl implements ReservationService {
         return reservation;
     }
 
+    @Override
+    public Reservation fastReservation(ReservationDTO reservationDTO) throws  InvalidReservationException{
+        Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
+        if(!checkReservation(reservationDTO, entity, true))
+            throw new InvalidReservationException("Invalid reservation input");
+        Reservation reservation = reservationRepository.getById(reservationDTO.getId());
+        if (reservation.getReservationStatus() == ReservationStatus.RESERVED)
+            throw new InvalidReservationException("Invalid reservation input");
+        reservation.setReservationStatus(ReservationStatus.RESERVED);
+        reservation.setNumberOfGuests(reservationDTO.getNumberOfGuests());
+        Collection<AdditionalService> additionalServices = new ArrayList<>();
+        Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
+        for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
+            price += additionalServiceDTO.getPrice();
+            additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
+        }
+        //check if reservation is in sale period and calculate discount
+        if (LocalDateTime.now().isAfter(reservation.getSalePeriod().getStartDate()) && LocalDateTime.now().isBefore(reservation.getSalePeriod().getEndDate()))
+            price = price - reservation.getDiscount();
+        reservation.setPrice(price);
+        reservation.setAdditionalServices(additionalServices);
+        reservation.setClient(clientRepository.findById(reservationDTO.getClientId()).get());
+        reservation = reservationRepository.save(reservation);
+
+        //send email
+        try {
+            sendEmailForReservation(reservation);
+        }catch (MessagingException me) {
+            return reservation;
+        }
+
+        return reservation;
+    }
+
+    private Boolean checkReservation(ReservationDTO reservationDTO, Entity entity, Boolean fastReservation){
+        if (reservationDTO.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now()))
+            return false;
+        if (reservationDTO.getReservedPeriod().getEndDate().isBefore(reservationDTO.getReservedPeriod().getStartDate()))
+            return false;
+        for (Reservation reservation : entity.getReservations())
+            if (reservation.getReservationStatus() == ReservationStatus.RESERVED && entityService.doTimeIntervalsIntersect(reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(), reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()))
+                return false;
+
+        if(!fastReservation)
+            if (!entityService.isPeriodInRentalTime(entity, reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()))
+                return false;
+        if (reservationDTO.getNumberOfGuests() < 1 || reservationDTO.getNumberOfGuests() > entity.getMaxNumberOfGuests())
+            return false;
+        return true;
+    }
+
+    @Override
+    public Collection<Reservation> findAllFutureReservationsOnSale() {
+        Collection<Reservation> reservations = reservationRepository.findAllBySalePeriod_StartDateAfter(LocalDateTime.now());
+        Collection<Reservation> reservationsToReturn = new ArrayList<Reservation>();
+        for (Reservation reservation : reservations)
+            if (reservation.getReservationStatus() == ReservationStatus.FREE) //&& reservation.getReservedPeriod() == null)
+                reservationsToReturn.add(reservation);
+        return reservationsToReturn;
+    }
 
     private void sendEmailForReservation(Reservation reservation) throws MessagingException {
         try {
