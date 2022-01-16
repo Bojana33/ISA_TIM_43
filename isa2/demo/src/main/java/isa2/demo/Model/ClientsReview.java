@@ -22,10 +22,15 @@ public class ClientsReview implements Serializable {
 
     @Column
     private java.lang.String description;
+
     @Column
     private java.lang.Double grade;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "clientsReview")
-    public Reservation reservation;
+    @Column
+    private Boolean processed;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
+    private Reservation reservation;
 
 }
