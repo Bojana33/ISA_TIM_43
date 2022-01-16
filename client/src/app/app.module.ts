@@ -81,14 +81,17 @@ import { OneAdventureComponent } from './user-quest/adventures-user/one-adventur
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import { CottageReservationsTableComponent } from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
 import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatRadioModule} from '@angular/material/radio';
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
 import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 import { BoatComponent } from './boat/boat.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComplaintsComponent } from './complaints/complaints.component';
+import { ClientReservationsComponent } from './client-reservations/client-reservations.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { EntityService } from './service/entity.service';
+import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -150,7 +153,9 @@ const mapConfig: YaConfig = {
     CalendarHeaderComponent,
     OwnerReservationsComponent,
     BoatComponent,
-    ComplaintsComponent
+    ComplaintsComponent,
+    ClientReservationsComponent,
+    ReservationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -206,6 +211,7 @@ const mapConfig: YaConfig = {
     ApiService,
     UserService,
     ConfigService,
+    EntityService,
     MatIconRegistry,
     MatNativeDateModule,
     MatDatepickerModule,

@@ -30,4 +30,8 @@ public class Period implements Serializable {
    @Column(name = "end_date")
    private LocalDateTime endDate;
 
+   public Period(LocalDateTime startDate, LocalDateTime endDate) {
+      this.startDate = startDate;
+      this.endDate = endDate;
+   }
 }

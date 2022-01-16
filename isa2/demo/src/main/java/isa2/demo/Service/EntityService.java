@@ -18,4 +18,7 @@ public interface EntityService {
     Entity findByReservations(Reservation reservation);
     Double  findAverageGrade(Integer entity_id);
     Entity findById(Integer id);
+
+    void uploadEntityPhoto(Integer id, String fileName);
+    boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate);
 }

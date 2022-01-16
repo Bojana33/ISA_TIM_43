@@ -12,13 +12,13 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "additionalServices")
+@Table(name = "additional_services")
 public class AdditionalService implements Serializable {
 
     //TODO: verovatno treba da se doda state kako bi znali da li je klijent selektovao dodatnu uslugu
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "additinalServices_id", unique = true, nullable = false)
+    @Column(name = "additional_services_id", unique = true, nullable = false)
     private java.lang.Integer id;
 
     @Column

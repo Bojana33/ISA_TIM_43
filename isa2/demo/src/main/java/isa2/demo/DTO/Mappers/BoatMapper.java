@@ -37,8 +37,8 @@ public class BoatMapper {
                 Reservation temp_reservation = iterator1.next();
                 ReservationDTO temp_reservationDTO = iterator2.next();
 
-                if (temp_reservationDTO.getClientId() != null)
-                    temp_reservation.setClient(clientService.findById(temp_reservationDTO.getClientId()));
+                //if (temp_reservationDTO.getClientId() != null)
+                  //  temp_reservation.setClient(clientService.findById(temp_reservationDTO.getClientId()));
 
                 temp_reservation.setEntity(boat);
                 //zasto je ovo u mapperu?

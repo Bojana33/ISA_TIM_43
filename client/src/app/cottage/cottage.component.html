@@ -2,8 +2,7 @@
         <div class = "box">
           <div class = "columns">
 
-            <div class = "column" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
-              <div class="box">
+            <div class = "column is-7" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
                 <ngb-carousel>
                   <ng-template ngbSlide>
                     <div class="picsum-img-wrapper image is-5by3">
@@ -19,11 +18,10 @@
 <!--                <figure class="image is-5by3">-->
 <!--                  <img src="{{cottage.entityPhoto}}">-->
 <!--                </figure>-->
-              </div>
             </div>
 
-            <form *ngIf ="hasSignedIn() && loggedUserIsOwner()" [formGroup]="cottageUpdateForm">
-            <div class = "column">
+            <div class = "column is-5">
+              <form *ngIf ="hasSignedIn() && loggedUserIsOwner()" [formGroup]="cottageUpdateForm">
               <div class="box">
                 <h4 class="title is-4 my-2">Name</h4>
                 <input class = "input is-small is-rounded" formControlName="cottageName">
@@ -48,9 +46,14 @@
                   </tr>
                   </tbody>
                 </table>
-                <button class="button is-info is-rounded" [disabled]="cottageUpdateForm.invalid" (click)="updateCottage(cottageUpdateForm)">Update</button>
-
-
+                <nav class="level">
+                  <div class="level-left">
+                  </div>
+                  <div class="level-right">
+                    <button class="button is-info is-rounded level-item" [disabled]="cottageUpdateForm.invalid"
+                            (click)="updateCottage(cottageUpdateForm)">Update</button>
+                  </div>
+                </nav>
               </div>
               <div class="buttons block">
                 <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
@@ -86,10 +89,11 @@
                   </div>
                 </div>
               </div>
-            </div>
             </form>
+            </div>
 
-            <div class = "column" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
+
+            <div class = "column is-5" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
               <div class="box">
                 <h4 class="title is-4 my-2">Name</h4>
                 <p class = "item">
@@ -125,7 +129,6 @@
                 <div class="buttons block">
                   <button class="button is-danger is-rounded" *ngIf="hasRole('ADMIN')" (click)="deleteCottage()">Delete</button>
                 </div>
-                <i class="fab fa-500px"></i>
               </div>
             </div>
          </div>

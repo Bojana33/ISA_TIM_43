@@ -3,7 +3,7 @@ import {ConfigService} from './config.service';
 import {HttpClient} from '@angular/common/http';
 import {ApiService} from './api.service';
 import {ReservationDTO} from '../model/reservation-dto.model';
-import {PeriodDto} from '../model/period-dto.model';
+import {PeriodDTO} from '../model/period-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class ReservationService {
   getOwnerReservations(ownerId:number) {
     return this.api.get(this.config.reservation_url + '/get_owner_reservations/' + ownerId);
   }
-  getReservationsInDateRange(periodDTO: PeriodDto): any{
+  getReservationsInDateRange(periodDTO: PeriodDTO): any{
     return this.api.get(this.config.entity_url + '/reservations/' + periodDTO.id, periodDTO);
   }
 }

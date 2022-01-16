@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../service/config.service';
 import {Adventure} from '../../model/adventure';
 import {Cottage} from '../../model/cottage';
+import { CottageDTO } from 'src/app/model/cottage-dto.model';
 
 @Component({
   selector: 'app-cottages',
@@ -11,19 +12,23 @@ import {Cottage} from '../../model/cottage';
 })
 export class CottagesUserComponent implements OnInit {
 
-  allCottages: Cottage[] = [];
-  cottages: Cottage[] = [];
+  allCottages: CottageDTO[] = [];
+  cottages: CottageDTO[] = [];
   cottage: any;
   searchTerm: any;
   searchFilter: any;
+  showAll!: boolean;
 
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService
-  ) { }
+  ) {
+    this.showAll = true;
+  }
 
   ngOnInit(): void {
-    this.getCottages();
+    if(this.showAll)
+      this.getCottages();
   }
 
   // tslint:disable-next-line:typedef
@@ -31,14 +36,18 @@ export class CottagesUserComponent implements OnInit {
     this.httpClient.get<any>(this.config.cottage_url + '/get_all').subscribe(
       (data) => {
         this.cottages = data;
-        this.allCottages = this.cottages;
       });
+  }
+
+  showCottages(cottagesToDisplay: CottageDTO[]){
+    this.showAll = false;
+    this.cottages = cottagesToDisplay;
   }
 
   search(search: any, value: any): void {
     console.log(value);
     if (search === 'name') {
-      this.cottages = this.allCottages.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
+      this.cottages = this.allCottages.filter((val) => val.cottageName.toUpperCase().includes(value) || val.cottageName.toLowerCase().includes(value));
     }
     else if (search === 'pricePerDay') {
       this.cottages = this.allCottages.filter((val) => Number(val.pricePerDay) === Number(value));

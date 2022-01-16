@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {ReservationService} from '../../../service/reservation.service';
 import {Observable} from 'rxjs';
 import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {PeriodDto} from '../../../model/period-dto.model';
+import {PeriodDTO} from '../../../model/period-dto.model';
 import {colors} from '../../../utils/colors';
 
 @Component({
@@ -52,7 +52,7 @@ export class CottageReservationsTableComponent implements OnInit {
   findReservationsInDateRange(form: FormGroup): void {
     const maxDate = new Date(8640000000000000);
     const minDate = new Date(-8640000000000000);
-    let timePeriod = new PeriodDto();
+    let timePeriod = new PeriodDTO();
     // timePeriod = this.reservationsDateRangeForm.getRawValue();
     timePeriod.startDate = form.value.startDate;
     timePeriod.endDate = form.value.endDate;
