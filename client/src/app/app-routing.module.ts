@@ -48,6 +48,7 @@ import {CottageReservationsTableComponent} from './cottage/cottage-reservations/
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
+import { ComplaintsComponent } from './complaints/complaints.component';
 
 
 
@@ -224,6 +225,11 @@ const routes: Routes = [
   {
     path: 'userComplaint',
     component: UserComplaintComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'complaints',
+    component: ComplaintsComponent,
     canActivate: [GuestGuard]
   },
   {

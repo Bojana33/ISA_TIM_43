@@ -47,6 +47,7 @@ public class UserComplaintServiceImpl implements UserComplaintService {
 
     @Override
     public UserComplaint save(UserComplaint userComplaint) {
+        userComplaint.setProcessed(Boolean.FALSE);
         return this.userComplaintRepository.save(userComplaint);
     }
 
@@ -57,6 +58,7 @@ public class UserComplaintServiceImpl implements UserComplaintService {
             throw new Exception("User complaint with this id doesn't exists");
         }
         userComplaintToUpdate.setResponse(userComplaint.getResponse());
+        userComplaintToUpdate.setProcessed(userComplaint.getProcessed());
         return this.userComplaintRepository.save(userComplaintToUpdate);
     }
 
@@ -68,10 +70,11 @@ public class UserComplaintServiceImpl implements UserComplaintService {
     @Override
     public void sendResponse(UserComplaint userComplaint) {
         try {
-            Client client = userComplaint.getReservation().getClient();
-            Entity entity = userComplaint.getReservation().getEntity();
+            Client client = (Client) this.userService.findById(userComplaint.getReservation().getClient().getId());
+            Entity entity = this.entityService.findById(userComplaint.getReservation().getEntity().getId());
             Owner owner = this.ownerService.findByEntity(entity);
 
+            userComplaint.setProcessed(Boolean.TRUE);
             userComplaint = update(userComplaint);
 
             String subject = "User complaint";

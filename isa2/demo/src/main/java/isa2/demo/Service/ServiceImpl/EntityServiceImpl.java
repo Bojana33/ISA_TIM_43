@@ -148,4 +148,9 @@ public class EntityServiceImpl implements EntityService {
         }
         return avgGrade;
     }
+
+    @Override
+    public Entity findById(Integer id) {
+        return this.entityRepository.findById(id).orElse(null);
+    }
 }

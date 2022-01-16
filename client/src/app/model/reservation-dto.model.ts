@@ -1,3 +1,4 @@
+import { UserComplaint } from './user-complaint';
 import {PeriodDto} from './period-dto.model';
 import {AdditionalServicesDTO} from './AdditionalServicesModel/additional-services-dto.model';
 import {ReservationStatus} from '../enum/ReservationStatus';
@@ -14,7 +15,8 @@ export class ReservationDTO {
     public salePeriod: PeriodDto,
     public additionalServices: AdditionalServicesDTO[],
     public entityId: number,
-    public clientId: number
+    public clientId: number,
+    public userComplaintDTO: UserComplaint
 ) {
   }
 }

@@ -6,10 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserComplaintDTO {
-    Integer id;
-    String description;
-    String response;
-    Boolean processed;
+    private Integer id;
+    private String description;
+    private String response;
+    private Boolean processed;
     //Integer reservationId;
-    ReservationDTO reservationDTO;
+    private ReservationDTO reservationDTO;
 }

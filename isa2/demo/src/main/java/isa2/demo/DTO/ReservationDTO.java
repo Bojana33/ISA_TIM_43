@@ -28,4 +28,5 @@ public class ReservationDTO {
     private Collection<AdditionalServiceDTO> additionalServices;
     private Integer entityId;
     private Integer clientId;
+    private UserComplaintDTO userComplaintDTO;
 }

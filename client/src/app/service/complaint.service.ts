@@ -15,4 +15,12 @@ export class ComplaintService {
   getList(){
     return this.apiService.get(this.config.user_complaint_url + '/get_list_of_reservations').subscribe(res=>console.log(res));
   }
+
+  getAllComplaints(){
+    return this.apiService.get(this.config.user_complaint_url + '/get_complaints');
+  }
+
+  sendResponse(body:any){
+    return this.apiService.post(this.config.user_complaint_url + '/send_response',body);
+  }
 }

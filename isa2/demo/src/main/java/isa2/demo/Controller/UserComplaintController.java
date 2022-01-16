@@ -22,6 +22,7 @@ public class UserComplaintController {
 
     public final UserComplaintMapper userComplaintMapper;
 
+
     public UserComplaintController(UserComplaintService userComplaintService, UserComplaintMapper userComplaintMapper){
         this.userComplaintService = userComplaintService;
         this.userComplaintMapper = userComplaintMapper;
@@ -33,14 +34,14 @@ public class UserComplaintController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/save_complaint")
     public UserComplaint createUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO){
         UserComplaint userComplaint = this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO);
         return this.userComplaintService.save(userComplaint);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update_complaint")
     public ResponseEntity<UserComplaintDTO> updateUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO){
         try {

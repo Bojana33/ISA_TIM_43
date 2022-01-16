@@ -19,27 +19,6 @@ export class UpdateAdventureComponent implements OnInit {
   // @ts-ignore
   adventure: FormGroup;
   success!: boolean;
-  
-  // new FormGroup({
-  //     name: new FormControl(''),
-  //     city: new FormControl(''),
-  //     country: new FormControl(''),
-  //     street: new FormControl(''),
-  //     houseNumber: new FormControl(''),
-  //     description: new FormControl(''),
-  //     instructorBio: new FormControl(''),
-  //     //photos: string[],
-  //     maxNumberOfGuests: new FormControl(0),
-  //     houseRules: new FormControl(''),
-  //     //public additionalServices: AdditionalService,
-  //     pricePerDay: new FormControl(0.0),
-  //     cancellationFee: new FormControl(0),
-  //     entityPhoto: new FormControl(''),
-  //     defaultFishingEquipment: new FormControl(''),
-  //     addressId : new FormControl(0),
-  //     id : new FormControl(0),
-  //     adventureOwnerId: new FormControl(0)
-  // })
 
   constructor(
     private router: ActivatedRoute,

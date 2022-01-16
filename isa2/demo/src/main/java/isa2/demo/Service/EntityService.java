@@ -17,4 +17,5 @@ public interface EntityService {
     boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2);
     Entity findByReservations(Reservation reservation);
     Double  findAverageGrade(Integer entity_id);
+    Entity findById(Integer id);
 }
