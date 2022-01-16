@@ -1,0 +1,37 @@
+<div class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 5%">
+<table  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="Sale start date">
+    <th mat-header-cell *matHeaderCellDef>Sale start date</th>
+    <td mat-cell *matCellDef="let element" (click)="reserve(element)"> {{convertDateToString(element.salePeriod.startDate)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Sale end date">
+    <th mat-header-cell *matHeaderCellDef>Sale end date</th>
+    <td mat-cell *matCellDef="let element"> {{convertDateToString(element.salePeriod.endDate)}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Reservation start date">
+    <th mat-header-cell *matHeaderCellDef>Reservation start date</th>
+    <td mat-cell *matCellDef="let element"> {{convertDateToString(element.reservedPeriod.startDate)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Reservation end date">
+    <th mat-header-cell *matHeaderCellDef>Reservation end date</th>
+    <td mat-cell *matCellDef="let element"> {{convertDateToString(element.reservedPeriod.endDate)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Price">
+    <th mat-header-cell *matHeaderCellDef>Price</th>
+    <td mat-cell *matCellDef="let element"> {{ element.price }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Discount">
+    <th mat-header-cell *matHeaderCellDef>Discount</th>
+    <td mat-cell *matCellDef="let element"> dodaj </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+</div>

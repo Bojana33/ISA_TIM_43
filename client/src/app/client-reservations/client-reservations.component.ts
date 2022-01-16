@@ -18,6 +18,7 @@ import { BoatService } from '../service/boat.service';
 import {AdventureService} from "../service/adventure.service";
 
 export interface DialogData {
+  id: any;
   entityId: any;
   numberOfGuests: any;
   reservationStartDate: any;

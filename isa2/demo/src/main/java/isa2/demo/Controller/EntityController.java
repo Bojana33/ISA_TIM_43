@@ -112,4 +112,16 @@ public class EntityController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @RequestMapping(value = "/fastReservation", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReservationDTO> fastReserve(@RequestBody ReservationDTO request){
+        try{
+            Reservation reservation = reservationService.fastReservation(request);
+            return new ResponseEntity<>(modelMapper.modelMapper().map(reservation, ReservationDTO.class), HttpStatus.OK);
+        }
+        catch(InvalidReservationException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

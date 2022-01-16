@@ -39,6 +39,9 @@ public class Reservation implements Serializable {
    @Column
    private Double price;
 
+   @Column
+   private Double discount;
+
    @Column(name = "number_of_guests")
    private Integer numberOfGuests;
 
@@ -48,9 +51,13 @@ public class Reservation implements Serializable {
    @Column(name = "additional_notes")
    private String additionalNotes;
    
-   @OneToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToOne(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
+
+   public Period getReservedPeriod() {
+      return reservedPeriod;
+   }
 
    @OneToOne(fetch =FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "sale_period_id", referencedColumnName = "id")

@@ -23,4 +23,7 @@ export class EntityService {
   reserve(request: ReservationDTO){
     return this.apiService.post(this.config.entity_url + '/reserve', JSON.parse(JSON.stringify(request)));
   }
+  fastReservation(request: ReservationDTO){
+    return this.apiService.post(this.config.entity_url + '/fastReservation', JSON.parse(JSON.stringify(request)));
+  }
 }
