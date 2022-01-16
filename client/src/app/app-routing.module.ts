@@ -52,6 +52,7 @@ import {CottageownerGuard} from './guard/cottageowner.guard';
 
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
+import {FastReservationComponent} from "./fast-reservation/fast-reservation.component";
 
 
 const routes: Routes = [
@@ -101,6 +102,10 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'fastReservation',
+    component: FastReservationComponent
   },
   {
     path: 'profile/profileUpdate',

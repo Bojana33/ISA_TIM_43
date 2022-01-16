@@ -21,12 +21,13 @@ export class ReservationService {
   createNewReservationForEntity(reservation: ReservationDTO): any{
     return this.api.post(this.config.entity_url + '/reservations', reservation);
   }
-
-
   getOwnerReservations(ownerId:number) {
     return this.api.get(this.config.reservation_url + '/get_owner_reservations/' + ownerId);
   }
   getReservationsInDateRange(periodDTO: PeriodDTO): any{
     return this.api.get(this.config.entity_url + '/reservations/' + periodDTO.id, periodDTO);
+  }
+  getFutureReservationsOnSale() {
+    return this.api.get(this.config.reservation_url + '/getAllFutureReservationsOnSale');
   }
 }
