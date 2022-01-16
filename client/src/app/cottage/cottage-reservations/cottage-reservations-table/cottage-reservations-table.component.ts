@@ -19,6 +19,7 @@ export class CottageReservationsTableComponent implements OnInit {
   reservationsDateRangeForm!: FormGroup;
   reservations: ReservationDTO[] = [];
   allReservations: ReservationDTO[] = [];
+  pricesList: any;
   filterStatus = 0;
   cottageId = -1;
   constructor(private config: ConfigService,
@@ -43,11 +44,13 @@ export class CottageReservationsTableComponent implements OnInit {
     this.reservationService.getReservationsForEntity(this.cottageId).subscribe((params: ReservationDTO[]) => {
       this.reservations = params;
       this.allReservations = this.reservations;
+      this.updatePrices();
     });
   }
 
   filterReservationsByStatus(status: string): void{
     this.reservations = this.allReservations.filter((val) => val.reservationStatus.toString() === status);
+    this.updatePrices();
   }
   findReservationsInDateRange(form: FormGroup): void {
     const maxDate = new Date(8640000000000000);
@@ -65,10 +68,11 @@ export class CottageReservationsTableComponent implements OnInit {
     }
     this.reservations = this.allReservations.filter((val) => new Date(val.reservedPeriod.startDate) >= timePeriod.startDate &&
       new Date(val.reservedPeriod.endDate) <= timePeriod.endDate);
-    // this.reservations = this.reservationService.getReservationsInDateRange(timePeriod).subscribe(
-    //     (res: ReservationDTO[]) => {
-    //     this.reservations = res;
-    //   }
-    // );
+    this.updatePrices();
+  }
+
+  private updatePrices(): void {
+    this.pricesList = this.reservations.map(a => a.price);
+    this.pricesList = this.pricesList.reduce((a: number, b: number) => a + b, 0);
   }
 }

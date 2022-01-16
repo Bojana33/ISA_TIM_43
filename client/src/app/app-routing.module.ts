@@ -49,6 +49,9 @@ import { SignupAdminComponent } from './signup/signup-admin/signup-admin.compone
 import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
 import {CottageownerGuard} from './guard/cottageowner.guard';
+import {BoatownerGuard} from './guard/boatowner.guard';
+import {RegisterBoatComponent} from './register-boat/register-boat.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 
 
@@ -174,9 +177,18 @@ const routes: Routes = [
     canActivate: [CottageownerGuard]
   },
   {
+    path: 'register-boat',
+    component: RegisterBoatComponent,
+    canActivate: [BoatownerGuard]
+  },
+  {
     path: 'delete-profile',
     component: DeleteProfileComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   },
   {
     path: 'user-delete-requests',

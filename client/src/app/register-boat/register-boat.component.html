@@ -1,0 +1,151 @@
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-half">
+    <form [formGroup]="boatCreationForm" (ngSubmit)="onSubmit()">
+
+      <div class = "field">
+        <label class = "label" for="boatName">
+          Name
+        </label>
+        <div class = "control">
+          <input class = "input" id="boatName" type="text" formControlName="boatName">
+        </div>
+      </div>
+
+      <div class = "field">
+        <label class = "label" for="maxNumberOfGuests">
+          Maximum number of guests
+        </label>
+        <div class = "control">
+          <input class = "input" id="maxNumberOfGuests" type="number" formControlName="maxNumberOfGuests">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Description" formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">houseRules</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="House rules" formControlName="houseRules"></textarea>
+        </div>
+      </div>
+
+      <div class = "field">
+        <label class = "label" for="pricePerDay">
+          Price per day
+        </label>
+        <div class = "control">
+          <input class = "input" id="pricePerDay" type="number" formControlName="pricePerDay">
+        </div>
+      </div>
+      <div class = "field">
+        <label class = "label" for="length">
+          Length
+        </label>
+        <div class = "control">
+          <input class = "input" id="length" type="number" formControlName="length">
+        </div>
+      </div>
+      <div class = "field">
+        <label class = "label" for="enginePower">
+          Engine power
+        </label>
+        <div class = "control">
+          <input class = "input" id="enginePower" type="number" formControlName="enginePower">
+        </div>
+      </div>
+      <div class = "field">
+        <label class = "label" for="engineNumber">
+          Engine number
+        </label>
+        <div class = "control">
+          <input class = "input" id="engineNumber" type="text" formControlName="engineNumber">
+        </div>
+      </div>
+      <div class = "field">
+        <label class = "label" for="maxSpeed">
+          Maximum speed
+        </label>
+        <div class = "control">
+          <input class = "input" id="maxSpeed" type="number" formControlName="maxSpeed">
+        </div>
+      </div>
+      <div class = "field">
+        <label class = "label" for="capacity">
+          Capacity
+        </label>
+        <div class = "control">
+          <input class = "input" id="capacity" type="number" formControlName="capacity">
+        </div>
+      </div>
+      <div formGroupName="address">
+        <div class = "field">
+          <label class = "label" for="country">
+            Country
+          </label>
+          <div class = "control">
+            <input class = "input" id="country" type="text" formControlName="country">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="city">
+            City
+          </label>
+          <div class = "control">
+            <input class = "input" id="city" type="text" formControlName="city">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="street">
+            Street
+          </label>
+          <div class = "control">
+            <input class = "input" id="street" type="text" formControlName="street">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="houseNumber">
+            House number
+          </label>
+          <div class = "control">
+            <input class = "input" id="houseNumber" type="text" formControlName="houseNumber">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="fishingEquipment">
+            Fishing equipment
+          </label>
+          <div class = "control">
+            <input class = "input" id="fishingEquipment" type="text" formControlName="fishingEquipment">
+          </div>
+        </div>
+        <div class = "field">
+          <label class = "label" for="cancellationFee">
+            Cancellation fee
+          </label>
+          <div class = "control">
+            <input class = "input" id="cancellationFee" type="number" formControlName="cancellationFee">
+          </div>
+        </div>
+        <div class="select is-rounded">
+          <select formControlName="boatType">
+            <option value=0 >Yacht</option>
+            <option value=1 >Fishing boat</option>
+          </select>
+        </div>
+        <input type="file" (change)="onFileChanged($event)">
+      </div>
+
+      <button type="submit"
+              class="button is-large is-warning"
+              [disabled]="boatCreationForm.invalid">
+        Send
+      </button>
+    </form>
+  </div>
+</div>

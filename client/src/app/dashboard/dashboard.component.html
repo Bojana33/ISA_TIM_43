@@ -1,0 +1,162 @@
+<div class="container">
+  <div class="columns">
+    <div class="column is-2 ">
+      <aside class="menu is-hidden-mobile">
+        <p class="menu-label">
+          General
+        </p>
+        <ul class="menu-list">
+          <li><a class="is-active">Dashboard</a></li>
+          <li><a>Customers</a></li>
+          <li><a>Other</a></li>
+        </ul>
+        <p class="menu-label">
+          Administration
+        </p>
+        <ul class="menu-list">
+          <li><a>Team Settings</a></li>
+          <li>
+            <a>Manage Your Team</a>
+            <ul>
+              <li><a>Members</a></li>
+              <li><a>Plugins</a></li>
+              <li><a>Add a member</a></li>
+              <li><a>Remove a member</a></li>
+            </ul>
+          </li>
+        </ul>
+      </aside>
+    </div>
+    <div class="column is-10">
+      <section class="hero is-info welcome is-small">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              Hello, {{this.user.firstName}}.
+            </h1>
+            <h2 class="subtitle">
+              I hope you are having a great day!
+            </h2>
+          </div>
+        </div>
+      </section>
+      <section class="info-tiles">
+        <div class="tile is-ancestor has-text-centered column is-gapless">
+          <div class="tile is-parent column">
+            <article class="tile is-child box">
+              <p class="title">{{this.completedReservations}}</p>
+              <p class="subtitle">Reservations completed</p>
+            </article>
+          </div>
+          <div class="tile is-parent column">
+            <article class="tile is-child box">
+              <p class="title">{{this.activeEntities.size}}</p>
+              <p class="subtitle">Active cottages</p>
+            </article>
+          </div>
+          <div class="tile is-parent column">
+            <article class="tile is-child box">
+              <p class="title">19</p>
+              <p class="subtitle">Exceptions</p>
+            </article>
+          </div>
+          <div class="tile is-parent column">
+            <article class="tile is-child box">
+              <p class="title">{{this.allEarnings}}$</p>
+              <p class="subtitle">Earned</p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <div *ngIf="this.reservations">
+        <table class="table is-striped">
+          <thead>
+          <tr>
+            <th><abbr title="Id">Id</abbr></th>
+            <th><abbr title="Price">Price</abbr></th>
+            <th><abbr title="Number of guests"># of guests</abbr></th>
+            <th><abbr title="Reservation status">Status</abbr></th>
+            <th><abbr title="Reservation start">Start</abbr></th>
+            <th><abbr title="Reservation end">End</abbr></th>
+            <th><abbr title="Sale start">Sale start</abbr></th>
+            <th><abbr title="Sale end">Sale end</abbr></th>
+            <th><abbr title="Client id">Client id</abbr></th>
+            <th><abbr title="Additional services"> Service : Price</abbr></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let res of reservations">
+            <th>{{res.id}}</th>
+            <td>{{res.price}}</td>
+            <td>{{res.numberOfGuests}}</td>
+            <td>{{res.reservationStatus.toString()}}</td>
+            <td>{{res.reservedPeriod.startDate}}</td>
+            <td>{{res.reservedPeriod.endDate}}</td>
+            <td>{{res.salePeriod.startDate}}</td>
+            <td>{{res.salePeriod.endDate}}</td>
+            <td>{{res.clientId}}</td>
+            <td>
+              <li *ngFor="let addService of res.additionalServices">
+                {{addService['name']}} : {{addService['price']}}
+              </li>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <p class="subtitle is-5">
+              <strong>{{reservations.length}}</strong> reservations
+            </p>
+          </div>
+          <div class="level-item">
+            <form [formGroup]= "reservationsDateRangeForm">
+              <div class=" field has-addons">
+                <div class = "control">
+                  <input class = "input" id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                         placeholder="From" formControlName="startDate">
+                  <owl-date-time #dt1></owl-date-time>
+                </div>
+                <div class = "control">
+                  <input class = "input" id="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                         placeholder="To" formControlName="endDate">
+                  <owl-date-time #dt2 ></owl-date-time>
+                </div>
+                <div class = "control">
+                  <button class="button is-success is-right" (click) = "findReservationsInDateRange(reservationsDateRangeForm)">Search</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right side -->
+        <div class="level-right">
+          <p class="subtitle is-5 level-item">
+            <strong>{{pricesList}}$</strong> earned
+          </p>
+          <div class="dropdown is-hoverable level-item">
+            <div class="dropdown-trigger">
+              <button class="button is-link is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
+                <span class="icon is-small">
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div class="dropdown-content">
+                  <span class="dropdown-item is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 1 }" (click)="filterReservationsByStatus('FREE'); filterStatus = 1">Free</span>
+                  <span class="dropdown-item is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 2 }" (click)="filterReservationsByStatus('RESERVED'); filterStatus = 2">Reserved</span>
+                  <span class="dropdown-item is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 3 }" (click)="filterReservationsByStatus('COMPLETED'); filterStatus = 3">Completed</span>
+                  <span class="dropdown-item is-size-5" [ngClass]="{'tag is-danger is-light': filterStatus == 4 }" (click)="filterReservationsByStatus('CANCELED'); filterStatus = 4">Canceled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+<script async type="text/javascript" src="../js/bulma.js"></script>

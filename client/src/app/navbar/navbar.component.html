@@ -52,6 +52,7 @@
       </div>
     </div>
     <a mat-button routerLink="register-cottage" *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">Register cottage</a>
+    <a mat-button routerLink="register-boat" *ngIf="hasSignedIn() && hasRole('BOATOWNER')">Register boat</a>
     <a mat-button routerLink="users" *ngIf="hasSignedIn() && hasRole('ADMIN')">Users</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signupAdmin" *ngIf="hasSignedIn() && hasRole('ADMIN')">Register Admin</a>

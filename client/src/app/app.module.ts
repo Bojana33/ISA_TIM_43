@@ -88,6 +88,8 @@ import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-hea
 import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 import { BoatComponent } from './boat/boat.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterBoatComponent } from './register-boat/register-boat.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const mapConfig: YaConfig = {
@@ -148,7 +150,9 @@ const mapConfig: YaConfig = {
     SignupAdminComponent,
     CalendarHeaderComponent,
     OwnerReservationsComponent,
-    BoatComponent
+    BoatComponent,
+    RegisterBoatComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
