@@ -54,7 +54,9 @@ public class UserComplaintServiceImpl implements UserComplaintService {
     public UserComplaint save(UserComplaint userComplaint, String username) throws Exception{
         User existingUser = userService.findByUsername(username);
         if (userComplaint.getReservation().getClient().getId() != existingUser.getId())
-            throw new Exception("This client is not allowed to give a cooment, rate or complaint for this entity");
+            throw new Exception("This client is not allowed to give a comment, rate or complaint for this entity");
+        if (userComplaintRepository.existsUserComplaintByReservation(userComplaint.getReservation()))
+            throw new Exception("Complaint for this reservation is already sent");
         userComplaint.setProcessed(false);
         return this.userComplaintRepository.save(userComplaint);
     }

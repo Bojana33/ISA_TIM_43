@@ -97,6 +97,7 @@ import { FastReservationDialogComponent } from './fast-reservation/fast-reservat
 import { UserReservationsComponent } from './user-reservations/user-reservations.component';
 import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
+import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -166,6 +167,7 @@ const mapConfig: YaConfig = {
     ClientsReviewsComponent,
     UserReservationsComponent,
     FeedbackDialogComponent,
+    ReviewDialogComponent,
   ],
   imports: [
     BrowserModule,

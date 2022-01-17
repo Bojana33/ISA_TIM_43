@@ -34,11 +34,11 @@ export class ClientsReviewsComponent implements OnInit {
 
   approvePublication(body:any){
     body.status = ClientsReviewStatus.PUBLIC;
-    return this.clientsReviewService.update(body).subscribe(res=>{console.log(res); this.success=true; this.openSnackBar()}, error => {this.success=false; this.openSnackBar();});
+    return this.clientsReviewService.sendResponse(body).subscribe(res=>{console.log(res); this.success=true; this.openSnackBar();}, error => {this.success=false; this.openSnackBar();});
   }
   denyPublication(body:any){
     body.status = ClientsReviewStatus.NONPUBLIC;
-    return this.clientsReviewService.update(body).subscribe(res=>{console.log(res); this.success=true; this.openSnackBar()}, error => {this.success=false; this.openSnackBar();});
+    return this.clientsReviewService.sendResponse(body).subscribe(res=>{console.log(res); this.success=true; this.openSnackBar();}, error => {this.success=false; this.openSnackBar();});
   }
 
   openSnackBar(){

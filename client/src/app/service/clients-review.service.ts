@@ -19,4 +19,12 @@ export class ClientsReviewService {
   getAllReviews(){
     return this.apiService.get(this.config.clients_review_url + '/get_reviews');
   }
+
+  createReview(body: any) {
+    return this.apiService.post(this.config.clients_review_url + '/save_review', body);
+  }
+
+  sendResponse(body:any){
+    return this.apiService.post(this.config.user_complaint_url + '/send_response', body);
+  }
 }

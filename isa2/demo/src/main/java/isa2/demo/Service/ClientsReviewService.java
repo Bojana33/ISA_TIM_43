@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ClientsReviewService {
 
-    ClientsReview save(ClientsReview clientsReview);
+    ClientsReview save(ClientsReview clientsReview) throws Exception;
 
     ClientsReview update(ClientsReview clientsReview) throws Exception;
 
     List<ClientsReview> findAllUnprocessedReviews();
 
-    //void sendResponse(ClientsReview clientsReview);
+    void sendResponse(ClientsReview clientsReview);
 }

@@ -2,6 +2,7 @@ package isa2.demo.Controller;
 
 import isa2.demo.DTO.ClientsReviewDTO;
 import isa2.demo.DTO.Mappers.ClientsReviewMapper;
+import isa2.demo.DTO.UserComplaintDTO;
 import isa2.demo.Model.ClientsReview;
 import isa2.demo.Service.ClientsReviewService;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,16 @@ public class ClientsReviewController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    //@PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(value = "/save_review")
-    public ClientsReview createClientReview(@RequestBody ClientsReviewDTO clientsReviewDTO){
+    public ResponseEntity<? extends Object> createClientReview(@RequestBody ClientsReviewDTO clientsReviewDTO){
         ClientsReview clientsReview = this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO);
-        return this.clientsReviewService.save(clientsReview);
+        try{
+            ClientsReview review = this.clientsReviewService.save(clientsReview);
+            return new ResponseEntity<ClientsReviewDTO>(this.clientsReviewMapper.mapUserComplaintToDto(review), HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(new Exception("Forbidden"), HttpStatus.FORBIDDEN);
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
@@ -56,5 +62,10 @@ public class ClientsReviewController {
             clientsReviewDTOS.add(this.clientsReviewMapper.mapUserComplaintToDto(clientsReview));
         }
         return new ResponseEntity<>(clientsReviewDTOS,HttpStatus.OK);
+    }
+
+    @PostMapping("/send_response")
+    public void sendResponse(@RequestBody ClientsReviewDTO clientsReviewDTO){
+        this.clientsReviewService.sendResponse(this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO));
     }
 }

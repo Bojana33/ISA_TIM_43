@@ -8,12 +8,11 @@ import { EntityService } from '../service/entity.service';
 import {MatDialog} from "@angular/material/dialog";
 import {FastReservationDialogComponent} from "../fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component";
 import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
+import {ReviewDialogComponent} from "./review-dialog/review-dialog.component";
 
 export interface FeedbackDialog {
-  //id: any;
-  //entityId: any;
-  //reservationStartDate: any;
-  //reservationEndDate: any;
+  grade: any;
+  description: any;
   complain: any;
   reservationDTO: ReservationDTO;
 }
@@ -25,7 +24,7 @@ export interface FeedbackDialog {
 })
 export class UserReservationsComponent implements OnInit {
 
-  displayedColumns: string[] = ['Entity', 'Owner', 'Price','Start date', 'End date'];
+  displayedColumns: string[] = ['Entity', 'Owner', 'Price','Start date', 'End date', 'Complain','Rate'];
   dataSource: Array<ReservationDTO> = [];
   entityName: Array<string> = [];
   owner!: any;
@@ -84,7 +83,18 @@ export class UserReservationsComponent implements OnInit {
   openReservationDialog(row: any): void {
     const dialogRef = this.dialog.open(FeedbackDialogComponent, {
       width: '250px',
-      data: {reservationDTO: row, complain: ''},
+      data: {reservationDTO: row, complain: '', grade: undefined, description: undefined},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  giveReview(row:any) {
+    const dialogRef = this.dialog.open(ReviewDialogComponent, {
+      width: '250px',
+      data: {reservationDTO: row, complain: '', grade: undefined, description: undefined},
     });
 
     dialogRef.afterClosed().subscribe(result => {
