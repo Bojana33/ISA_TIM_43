@@ -27,7 +27,6 @@ export class FeedbackDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-
   ngOnInit(): void {
   }
 
@@ -41,9 +40,9 @@ export class FeedbackDialogComponent implements OnInit {
     console.log(this.userComplaint);
     this.complaintService.createComplaint(this.userComplaint).subscribe(res => {
       console.log(res);
+      this.snackBar.open('Complaint successfully sent', 'cancel');
     });
     this.dialogRef.close();
-    this.snackBar.open('Complaint successfully sent', 'cancel');
   }
 
   convertDateToString(date: Date) : any{

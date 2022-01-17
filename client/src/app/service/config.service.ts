@@ -19,8 +19,13 @@ export class ConfigService {
   private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
   private _reservation_url = 'http://localhost:8090/reservations';
   private _owner_url = 'http://localhost:8090/owner';
+  private _clients_review_url = 'http://localhost:8090/clients_review';
 
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get clients_review_url(): string{
+    return this._clients_review_url;
+  }
 
   get user_complaint_url(): string{
     return this._user_complaint_url;

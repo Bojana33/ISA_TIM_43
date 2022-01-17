@@ -96,6 +96,8 @@ import { FastReservationComponent } from './fast-reservation/fast-reservation.co
 import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
 import { UserReservationsComponent } from './user-reservations/user-reservations.component';
 import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
+import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
+import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -162,8 +164,10 @@ const mapConfig: YaConfig = {
     ReservationDialogComponent,
     FastReservationComponent,
     FastReservationDialogComponent,
+    ClientsReviewsComponent,
     UserReservationsComponent,
     FeedbackDialogComponent,
+    ReviewDialogComponent,
   ],
   imports: [
     BrowserModule,

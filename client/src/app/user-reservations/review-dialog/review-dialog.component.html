@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Reservation review</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Grade</mat-label>
+    <input matInput [(ngModel)]="data.grade" required type="number" min="0">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="data.description" required>
+  </mat-form-field>
+  <p>Information about your reservation</p>
+  <p>
+    Start date: {{convertDateToString(data.reservationDTO.reservedPeriod.startDate)}}
+  </p>
+  <p>
+    End date: {{convertDateToString(data.reservationDTO.reservedPeriod.endDate)}}
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial type="submit" (click)="sendReview()">Send</button>
+</div>

@@ -12,6 +12,7 @@
   <!--!-->
     <a mat-button routerLink="userComplaint" *ngIf="hasRole('USER')">Complaint</a>
     <a mat-button routerLink="complaints" *ngIf="hasRole('ADMIN')">Complaints</a>
+    <a mat-button routerLink="clients-reviews" *ngIf="hasRole('ADMIN')">Client reviews</a>
     <a mat-button routerLink="userReservations" *ngIf="hasRole('USER')">Reservations</a>
 
     <div class="dropdown is-hoverable" *ngIf="hasSignedIn() && hasRole('ADMIN')">

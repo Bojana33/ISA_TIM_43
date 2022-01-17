@@ -55,6 +55,7 @@ import {ReservationFormComponent} from './reservation-form/reservation-form.comp
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 import {FastReservationComponent} from "./fast-reservation/fast-reservation.component";
 import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
+import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 
 
 const routes: Routes = [
@@ -262,6 +263,11 @@ const routes: Routes = [
   {
     path: 'owner-reservations/:id',
     component: OwnerReservationsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'clients-reviews',
+    component: ClientsReviewsComponent,
     canActivate: [GuestGuard]
   },
   {

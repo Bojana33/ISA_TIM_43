@@ -71,8 +71,7 @@ public class Reservation implements Serializable {
    @JoinColumn(name = "owners_review_id", referencedColumnName = "id")
    private OwnersReview ownersReview;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "client_review_id", referencedColumnName = "client_review_id")
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private ClientsReview clientsReview;
 
 
