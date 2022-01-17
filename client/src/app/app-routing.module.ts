@@ -48,11 +48,13 @@ import {CottageReservationsTableComponent} from './cottage/cottage-reservations/
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
+import { ComplaintsComponent } from './complaints/complaints.component';
 import {CottageownerGuard} from './guard/cottageowner.guard';
 
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 import {FastReservationComponent} from "./fast-reservation/fast-reservation.component";
+import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
 
 
 const routes: Routes = [
@@ -91,6 +93,10 @@ const routes: Routes = [
     path: 'signupAdmin',
     component: SignupAdminComponent,
     canActivate: [AdminGuard,GuestGuard]
+  },
+  {
+    path: 'userReservations',
+    component: UserReservationsComponent
   },
   {
     path: 'profile/:id',
@@ -241,6 +247,11 @@ const routes: Routes = [
   {
     path: 'userComplaint',
     component: UserComplaintComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'complaints',
+    component: ComplaintsComponent,
     canActivate: [GuestGuard]
   },
   {

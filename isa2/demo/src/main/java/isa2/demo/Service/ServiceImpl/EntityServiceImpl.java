@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -134,6 +135,12 @@ public class EntityServiceImpl implements EntityService {
         return (!startDate2.isAfter(endDate1) && !endDate2.isBefore(startDate1));
     }
 
+    @Override
+    public Entity findByReservations(Reservation reservation) {
+        return this.entityRepository.findByReservations(reservation);
+    }
+
+
     private void sendEmailsToSubscribers(Entity entity,
                                          LocalDateTime offerStartDate,
                                          LocalDateTime offerEndDate,
@@ -169,6 +176,11 @@ public class EntityServiceImpl implements EntityService {
             }
         }
         return avgGrade;
+    }
+
+    @Override
+    public Entity findById(Integer id) {
+        return this.entityRepository.findById(id).orElse(null);
     }
 
     @Override

@@ -86,6 +86,7 @@ import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-hea
 import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
 import { BoatComponent } from './boat/boat.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComplaintsComponent } from './complaints/complaints.component';
 import { ClientReservationsComponent } from './client-reservations/client-reservations.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -93,6 +94,8 @@ import { EntityService } from './service/entity.service';
 import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
 import { FastReservationComponent } from './fast-reservation/fast-reservation.component';
 import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
+import { UserReservationsComponent } from './user-reservations/user-reservations.component';
+import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -154,10 +157,13 @@ const mapConfig: YaConfig = {
     CalendarHeaderComponent,
     OwnerReservationsComponent,
     BoatComponent,
+    ComplaintsComponent,
     ClientReservationsComponent,
     ReservationDialogComponent,
     FastReservationComponent,
     FastReservationDialogComponent,
+    UserReservationsComponent,
+    FeedbackDialogComponent,
   ],
   imports: [
     BrowserModule,
