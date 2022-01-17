@@ -64,7 +64,7 @@ public class Reservation implements Serializable {
    private Period salePeriod;
 
    @JsonManagedReference
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
    private Collection<AdditionalService> additionalServices;
 
    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
