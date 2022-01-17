@@ -54,7 +54,7 @@ export class RegisterBoatComponent implements OnInit {
   }
   private initializeForm(): void {
     this.boatCreationForm = this.formBuilder.group({
-      boatName: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
       description: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(511)]),
       pricePerDay: new FormControl('', [Validators.required, Validators.min(0)]),
       maxNumberOfGuests: new FormControl('', [Validators.required, Validators.min(0), Validators.max(300)]),
@@ -74,12 +74,11 @@ export class RegisterBoatComponent implements OnInit {
         Validators.min(0),
         Validators.max(300)]
       ),
-      boatType: new FormControl(this.boat.type
-      ),
+      type: new FormControl(this.boat.type),
       enginePower: new FormControl(this.boat.enginePower, [
         Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(31)]
+        Validators.min(5),
+        Validators.max(1000)]
       ),
       engineNumber: new FormControl(this.boat.engineNumber, [
         Validators.required,
@@ -96,15 +95,14 @@ export class RegisterBoatComponent implements OnInit {
         Validators.min(0),
         Validators.max(100)]
       ),
-      fishingEquipment: new FormControl(this.boat.fishingEquipment, [
-        Validators.required,
-        Validators.min(0),
-        Validators.max(300)]
+      fishingEquipment: new FormControl('', [
+        Validators.minLength(0),
+        Validators.maxLength(300)]
       ),
       houseRules: new FormControl(this.boat.houseRules, [
         Validators.required,
-        Validators.min(0),
-        Validators.max(300)]
+        Validators.minLength(0),
+        Validators.maxLength(300)]
       )
     });
   }

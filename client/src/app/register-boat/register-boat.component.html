@@ -8,7 +8,7 @@
           Name
         </label>
         <div class = "control">
-          <input class = "input" id="boatName" type="text" formControlName="boatName">
+          <input class = "input" id="boatName" type="text" formControlName="name">
         </div>
       </div>
 
@@ -133,7 +133,7 @@
           </div>
         </div>
         <div class="select is-rounded">
-          <select formControlName="boatType">
+          <select formControlName="type">
             <option value=0 >Yacht</option>
             <option value=1 >Fishing boat</option>
           </select>
@@ -146,6 +146,7 @@
               [disabled]="boatCreationForm.invalid">
         Send
       </button>
+
     </form>
   </div>
 </div>
