@@ -10,5 +10,5 @@ public interface ClientService {
     Client findByUsername(String email) throws UsernameNotFoundException;
     Client findById(Integer id);
     Collection<Reservation> findAllReservations(String email);
-    boolean subscribeToEntity(Integer client_id,Integer entity_id);
+    boolean subscribeToEntity(String username, Integer entity_id);
 }

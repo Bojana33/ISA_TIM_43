@@ -14,9 +14,11 @@ import isa2.demo.Service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -72,9 +74,10 @@ public class EntityController {
         return ResponseEntity.ok().body(reservationDTOS);
 
     }
+    @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("/{entity_id}")
-    public String subscribe(@PathVariable("entity_id") Integer entity_id, @RequestParam("user_id") Integer user_id){
-        if(clientService.subscribeToEntity(user_id, entity_id))
+    public String subscribe(@PathVariable("entity_id") Integer entity_id, Principal user){
+        if(clientService.subscribeToEntity(user.getName(), entity_id))
             return "created";
         else
             return "not created";

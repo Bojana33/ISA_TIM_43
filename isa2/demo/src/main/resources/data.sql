@@ -27,7 +27,8 @@ VALUES (true, false, 'user@userovic.com', false, false, null, '$2a$10$OyHff7x9UR
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
                                                           (1, 2),
-                                                          (2,5);
+                                                          (2,5),
+                                                          (1,4);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
@@ -51,7 +52,7 @@ insert into owner (category, loyalty_points, owner_type, id)
     values (0,0,1,2);
 
 insert into client (category, loyalty_points, penalty, id)
-values (0,0,0,3);
+values (0,0,0,1);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, average_grade, address_id)

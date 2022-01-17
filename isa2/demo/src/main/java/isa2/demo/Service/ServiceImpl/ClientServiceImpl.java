@@ -47,9 +47,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean subscribeToEntity(Integer client_id, Integer entity_id) {
+    public boolean subscribeToEntity(String username, Integer entity_id) {
        Entity entity = entityRepository.getById(entity_id);
-       Client client = clientRepository.getById(client_id);
+       Client client = findByUsername(username);
        if(!client.getSubscriptions().contains(entity)){
            Collection<Entity> entityCollection = client.getSubscriptions();
            entityCollection.add(entity);
