@@ -2,7 +2,7 @@ import { ChangePasswordComponent } from './profile/change-password/change-passwo
 import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatSortModule} from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -193,6 +193,7 @@ const mapConfig: YaConfig = {
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     MatCheckboxModule,
     MatRadioModule,
+    MatSortModule,
     NgbModule
   ],
   exports: [
