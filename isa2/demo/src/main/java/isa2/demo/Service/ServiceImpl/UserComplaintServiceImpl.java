@@ -52,7 +52,6 @@ public class UserComplaintServiceImpl implements UserComplaintService {
 
     @Override
     public UserComplaint save(UserComplaint userComplaint, String username) throws Exception{
-        //TO DO: check if that user has that reservation
         User existingUser = userService.findByUsername(username);
         if (userComplaint.getReservation().getClient().getId() != existingUser.getId())
             throw new Exception("This client is not allowed to give a cooment, rate or complaint for this entity");
