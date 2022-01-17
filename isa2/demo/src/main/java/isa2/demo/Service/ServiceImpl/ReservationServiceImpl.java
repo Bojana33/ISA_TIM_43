@@ -218,4 +218,19 @@ public class ReservationServiceImpl implements ReservationService {
             System.out.println("Message exception");
         }
     }
+
+    @Override
+    public List<Reservation> findAllReservationsForClient(Integer clientId) {
+        Client client  = clientRepository.getById(clientId);
+        List<Reservation> reservations = reservationRepository.findAllByClient(client);
+        List<Entity> entities = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+        Entity entity = this.entityService.findByReservations(reservation);
+//            if (entity instanceof Adventure){
+//                Owner owner = ((Adventure) entity).getOwner();
+//            }
+        entities.add(entity);
+        }
+        return reservations;
+    }
 }

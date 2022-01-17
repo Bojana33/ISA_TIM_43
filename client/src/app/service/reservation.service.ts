@@ -30,4 +30,7 @@ export class ReservationService {
   getFutureReservationsOnSale() {
     return this.api.get(this.config.reservation_url + '/getAllFutureReservationsOnSale');
   }
+  getAllUserReservations(clientId:any){
+    return this.api.get(this.config.reservation_url + '/getAllUserReservations/' + clientId);
+  }
 }

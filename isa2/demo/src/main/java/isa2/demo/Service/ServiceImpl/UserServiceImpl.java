@@ -186,6 +186,7 @@ public class UserServiceImpl implements UserService {
 
             List<Authority> auth;
             auth = authService.findByname("ROLE_USER");
+            //TO DO: add client auth
             user.setAuthorities(auth);
 
             userRepository.save(user);

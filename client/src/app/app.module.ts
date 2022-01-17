@@ -94,6 +94,8 @@ import { EntityService } from './service/entity.service';
 import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
 import { FastReservationComponent } from './fast-reservation/fast-reservation.component';
 import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
+import { UserReservationsComponent } from './user-reservations/user-reservations.component';
+import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -160,6 +162,8 @@ const mapConfig: YaConfig = {
     ReservationDialogComponent,
     FastReservationComponent,
     FastReservationDialogComponent,
+    UserReservationsComponent,
+    FeedbackDialogComponent,
   ],
   imports: [
     BrowserModule,

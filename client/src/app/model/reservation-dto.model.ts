@@ -1,4 +1,3 @@
-import { UserComplaint } from './user-complaint';
 import {PeriodDTO} from './period-dto.model';
 import {AdditionalServicesDTO} from './AdditionalServicesModel/additional-services-dto.model';
 import {ReservationStatus} from '../enum/ReservationStatus';
