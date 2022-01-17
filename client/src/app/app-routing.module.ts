@@ -54,6 +54,7 @@ import {CottageownerGuard} from './guard/cottageowner.guard';
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 import {FastReservationComponent} from "./fast-reservation/fast-reservation.component";
+import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 
 
@@ -93,6 +94,10 @@ const routes: Routes = [
     path: 'signupAdmin',
     component: SignupAdminComponent,
     canActivate: [AdminGuard,GuestGuard]
+  },
+  {
+    path: 'userReservations',
+    component: UserReservationsComponent
   },
   {
     path: 'profile/:id',

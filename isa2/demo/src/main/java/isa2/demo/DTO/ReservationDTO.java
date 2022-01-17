@@ -29,4 +29,5 @@ public class ReservationDTO {
     private Integer entityId;
     private Integer clientId;
     private UserComplaintDTO userComplaintDTO;
+    private Double discount;
 }

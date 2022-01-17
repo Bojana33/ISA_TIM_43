@@ -142,7 +142,7 @@ public class ReservationServiceImpl implements ReservationService {
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
         }
         //check if reservation is in sale period and calculate discount
-        if (LocalDateTime.now().isAfter(reservation.getSalePeriod().getStartDate()) && LocalDateTime.now().isBefore(reservation.getSalePeriod().getEndDate()))
+        if (LocalDateTime.now().isAfter(reservation.getSalePeriod().getStartDate()) && LocalDateTime.now().isBefore(reservation.getSalePeriod().getEndDate()) && reservation.getDiscount() != null)
             price = price - reservation.getDiscount();
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
@@ -178,7 +178,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Collection<Reservation> findAllFutureReservationsOnSale() {
-        Collection<Reservation> reservations = reservationRepository.findAllBySalePeriod_StartDateAfter(LocalDateTime.now());
+        Collection<Reservation> reservations = reservationRepository.findAllBySalePeriod_EndDateAfter(LocalDateTime.now());
         Collection<Reservation> reservationsToReturn = new ArrayList<Reservation>();
         for (Reservation reservation : reservations)
             if (reservation.getReservationStatus() == ReservationStatus.FREE) //&& reservation.getReservedPeriod() == null)
@@ -217,5 +217,20 @@ public class ReservationServiceImpl implements ReservationService {
         } catch (MessagingException me) {
             System.out.println("Message exception");
         }
+    }
+
+    @Override
+    public List<Reservation> findAllReservationsForClient(Integer clientId) {
+        Client client  = clientRepository.getById(clientId);
+        List<Reservation> reservations = reservationRepository.findAllByClient(client);
+        List<Entity> entities = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+        Entity entity = this.entityService.findByReservations(reservation);
+//            if (entity instanceof Adventure){
+//                Owner owner = ((Adventure) entity).getOwner();
+//            }
+        entities.add(entity);
+        }
+        return reservations;
     }
 }

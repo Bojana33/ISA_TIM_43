@@ -1,4 +1,3 @@
-import { UserComplaint } from './user-complaint';
 import {PeriodDTO} from './period-dto.model';
 import {AdditionalServicesDTO} from './AdditionalServicesModel/additional-services-dto.model';
 import {ReservationStatus} from '../enum/ReservationStatus';
@@ -15,6 +14,7 @@ export class ReservationDTO {
   public additionalServices!: AdditionalServicesDTO[];
   public entityId!: number;
   public clientId!: number;
+  public discount: number = 0;
 
   //constructor(
     //public id: number,

@@ -1,5 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.Config.ModelMapperConfig;
+import isa2.demo.DTO.UserComplaintDTO;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.UserComplaintRepository;
 import isa2.demo.Service.OwnerService;
@@ -14,40 +16,46 @@ import java.util.List;
 public class UserComplaintServiceImpl implements UserComplaintService {
 
     public final ReservationServiceImpl reservationService;
-
     public final EntityServiceImpl entityService;
-
     public final UserComplaintRepository userComplaintRepository;
-
     public final UserService userService;
-
     public final OwnerService ownerService;
+    private final ModelMapperConfig modelMapper;
 
-    public UserComplaintServiceImpl(ReservationServiceImpl reservationService, EntityServiceImpl entityService,UserComplaintRepository userComplaintRepository, UserService userService, OwnerService ownerService){
+    public UserComplaintServiceImpl(ReservationServiceImpl reservationService,
+                                    EntityServiceImpl entityService,
+                                    UserComplaintRepository userComplaintRepository,
+                                    UserService userService,
+                                    OwnerService ownerService,
+                                    ModelMapperConfig modelMapperConfig){
         this.entityService = entityService;
         this.reservationService = reservationService;
         this.userComplaintRepository = userComplaintRepository;
         this.userService = userService;
         this.ownerService = ownerService;
+        this.modelMapper = modelMapperConfig;
     }
 
-    @Override
-    public List<Reservation> createClientsList(Client client) {
-        List<Reservation> reservations = this.reservationService.findByClient(client);
-        List<Entity> entities = new ArrayList<>();
-        for (Reservation reservation : reservations) {
-            Entity entity = this.entityService.findByReservations(reservation);
+    //@Override
+    //public List<Reservation> createClientsList(Integer clientId) {
+      //  List<Reservation> reservations = this.reservationService.findByClient(client);
+        //List<Entity> entities = new ArrayList<>();
+        //for (Reservation reservation : reservations) {
+          //  Entity entity = this.entityService.findByReservations(reservation);
 //            if (entity instanceof Adventure){
 //                Owner owner = ((Adventure) entity).getOwner();
 //            }
-            entities.add(entity);
-        }
-        return reservations;
-    }
+            //entities.add(entity);
+        //}
+        //return reservations;
+    //}
 
     @Override
-    public UserComplaint save(UserComplaint userComplaint) {
-        userComplaint.setProcessed(Boolean.FALSE);
+    public UserComplaint save(UserComplaint userComplaint, String username) throws Exception{
+        User existingUser = userService.findByUsername(username);
+        if (userComplaint.getReservation().getClient().getId() != existingUser.getId())
+            throw new Exception("This client is not allowed to give a cooment, rate or complaint for this entity");
+        userComplaint.setProcessed(false);
         return this.userComplaintRepository.save(userComplaint);
     }
 

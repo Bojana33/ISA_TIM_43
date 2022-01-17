@@ -124,4 +124,11 @@ public class EntityController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping(value="/getEntityById/{entityId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EntityDTO> getEntity(@PathVariable Integer entityId){
+        Entity entity = entityService.findById(entityId);
+        return new ResponseEntity<>(modelMapper.modelMapper().map(entity, EntityDTO.class), HttpStatus.OK);
+    }
 }

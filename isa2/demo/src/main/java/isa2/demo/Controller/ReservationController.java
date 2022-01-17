@@ -9,13 +9,11 @@ import isa2.demo.Service.ServiceImpl.ReservationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/reservations", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,4 +48,14 @@ public class ReservationController {
             reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
         return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
     }
+
+    @GetMapping("/getAllUserReservations/{clientId}")
+    public ResponseEntity<Collection<ReservationDTO>> getListOfReservations(@PathVariable Integer clientId){
+        Collection<Reservation> reservations = this.reservationService.findAllReservationsForClient(clientId);
+        Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation : reservations)
+            reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
+        return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
+    }
+
 }

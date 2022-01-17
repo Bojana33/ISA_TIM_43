@@ -21,7 +21,7 @@ export class FastReservationDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<FastReservationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private entityService: EntityService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   onNoClick(): void {

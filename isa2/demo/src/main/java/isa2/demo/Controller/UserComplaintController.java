@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 @RestController
@@ -28,17 +29,23 @@ public class UserComplaintController {
         this.userComplaintMapper = userComplaintMapper;
     }
 
-    @GetMapping("/get_list_of_reservations")
-    public ResponseEntity<List<Reservation>> getListOfReservations(@RequestBody Client client){
-        return new ResponseEntity<>(this.userComplaintService.createClientsList(client), HttpStatus.OK);
-    }
+    //@GetMapping("/get_list_of_reservations")
+    //public ResponseEntity<List<Reservation>> getListOfReservations(@RequestBody Integer clientId){
+      //  return new ResponseEntity<>(this.userComplaintService.createClientsList(clientId), HttpStatus.OK);
+    //}
 
-    @ResponseStatus(HttpStatus.CREATED)
-    //@PreAuthorize("hasRole('USER')")
+    //@ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/save_complaint")
-    public UserComplaint createUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO){
+    public ResponseEntity<? extends Object> createUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO, Principal user){
         UserComplaint userComplaint = this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO);
-        return this.userComplaintService.save(userComplaint);
+        try {
+            UserComplaint userComplaint1 = userComplaintService.save(userComplaint, user.getName());
+            UserComplaintDTO userComplaintDTO1 = this.userComplaintMapper.mapUserComplaintToDto(userComplaint1);
+            return new ResponseEntity<>(userComplaintDTO1, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(new Exception("Forbidden"), HttpStatus.FORBIDDEN);
+        }
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
