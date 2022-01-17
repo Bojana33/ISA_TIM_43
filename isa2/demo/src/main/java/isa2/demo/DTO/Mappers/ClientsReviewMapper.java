@@ -3,12 +3,12 @@ package isa2.demo.DTO.Mappers;
 import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.ClientsReviewDTO;
 import isa2.demo.DTO.ReservationDTO;
-import isa2.demo.DTO.UserComplaintDTO;
 import isa2.demo.Model.ClientsReview;
 import isa2.demo.Model.Reservation;
-import isa2.demo.Model.UserComplaint;
 import isa2.demo.Repository.ReservationRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ClientsReviewMapper {
 
     public final ModelMapperConfig modelMapper;

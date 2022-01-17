@@ -27,7 +27,7 @@ public class ClientsReview implements Serializable {
     private java.lang.Double grade;
 
     @Column
-    private Boolean processed;
+    private ClientsReviewStatus status;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id", referencedColumnName = "id")

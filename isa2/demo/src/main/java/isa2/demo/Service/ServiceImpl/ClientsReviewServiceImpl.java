@@ -1,7 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Model.ClientsReview;
-import isa2.demo.Model.UserComplaint;
+import isa2.demo.Model.ClientsReviewStatus;
 import isa2.demo.Repository.ClientsReviewRepository;
 import isa2.demo.Service.ClientsReviewService;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ClientsReviewServiceImpl implements ClientsReviewService {
 
     @Override
     public ClientsReview save(ClientsReview clientsReview) {
-        clientsReview.setProcessed(Boolean.FALSE);
+        clientsReview.setStatus(ClientsReviewStatus.UNPROCESSED);
         return this.clientsReviewRepository.save(clientsReview);
     }
 
@@ -29,12 +29,12 @@ public class ClientsReviewServiceImpl implements ClientsReviewService {
         if (clientsReviewToUpdate == null){
             throw new Exception("User complaint with this id doesn't exists");
         }
-        clientsReviewToUpdate.setProcessed(clientsReview.getProcessed());
+        clientsReviewToUpdate.setStatus(clientsReview.getStatus());
         return this.clientsReviewRepository.save(clientsReviewToUpdate);
     }
 
     @Override
     public List<ClientsReview> findAllUnprocessedReviews() {
-        return this.clientsReviewRepository.findAllByProcessedIsFalse();
+        return this.clientsReviewRepository.findAllByStatus(ClientsReviewStatus.UNPROCESSED);
     }
 }
