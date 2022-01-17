@@ -14,6 +14,7 @@ export class ReservationDTO {
   public additionalServices!: AdditionalServicesDTO[];
   public entityId!: number;
   public clientId!: number;
+  public discount: number = 0;
 
   //constructor(
     //public id: number,
