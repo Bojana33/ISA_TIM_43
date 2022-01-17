@@ -16,6 +16,9 @@ import {Address} from '../model/address';
 export class ProfileComponent implements OnInit {
 
   userProfile: any;
+  showForm = 1;
+  choosed!: string;
+  choices: string[] = ['Reservations', 'Availability'];
 
   constructor(
     private httpClient: HttpClient,
@@ -26,12 +29,24 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getMyInfo().subscribe((response) =>
+    this.userService.getUser(this.router.snapshot.params.id).subscribe((response)=>
       this.userProfile = response);
   }
 
   openDialog(){
     const dialogConfig = new MatDialogConfig();
     this.dialog.open(DeleteProfileComponent, dialogConfig);
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
+  }
+
+  onItemChange(event:any){
+    this.choosed = event.taget.value;
+  }
+
+  isLoggedIdEqualToProfileId(id:number){
+    return this.userService.currentUser.id == id;
   }
 }

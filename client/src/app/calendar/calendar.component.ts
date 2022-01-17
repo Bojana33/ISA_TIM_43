@@ -29,7 +29,7 @@ import {Moment} from 'moment';
 })
 export class CalendarComponent implements OnInit{
   view: CalendarView = CalendarView.Week;
-  @Input() cottageId: any;
+  @Input() entityId: any;
 
 
   constructor(private configService: ConfigService,
@@ -39,11 +39,11 @@ export class CalendarComponent implements OnInit{
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
   ngOnInit(): void {
-    this.getReservationsForCottage(this.cottageId);
+    this.getReservationsForEntity(this.entityId);
   }
-  getReservationsForCottage(cottageId: number): void{
+  getReservationsForEntity(entityId: number): void{
 
-    this.reservationService.getReservationsForEntity(cottageId).subscribe(
+    this.reservationService.getReservationsForEntity(entityId).subscribe(
       (modelData: ReservationDTO[]) => {
         modelData.forEach((item) => {
           console.log(item.reservedPeriod.startDate);

@@ -55,7 +55,7 @@ public class User implements UserDetails {
    private Boolean activated;
 
    @Column
-   private Boolean firstLogIn;
+   private Boolean firstLogin;
 
    @Column
    private Boolean deleted;

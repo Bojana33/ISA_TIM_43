@@ -24,7 +24,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "reservations")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Reservation implements Serializable {
 
    @Id
@@ -37,7 +37,10 @@ public class Reservation implements Serializable {
    private LocalDateTime creationDate;
 
    @Column
-   private Float price;
+   private Double price;
+
+   @Column
+   private Double discount;
 
    @Column(name = "number_of_guests")
    private Integer numberOfGuests;
@@ -48,28 +51,31 @@ public class Reservation implements Serializable {
    @Column(name = "additional_notes")
    private String additionalNotes;
    
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToOne(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "reserved_period_id", referencedColumnName = "id")
    private Period reservedPeriod;
+
+   public Period getReservedPeriod() {
+      return reservedPeriod;
+   }
 
    @OneToOne(fetch =FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
    @JoinColumn(name = "sale_period_id", referencedColumnName = "id")
    private Period salePeriod;
 
    @JsonManagedReference
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
    private Collection<AdditionalService> additionalServices;
 
    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    @JoinColumn(name = "owners_review_id", referencedColumnName = "id")
    private OwnersReview ownersReview;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "client_review_id", referencedColumnName = "client_review_id")
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private ClientsReview clientsReview;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "user_complaint_id", referencedColumnName = "id")
+
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private UserComplaint userComplaint;
 
    @JsonBackReference
@@ -81,4 +87,8 @@ public class Reservation implements Serializable {
    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
    @JoinColumn(name = "reservation_entity_id", referencedColumnName = "id")
    private isa2.demo.Model.Entity entity;
+
+   public void setReservedPeriod(Period reservedPeriod) {
+      this.reservedPeriod = reservedPeriod;
+   }
 }

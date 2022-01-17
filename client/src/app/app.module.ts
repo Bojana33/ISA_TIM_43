@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,7 +19,6 @@ import { MatSidenavModule} from '@angular/material/sidenav';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { SignupComponent } from './signup/signup.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ApiService } from './service/api.service';
 import { UserService } from './service/user.service';
 import { ConfigService } from './service/config.service';
@@ -75,9 +75,29 @@ import { DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
+
 import { OneAdventureComponent } from './user-quest/adventures-user/one-adventure/one-adventure.component';
 import { OneBoatUserComponent } from './user-quest/boats-user/one-boat-user/one-boat-user.component';
 import { CottageReservationsTableComponent } from './cottage/cottage-reservations/cottage-reservations-table/cottage-reservations-table.component';
+import { InstructorAvailabilityFormComponent } from './instructor-availability-form/instructor-availability-form.component';
+import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
+import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header/calendar-header.component';
+import { OwnerReservationsComponent } from './owner-reservations/owner-reservations.component';
+import { BoatComponent } from './boat/boat.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComplaintsComponent } from './complaints/complaints.component';
+import { ClientReservationsComponent } from './client-reservations/client-reservations.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { EntityService } from './service/entity.service';
+import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
+import { FastReservationComponent } from './fast-reservation/fast-reservation.component';
+import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
+import { UserReservationsComponent } from './user-reservations/user-reservations.component';
+import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
+import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
+import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 
 
 const mapConfig: YaConfig = {
@@ -130,9 +150,24 @@ const mapConfig: YaConfig = {
     OneCottageComponent,
     CalendarComponent,
     ReservationFormComponent,
+    InstructorCalendarComponent,
     OneAdventureComponent,
     OneBoatUserComponent,
     CottageReservationsTableComponent,
+    InstructorAvailabilityFormComponent,
+    SignupAdminComponent,
+    CalendarHeaderComponent,
+    OwnerReservationsComponent,
+    BoatComponent,
+    ComplaintsComponent,
+    ClientReservationsComponent,
+    ReservationDialogComponent,
+    FastReservationComponent,
+    FastReservationDialogComponent,
+    ClientsReviewsComponent,
+    UserReservationsComponent,
+    FeedbackDialogComponent,
+    ReviewDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -165,7 +200,10 @@ const mapConfig: YaConfig = {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     AngularYandexMapsModule.forRoot(mapConfig),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    MatCheckboxModule,
+    MatRadioModule,
+    NgbModule
   ],
   exports: [
     SignupClientComponent
@@ -185,6 +223,7 @@ const mapConfig: YaConfig = {
     ApiService,
     UserService,
     ConfigService,
+    EntityService,
     MatIconRegistry,
     MatNativeDateModule,
     MatDatepickerModule,
@@ -193,4 +232,5 @@ const mapConfig: YaConfig = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

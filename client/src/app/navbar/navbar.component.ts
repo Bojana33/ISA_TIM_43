@@ -10,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  user:any;
+
   constructor(
     private userService : UserService,
     private authService : AuthService,
@@ -17,6 +19,8 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userService.getMyInfo().subscribe((response) =>
+       this.user = response);
   }
 
   logout(){
@@ -32,4 +36,5 @@ export class NavbarComponent implements OnInit {
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }
+
 }

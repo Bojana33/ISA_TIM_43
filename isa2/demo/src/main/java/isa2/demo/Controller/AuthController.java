@@ -29,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.cert.TrustAnchor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,10 +124,32 @@ public class AuthController {
         }
     }
 
+    // Endpoint za registraciju novog korisnika - klijenta
+    @PostMapping("/signupAdmin")
+    public HttpEntity<? extends Object> addAdmin(@RequestBody UserRequestDTO userRequestDTO, UriComponentsBuilder ucBuilder) {
+
+        UserRequest userRequest = userRequestMapper.mapDtoToUserRequest(userRequestDTO);
+        User existUser = this.userService.findByEmail(userRequest.getEmail());
+        RegistrationRequest existRequest = this.registrationRequestService.findByEmail(userRequest.getEmail());
+        if (existUser != null || existRequest != null) {
+            throw new ResourceConflictException(userRequest.getId(), "Email already exists");
+        }
+        try {
+            User user = this.userService.saveAdmin(userRequest);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (MessagingException me) {
+            System.out.println("Message exception");
+            return new ResponseEntity<MessagingException>(new MessagingException(), HttpStatus.FORBIDDEN);
+        }
+        catch (EmailAlreadyInUseException e) {
+            System.out.println("Email already in use");
+            return new ResponseEntity<EmailAlreadyInUseException>(new EmailAlreadyInUseException("Email already in use"), HttpStatus.FORBIDDEN);
+        }
+    }
+
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
     @GetMapping(value = "/refresh")
     public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {
-
         String token = tokenUtils.getToken(request);
         String username = this.tokenUtils.getUsernameFromToken(token);
         User user = (User) this.userDetailsService.loadUserByUsername(username);
@@ -143,8 +166,13 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/change-password", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'BOATOWNER', 'COTTAGEOWNER', 'ADMIN', 'CLIENT', 'INSTRUCTOR')")
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
+        User user = userService.findById(passwordChanger.userId);
+        if(user.getFirstLogin() == Boolean.TRUE){
+            user.setFirstLogin(Boolean.FALSE);
+            userService.save(user);
+        }
         userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
 
         Map<String, String> result = new HashMap<>();
@@ -153,6 +181,7 @@ public class AuthController {
     }
 
     static class PasswordChanger {
+        public Integer userId;
         public String oldPassword;
         public String newPassword;
     }

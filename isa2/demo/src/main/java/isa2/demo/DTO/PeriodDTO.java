@@ -14,11 +14,9 @@ import java.time.LocalDateTime;
 public class PeriodDTO {
     private Integer id;
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Belgrade")
-//    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ssZ")
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime startDate;
 //    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Belgrade")
-//    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ssZ")
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime endDate;
 }

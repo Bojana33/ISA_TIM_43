@@ -48,4 +48,11 @@ public class UserController {
             UserDTO userDTO = userMapper.mapUserToDto(user1);
             return userDTO;
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete_user/{id}")
+    public void deleteUser(@PathVariable Integer id){
+        User user = this.userService.findById(id);
+        this.userService.delete(user);
+    }
 }

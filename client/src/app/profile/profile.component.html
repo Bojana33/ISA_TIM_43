@@ -38,10 +38,64 @@
             Category: {{userProfile.category}}
           </p>
         </mat-card-content>
-          <div> <button style="width:330px;" mat-raised-button type="submit" routerLink="profileUpdate">Update information</button> </div>
-          <div> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()">Delete request</button> </div>
+          <div *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px;" mat-raised-button type="submit" routerLink="profileUpdate">Update information</button> </div>
+          <div  *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()"> Send delete request</button> </div>
+          <div  *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=4">Change Password</button> </div>
+
+          <div class="modal is-active" *ngIf="showForm === 4">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Change Password</p>
+                <button class="delete" (click)="showForm=1" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <app-change-password [showForm]="showForm">
+                </app-change-password>
+              </section>
+            </div>
+          </div>
+
+          <div *ngIf="hasRole('INSTRUCTOR') &&  isLoggedIdEqualToProfileId(userProfile.id)"> 
+            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=2">Set Available Period</button>
+            <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=3">Set Unavailable Period</button>
+            <div class="modal is-active" *ngIf="showForm === 2 || showForm === 3">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Set (un)availability period</p>
+                  <button class="delete" (click)="showForm=1" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <app-instructor-availability-form [showForm]="showForm">
+                  </app-instructor-availability-form>
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <div  *ngIf="(hasRole('INSTRUCTOR') || hasRole('BOATOWNER') || hasRole('COTTAGEOWNER')) && isLoggedIdEqualToProfileId(userProfile.id)"> <button class="button is-link  is-light" style="width:330px; margin-top:5%;" mat-raised-button type="submit" routerLink="/owner-reservations/{{userProfile.id}}">Reservations History</button> </div>
         </form>
       </mat-card>
     </div>
   </div>
+</div>
+<div *ngIf="hasRole('INSTRUCTOR') &&  isLoggedIdEqualToProfileId(userProfile.id)" style="width:auto; margin-left:20%; margin-top:5%; margin-right: 20%">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-title>Calendar</mat-card-title>
+    <section class="example-section">
+      <label class="example-margin">Show:</label>
+      <mat-radio-group [(ngModel)]="choosed">
+        <mat-radio-button  *ngFor="let choice of choices" [value]="choice" (change)="onItemChange($event)">
+          {{choice}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </section>
+  <div *ngIf="choosed == 'Reservations'" class="calendar" >
+    <app-instructor-calendar [instructorId]="userProfile.id" [showType]="'Reservations'"></app-instructor-calendar>
+  </div>
+  <div *ngIf="choosed == 'Availability'" class="calendar" >
+    <app-instructor-calendar [instructorId]="userProfile.id" [showType]="'Availability'"></app-instructor-calendar>
+  </div>
+  </mat-card>
 </div>

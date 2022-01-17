@@ -31,7 +31,8 @@ public class UserComplaint implements Serializable {
    @Column
    private Boolean processed;
 
-   @OneToOne(fetch = FetchType.EAGER, mappedBy = "userComplaint")
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "reservation_id", referencedColumnName = "id")
    private Reservation reservation;
 
 }

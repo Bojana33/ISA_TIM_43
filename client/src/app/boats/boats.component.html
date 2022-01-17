@@ -1,1 +1,62 @@
-<p>boats asdas!</p>
+
+
+
+<form (ngSubmit)="filterBoats(boatName.value)">
+  <div class = "column is-three-fifths is-offset-one-fifth">
+    <div class=" field">
+      <label class="label"></label>
+      <div class="control">
+        <input #boatName class="input" type="text" placeholder="Seach">
+      </div>
+    </div>
+  </div>
+</form>
+<div id="app" *ngFor="let boat of allBoats" class="row column is-multiline ">
+  <div class="column is-three-fifths is-offset-one-fifth">
+    <a routerLink="./{{boat.id}}">
+      <div class="card large">
+        <div class="card-image">
+          <figure class="image is-16by9">
+            <img src="{{boat.entityPhoto}}" alt="Image">
+          </figure></div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img class ="is-rounded" src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="Image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4 no-padding">{{boat.name}}</p>
+              <p><span class="title is-6">
+                  </span>
+              </p>
+              <p class="subtitle is-6">
+                {{boat.address.city}}
+              </p>
+            </div>
+          </div>
+          <div class="content">
+            {{boat.description}}
+          </div>
+          <div class="content">
+
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<script src="../js/cardsData.js"></script>
+
+<!-- Using Vue to populate cards to reduce redundant code -->
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      cardData: cardsData
+    }
+  })
+
+</script>

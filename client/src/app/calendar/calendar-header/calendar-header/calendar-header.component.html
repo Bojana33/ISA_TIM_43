@@ -1,0 +1,57 @@
+<nav class="level">
+    <div class="buttons level-left">
+      <button
+        class="button is-link is-inverted level-item"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+      >
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </button>
+      <button
+        class="button is-link is-inverted level-item"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+      >
+        Today
+      </button>
+      <button
+        class="button is-link is-inverted level-item"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+      >
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </button>
+  </div>
+  <div class="level-item has-text-centered">
+    <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
+  </div>
+  <div class="buttons level-right">
+    <button
+      class="button is-success is-inverted level-item"
+      (click)="viewChange.emit(CalendarView.Month)"
+      [class.active]="view === CalendarView.Month"
+    >
+      Month
+    </button>
+    <button
+      class="button is-success is-inverted level-item"
+      (click)="viewChange.emit(CalendarView.Week)"
+      [class.active]="view === CalendarView.Week"
+    >
+      Week
+    </button>
+    <button
+      class="button is-success is-inverted level-item"
+      (click)="viewChange.emit(CalendarView.Day)"
+      [class.active]="view === CalendarView.Day"
+    >
+      Day
+    </button>
+  </div>
+</nav>
+<br/>

@@ -52,6 +52,7 @@ public class Entity implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "subscriptions")
     private java.util.Collection<Client> subscribedClients;
 
+
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity", orphanRemoval = true)
     public java.util.Collection<Reservation> reservations;

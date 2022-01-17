@@ -12,12 +12,13 @@ import java.util.Set;
 @Setter
 public class BoatDTO {
     private Integer id;
-    //private Integer boatOwnerId;
+    private Integer boatOwnerId;
     private String name;
     private String description;
     private Integer maxNumberOfGuests;
     private Double pricePerDay;
     private AddressDTO address;
+    private Double avgGrade;
     //private Collection<RoomDTO> rooms;
     private Collection<ReservationDTO> reservations;
     private String entityPhoto;

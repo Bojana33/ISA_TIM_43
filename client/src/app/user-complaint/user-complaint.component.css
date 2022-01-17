@@ -25,10 +25,9 @@
 }
 
 .select {
-  margin-top: 3%;
   margin-left: 5%;
   fxFlex: 55%;
-  width: 120px;
+  width: 150px;
   height: 25px;
 }
 

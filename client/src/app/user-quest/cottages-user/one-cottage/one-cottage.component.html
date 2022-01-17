@@ -23,11 +23,26 @@
       Address: {{cottage.address.country}}, {{cottage.address.city}}, {{cottage.address.street}}, {{cottage.address.houseNumber}}
     </p>
     <p>
+      Average grade: {{cottage.averageGrade}}
+    </p>
+    <p>
       Number of beds per room:
     </p>
     <ul *ngFor="let room of cottage.rooms">
       <li>{{room.numberOfBeds}}</li>
     </ul>
+    <p>
+      Additional services:
+    </p>
+    <span class="example-list-section">
+    <ul>
+      <li *ngFor="let serv of cottage.additionalServices">
+        <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
+        {{serv.name}} price: {{serv.price}}
+      </li>
+    </ul>
+  </span>
+    <a mat-stroked-button color="accent" (click)="reserve()" *ngIf="hasRole('USER')" style="margin-top: 5%">Reserve</a>
 
   </mat-card-content>
   </form>

@@ -10,13 +10,43 @@ export class ConfigService {
   private _user_url = 'http://localhost:8090/user';
   private _registration_request_url = 'http://localhost:8090/registration_request';
   private _adventure_url = 'http://localhost:8090/adventures';
+  private _user_complaint_url = 'http://localhost:8090/user_complaint';
   private _cottage_url = 'http://localhost:8090/cottages';
   private _boat_url = 'http://localhost:8090/boats';
   private _client_url = 'http://localhost:8090/client';
   private _cottages_url = 'http://localhost:8090/cottages';
   private _entity_url = 'http://localhost:8090/entities';
   private _user_delete_request_url = 'http://localhost:8090/user_delete_request';
+  private _reservation_url = 'http://localhost:8090/reservations';
+  private _owner_url = 'http://localhost:8090/owner';
+  private _clients_review_url = 'http://localhost:8090/clients_review';
+
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get clients_review_url(): string{
+    return this._clients_review_url;
+  }
+
+  get user_complaint_url(): string{
+    return this._user_complaint_url;
+  }
+  
+  get owner_url() : string {
+    return this._owner_url;
+  }
+
+  get auth_url(): string {
+    return this._auth_url;
+  }
+
+  get user_url(): string{
+    return this._user_url;
+  }
+  
+
+  get reservation_url(): string{
+    return this._reservation_url;
+  }
 
   get user_delete_request_url(): string{
     return this._user_delete_request_url;
@@ -72,7 +102,7 @@ export class ConfigService {
     return this._whoami_url;
   }
 
-  private _users_url = this._user_url + '/all';
+  private _users_url = this._api_url + '/user/all';
 
   get users_url(): string {
     return this._users_url;

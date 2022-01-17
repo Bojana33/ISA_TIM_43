@@ -1,11 +1,14 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.CottageDTO;
+import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
+import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Address;
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
 
+import isa2.demo.Model.Reservation;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.CottageService;
 
@@ -14,9 +17,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cottages", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,11 +38,12 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Cottage addCottage(@RequestBody CottageDTO cottageDTO){
+    public ResponseEntity<CottageDTO> addCottage(@RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
         cottage = cottageService.addNewCottage(cottage);
-        return cottage;
+        cottageDTO = cottageMapper.mapCottageToDto(cottage);
+        return ResponseEntity.status(HttpStatus.OK).body(cottageDTO);
     }
     @DeleteMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> deleteCottage(@PathVariable("cottage_id") Integer id){
@@ -86,11 +91,10 @@ public class CottageController {
     public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
         try{
-            CottageDTO updatedCottageDTO;
             Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
             cottage = cottageService.updateCottage(cottage);
-            updatedCottageDTO = cottageMapper.mapCottageToDto(cottage);
-            responseEntity = ResponseEntity.ok(updatedCottageDTO);
+            cottageDTO = cottageMapper.mapCottageToDto(cottage);
+            responseEntity = ResponseEntity.ok(cottageDTO);
 
         } catch (UnsupportedOperationException e){
             responseEntity = ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
@@ -106,5 +110,26 @@ public class CottageController {
         for (Cottage cottage : cottages)
             cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
         return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/findFree", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<CottageDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
+        try {
+            Collection<Cottage> cottages = this.cottageService.findFreeCottages(request);
+         ///   List<Cottage> cottagesSorted = this.cottageService.sortCottages(cottages, 0, true);
+            Collection<CottageDTO> cottageDTOS = new ArrayList<>();
+            for (Cottage cottage : cottages)
+                cottageDTOS.add(this.cottageMapper.mapCottageToDto(cottage));
+            return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
+        }
+        catch (InvalidInputException e){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @RequestMapping(value = "/sorted/{criterion}/{asc}",  method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CottageDTO>> getSorted(@PathVariable("criterion")String criterion, @PathVariable("asc") Boolean asc,@RequestBody Collection<CottageDTO> cottages){
+        List<CottageDTO> cottagesSorted = this.cottageService.sortCottages(cottages, criterion, asc);
+        return new ResponseEntity<>(cottagesSorted, HttpStatus.OK);
     }
 }
