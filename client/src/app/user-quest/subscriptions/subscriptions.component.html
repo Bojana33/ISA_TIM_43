@@ -1,1 +1,32 @@
-<p>subscriptions works!</p>
+<div class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 5%">
+  <table  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="Entity name">
+      <th mat-header-cell *matHeaderCellDef>Entity name</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let element"> {{element.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Price per day">
+      <th mat-header-cell *matHeaderCellDef>Price per day</th>
+      <td mat-cell *matCellDef="let element"> {{element.pricePerDay}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Max num of guests">
+      <th mat-header-cell *matHeaderCellDef>Maximum number of guests</th>
+      <td mat-cell *matCellDef="let element"> {{element.maxNumberOfGuests}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Unsubscribe">
+      <th mat-header-cell *matHeaderCellDef>Unsubscribe</th>
+      <td><button mat-stroked-button color="accent" *matCellDef="let element" (click)="unsubscribe(element)">Unsubscribe</button></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>

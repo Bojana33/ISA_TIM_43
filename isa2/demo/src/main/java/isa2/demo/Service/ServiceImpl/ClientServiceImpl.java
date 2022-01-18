@@ -59,4 +59,31 @@ public class ClientServiceImpl implements ClientService {
        }
        return false;
     }
+
+    @Override
+    public void unsubscribe(String username, Integer entity_id) throws Exception{
+        Entity entity = entityRepository.getById(entity_id);
+        Client client = findByUsername(username);
+        Collection<Entity> entities = client.getSubscriptions();
+        if(!entities.contains(entity))
+            throw new Exception("Client is not subscribed");
+        entities.remove(entity);
+        client.setSubscriptions(entities);
+        clientRepository.save(client);
+    }
+
+    @Override
+    public boolean isSubscribed(String username, Integer entity_id){
+        Entity entity = entityRepository.getById(entity_id);
+        Client client = findByUsername(username);
+        if(client.getSubscriptions().contains(entity))
+            return true;
+        return false;
+    }
+
+    @Override
+    public Collection<Entity> getAllSubscriptions(String username){
+        Client client = findByUsername(username);
+        return client.getSubscriptions();
+    }
 }
