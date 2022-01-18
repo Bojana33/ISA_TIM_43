@@ -72,6 +72,7 @@ public class UserComplaintController {
         return new ResponseEntity<>(userComplaintDTOS,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/send_response")
     public void sendResponse(@RequestBody UserComplaintDTO userComplaintDTO){
         this.userComplaintService.sendResponse(this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO));
