@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,5 +59,11 @@ public class ClientController {
         for(Reservation reservation : reservations)
             reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
         return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
+    }
+
+    @Scheduled(cron="0 0 0 1 1/1 *")
+    @PutMapping("/refresh")
+    public void doSomething() {
+        clientService.refreshPenaltyPoints();
     }
 }

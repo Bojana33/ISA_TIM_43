@@ -97,4 +97,12 @@ public class ClientServiceImpl implements ClientService {
         return futureReservations;
     }
 
+    @Override
+    public void refreshPenaltyPoints(){
+        Collection<Client> clients = clientRepository.findAllByDeleted(false);
+        for (Client client: clients){
+            client.setPenalty(0);
+            clientRepository.save(client);
+        }
+    }
 }
