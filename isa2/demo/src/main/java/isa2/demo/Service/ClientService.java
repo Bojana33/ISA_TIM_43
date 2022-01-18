@@ -16,4 +16,5 @@ public interface ClientService {
     Collection<Entity> getAllSubscriptions(String username);
     void unsubscribe(String username, Integer entity_id) throws Exception;
     Collection<Reservation> getAllFutureReservations(String username);
+    void refreshPenaltyPoints();
 }

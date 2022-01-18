@@ -131,6 +131,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation fastReservation(ReservationDTO reservationDTO) throws  InvalidReservationException{
         Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
+        Client client = clientRepository.findById(reservationDTO.getClientId()).get();
+        if(client.getPenalty() >= 3)
+            throw new InvalidReservationException("Client has 3 or more penalties");
         if(!checkReservation(reservationDTO, entity, true))
             throw new InvalidReservationException("Invalid reservation input");
         Reservation reservation = reservationRepository.getById(reservationDTO.getId());
@@ -149,7 +152,7 @@ public class ReservationServiceImpl implements ReservationService {
             price = price - reservation.getDiscount();
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
-        reservation.setClient(clientRepository.findById(reservationDTO.getClientId()).get());
+        reservation.setClient(client);
         reservation = reservationRepository.save(reservation);
 
         //send email
