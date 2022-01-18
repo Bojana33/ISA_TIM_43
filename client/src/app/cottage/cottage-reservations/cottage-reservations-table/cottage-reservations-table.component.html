@@ -77,9 +77,24 @@
         </li>
       </td>
       <td>
-        <i *ngIf="res.reservationStatus.toString() == 'COMPLETED'" class="fa fa-pencil" aria-hidden="true"></i>
+        <button class="button is-link is-inverted" (click)="showForm=2" *ngIf="res.reservationStatus.toString() == 'COMPLETED'">
+          <i class="fa fa-pencil" aria-hidden="true" > Review</i>
+        </button>
       </td>
     </tr>
     </tbody>
   </table>
+  <div class="modal is-active" *ngIf="showForm === 2">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Review client</p>
+        <button class="delete" (click)="showForm=1" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <app-owner-review-form>
+        </app-owner-review-form>
+      </section>
+    </div>
+  </div>
 </div>

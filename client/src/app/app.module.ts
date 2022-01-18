@@ -73,7 +73,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
-
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
 
@@ -93,6 +93,7 @@ import { EntityService } from './service/entity.service';
 import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
 import { FastReservationComponent } from './fast-reservation/fast-reservation.component';
 import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
+import { OwnerReviewFormComponent } from './owner-review-form/owner-review-form.component';
 
 
 const mapConfig: YaConfig = {
@@ -158,6 +159,7 @@ const mapConfig: YaConfig = {
     ReservationDialogComponent,
     FastReservationComponent,
     FastReservationDialogComponent,
+    OwnerReviewFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -194,6 +196,7 @@ const mapConfig: YaConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSortModule,
+    MatSlideToggleModule,
     NgbModule
   ],
   exports: [

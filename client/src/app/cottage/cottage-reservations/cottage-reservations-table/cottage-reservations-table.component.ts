@@ -21,6 +21,7 @@ export class CottageReservationsTableComponent implements OnInit {
   reservationInDateRange: ReservationDTO[] = [];
   filterStatus = 0;
   cottageId = -1;
+  showForm = 1;
 
   constructor(private config: ConfigService,
               private activatedRoute: ActivatedRoute,
