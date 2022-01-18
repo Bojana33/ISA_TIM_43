@@ -34,7 +34,7 @@ public class ClientsReviewController {
         ClientsReview clientsReview = this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO);
         try{
             ClientsReview review = this.clientsReviewService.save(clientsReview);
-            return new ResponseEntity<ClientsReviewDTO>(this.clientsReviewMapper.mapUserComplaintToDto(review), HttpStatus.OK);
+            return new ResponseEntity<ClientsReviewDTO>(this.clientsReviewMapper.mapClientsReviewToDto(review), HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(new Exception("Forbidden"), HttpStatus.FORBIDDEN);
         }
@@ -42,11 +42,11 @@ public class ClientsReviewController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     @PutMapping("/update_review")
-    public ResponseEntity<ClientsReviewDTO> updateUserComplaint(@RequestBody ClientsReviewDTO clientsReviewDTO){
+    public ResponseEntity<ClientsReviewDTO> updateClientsReview(@RequestBody ClientsReviewDTO clientsReviewDTO){
         try {
             ClientsReview clientsReview = this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO);
             clientsReview = this.clientsReviewService.update(clientsReview);
-            clientsReviewDTO = this.clientsReviewMapper.mapUserComplaintToDto(clientsReview);
+            clientsReviewDTO = this.clientsReviewMapper.mapClientsReviewToDto(clientsReview);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class ClientsReviewController {
         List<ClientsReview> clientsReviews = this.clientsReviewService.findAllUnprocessedReviews();
         List<ClientsReviewDTO> clientsReviewDTOS = new ArrayList<>();
         for(ClientsReview clientsReview: clientsReviews){
-            clientsReviewDTOS.add(this.clientsReviewMapper.mapUserComplaintToDto(clientsReview));
+            clientsReviewDTOS.add(this.clientsReviewMapper.mapClientsReviewToDto(clientsReview));
         }
         return new ResponseEntity<>(clientsReviewDTOS,HttpStatus.OK);
     }
