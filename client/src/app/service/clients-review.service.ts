@@ -25,6 +25,6 @@ export class ClientsReviewService {
   }
 
   sendResponse(body:any){
-    return this.apiService.post(this.config.user_complaint_url + '/send_response', body);
+    return this.apiService.post(this.config.clients_review_url + '/send_response', body);
   }
 }

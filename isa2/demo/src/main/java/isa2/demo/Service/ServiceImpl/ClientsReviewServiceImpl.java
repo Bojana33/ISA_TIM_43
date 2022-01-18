@@ -56,13 +56,16 @@ public class ClientsReviewServiceImpl implements ClientsReviewService {
             Entity entity = this.entityService.findById(clientsReview.getReservation().getEntity().getId());
             Owner owner = this.ownerService.findByEntity(entity);
 
-            //clientsReview.setStatus(Boolean.TRUE);
             clientsReview = update(clientsReview);
 
             String subject = "Client review";
-            String content = clientsReview.getStatus().getDeclaringClass().getName();
+            String content;
 
-            this.userService.sendEmail(subject,content, owner.getEmail());
+            if(clientsReview.getStatus() == ClientsReviewStatus.PUBLIC){
+                content = "New review about you is public.";
+                this.userService.sendEmail(subject,content, owner.getEmail());
+            }
+
 
         } catch (Exception e){
             e.printStackTrace();

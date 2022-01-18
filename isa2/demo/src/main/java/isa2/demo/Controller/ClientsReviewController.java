@@ -64,6 +64,7 @@ public class ClientsReviewController {
         return new ResponseEntity<>(clientsReviewDTOS,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/send_response")
     public void sendResponse(@RequestBody ClientsReviewDTO clientsReviewDTO){
         this.clientsReviewService.sendResponse(this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO));
