@@ -1,7 +1,6 @@
 package isa2.demo.Service;
 
 import isa2.demo.Model.OwnersReview;
-import isa2.demo.Model.ReviewStatus;
 
 import java.util.List;
 
