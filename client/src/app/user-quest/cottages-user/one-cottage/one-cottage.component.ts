@@ -22,6 +22,7 @@ export class OneCottageComponent implements OnInit {
   cottage: CottageDTO = ({} as any);
   value!: string[];
   checkboxFlag: Array<AdditionalServicesDTO> = [];
+  isSubscribed!: boolean;
 
   constructor(
     private httpClient: HttpClient,
@@ -30,7 +31,8 @@ export class OneCottageComponent implements OnInit {
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private entityService: EntityService
   ) {
   }
 
@@ -39,6 +41,10 @@ export class OneCottageComponent implements OnInit {
       response => {
         this.cottage = response;
       });
+    this.entityService.isSubscribed(this.router.snapshot.params.id).subscribe(res =>
+    {
+      this.isSubscribed = res;
+    });
   }
 
   addAdditionalService(serv: AdditionalServicesDTO){
@@ -50,9 +56,12 @@ export class OneCottageComponent implements OnInit {
     return this.userService.loggedRole(role);
   }
 
-  reserve(){
-    //this.entityService.reserve(1, 1, )
+  subscribe(adventureId: any){
+    this.entityService.subscribeToEntity(adventureId).subscribe();
+    this.isSubscribed = true;
   }
 
-
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
 }

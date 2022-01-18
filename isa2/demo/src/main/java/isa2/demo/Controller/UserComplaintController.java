@@ -35,7 +35,7 @@ public class UserComplaintController {
     //}
 
     //@ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(value = "/save_complaint")
     public ResponseEntity<? extends Object> createUserComplaint(@RequestBody UserComplaintDTO userComplaintDTO, Principal user){
         UserComplaint userComplaint = this.userComplaintMapper.mapDtoToUserComplaint(userComplaintDTO);

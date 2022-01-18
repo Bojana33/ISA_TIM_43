@@ -42,9 +42,9 @@
       </li>
     </ul>
   </span>
-    <a mat-stroked-button color="accent" (click)="reserve()" *ngIf="hasRole('USER')" style="margin-top: 5%">Reserve</a>
-
   </mat-card-content>
+    <button *ngIf="!isSubscribed && hasSignedIn() && hasRole('CLIENT')" mat-raised-button color="accent" (click)="subscribe(cottage.id)">Subscribe</button>
+    <button *ngIf="isSubscribed && hasSignedIn() && hasRole('CLIENT')" mat-stroked-button color="accent">Subscribed</button>
   </form>
 </mat-card>
       </div>

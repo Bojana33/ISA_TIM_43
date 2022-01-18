@@ -9,4 +9,6 @@ public class EntityDTO {
     private Integer id;
     private String name;
     private String description;
+    private Double pricePerDay;
+    private Integer maxNumberOfGuests;
 }

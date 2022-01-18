@@ -18,12 +18,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.*;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/entities" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -83,13 +89,26 @@ public class EntityController {
         return ResponseEntity.ok().body(reservationDTOS);
     }
 
-    @PostMapping("/{entity_id}")
-    public String subscribe(@PathVariable("entity_id") Integer entity_id, @RequestParam("user_id") Integer user_id){
-        if(clientService.subscribeToEntity(user_id, entity_id))
+    @PreAuthorize("hasRole('CLIENT')")
+    @PostMapping("/subscribe/{entity_id}")
+    public String subscribe(@PathVariable Integer entity_id, Principal user){
+        if(clientService.subscribeToEntity(user.getName(), entity_id))
             return "created";
         else
             return "not created";
     }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @PutMapping("/unsubscribe/{entity_id}")
+    public ResponseEntity<String> unsubscribe(@PathVariable Integer entity_id, Principal user){
+        try {
+            clientService.unsubscribe(user.getName(), entity_id);
+            return new ResponseEntity("unsubscribed", HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity("exception", HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
     @PostMapping(value = "/save_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
 //    @PreAuthorize("hasRole('COTTAGEOWNER')")
     public void saveImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
@@ -111,6 +130,12 @@ public class EntityController {
         catch(InvalidReservationException e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping(value = "/isSubscribed/{entity_id}")
+    public boolean isSubscribed(@PathVariable Integer entity_id, Principal user){
+        return clientService.isSubscribed(user.getName(), entity_id);
     }
 
     @PreAuthorize("hasRole('CLIENT')")

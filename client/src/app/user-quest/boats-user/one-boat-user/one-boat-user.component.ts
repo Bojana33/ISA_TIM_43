@@ -8,6 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {CottageService} from "../../../service/cottage.service";
 import {FormBuilder} from "@angular/forms";
 import {BoatDTO} from "../../../model/boat-dto";
+import {EntityService} from "../../../service/entity.service";
 
 @Component({
   selector: 'app-one-boat-user',
@@ -17,6 +18,7 @@ import {BoatDTO} from "../../../model/boat-dto";
 export class OneBoatUserComponent implements OnInit {
 
   boat: BoatDTO = ({} as any);
+  isSubscribed!: boolean;
 
   constructor(
     private httpClient: HttpClient,
@@ -25,7 +27,8 @@ export class OneBoatUserComponent implements OnInit {
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private entityService: EntityService
   ) {
   }
 
@@ -35,5 +38,22 @@ export class OneBoatUserComponent implements OnInit {
       response => {
         this.boat = response;
       });
+    this.entityService.isSubscribed(this.router.snapshot.params.id).subscribe(res =>
+    {
+      this.isSubscribed = res;
+    });
+  }
+
+  subscribe(adventureId: any){
+    this.entityService.subscribeToEntity(adventureId).subscribe();
+    this.isSubscribed = true;
+  }
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
   }
 }
