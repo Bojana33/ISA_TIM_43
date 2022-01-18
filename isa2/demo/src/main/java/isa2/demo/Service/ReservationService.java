@@ -24,4 +24,5 @@ public interface ReservationService {
     Collection<Reservation> findAllFutureReservationsOnSale();
     Reservation fastReservation(ReservationDTO reservationDTO) throws  InvalidReservationException;
     List<Reservation> findAllReservationsForClient(Integer clientId);
+    void cancelReservation(String username, Integer reservationId) throws Exception;
 }

@@ -33,4 +33,7 @@ export class ReservationService {
   getAllUserReservations(clientId:any){
     return this.api.get(this.config.reservation_url + '/getAllUserReservations/' + clientId);
   }
+  cancelReservation(reservationId: any) {
+    return this.api.put(this.config.reservation_url + '/cancelReservation/' + reservationId, null);
+  }
 }

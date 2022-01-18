@@ -1,9 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
-import isa2.demo.Model.Client;
-import isa2.demo.Model.Entity;
-import isa2.demo.Model.Reservation;
-import isa2.demo.Model.User;
+import isa2.demo.Model.*;
 import isa2.demo.Repository.ClientRepository;
 import isa2.demo.Service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,9 @@ import isa2.demo.Repository.ClientRepository;
 import isa2.demo.Repository.EntityRepository;
 import isa2.demo.Service.ClientService;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -86,4 +86,15 @@ public class ClientServiceImpl implements ClientService {
         Client client = findByUsername(username);
         return client.getSubscriptions();
     }
+
+    @Override
+    public Collection<Reservation> getAllFutureReservations(String username){
+        Collection<Reservation> reservations = findByUsername(username).getReservation();
+        Collection<Reservation> futureReservations = new ArrayList<>();
+        for(Reservation reservation : reservations)
+            if (reservation.getReservedPeriod().getStartDate().isAfter(LocalDateTime.now()) && reservation.getReservationStatus() == ReservationStatus.RESERVED)
+                futureReservations.add(reservation);
+        return futureReservations;
+    }
+
 }
