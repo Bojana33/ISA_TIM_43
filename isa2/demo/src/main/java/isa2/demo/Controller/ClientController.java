@@ -2,6 +2,7 @@ package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.EntityDTO;
+import isa2.demo.DTO.ReservationDTO;
 import isa2.demo.Model.Boat;
 import isa2.demo.Model.Entity;
 import isa2.demo.Model.Reservation;
@@ -46,5 +47,15 @@ public class ClientController {
         for(Entity entity : entities)
             entityDTOS.add(modelMapper.modelMapper().map(entity, EntityDTO.class));
         return new ResponseEntity<>(entityDTOS, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping("/getAllFutureReservations")
+    public ResponseEntity<Collection<ReservationDTO>> getAllFutureReservations(Principal user){
+        Collection<Reservation> reservations = clientService.getAllFutureReservations(user.getName());
+        Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for(Reservation reservation : reservations)
+            reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
+        return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
     }
 }

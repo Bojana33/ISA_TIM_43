@@ -57,6 +57,7 @@ import {FastReservationComponent} from "./fast-reservation/fast-reservation.comp
 import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 import {SubscriptionsComponent} from "./user-quest/subscriptions/subscriptions.component";
+import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
 
 
 const routes: Routes = [
@@ -118,6 +119,10 @@ const routes: Routes = [
   {
     path: 'subscriptions',
     component: SubscriptionsComponent
+  },
+  {
+    path: 'futureReservations',
+    component: FutureReservationsComponent
   },
   {
     path: 'profile/profileUpdate',

@@ -17,6 +17,9 @@ export class ClientService {
     this.clientsUrl = 'http://localhost:8090/client';
   }
 
+  getFutureReservations(){
+    return this.apiService.get(this.clientsUrl + '/getAllFutureReservations');
+  }
 
   getAllSubscriptions() {
     return this.apiService.get(this.clientsUrl + '/getAllSubscriptions');

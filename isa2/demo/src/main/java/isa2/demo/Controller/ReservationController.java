@@ -9,8 +9,10 @@ import isa2.demo.Service.ServiceImpl.ReservationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -58,4 +60,14 @@ public class ReservationController {
         return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
+    @PutMapping("/cancelReservation/{reservationId}")
+    public ResponseEntity<String> cancelReservation(@PathVariable Integer reservationId, Principal user){
+        try{
+            this.reservationService.cancelReservation(user.getName(), reservationId);
+            return new ResponseEntity("Successfully canceled", HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity("Something went wrong", HttpStatus.FORBIDDEN);
+        }
+    }
 }

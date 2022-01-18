@@ -30,6 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final AdventureService adventureService;
     private final CottageService cottageService;
     private final BoatService boatService;
+    private final ClientService clientService;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EntityRepository entityRepository,
@@ -38,7 +39,8 @@ public class ReservationServiceImpl implements ReservationService {
                                   ClientRepository clientRepository,
                                   BoatService boatService,
                                   CottageService cottageService,
-                                  AdventureService adventureService) {
+                                  AdventureService adventureService,
+                                  ClientService clientService) {
         this.reservationRepository = reservationRepository;
         this.adventureService = adventureService;
         this.cottageService = cottageService;
@@ -47,6 +49,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.entityService = entityService;
         this.modelMapper = modelMapperConfig;
         this.clientRepository = clientRepository;
+        this.clientService = clientService;
     }
 
     @Override
@@ -232,5 +235,17 @@ public class ReservationServiceImpl implements ReservationService {
         entities.add(entity);
         }
         return reservations;
+    }
+
+    @Override
+    public void cancelReservation(String username, Integer reservationId) throws Exception{
+        Client client = clientService.findByUsername(username);
+        Reservation reservation = reservationRepository.getById(reservationId);
+        if(!client.getReservation().contains(reservation))
+            throw new Exception("Client does not have this reservation");
+        if(reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now().plusDays(3)))
+            throw new Exception("the reservation can no longer be canceled");
+        reservation.setReservationStatus(ReservationStatus.CANCELED);
+        reservationRepository.save(reservation);
     }
 }
