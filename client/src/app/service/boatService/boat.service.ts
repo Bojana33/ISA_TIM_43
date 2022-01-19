@@ -26,4 +26,7 @@ export class BoatService {
   updateBoat(boat: BoatDTO){
     return this.apiService.put(this.config.boat_url + '/' + boat.id, boat);
   }
+  getAllForOwner(id: number){
+    return this.apiService.get(this.config.boat_url + '/getForOwner/' + id);
+  }
 }

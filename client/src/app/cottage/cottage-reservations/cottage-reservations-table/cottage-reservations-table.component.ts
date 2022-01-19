@@ -19,6 +19,7 @@ export class CottageReservationsTableComponent implements OnInit {
   reservations: ReservationDTO[] = [];
   allReservations: ReservationDTO[] = [];
   reservationInDateRange: ReservationDTO[] = [];
+  pricesList: any;
   filterStatus = 0;
   cottageId = -1;
   showForm = 1;
@@ -58,8 +59,8 @@ export class CottageReservationsTableComponent implements OnInit {
     }
     console.log(status, this.filterStatus);
     this.reservations = this.reservationInDateRange.filter((val) => val.reservationStatus.toString() === status);
+    this.updatePrices();
   }
-
   findReservationsInDateRange(form: FormGroup): void {
     const maxDate = new Date(8640000000000000);
     const minDate = new Date(-8640000000000000);
@@ -76,12 +77,12 @@ export class CottageReservationsTableComponent implements OnInit {
     }
     this.reservations = this.allReservations.filter((val) => new Date(val.reservedPeriod.startDate) >= timePeriod.startDate &&
       new Date(val.reservedPeriod.endDate) <= timePeriod.endDate);
-    this.reservationInDateRange = this.reservations;
-    // this.reservations = this.reservationService.getReservationsInDateRange(timePeriod).subscribe(
-    //     (res: ReservationDTO[]) => {
-    //     this.reservations = res;
-    //   }
-    // );
+    this.updatePrices();
+  }
+
+  private updatePrices(): void {
+    this.pricesList = this.reservations.map(a => a.price);
+    this.pricesList = this.pricesList.reduce((a: number, b: number) => a + b, 0);
   }
 
   // @ts-ignore

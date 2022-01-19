@@ -19,6 +19,7 @@ import {ReservationService} from '../service/reservation.service';
 export class CottageComponent implements OnInit{
   cottage: CottageDTO = new CottageDTO();
   addressFormated: any;
+  clicked = false;
   showForm = 1;
   // @ts-ignore
   cottageUpdateForm: FormGroup;

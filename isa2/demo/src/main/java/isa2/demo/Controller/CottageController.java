@@ -4,11 +4,8 @@ import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.CottageMapper;
 import isa2.demo.Exception.InvalidInputException;
-import isa2.demo.Model.Address;
-import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Cottage;
 
-import isa2.demo.Model.Reservation;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.CottageService;
 
@@ -17,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -71,9 +67,9 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public List<CottageDTO> getCottages(@RequestParam(defaultValue = "") String cottageName) {
+    public List<CottageDTO> getOwnerCottagesByName(@RequestParam(defaultValue = "") String cottageName, @RequestParam Integer ownerId) {
         List<Cottage> cottages = new ArrayList<>();
-        cottages = cottageService.findCottagesByName(cottageName);
+        cottages = cottageService.findOwnerCottagesByName(cottageName, ownerId);
 //        if(name.equals("")){
 //            cottages = cottageService.findCottagesByName(name);
 //        }else{
@@ -87,6 +83,16 @@ public class CottageController {
         return cottageDTOS;
     }
 
+    @GetMapping("/getForOwner/{id}")
+    public List<CottageDTO> getCottagesForOwner(@PathVariable("id") Integer ownerId){
+        List<Cottage> cottages = new ArrayList<>();
+        cottages = cottageService.findCottagesByOwnerId(ownerId);
+        List<CottageDTO> cottageDTOS = new ArrayList<>();
+        for(Cottage cottage:cottages){
+            cottageDTOS.add(cottageMapper.mapCottageToDto(cottage));
+        }
+        return cottageDTOS;
+    }
     @PutMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
@@ -104,7 +110,7 @@ public class CottageController {
     }
 
     @GetMapping(value =  "/get_all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CottageDTO>> getAll(){
+    public ResponseEntity<List<CottageDTO>> getAllForUser(@RequestBody Integer ownerId){
         List<Cottage> cottages = this.cottageService.findAll();
         List<CottageDTO> cottageDTOS = new ArrayList<>();
         for (Cottage cottage : cottages)

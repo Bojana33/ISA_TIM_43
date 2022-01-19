@@ -21,6 +21,9 @@ export class CottageService {
   getAll() {
     return this.apiService.get(this.config.cottages_url);
   }
+  getAllForOwner(id: number){
+    return this.apiService.get(this.config.cottages_url + '/getForOwner/' + id);
+  }
   deleteCottage(id: number){
     return this.apiService.delete(this.config.cottages_url + '/' + id);
   }

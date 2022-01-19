@@ -24,7 +24,8 @@ public class BoatDTO {
     private String entityPhoto;
     private Set<String> photos;
     private Double length;
-    private String enginePower;
+    private Double enginePower;
+    private String engineNumber;
     private Double maxSpeed;
     private Double capacity;
     private Double cancellationFee;

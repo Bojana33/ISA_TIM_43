@@ -1,6 +1,7 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.BoatDTO;
+import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.BoatMapper;
 import isa2.demo.Exception.InvalidInputException;
@@ -76,7 +77,7 @@ public class BoatController {
         return ResponseEntity.status(HttpStatus.OK).body(boatDTO);
     }
     @PutMapping("/{boat_id}")
-    public ResponseEntity<BoatDTO> updateCottage(@RequestBody BoatDTO boatDTO){
+    public ResponseEntity<BoatDTO> updateBoat(@RequestBody BoatDTO boatDTO){
         ResponseEntity responseEntity = null;
         try{
             Boat boat = boatMapper.mapDtoToBoat(boatDTO);
@@ -90,7 +91,16 @@ public class BoatController {
 
         return responseEntity;
     }
-
+    @GetMapping("/getForOwner/{id}")
+    public List<BoatDTO> getBoatsForOwner(@PathVariable("id") Integer ownerId){
+        List<Boat> boats = new ArrayList<>();
+        boats = boatService.findBoatsByOwnerId(ownerId);
+        List<BoatDTO> boatDTOS = new ArrayList<>();
+        for(Boat boat:boats){
+            boatDTOS.add(boatMapper.mapBoatToDTO(boat));
+        }
+        return boatDTOS;
+    }
     @RequestMapping(value = "/findFree", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<BoatDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
         try {

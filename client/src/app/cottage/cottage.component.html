@@ -2,7 +2,7 @@
         <div class = "box">
           <div class = "columns">
 
-            <div class = "column is-7" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
+            <div class = "column is-8" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
                 <ngb-carousel>
                   <ng-template ngbSlide>
                     <div class="picsum-img-wrapper image is-5by3">
@@ -15,15 +15,36 @@
                     </div>
                   </ng-template>
                 </ngb-carousel>
-<!--                <figure class="image is-5by3">-->
-<!--                  <img src="{{cottage.entityPhoto}}">-->
-<!--                </figure>-->
             </div>
 
-            <div class = "column is-5">
-              <form *ngIf ="hasSignedIn() && loggedUserIsOwner()" [formGroup]="cottageUpdateForm">
-              <div class="box">
-                <h4 class="title is-4 my-2">Name</h4>
+            <div class = "column is-4" *ngIf ="hasSignedIn() && loggedUserIsOwner()">
+              <form [formGroup]="cottageUpdateForm">
+                <div class="box">
+                  <nav class="level">
+                    <div class="level-left">
+                      <h4 class="title is-4 level-item">Name</h4>
+                    </div>
+                    <div class="level-right">
+                      <div class="dropdown level-item" [ngClass]="{'is-active':this.clicked.valueOf()}" (click)="this.clicked = !clicked">
+                        <div class="dropdown-trigger">
+                          <button class="button is-link is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                              <i class="fa fa-ellipsis-v" style="font-size:24px" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                          <div class="dropdown-content">
+                            <div class = "buttons block">
+                              <button class="dropdown-item button is-link is-light level-item" (click)="showForm=2">Create new quick reservation</button>
+                              <button class="dropdown-item button is-warning is-light level-item" routerLink="reservations">Reservations</button>
+                              <button class="dropdown-item button is-danger is-light level-item"  routerLink="cottages" (click)="deleteCottage()">Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </nav>
                 <input class = "input is-small is-rounded" formControlName="cottageName">
                 <h4 class="title is-4 my-2">Description</h4>
                 <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
@@ -54,11 +75,11 @@
                             (click)="updateCottage(cottageUpdateForm)">Update</button>
                   </div>
                 </nav>
-              </div>
-              <div class="buttons block">
-                <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
-                <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
-                <button class="button is-danger is-rounded is-light"  routerLink="cottages" (click)="deleteCottage()">Delete</button>
+                </div>
+              </form>
+            </div>
+
+              <div>
                 <div class="modal">
                   <div class="modal-background"></div>
                   <div class="modal-card">
@@ -89,11 +110,9 @@
                   </div>
                 </div>
               </div>
-            </form>
-            </div>
 
 
-            <div class = "column is-5" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
+            <div class = "column is-4" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
               <div class="box">
                 <h4 class="title is-4 my-2">Name</h4>
                 <p class = "item">
@@ -133,12 +152,14 @@
             </div>
          </div>
       </div>
-     <div class = "box" *ngIf="cottage.id != 0">
+   <div class = "columns">
+     <div class = "column" *ngIf="cottage.id != 0">
        <app-calendar [entityId]= "cottage.id">
        </app-calendar>
      </div>
-     <div class = "box" *ngIf="addressFormated != null">
+     <div class="column" *ngIf="addressFormated != null">
        {{addressFormated}}
        <app-map [address]="addressFormated"></app-map>
      </div>
+   </div>
  </div>

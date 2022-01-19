@@ -21,7 +21,4 @@ export class BoatService {
   getFreeBoats(request: FreeEntityDTO) {
     return this.apiService.post('http://localhost:8090/boats/findFree',  JSON.parse(JSON.stringify(request)));
   }
-  //getSorted(cottages: CottageDTO[], criterion: string, asc: boolean){
-    //return this.apiService.post('http://localhost:8090/cottages/sorted' + '/' + criterion + '/' + asc, JSON.parse(JSON.stringify(cottages)));
-  //}
 }

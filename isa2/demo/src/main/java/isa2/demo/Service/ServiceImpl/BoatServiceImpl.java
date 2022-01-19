@@ -123,4 +123,9 @@ public class BoatServiceImpl implements BoatService {
         }
         return freeBoats;
     }
+
+    @Override
+    public List<Boat> findBoatsByOwnerId(Integer id) {
+        return boatRepository.findBoatsByOwner_id(id);
+    }
 }

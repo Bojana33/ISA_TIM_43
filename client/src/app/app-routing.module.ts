@@ -50,6 +50,9 @@ import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
 import { ComplaintsComponent } from './complaints/complaints.component';
 import {CottageownerGuard} from './guard/cottageowner.guard';
+import {BoatownerGuard} from './guard/boatowner.guard';
+import {RegisterBoatComponent} from './register-boat/register-boat.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
@@ -57,6 +60,7 @@ import {FastReservationComponent} from "./fast-reservation/fast-reservation.comp
 import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 import {SubscriptionsComponent} from "./user-quest/subscriptions/subscriptions.component";
+import {CottageOwnerAndBoatOwnerGuard} from './guard/cottage-owner-and-boat-owner.guard';
 
 
 const routes: Routes = [
@@ -202,9 +206,19 @@ const routes: Routes = [
     canActivate: [CottageownerGuard]
   },
   {
+    path: 'register-boat',
+    component: RegisterBoatComponent,
+    canActivate: [BoatownerGuard]
+  },
+  {
     path: 'delete-profile',
     component: DeleteProfileComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [CottageOwnerAndBoatOwnerGuard]
   },
   {
     path: 'user-delete-requests',

@@ -99,6 +99,9 @@ import { UserReservationsComponent } from './user-reservations/user-reservations
 import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
+import { RegisterBoatComponent } from './register-boat/register-boat.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 const mapConfig: YaConfig = {
   apikey: 'cb834c63-c138-4b32-a96f-8e5b8427de81',
@@ -168,7 +171,9 @@ const mapConfig: YaConfig = {
     ClientsReviewsComponent,
     UserReservationsComponent,
     FeedbackDialogComponent,
-    ReviewDialogComponent
+    ReviewDialogComponent,
+    RegisterBoatComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

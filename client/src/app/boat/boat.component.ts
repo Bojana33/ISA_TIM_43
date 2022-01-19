@@ -57,7 +57,7 @@ export class BoatComponent implements OnInit {
 
   initializeForm(boat: BoatDTO): void{
     this.boatUpdateForm = this.formBuilder.group({
-      boatName: new FormControl(this.boat.name, [
+      name: new FormControl(this.boat.name, [
         Validators.required,
         Validators.minLength(5)]
       ),
