@@ -20,8 +20,13 @@ export class ConfigService {
   private _reservation_url = 'http://localhost:8090/reservations';
   private _owner_url = 'http://localhost:8090/owner';
   private _clients_review_url = 'http://localhost:8090/clients_review';
+  private _owners_review_url = 'http://localhost:8090/owners_review';
 
   private _refresh_token_url = this._auth_url + '/refresh';
+
+  get owners_review_url(): string{
+    return this._owners_review_url;
+  }
 
   get clients_review_url(): string{
     return this._clients_review_url;

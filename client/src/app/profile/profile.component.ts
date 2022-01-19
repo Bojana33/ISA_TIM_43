@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onItemChange(event:any){
-    this.choosed = event.taget.value;
+    this.choosed = event.target.value;
   }
 
   isLoggedIdEqualToProfileId(id:number){

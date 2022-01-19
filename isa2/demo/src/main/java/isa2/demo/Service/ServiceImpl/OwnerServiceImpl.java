@@ -71,7 +71,8 @@ public class OwnerServiceImpl implements OwnerService {
             owner = this.ownerRepository.findByAdventures((Adventure) entity);
         }
         if(entity instanceof Cottage){
-            owner = this.ownerRepository.findByCottages((Cottage) entity);
+            owner = //((Cottage) entity).getOwner();
+                    this.ownerRepository.findByCottages((Cottage) entity);
         }
         if(entity instanceof Boat){
             owner = this.ownerRepository.findByBoat((Boat) entity);

@@ -71,7 +71,7 @@ public class OwnersReviewServiceImpl implements OwnersReviewService {
                 content = client.getFirstName() + " " + client.getSurname() + " has NOT earned penalty.";
             }
             this.userService.sendEmail(subject,content, owner.getEmail());
-
+            this.userService.sendEmail(subject,content, client.getEmail());
 
         } catch (Exception e){
             e.printStackTrace();
