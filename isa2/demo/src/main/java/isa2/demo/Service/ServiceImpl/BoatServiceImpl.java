@@ -69,8 +69,7 @@ public class BoatServiceImpl implements BoatService {
         Boat boat = boatRepository.findById(boat_id).orElse(null);
         if (boat != null){
             Collection<Reservation> reservations = new ArrayList<>(boat.getReservations());
-            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-            if(reservations.isEmpty())
+            if(!(reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.RESERVED))))
                 boatRepository.deleteById(boat_id);
             else
                 throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
@@ -83,8 +82,7 @@ public class BoatServiceImpl implements BoatService {
     @Override
     public Boat updateBoat(Boat boat) {
         Collection<Reservation> reservations = new ArrayList<>(boat.getReservations());
-        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-        if(reservations.isEmpty())
+        if(!(reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.RESERVED))))
             return boatRepository.save(boat);
         else
             throw new UnsupportedOperationException("Entity with active reservations can't be updated");

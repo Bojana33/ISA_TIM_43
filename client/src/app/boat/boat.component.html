@@ -15,6 +15,7 @@
               </div>
             </ng-template>
           </ngb-carousel>
+        <input type="file" (change)="onFileChanged($event)">
       </div>
 
       <div class = "column is-5" *ngIf ="hasSignedIn() && loggedUserIsOwner()">

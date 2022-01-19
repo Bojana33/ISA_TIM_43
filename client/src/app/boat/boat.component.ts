@@ -9,6 +9,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 import {BoatDTO} from '../model/boat-dto';
+import {EntityService} from '../service/entity.service';
 
 @Component({
   selector: 'app-boat',
@@ -20,6 +21,7 @@ export class BoatComponent implements OnInit {
   addressFormated: any;
   boatTypeButtonActive = false;
   showForm = 1;
+  private selectedFile!: File;
   // @ts-ignore
   boatUpdateForm: FormGroup;
   //     public fishingEquipment: string = '',
@@ -34,15 +36,12 @@ export class BoatComponent implements OnInit {
     private boatService: BoatService,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
+    private entityService: EntityService
   ) {
   }
 
   ngOnInit(): void {
     this.loadData();
-    // if (this.hasSignedIn() && this.loggedUserIsOwner()){
-    //   // @ts-ignore
-    //   this.boatUpdateForm.get('boatName')?.setValue(this.boat.boatName);
-    // }
   }
 
   private loadData(): void {
@@ -138,6 +137,7 @@ export class BoatComponent implements OnInit {
     this.boat.type = form.value.boatType;
     return this.boatService.updateBoat(this.boat).subscribe(
       res => {
+        this.uploadImage(res.id);
         if (res.status === 200){
           this.snackbar.open('Boat update successful', 'cancel');
         }else{
@@ -153,5 +153,14 @@ export class BoatComponent implements OnInit {
       (res: any) => {
         console.log(res);
       });
+  }
+  public onFileChanged(event: any): void {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile.name);
+  }
+  private uploadImage(id: number): void{
+    const data: FormData = new FormData();
+    data.append('imageUrl', this.selectedFile, this.selectedFile.name);
+    this.entityService.savePhoto(data, id).subscribe(res => {console.log(res); });
   }
 }
