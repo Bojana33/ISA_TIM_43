@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../service/config.service';
 
 @Component({
-  selector: 'app-boats',
+  selector: 'app-boats-client',
   templateUrl: './boats-user.component.html',
   styleUrls: ['./boats-user.component.css']
 })

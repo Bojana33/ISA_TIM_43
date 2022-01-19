@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   activeEntities: any;
   filterStatus = 0;
   canceledReservationsNumber = 0;
+  activeButton = 'DASHBOARD';
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,

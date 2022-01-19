@@ -6,14 +6,14 @@
           General
         </p>
         <ul class="menu-list">
-          <li><a class="is-active">Dashboard</a></li>
+          <li><a [ngClass]="{'is-active': activeButton === 'DASHBOARD'}" (click)="activeButton='DASHBOARD'"> Dashboard</a></li>
           <li>
             Manage Your <div *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">Cottages</div> <div *ngIf="hasSignedIn() && hasRole('BOATOWNER')"> Boats</div>
             <ul>
-              <li><a routerLink = "/cottages" *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">My Cottages</a></li>
-              <li><a routerLink = "/boats" *ngIf="hasSignedIn() && hasRole('BOATOWNER')">My Boats</a></li>
-              <li><a routerLink="/register-cottage" *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">Register cottage</a></li>
-              <li><a routerLink="/register-boat" *ngIf="hasSignedIn() && hasRole('BOATOWNER')">Register boat</a></li>
+              <li><a *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')" (click)="activeButton='COTTAGES'" [ngClass]="{'is-active': activeButton === 'COTTAGES'}">My Cottages</a></li>
+              <li><a *ngIf="hasSignedIn() && hasRole('BOATOWNER')" (click)="activeButton='BOATS'" [ngClass]="{'is-active': activeButton === 'BOATS'}">My Boats</a></li>
+              <li><a *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')" (click)="activeButton='REGISTER-COTTAGE'" [ngClass]="{'is-active': activeButton === 'REGISTER-COTTAGE'}">Register cottage</a></li>
+              <li><a *ngIf="hasSignedIn() && hasRole('BOATOWNER')" (click)="activeButton='REGISTER-BOAT'" [ngClass]="{'is-active': activeButton === 'REGISTER-BOAT'}">Register boat</a></li>
             </ul>
           </li>
 
@@ -27,6 +27,7 @@
       </aside>
     </div>
     <div class="column is-10">
+      <div *ngIf="activeButton==='DASHBOARD'">
       <section class="hero is-info welcome is-small">
         <div class="hero-body">
           <div class="container">
@@ -160,6 +161,23 @@
         </div>
       </nav>
     </div>
+      <div *ngIf="activeButton==='BOATS'">
+        <app-boats>
+        </app-boats>
+      </div>
+      <div *ngIf="activeButton==='COTTAGES'">
+        <app-cottages>
+        </app-cottages>
+      </div>
+      <div *ngIf="activeButton==='REGISTER-BOAT'">
+        <app-register-boat>
+        </app-register-boat>
+      </div>
+      <div *ngIf="activeButton==='REGISTER-COTTAGE'">
+        <app-register-cottage>
+        </app-register-cottage>
+      </div>
+  </div>
   </div>
 </div>
 <script async type="text/javascript" src="../js/bulma.js"></script>

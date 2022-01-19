@@ -6,7 +6,7 @@ import {Cottage} from '../../model/cottage';
 import { CottageDTO } from 'src/app/model/cottage-dto.model';
 
 @Component({
-  selector: 'app-cottages',
+  selector: 'app-cottages-client',
   templateUrl: './cottages-user.component.html',
   styleUrls: ['./cottages-user.component.css']
 })
