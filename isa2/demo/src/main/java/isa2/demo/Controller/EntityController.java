@@ -109,16 +109,27 @@ public class EntityController {
         }
     }
 
+    @PostMapping(value = "/save_entity_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @PreAuthorize("hasRole('COTTAGEOWNER')")
+    public void saveEntityImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
+        String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
+
+        String uploadDir = "../../client/src/assets/images/entity_" + id + '/';
+        entityService.uploadEntityPhoto(id,"./../../assets/images/entity_" + id + '/' + fileName);
+        FileUploadUtil.saveFile(uploadDir, fileName, imageUrl);
+
+    }
     @PostMapping(value = "/save_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
 //    @PreAuthorize("hasRole('COTTAGEOWNER')")
     public void saveImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
         String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
 
-        String uploadDir = "../../client/src/assets/images";
-        entityService.uploadEntityPhoto(id,"./../../assets/images/" + fileName);
+        String uploadDir = "../../client/src/assets/images/entity_" + id + '/';
+        entityService.savePhoto(id,"./../../assets/images/entity_" + id + '/' + fileName);
         FileUploadUtil.saveFile(uploadDir, fileName, imageUrl);
 
     }
+
 
     @PreAuthorize("hasRole('CLIENT')")
     @RequestMapping(value = "/reserve", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

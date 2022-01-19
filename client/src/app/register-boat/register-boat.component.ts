@@ -50,7 +50,7 @@ export class RegisterBoatComponent implements OnInit {
   private uploadImage(id: number): void{
     const data: FormData = new FormData();
     data.append('imageUrl', this.selectedFile, this.selectedFile.name);
-    this.entityService.saveImage(data, id).subscribe(res => {console.log(res); });
+    this.entityService.saveEntityPhoto(data, id).subscribe(res => {console.log(res); });
   }
   private initializeForm(): void {
     this.boatCreationForm = this.formBuilder.group({

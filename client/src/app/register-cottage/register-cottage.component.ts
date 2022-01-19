@@ -1201,7 +1201,7 @@ export class RegisterCottageComponent implements OnInit {
   private uploadImage(id: number): void{
     const data: FormData = new FormData();
     data.append('imageUrl', this.selectedFile, this.selectedFile.name);
-    this.entityService.saveImage(data, id).subscribe(res => {console.log(res); });
+    this.entityService.saveEntityPhoto(data, id).subscribe(res => {console.log(res); });
   }
   createRooms(): FormGroup {
     return this.formBuilder.group({
