@@ -26,4 +26,16 @@ export class EntityService {
   fastReservation(request: ReservationDTO){
     return this.apiService.post(this.config.entity_url + '/fastReservation', JSON.parse(JSON.stringify(request)));
   }
+  getEntity(entityId: number){
+    return this.apiService.get(this.config.entity_url + '/getEntityById/' + entityId);
+  }
+  subscribeToEntity(entityId: number){
+    return this.apiService.post(this.config.entity_url + '/subscribe/' + entityId, null);
+  }
+  unsubscribe(entityId: number){
+    return this.apiService.put(this.config.entity_url + '/unsubscribe/' + entityId, null);
+  }
+  isSubscribed(entityId: number){
+    return this.apiService.get(this.config.entity_url + '/isSubscribed/' + entityId);
+  }
 }

@@ -15,7 +15,7 @@ import { FastReservationDialogComponent } from './fast-reservation-dialog/fast-r
 export class FastReservationComponent implements OnInit {
 
   displayedColumns: string[] = ['Sale start date', 'Sale end date', 'Reservation start date', 'Reservation end date',
-                                'Price', 'Discount'];
+                                'Price', 'Discount', 'Reserve'];
   dataSource: Array<ReservationDTO> = [];
   userId: any;
 

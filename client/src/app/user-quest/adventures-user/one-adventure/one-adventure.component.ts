@@ -7,6 +7,7 @@ import {UserService} from '../../../service/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CottageService} from '../../../service/cottage.service';
 import {AdventureDTO} from '../../../model/adventure-dto';
+import { EntityService } from 'src/app/service/entity.service';
 
 @Component({
   selector: 'app-one-adventure',
@@ -16,6 +17,7 @@ import {AdventureDTO} from '../../../model/adventure-dto';
 export class OneAdventureComponent implements OnInit {
 
   adventure: AdventureDTO = ({} as any);
+  isSubscribed!: boolean;
 
   constructor(
     private httpClient: HttpClient,
@@ -24,7 +26,9 @@ export class OneAdventureComponent implements OnInit {
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private entityService: EntityService,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -34,5 +38,22 @@ export class OneAdventureComponent implements OnInit {
       response => {
         this.adventure = response;
       });
+    this.entityService.isSubscribed(this.router.snapshot.params.id).subscribe(res =>
+    {
+      this.isSubscribed = res;
+    })
+  }
+
+  subscribe(adventureId: any){
+    this.entityService.subscribeToEntity(adventureId).subscribe();
+    this.isSubscribed = true;
+  }
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
   }
 }

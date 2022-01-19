@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Feedback for reservation</h1>
+<div mat-dialog-content>
+  <p>Help owners to improve their services based on your experiance</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Complain</mat-label>
+    <textarea  ng-model="myTextarea" rows="10" [(ngModel)]="data.complain" required placeholder="Write here..." required></textarea>
+  </mat-form-field>
+  <p>
+    Start date: {{convertDateToString(data.reservationDTO.reservedPeriod.startDate)}}
+  </p>
+  <p>
+    End date: {{convertDateToString(data.reservationDTO.reservedPeriod.endDate)}}
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial type="submit" (click)="sendFeedback()">Send</button>
+</div>

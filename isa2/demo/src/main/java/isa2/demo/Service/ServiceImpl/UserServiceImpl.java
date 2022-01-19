@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService {
         if (userRequest == null || userRequest.getVerificationCode() == null) {
             return false;
         } else {
-            //Create user
+            //Create user - client
             Client user = new Client();
             user.setFirstName(userRequest.getFirstName());
             user.setSurname(userRequest.getSurname());
@@ -186,6 +186,7 @@ public class UserServiceImpl implements UserService {
 
             List<Authority> auth;
             auth = authService.findByname("ROLE_USER");
+            auth.add(authService.findByName("ROLE_CLIENT"));
             user.setAuthorities(auth);
 
             userRepository.save(user);

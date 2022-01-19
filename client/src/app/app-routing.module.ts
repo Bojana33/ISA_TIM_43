@@ -48,11 +48,15 @@ import {CottageReservationsTableComponent} from './cottage/cottage-reservations/
 import { SignupAdminComponent } from './signup/signup-admin/signup-admin.component';
 import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
+import { ComplaintsComponent } from './complaints/complaints.component';
 import {CottageownerGuard} from './guard/cottageowner.guard';
 
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
 import {FastReservationComponent} from "./fast-reservation/fast-reservation.component";
+import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
+import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
+import {SubscriptionsComponent} from "./user-quest/subscriptions/subscriptions.component";
 
 
 const routes: Routes = [
@@ -93,6 +97,10 @@ const routes: Routes = [
     canActivate: [AdminGuard,GuestGuard]
   },
   {
+    path: 'userReservations',
+    component: UserReservationsComponent
+  },
+  {
     path: 'profile/:id',
     component: ProfileComponent,
     canActivate: [LoginGuard, GuestGuard],
@@ -106,6 +114,10 @@ const routes: Routes = [
   {
     path: 'fastReservation',
     component: FastReservationComponent
+  },
+  {
+    path: 'subscriptions',
+    component: SubscriptionsComponent
   },
   {
     path: 'profile/profileUpdate',
@@ -244,6 +256,11 @@ const routes: Routes = [
     canActivate: [GuestGuard]
   },
   {
+    path: 'complaints',
+    component: ComplaintsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
     path: 'userReservations',
     component: ReservationsComponent,
     canActivate: [GuestGuard]
@@ -251,6 +268,11 @@ const routes: Routes = [
   {
     path: 'owner-reservations/:id',
     component: OwnerReservationsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'clients-reviews',
+    component: ClientsReviewsComponent,
     canActivate: [GuestGuard]
   },
   {

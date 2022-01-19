@@ -24,7 +24,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "reservations")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Reservation implements Serializable {
 
    @Id
@@ -67,16 +67,14 @@ public class Reservation implements Serializable {
    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
    private Collection<AdditionalService> additionalServices;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "owners_review_id", referencedColumnName = "id")
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private OwnersReview ownersReview;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "client_review_id", referencedColumnName = "client_review_id")
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private ClientsReview clientsReview;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "user_complaint_id", referencedColumnName = "id")
+
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private UserComplaint userComplaint;
 
    @JsonBackReference
