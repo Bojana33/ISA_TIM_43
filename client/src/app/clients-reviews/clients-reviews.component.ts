@@ -4,6 +4,7 @@ import { ClientsReview } from './../model/clients-review';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-clients-reviews',
@@ -17,19 +18,29 @@ export class ClientsReviewsComponent implements OnInit {
   sendResponseForm!: FormGroup;
   displayedColumns: string[] = ['id', 'description', 'grade', 'approve', 'deny'];
   success!: boolean;
+  clientNames: string[];
+  user:any;
 
   constructor(
     private clientsReviewService: ClientsReviewService,
     private formBuilder: FormBuilder,
-    private snackbar: MatSnackBar
-  ) { }
+    private snackbar: MatSnackBar,
+    private userService: UserService
+  ) { this.clientNames = [];}
 
   ngOnInit(): void {
      this.getAllReviews();
   }
 
   getAllReviews(){
-    return this.clientsReviewService.getAllReviews().subscribe(res=>{console.log(res); this.reviews = res});
+    return this.clientsReviewService.getAllReviews().subscribe(res=>{console.log(res); this.reviews = res;
+      for(let res of this.reviews){
+        if(res.reservationDTO.clientId == null){
+          this.clientNames.push("/");}
+        this.userService.getUser(res.reservationDTO.clientId).subscribe((result)=>{
+          this.user = result;
+          this.clientNames.push(this.user.firstName + ' ' + this.user.surname)})};
+    });
   }
 
   approvePublication(body:any){

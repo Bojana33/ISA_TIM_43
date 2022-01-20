@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface CottageRepository extends JpaRepository<Cottage, Integer> {
     Cottage findByIdAndReservationsIsNull(Integer id);
-    List<Cottage> findAllByNameContainingIgnoreCase(String name);
+    List<Cottage> findAllByOwner_idAndNameContainingIgnoreCase(Integer ownerId, String name);
     List<Cottage> findAllByOwner(Owner owner);
+    List<Cottage> findCottageByOwner_id(Integer id);
 }

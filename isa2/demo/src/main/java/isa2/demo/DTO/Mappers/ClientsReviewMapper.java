@@ -27,9 +27,8 @@ public class ClientsReviewMapper {
         return clientsReview;
     }
 
-    public ClientsReviewDTO mapUserComplaintToDto(ClientsReview clientsReview){
+    public ClientsReviewDTO mapClientsReviewToDto(ClientsReview clientsReview){
         ClientsReviewDTO clientsReviewDTO = modelMapper.modelMapper().map(clientsReview,ClientsReviewDTO.class);
-//        Reservation reservation = this.reservationRepository.findByUserComplaint(userComplaint);
         ReservationDTO reservationDTO = modelMapper.modelMapper().map(clientsReview.getReservation(), ReservationDTO.class);
         clientsReviewDTO.setReservationDTO(reservationDTO);
         return clientsReviewDTO;

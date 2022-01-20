@@ -5,6 +5,8 @@ import {CottageDTO} from '../model/cottage-dto.model';
 import {ActivatedRoute} from '@angular/router';
 import {ConfigService} from '../service/config.service';
 import {ApiService} from '../service/api.service';
+import {UserService} from '../service/user.service';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-cottages',
@@ -13,24 +15,27 @@ import {ApiService} from '../service/api.service';
 })
 export class CottagesComponent implements OnInit {
   cottages: CottageDTO[] = [];
-
-
+  allCottages: CottageDTO[] = [];
+  user!: any;
   constructor(private cottageService: CottageService,
               private httpClient: HttpClient,
               private config: ConfigService,
+              private userService: UserService
   ) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<any>(this.config.cottages_url).subscribe(results => {
-      console.log(results);
-      this.cottages = results;
+    this.userService.getMyInfo().subscribe(res => {
+      this.user = this.userService.currentUser;
+      this.cottageService.getAllForOwner(Number(this.user.id)).subscribe(results => {
+        this.cottages = results;
+        this.allCottages = this.cottages;
+      });
     });
   }
   filterCottages(cottageName: string){
-    return this.httpClient.get<CottageDTO[]>(this.config.cottages_url, {params: {cottageName}}).subscribe(results => {
-      this.cottages = results;
-    });
+    this.cottages = this.allCottages.filter((val) => val.cottageName.toUpperCase().includes(cottageName)
+      || val.cottageName.toLowerCase().includes(cottageName));
   }
 
 }

@@ -39,7 +39,7 @@ public class ClientsReviewServiceImpl implements ClientsReviewService {
     public ClientsReview update(ClientsReview clientsReview) throws Exception {
         ClientsReview clientsReviewToUpdate = this.clientsReviewRepository.findById(clientsReview.getId()).orElse(null);
         if (clientsReviewToUpdate == null){
-            throw new Exception("User complaint with this id doesn't exists");
+            throw new Exception("Client review with this id doesn't exists");
         }
         clientsReviewToUpdate.setStatus(clientsReview.getStatus());
         return this.clientsReviewRepository.save(clientsReviewToUpdate);

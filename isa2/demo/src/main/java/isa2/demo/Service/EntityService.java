@@ -19,6 +19,7 @@ public interface EntityService {
     Double  findAverageGrade(Integer entity_id);
     Entity findById(Integer id);
 
-    void uploadEntityPhoto(Integer id, String fileName);
+    void uploadEntityPhoto(Integer id, String fileUrl);
+    void savePhoto(Integer id, String fileUrl);
     boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate);
 }

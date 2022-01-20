@@ -4,21 +4,13 @@ import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.*;
-import isa2.demo.DTO.ReservationDTO;
-import isa2.demo.Model.*;
 import isa2.demo.Repository.CottageRepository;
-import isa2.demo.Repository.PeriodRepository;
-import isa2.demo.Repository.ReservationRepository;
-import isa2.demo.Repository.UserRepository;
 import isa2.demo.Service.CottageService;
 import isa2.demo.Service.EntityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
@@ -58,8 +50,7 @@ public class CottageServiceImpl implements CottageService {
     @Override
     public Cottage updateCottage(Cottage cottage) {
         Collection<Reservation> reservations = new ArrayList<>(cottage.getReservations());
-        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-        if(reservations.isEmpty())
+        if(!(reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.RESERVED))))
             return cottageRepository.save(cottage);
         else
             throw new UnsupportedOperationException("Entity with active reservations can't be updated");
@@ -76,8 +67,7 @@ public class CottageServiceImpl implements CottageService {
         Cottage cottage = cottageRepository.findById(id).orElse(null);
         if (cottage != null){
             Collection<Reservation> reservations = new ArrayList<>(cottage.getReservations());
-            reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-            if(reservations.isEmpty())
+            if(!(reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.RESERVED))))
                 cottageRepository.deleteById(id);
             else
                 throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
@@ -93,8 +83,8 @@ public class CottageServiceImpl implements CottageService {
     }
 
     @Override
-    public List<Cottage> findCottagesByName(String name) {
-        return cottageRepository.findAllByNameContainingIgnoreCase(name);
+    public List<Cottage> findOwnerCottagesByName(String name, Integer id) {
+        return cottageRepository.findAllByOwner_idAndNameContainingIgnoreCase(id, name);
     }
 
     @Override
@@ -174,4 +164,8 @@ public class CottageServiceImpl implements CottageService {
         return newList;
     }
 
+    @Override
+    public List<Cottage> findCottagesByOwnerId(Integer id) {
+        return cottageRepository.findCottageByOwner_id(id);
+    }
 }

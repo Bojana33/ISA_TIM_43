@@ -27,7 +27,7 @@ export class CottageownerGuard implements CanActivate {
       console.log('NOT AN COTTAGEOWNER ROLE');
       this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
       return false;
-  }
+    }
   }
 
 

@@ -6,9 +6,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../service/user.service';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
+import {EntityService} from '../service/entity.service';
 
 
 @Component({
@@ -19,6 +20,8 @@ import {ReservationService} from '../service/reservation.service';
 export class CottageComponent implements OnInit{
   cottage: CottageDTO = new CottageDTO();
   addressFormated: any;
+  private selectedFile!: File;
+  clicked = false;
   showForm = 1;
   // @ts-ignore
   cottageUpdateForm: FormGroup;
@@ -31,6 +34,7 @@ export class CottageComponent implements OnInit{
     private cottageService: CottageService,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
+    private entityService: EntityService
   ) {
   }
 
@@ -102,6 +106,8 @@ export class CottageComponent implements OnInit{
     this.cottage.pricePerDay = form.value.pricePerDay;
     return this.cottageService.updateCottage(this.cottage).subscribe(
       res => {
+        console.log(res.id);
+        this.uploadImage(res.id);
         if (res.status === 200){
           this.snackbar.open('Cottage update successful', 'cancel');
         }else{
@@ -117,5 +123,14 @@ export class CottageComponent implements OnInit{
         (res: any) => {
         console.log(res);
       });
+  }
+  public onFileChanged(event: any): void {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile.name);
+  }
+  private uploadImage(id: number): void{
+    const data: FormData = new FormData();
+    data.append('imageUrl', this.selectedFile, this.selectedFile.name);
+    this.entityService.savePhoto(data, id).subscribe(res => {console.log(res); });
   }
 }

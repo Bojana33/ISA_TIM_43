@@ -13,6 +13,7 @@
     <a mat-button routerLink="userComplaint" *ngIf="hasRole('USER')">Complaint</a>
     <a mat-button routerLink="complaints" *ngIf="hasRole('ADMIN')">Complaints</a>
     <a mat-button routerLink="clients-reviews" *ngIf="hasRole('ADMIN')">Client reviews</a>
+    <a mat-button routerLink="owners-reviews" *ngIf="hasRole('ADMIN')">Owner reviews</a>
     <a mat-button routerLink="userReservations" *ngIf="hasRole('USER')">Reservations</a>
 
     <div class="dropdown is-hoverable" *ngIf="hasSignedIn() && hasRole('ADMIN')">
@@ -35,25 +36,7 @@
         </div>
       </div>
     </div>
-
-    <div class="dropdown is-hoverable">
-      <div class="dropdown-trigger">
-        <button class="mat-button" aria-haspopup="true" aria-controls="dropdown-menu4">
-          <span>Entities</span>
-          <span class="icon is-small">
-          <i class="fa fa-angle-down" aria-hidden="true"></i>
-        </span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-            <a routerLink = "adventures" class = "dropdown-item">Adventures</a>
-            <a routerLink = "cottages" class = "dropdown-item">Cottages</a>
-            <a routerLink = "boats" class = "dropdown-item">Boats</a>
-        </div>
-      </div>
-    </div>
-    <a mat-button routerLink="register-cottage" *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">Register cottage</a>
+    <a mat-button routerLink="dashboard" *ngIf="hasSignedIn() && (hasRole('COTTAGEOWNER') || hasRole('BOATOWNER')) ">Dashboard</a>
     <a mat-button routerLink="users" *ngIf="hasSignedIn() && hasRole('ADMIN')">Users</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signupAdmin" *ngIf="hasSignedIn() && hasRole('ADMIN')">Register Admin</a>
