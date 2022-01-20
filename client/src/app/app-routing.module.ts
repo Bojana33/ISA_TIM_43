@@ -102,6 +102,12 @@ const routes: Routes = [
     component: UserReservationsComponent
   },
   {
+    path: 'userProfile',
+    component: ProfileComponent,
+    //canActivate: [LoginGuard, GuestGuard],
+    pathMatch: 'full'
+  },
+  {
     path: 'profile/:id',
     component: ProfileComponent,
     canActivate: [LoginGuard, GuestGuard],
@@ -125,7 +131,7 @@ const routes: Routes = [
     component: FutureReservationsComponent
   },
   {
-    path: 'profile/profileUpdate',
+    path: 'profileUpdate',
     component: ProfileUpdateComponent,
     canActivate: [LoginGuard,GuestGuard]
   },

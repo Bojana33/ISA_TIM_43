@@ -56,7 +56,7 @@ insert into owner (category, loyalty_points, owner_type, id)
            (0,0,0,4);
 
 insert into client (category, loyalty_points, penalty, id)
-values (0,0,3,1);
+values (0,0,2,1);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, average_grade, address_id)

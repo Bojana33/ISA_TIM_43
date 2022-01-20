@@ -36,6 +36,7 @@ public class ClientController {
         this.modelMapper = modelMapper;
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/get_client_reservations")
     public ResponseEntity<Collection<Reservation>> getAll(Principal user){
         return new ResponseEntity<>(this.clientService.findAllReservations(user.getName()), HttpStatus.OK);
