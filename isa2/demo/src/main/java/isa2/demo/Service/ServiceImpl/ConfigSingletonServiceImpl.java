@@ -86,6 +86,7 @@ public class ConfigSingletonServiceImpl implements ConfigSingletonService {
             owner.setCategory(UserCategory.NONE);
         }
         this.userService.save(owner);
+        //TODO: kada su rezervacije COMPLETED dodaj poene vlasniku
     }
 
     @Override
@@ -115,6 +116,6 @@ public class ConfigSingletonServiceImpl implements ConfigSingletonService {
         if (owner.getCategory() == UserCategory.REGULAR){
             return (loyaltyProgram.getIncomeRegular())/100;
         }
-        return -1.0;
+        return (1 - (loyaltyProgram.getFeePercentage()/100));
     }
 }

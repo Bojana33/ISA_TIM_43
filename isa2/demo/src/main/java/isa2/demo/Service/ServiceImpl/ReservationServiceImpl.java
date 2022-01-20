@@ -32,6 +32,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final BoatService boatService;
     private final ClientService clientService;
     private final ConfigSingletonService configSingletonService;
+    private final OwnerService ownerService;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EntityRepository entityRepository,
@@ -42,7 +43,8 @@ public class ReservationServiceImpl implements ReservationService {
                                   CottageService cottageService,
                                   AdventureService adventureService,
                                   ClientService clientService,
-                                  ConfigSingletonService configSingletonService) {
+                                  ConfigSingletonService configSingletonService,
+                                  OwnerService ownerService) {
         this.reservationRepository = reservationRepository;
         this.adventureService = adventureService;
         this.cottageService = cottageService;
@@ -53,6 +55,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.clientRepository = clientRepository;
         this.clientService = clientService;
         this.configSingletonService = configSingletonService;
+        this.ownerService = ownerService;
     }
 
     @Override
@@ -121,6 +124,12 @@ public class ReservationServiceImpl implements ReservationService {
         if (clientsDiscount != -1){
             price = price * (1 - clientsDiscount);
         }
+        // calculate owner income for this reservation
+        Owner owner = this.ownerService.findByEntity(entity);
+        Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
+        ownerIncome = price * ownerIncome;
+        reservation.setOwnersIncome(ownerIncome);
+
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(clientRepository.findById(reservationDTO.getClientId()).get());
@@ -152,6 +161,8 @@ public class ReservationServiceImpl implements ReservationService {
 
         Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
         Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
+
+        // calculate clients discount based on category
         if (clientsDiscount != -1){
             price = price * (1 - clientsDiscount);
         }
@@ -162,6 +173,13 @@ public class ReservationServiceImpl implements ReservationService {
         //check if reservation is in sale period and calculate discount
         if (LocalDateTime.now().isAfter(reservation.getSalePeriod().getStartDate()) && LocalDateTime.now().isBefore(reservation.getSalePeriod().getEndDate()) && reservation.getDiscount() != null)
             price = price - reservation.getDiscount();
+
+        // calculate owner income for this reservation
+        Owner owner = this.ownerService.findByEntity(entity);
+        Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
+        ownerIncome = price * ownerIncome;
+        reservation.setOwnersIncome(ownerIncome);
+
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
