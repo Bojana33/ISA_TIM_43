@@ -31,6 +31,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final CottageService cottageService;
     private final BoatService boatService;
     private final ClientService clientService;
+    private final ConfigSingletonService configSingletonService;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EntityRepository entityRepository,
@@ -40,7 +41,8 @@ public class ReservationServiceImpl implements ReservationService {
                                   BoatService boatService,
                                   CottageService cottageService,
                                   AdventureService adventureService,
-                                  ClientService clientService) {
+                                  ClientService clientService,
+                                  ConfigSingletonService configSingletonService) {
         this.reservationRepository = reservationRepository;
         this.adventureService = adventureService;
         this.cottageService = cottageService;
@@ -50,6 +52,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.modelMapper = modelMapperConfig;
         this.clientRepository = clientRepository;
         this.clientService = clientService;
+        this.configSingletonService = configSingletonService;
     }
 
     @Override
@@ -114,6 +117,10 @@ public class ReservationServiceImpl implements ReservationService {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
         }
+        Double clientsDiscount = this.configSingletonService.getClientDiscount(this.clientService.findById(reservationDTO.getClientId()));
+        if (clientsDiscount != -1){
+            price = price * (1 - clientsDiscount);
+        }
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(clientRepository.findById(reservationDTO.getClientId()).get());
@@ -142,7 +149,12 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setReservationStatus(ReservationStatus.RESERVED);
         reservation.setNumberOfGuests(reservationDTO.getNumberOfGuests());
         Collection<AdditionalService> additionalServices = new ArrayList<>();
+
+        Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
         Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
+        if (clientsDiscount != -1){
+            price = price * (1 - clientsDiscount);
+        }
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
