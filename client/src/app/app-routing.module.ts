@@ -59,6 +59,7 @@ import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.compo
 import {SubscriptionsComponent} from "./user-quest/subscriptions/subscriptions.component";
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
 import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
+import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 
 
 const routes: Routes = [
@@ -126,7 +127,7 @@ const routes: Routes = [
     component: FutureReservationsComponent
   },
   {
-    path: 'profile/profileUpdate',
+    path: 'profile/:id/profileUpdate',
     component: ProfileUpdateComponent,
     canActivate: [LoginGuard,GuestGuard]
   },
@@ -284,6 +285,11 @@ const routes: Routes = [
   {
     path: 'owners-reviews',
     component: OwnersReviewsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'config-singleton',
+    component: ConfigSingletonComponent,
     canActivate: [GuestGuard]
   },
   {

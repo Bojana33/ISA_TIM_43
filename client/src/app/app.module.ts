@@ -100,6 +100,7 @@ import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.compo
 import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
 import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
+import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 
 
 const mapConfig: YaConfig = {
@@ -172,6 +173,7 @@ const mapConfig: YaConfig = {
     ReviewDialogComponent,
     FutureReservationsComponent,
     OwnersReviewsComponent,
+    ConfigSingletonComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@
 
     <div class="spacer"></div>
 
+    <a mat-button routerLink="config-singleton" *ngIf="hasRole('ADMIN')">System Configuration</a>
     <a mat-button routerLink="registration-requests" *ngIf="hasSignedIn() && hasRole('ADMIN')">Registration Requests</a>
     <a mat-button routerLink="home">Home</a>
   <!--USER AND GUEST ENTITY CATALOGS!-->

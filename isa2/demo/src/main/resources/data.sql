@@ -97,3 +97,7 @@ values ('BROD 2', 'Perfect rest day on our boat', 10, 9, './../../assets/images/
 INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
 VALUES (6, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel');
 
+insert into config_singleton(config_singleton_id,client_reservation_points, discount_gold, discount_regular, discount_silver,
+                             fee_percentage,gold_start_points,silver_start_points,regular_start_points, successful_owner_points,
+                             income_gold, income_regular, income_silver)
+            values (1,0,0,0,0,0,0,0,0,0,0,0,0);
