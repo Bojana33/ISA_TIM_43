@@ -2,6 +2,7 @@ import {Address} from './address';
 import {AddressDTO} from './address-dto.model';
 
 export class UserDTO {
+  public id!: any;
   public firstName!: string;
   public email!: string;
   public surname!: string;
