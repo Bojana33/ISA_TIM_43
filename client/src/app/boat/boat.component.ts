@@ -21,6 +21,7 @@ export class BoatComponent implements OnInit {
   addressFormated: any;
   boatTypeButtonActive = false;
   showForm = 1;
+  clicked = false;
   private selectedFile!: File;
   // @ts-ignore
   boatUpdateForm: FormGroup;

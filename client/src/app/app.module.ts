@@ -103,6 +103,8 @@ import { FutureReservationsComponent } from './user-reservations/future-reservat
 import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { BarchartComponent } from './barchart/barchart.component';
 
 
 const mapConfig: YaConfig = {
@@ -177,7 +179,8 @@ const mapConfig: YaConfig = {
     FutureReservationsComponent,
     OwnersReviewsComponent,
     RegisterBoatComponent,
-    DashboardComponent
+    DashboardComponent,
+    BarchartComponent
   ],
   imports: [
     BrowserModule,
@@ -215,7 +218,8 @@ const mapConfig: YaConfig = {
     MatRadioModule,
     MatSortModule,
     MatSlideToggleModule,
-    NgbModule
+    NgbModule,
+    NgxChartsModule
   ],
   exports: [
     SignupClientComponent

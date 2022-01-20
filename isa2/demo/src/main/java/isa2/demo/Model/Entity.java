@@ -57,4 +57,19 @@ public class Entity implements Serializable {
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity", orphanRemoval = true)
     public java.util.Collection<Reservation> reservations;
+
+    @PostLoad
+    private void onLoad() {
+        Double sum = 0.0;
+        Double counter = 0.0;
+
+        for(Reservation reservation: this.getReservations()){
+            if(reservation.getClientsReview() != null){
+                sum += reservation.getClientsReview().getGrade();
+                counter += 1;
+            }
+        }
+
+        this.averageGrade = (sum/counter);
+    }
 }

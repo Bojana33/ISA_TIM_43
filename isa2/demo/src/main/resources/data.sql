@@ -79,3 +79,4 @@ INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 3),
 INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
 VALUES (5, 0, 20.0, 12.3, 200, 15, 15, 20, 'no rules', null),
        (6, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel');
+
