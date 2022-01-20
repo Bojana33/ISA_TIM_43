@@ -1,21 +1,18 @@
 package isa2.demo.Controller;
 
 import isa2.demo.DTO.BoatDTO;
-import isa2.demo.DTO.CottageDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.BoatMapper;
 import isa2.demo.Exception.InvalidInputException;
-import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
-import isa2.demo.Model.Cottage;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.BoatService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -50,7 +47,7 @@ public class BoatController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Boat addBoat(@RequestBody BoatDTO boatDTO){
+    public Boat addBoat(@RequestBody @Valid BoatDTO boatDTO){
         Boat boat = boatMapper.mapDtoToBoat(boatDTO);
         boat.setOwner(ownerRepository.findById(boatDTO.getBoatOwnerId()).get());
         boat = boatService.addNewBoat(boat);

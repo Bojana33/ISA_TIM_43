@@ -26,17 +26,25 @@
           <h4 class="title is-4 my-2">Description</h4>
           <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
           <h4 class="title is-4 my-2">Maximum number of guests</h4>
-          <input class = "input is-small is-rounded" formControlName="maxNumberOfGuests">
+          <input class = "input is-small is-rounded" type="number"formControlName="maxNumberOfGuests">
           <h4 class="title is-4 my-2">Price per day</h4>
-          <input class = "input is-small is-rounded" formControlName="pricePerDay">
+          <input class = "input is-small is-rounded" type="number"formControlName="pricePerDay">
           <h4 class="title is-4 my-2">Length</h4>
-          <input class = "input is-small is-rounded" formControlName="length">
+          <input class = "input is-small is-rounded" type="number"formControlName="length">
           <h4 class="title is-4 my-2">Engine power</h4>
-          <input class = "input is-small is-rounded" formControlName="enginePower">
+          <input class = "input is-small is-rounded" type="number"formControlName="enginePower">
+          <h4 class="title is-4 my-2">Engine number</h4>
+          <input class = "input is-small is-rounded" type="text" formControlName="engineNumber">
           <h4 class="title is-4 my-2">Maximum speed</h4>
-          <input class = "input is-small is-rounded" formControlName="maxSpeed">
+          <input class = "input is-small is-rounded" type="number"formControlName="maxSpeed">
           <h4 class="title is-4 my-2">Capacity</h4>
-          <input class = "input is-small is-rounded" formControlName="capacity">
+          <input class = "input is-small is-rounded" type="number" formControlName="capacity">
+          <h4 class="title is-4 my-2">Cancellation fee</h4>
+          <input class = "input is-small is-rounded" type="number" formControlName="cancellationFee">
+          <h4 class="title is-4 my-2">Fishing equipment</h4>
+          <input class = "input is-small is-rounded" type="text" formControlName="fishingEquipment">
+          <h4 class="title is-4 my-2">House rules</h4>
+          <input class = "input is-small is-rounded" type="text" formControlName="houseRules">
           <h4 class="title is-4 my-2">Boat type: {{boat.type.toString()}} </h4>
           <div class="select is-rounded">
             <select formControlName="boatType">

@@ -75,6 +75,11 @@ export class BoatComponent implements OnInit {
       ),
       enginePower: new FormControl(this.boat.enginePower, [
         Validators.required,
+        Validators.min(5),
+        Validators.max(1000)]
+      ),
+      engineNumber: new FormControl(this.boat.engineNumber, [
+        Validators.required,
         Validators.minLength(5),
         Validators.maxLength(31)]
       ),
@@ -96,6 +101,20 @@ export class BoatComponent implements OnInit {
       boatType: new FormControl(this.boat.type, [
         Validators.required]
       ),
+      cancellationFee: new FormControl(this.boat.cancellationFee, [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(100)]
+      ),
+      fishingEquipment: new FormControl(this.boat.fishingEquipment, [
+        Validators.minLength(0),
+        Validators.maxLength(300)]
+      ),
+      houseRules: new FormControl(this.boat.houseRules, [
+        Validators.required,
+        Validators.minLength(0),
+        Validators.maxLength(300)]
+      )
     });
   }
   // tslint:disable-next-line:typedef
@@ -127,7 +146,7 @@ export class BoatComponent implements OnInit {
   updateboat(form: FormGroup) {
     // let boatForUpdate = new BoatDTO();
     // boatForUpdate = this.boat;
-    this.boat.name = form.value.boatName;
+    this.boat.name = form.value.name;
     this.boat.description = form.value.description;
     this.boat.pricePerDay = form.value.pricePerDay;
     this.boat.maxNumberOfGuests = form.value.maxNumberOfGuests;
@@ -135,6 +154,10 @@ export class BoatComponent implements OnInit {
     this.boat.capacity = form.value.capacity;
     this.boat.enginePower = form.value.enginePower;
     this.boat.type = form.value.boatType;
+    this.boat.cancellationFee = form.value.cancellationFee;
+    this.boat.houseRules = form.value.houseRules;
+    this.boat.fishingEquipment = form.value.fishingEquipment;
+    this.boat.engineNumber = form.value.engineNumber;
     return this.boatService.updateBoat(this.boat).subscribe(
       res => {
         this.uploadImage(res.id);

@@ -32,6 +32,9 @@ export class RegisterBoatComponent implements OnInit {
     this.boat = this.boatCreationForm.getRawValue();
     this.boat.reservations = [];
     this.boat.boatOwnerId = this.userService.currentUser.id;
+    console.log(this.boat.cancellationFee);
+    this.boat.cancellationFee = this.boatCreationForm.value.cancellationFee;
+    console.log(this.boat.cancellationFee);
     this.http.post<any>(this.config.boat_url, this.boat)
       .subscribe(res => {
         this.uploadImage(res.id);
