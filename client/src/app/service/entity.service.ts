@@ -16,7 +16,10 @@ export class EntityService {
                   private config: ConfigService,
                   private http: HttpClient) { }
 
-  saveImage(data: FormData, cottageId: number) {
+  saveEntityPhoto(data: FormData, cottageId: number) {
+    return this.http.post(this.config.entity_url + '/save_entity_image/' + cottageId, data);
+  }
+  savePhoto(data: FormData, cottageId: number) {
     return this.http.post(this.config.entity_url + '/save_image/' + cottageId, data);
   }
 

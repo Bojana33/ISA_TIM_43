@@ -50,15 +50,19 @@ import {Boat} from './model/boat';
 import {BoatComponent} from './boat/boat.component';
 import { ComplaintsComponent } from './complaints/complaints.component';
 import {CottageownerGuard} from './guard/cottageowner.guard';
+import {BoatownerGuard} from './guard/boatowner.guard';
+import {RegisterBoatComponent} from './register-boat/register-boat.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 import {ReservationFormComponent} from './reservation-form/reservation-form.component';
 import {ClientReservationsComponent} from './client-reservations/client-reservations.component';
-import {FastReservationComponent} from "./fast-reservation/fast-reservation.component";
-import {UserReservationsComponent} from "./user-reservations/user-reservations.component";
+import {FastReservationComponent} from './fast-reservation/fast-reservation.component';
+import {UserReservationsComponent} from './user-reservations/user-reservations.component';
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
-import {SubscriptionsComponent} from "./user-quest/subscriptions/subscriptions.component";
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
 import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
+import {SubscriptionsComponent} from './user-quest/subscriptions/subscriptions.component';
+import {CottageOwnerAndBoatOwnerGuard} from './guard/cottage-owner-and-boat-owner.guard';
 
 
 const routes: Routes = [
@@ -80,7 +84,7 @@ const routes: Routes = [
     path: 'signupClient',
     component: SignupClientComponent,
     canActivate: [GuestGuard],
-    pathMatch:'full'
+    pathMatch: 'full'
   },
   {
     path: 'login',
@@ -96,7 +100,7 @@ const routes: Routes = [
   {
     path: 'signupAdmin',
     component: SignupAdminComponent,
-    canActivate: [AdminGuard,GuestGuard]
+    canActivate: [AdminGuard, GuestGuard]
   },
   {
     path: 'userReservations',
@@ -128,7 +132,7 @@ const routes: Routes = [
   {
     path: 'profile/profileUpdate',
     component: ProfileUpdateComponent,
-    canActivate: [LoginGuard,GuestGuard]
+    canActivate: [LoginGuard, GuestGuard]
   },
   {
     path: 'adventures',
@@ -148,7 +152,7 @@ const routes: Routes = [
   {
     path: 'create-adventure',
     component: CreateAdventureComponent,
-    canActivate: [InstructorGuard,GuestGuard]
+    canActivate: [InstructorGuard, GuestGuard]
   },
   // {
   //  path: 'boats',
@@ -172,7 +176,7 @@ const routes: Routes = [
   {
     path: 'registration-requests',
     component: RegistrationRequestsComponent,
-    canActivate: [AdminGuard,GuestGuard]
+    canActivate: [AdminGuard, GuestGuard]
   },
   {
     path: 'reject-request/:id',
@@ -208,9 +212,19 @@ const routes: Routes = [
     canActivate: [CottageownerGuard]
   },
   {
+    path: 'register-boat',
+    component: RegisterBoatComponent,
+    canActivate: [BoatownerGuard]
+  },
+  {
     path: 'delete-profile',
     component: DeleteProfileComponent,
     canActivate: [GuestGuard]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [CottageOwnerAndBoatOwnerGuard]
   },
   {
     path: 'user-delete-requests',

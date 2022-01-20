@@ -9,6 +9,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 import {BoatDTO} from '../model/boat-dto';
+import {EntityService} from '../service/entity.service';
 
 @Component({
   selector: 'app-boat',
@@ -20,6 +21,7 @@ export class BoatComponent implements OnInit {
   addressFormated: any;
   boatTypeButtonActive = false;
   showForm = 1;
+  private selectedFile!: File;
   // @ts-ignore
   boatUpdateForm: FormGroup;
   //     public fishingEquipment: string = '',
@@ -34,15 +36,12 @@ export class BoatComponent implements OnInit {
     private boatService: BoatService,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
+    private entityService: EntityService
   ) {
   }
 
   ngOnInit(): void {
     this.loadData();
-    // if (this.hasSignedIn() && this.loggedUserIsOwner()){
-    //   // @ts-ignore
-    //   this.boatUpdateForm.get('boatName')?.setValue(this.boat.boatName);
-    // }
   }
 
   private loadData(): void {
@@ -57,7 +56,7 @@ export class BoatComponent implements OnInit {
 
   initializeForm(boat: BoatDTO): void{
     this.boatUpdateForm = this.formBuilder.group({
-      boatName: new FormControl(this.boat.name, [
+      name: new FormControl(this.boat.name, [
         Validators.required,
         Validators.minLength(5)]
       ),
@@ -75,6 +74,11 @@ export class BoatComponent implements OnInit {
         Validators.min(0)]
       ),
       enginePower: new FormControl(this.boat.enginePower, [
+        Validators.required,
+        Validators.min(5),
+        Validators.max(1000)]
+      ),
+      engineNumber: new FormControl(this.boat.engineNumber, [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(31)]
@@ -97,6 +101,20 @@ export class BoatComponent implements OnInit {
       boatType: new FormControl(this.boat.type, [
         Validators.required]
       ),
+      cancellationFee: new FormControl(this.boat.cancellationFee, [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(100)]
+      ),
+      fishingEquipment: new FormControl(this.boat.fishingEquipment, [
+        Validators.minLength(0),
+        Validators.maxLength(300)]
+      ),
+      houseRules: new FormControl(this.boat.houseRules, [
+        Validators.required,
+        Validators.minLength(0),
+        Validators.maxLength(300)]
+      )
     });
   }
   // tslint:disable-next-line:typedef
@@ -128,7 +146,7 @@ export class BoatComponent implements OnInit {
   updateboat(form: FormGroup) {
     // let boatForUpdate = new BoatDTO();
     // boatForUpdate = this.boat;
-    this.boat.name = form.value.boatName;
+    this.boat.name = form.value.name;
     this.boat.description = form.value.description;
     this.boat.pricePerDay = form.value.pricePerDay;
     this.boat.maxNumberOfGuests = form.value.maxNumberOfGuests;
@@ -136,8 +154,13 @@ export class BoatComponent implements OnInit {
     this.boat.capacity = form.value.capacity;
     this.boat.enginePower = form.value.enginePower;
     this.boat.type = form.value.boatType;
+    this.boat.cancellationFee = form.value.cancellationFee;
+    this.boat.houseRules = form.value.houseRules;
+    this.boat.fishingEquipment = form.value.fishingEquipment;
+    this.boat.engineNumber = form.value.engineNumber;
     return this.boatService.updateBoat(this.boat).subscribe(
       res => {
+        this.uploadImage(res.id);
         if (res.status === 200){
           this.snackbar.open('Boat update successful', 'cancel');
         }else{
@@ -153,5 +176,14 @@ export class BoatComponent implements OnInit {
       (res: any) => {
         console.log(res);
       });
+  }
+  public onFileChanged(event: any): void {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile.name);
+  }
+  private uploadImage(id: number): void{
+    const data: FormData = new FormData();
+    data.append('imageUrl', this.selectedFile, this.selectedFile.name);
+    this.entityService.savePhoto(data, id).subscribe(res => {console.log(res); });
   }
 }

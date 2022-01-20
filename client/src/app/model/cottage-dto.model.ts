@@ -1,7 +1,7 @@
 import {AddressDTO} from './address-dto.model';
 import {RoomDTO} from './room-dto.model';
 import {ReservationDTO} from './reservation-dto.model';
-import {AdditionalServicesDTO} from "./AdditionalServicesModel/additional-services-dto.model";
+import {AdditionalServicesDTO} from './AdditionalServicesModel/additional-services-dto.model';
 
 export class CottageDTO {
     public id!: number;

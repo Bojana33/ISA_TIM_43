@@ -2,7 +2,7 @@ import { ChangePasswordComponent } from './profile/change-password/change-passwo
 import { InstructorGuard } from './guard/instructor.guard';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatSortModule} from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -73,7 +73,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DatePipe} from '@angular/common';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
-
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 import { InstructorCalendarComponent } from './instructor-calendar/instructor-calendar.component';
 
@@ -94,12 +94,15 @@ import { EntityService } from './service/entity.service';
 import { ReservationDialogComponent } from './client-reservations/reservation-dialog/reservation-dialog.component';
 import { FastReservationComponent } from './fast-reservation/fast-reservation.component';
 import { FastReservationDialogComponent } from './fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component';
+import { OwnerReviewFormComponent } from './owner-review-form/owner-review-form.component';
 import { UserReservationsComponent } from './user-reservations/user-reservations.component';
 import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/feedback-dialog.component';
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
 import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
+import { RegisterBoatComponent } from './register-boat/register-boat.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const mapConfig: YaConfig = {
@@ -166,12 +169,15 @@ const mapConfig: YaConfig = {
     ReservationDialogComponent,
     FastReservationComponent,
     FastReservationDialogComponent,
+    OwnerReviewFormComponent,
     ClientsReviewsComponent,
     UserReservationsComponent,
     FeedbackDialogComponent,
     ReviewDialogComponent,
     FutureReservationsComponent,
     OwnersReviewsComponent,
+    RegisterBoatComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -207,6 +213,8 @@ const mapConfig: YaConfig = {
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     MatCheckboxModule,
     MatRadioModule,
+    MatSortModule,
+    MatSlideToggleModule,
     NgbModule
   ],
   exports: [

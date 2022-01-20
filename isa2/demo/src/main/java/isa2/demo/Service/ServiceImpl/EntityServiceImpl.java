@@ -25,11 +25,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -184,9 +180,18 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public void uploadEntityPhoto(Integer id, String fileName) {
+    public void uploadEntityPhoto(Integer id, String fileUrl) {
         Entity entity = entityRepository.findById(id).get();
-        entity.setEntityPhoto(fileName);
+        entity.setEntityPhoto(fileUrl);
+        entityRepository.save(entity);
+    }
+
+    @Override
+    public void savePhoto(Integer id, String fileUrl) {
+        Entity entity = entityRepository.findById(id).get();
+        Set<String> photos = entity.getPhotos();
+        photos.add(fileUrl);
+        entity.setPhotos(photos);
         entityRepository.save(entity);
     }
 
