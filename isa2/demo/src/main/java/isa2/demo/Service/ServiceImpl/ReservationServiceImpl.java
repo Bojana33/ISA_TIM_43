@@ -116,7 +116,11 @@ public class ReservationServiceImpl implements ReservationService {
         Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
-            additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
+            additionalServiceDTO.setId(null);
+            AdditionalService additionalService = modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class);
+            additionalService.setEntity(entity);
+            additionalService.setReservation(reservation);
+            additionalServices.add(additionalService);
         }
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);

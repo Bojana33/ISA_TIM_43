@@ -89,10 +89,10 @@ public class CottageServiceImpl implements CottageService {
 
     @Override
     public Collection<Cottage> findFreeCottages(FreeEntityDTO request) throws InvalidInputException {
+        Collection<Cottage> freeCottages = new ArrayList<Cottage>();
         if (request.getStartDate().isAfter(request.getEndDate()) || request.getStartDate().isEqual(request.getEndDate()))
             throw new InvalidInputException("Invalid start and end date");
         Collection<Cottage> cottages = cottageRepository.findAll();
-        Collection<Cottage> freeCottages = new ArrayList<Cottage>();
         if (request.getGrade() != null && request.getGrade() < 0)
             throw new InvalidInputException("Grade needs to be positive");
         if (request.getNumberOfGuests() != null && request.getNumberOfGuests() < 1)

@@ -73,9 +73,11 @@
       <td>{{res.salePeriod.endDate}}</td>
       <td>{{res.clientId}}</td>
       <td>
+        <div *ngIf="res.additionalServices">
         <li *ngFor="let addService of res.additionalServices">
           {{addService['name']}} : {{addService['price']}}
         </li>
+        </div>
       </td>
       <td>
         <button class="button is-link is-inverted" (click)="showForm=2" *ngIf="res.reservationStatus.toString() == 'COMPLETED'">
