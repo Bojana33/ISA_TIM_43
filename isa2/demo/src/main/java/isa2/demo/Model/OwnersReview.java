@@ -25,15 +25,16 @@ public class OwnersReview implements Serializable {
    private String description;
 
    @Column
-   private Double grade;
+   private Boolean appeared;
 
    @Column
    private ReviewStatus reviewStatus;
 
    @Column
    private Boolean isReported;
-   
-   @OneToOne(fetch = FetchType.EAGER, mappedBy = "ownersReview")
+
+   @OneToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "reservation_id", referencedColumnName = "id")
    private Reservation reservation;
 
 }

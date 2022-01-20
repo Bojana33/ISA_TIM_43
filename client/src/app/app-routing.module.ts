@@ -58,6 +58,7 @@ import {UserReservationsComponent} from "./user-reservations/user-reservations.c
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 import {SubscriptionsComponent} from "./user-quest/subscriptions/subscriptions.component";
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
+import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
 
 
 const routes: Routes = [
@@ -278,6 +279,11 @@ const routes: Routes = [
   {
     path: 'clients-reviews',
     component: ClientsReviewsComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'owners-reviews',
+    component: OwnersReviewsComponent,
     canActivate: [GuestGuard]
   },
   {

@@ -99,6 +99,7 @@ import { FeedbackDialogComponent } from './user-reservations/feedback-dialog/fee
 import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.component';
 import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
+import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
 
 
 const mapConfig: YaConfig = {
@@ -170,6 +171,7 @@ const mapConfig: YaConfig = {
     FeedbackDialogComponent,
     ReviewDialogComponent,
     FutureReservationsComponent,
+    OwnersReviewsComponent,
   ],
   imports: [
     BrowserModule,

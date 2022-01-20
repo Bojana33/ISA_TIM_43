@@ -67,8 +67,7 @@ public class Reservation implements Serializable {
    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
    private Collection<AdditionalService> additionalServices;
 
-   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-   @JoinColumn(name = "owners_review_id", referencedColumnName = "id")
+   @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
    private OwnersReview ownersReview;
 
    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
