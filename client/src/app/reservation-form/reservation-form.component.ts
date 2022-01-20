@@ -10,6 +10,7 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 })
 export class ReservationFormComponent implements OnInit{
   @Input() entityId: any;
+  @Input() clientId!: number;
   @Output() createdReservationEvent = new EventEmitter<ReservationDTO>();
   cottageReservationForm!: FormGroup;
   private _additionalServices!: FormArray;
@@ -53,6 +54,8 @@ export class ReservationFormComponent implements OnInit{
   }
   makeReservation(): void {
     this.reservation = this.cottageReservationForm.getRawValue();
+    // @ts-ignore
+    this.reservation?.clientId = this.clientId;
     console.log(this.reservation);
     // @ts-ignore
     console.log(this.reservation.reservedPeriod.startDate.toISOString());

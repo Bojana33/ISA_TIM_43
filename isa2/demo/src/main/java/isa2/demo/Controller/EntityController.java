@@ -167,4 +167,15 @@ public class EntityController {
         Entity entity = entityService.findById(entityId);
         return new ResponseEntity<>(modelMapper.modelMapper().map(entity, EntityDTO.class), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/createReservationForUser")
+    public ResponseEntity<ReservationDTO> createReservationForUser(@RequestBody ReservationDTO reservationDTO){
+        try{
+            Reservation reservation = reservationService.reserveEntity(reservationDTO);
+            return new ResponseEntity<>(modelMapper.modelMapper().map(reservation, ReservationDTO.class), HttpStatus.OK);
+        }
+        catch(InvalidReservationException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

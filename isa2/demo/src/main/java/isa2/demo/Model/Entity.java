@@ -36,6 +36,7 @@ public class Entity implements Serializable {
     private java.lang.String entityPhoto;
 
     //TO DO: return this to transient, it is only a temporary column
+    @Transient
     @Column(name = "average_grade")
     private java.lang.Double averageGrade = 0.0;
 

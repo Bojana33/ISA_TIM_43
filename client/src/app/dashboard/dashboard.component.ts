@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   pricesList: any;
   activeEntities: any;
   filterStatus = 0;
+  showForm = 1;
   canceledReservationsNumber = 0;
   activeButton = 'DASHBOARD';
   constructor(
@@ -93,5 +94,21 @@ export class DashboardComponent implements OnInit {
   hasRole(role: string){
     return this.userService.loggedRole(role);
   }
-
+  isReservationActive(reservation: ReservationDTO): boolean{
+    const dateNow = new Date();
+    return (new Date(reservation.reservedPeriod.startDate) <=  dateNow && new Date(reservation.reservedPeriod.endDate) >= dateNow);
+  }
+  activeReservations(): void {
+    const dateNow = new Date();
+    console.log(dateNow);
+    this.reservations = this.allReservations.filter((val) => new Date(val.reservedPeriod.startDate) <=  dateNow &&
+      new Date(val.reservedPeriod.endDate) >= dateNow);
+    this.updatePrices();
+  }
+  createNewReservation($event: ReservationDTO){
+    this.reservationService.createNewReservationsForClient($event).subscribe(
+      (res: any) => {
+        console.log(res);
+      });
+  }
 }
