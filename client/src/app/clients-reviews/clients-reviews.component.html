@@ -9,7 +9,12 @@
       
           </ng-container>
       
-      
+          <ng-container matColumnDef="client">
+            <mat-header-cell *matHeaderCellDef>Client</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let res">{{clientNames[res.id-1]}}</mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
             <mat-cell class="duration-cell"
