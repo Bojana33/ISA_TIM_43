@@ -69,4 +69,5 @@ export class SignupClientComponent implements OnInit {
     this.request.password = form.value.password;
     this.request.phoneNumber = form.value.phoneNumber;
   }
+
 }

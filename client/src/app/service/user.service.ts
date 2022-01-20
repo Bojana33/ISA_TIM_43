@@ -102,4 +102,8 @@ export class UserService {
   delete(id:number){
     this.apiService.delete(this.config.user_url + '/delete_user/' + id).subscribe(res => console.log(res));
   }
+
+  getLoggedUserInfo(){
+    return this.apiService.get('http://localhost:8090/user/userInfo');
+  }
 }

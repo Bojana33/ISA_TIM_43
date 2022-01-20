@@ -29,8 +29,9 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser(this.router.snapshot.params.id).subscribe((response)=>
-      this.userProfile = response);
+    //this.userService.getUser(this.router.snapshot.params.id).subscribe((response)=>
+     // this.userProfile = response);
+    this.userService.getLoggedUserInfo().subscribe(res => this.userProfile = res);
   }
 
   openDialog(){
