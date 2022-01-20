@@ -74,7 +74,6 @@ export class DashboardComponent implements OnInit {
     // timePeriod = this.reservationsDateRangeForm.getRawValue();
     timePeriod.startDate = form.value.startDate;
     timePeriod.endDate = form.value.endDate;
-    console.log(timePeriod);
     if (timePeriod.startDate == null){
       timePeriod.startDate = minDate;
     }

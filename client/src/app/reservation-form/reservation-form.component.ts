@@ -34,11 +34,11 @@ export class ReservationFormComponent implements OnInit{
       }),
       additionalServices: this.formBuilder.array([this.createAdditionalServices()])
     });
-    console.log('ngInitOver');
+    // @ts-ignore
+    this.reservation?.clientId = this.clientId;
   }
 
   createAdditionalServices(): FormGroup{
-    console.log('createAdditionalService');
     return this.formBuilder.group({
       name: '',
       price: ''
@@ -55,10 +55,10 @@ export class ReservationFormComponent implements OnInit{
   makeReservation(): void {
     this.reservation = this.cottageReservationForm.getRawValue();
     // @ts-ignore
+    console.log(this.clientId);
+    // @ts-ignore
     this.reservation?.clientId = this.clientId;
     console.log(this.reservation);
-    // @ts-ignore
-    console.log(this.reservation.reservedPeriod.startDate.toISOString());
     // @ts-ignore
     this.reservation.entityId = this.entityId;
     this.createdReservationEvent.emit(this.reservation);

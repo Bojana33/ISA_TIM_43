@@ -67,10 +67,10 @@
       <td>{{res.price}}</td>
       <td>{{res.numberOfGuests}}</td>
       <td>{{res.reservationStatus.toString()}}</td>
-      <td>{{res.reservedPeriod.startDate}}</td>
-      <td>{{res.reservedPeriod.endDate}}</td>
-      <td>{{res.salePeriod.startDate}}</td>
-      <td>{{res.salePeriod.endDate}}</td>
+      <td *ngIf="res.salePeriod != null">{{res.salePeriod.startDate}}</td>
+      <td *ngIf="res.salePeriod != null">{{res.salePeriod.endDate}}</td>
+      <td *ngIf="res.salePeriod == null">no sale</td>
+      <td *ngIf="res.salePeriod == null">no sale</td>
       <td>{{res.clientId}}</td>
       <td>
         <div *ngIf="res.additionalServices">
