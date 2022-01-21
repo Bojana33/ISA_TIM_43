@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
     private userService : UserService,
     private authService : AuthService,
     private router : Router
-  ) { }
+  ) { this.user = userService.currentUser}
 
   ngOnInit(): void {
     this.userService.getMyInfo().subscribe((response) =>

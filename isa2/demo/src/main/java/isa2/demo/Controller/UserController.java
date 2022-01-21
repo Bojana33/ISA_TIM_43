@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/update", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     public ResponseEntity<? extends Object> updateUser(@RequestBody UserDTO userUpdateDTO, Principal user) {
         try {
             User userUpdate = userMapper.mapDtoToUser(userUpdateDTO);
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/userInfo", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER')")
+    //@PreAuthorize("hasRole('USER')")
     public UserDTO getUserInfo(Principal user) {
             User user1 = userService.findByUsername(user.getName());
             UserDTO userDTO = userMapper.mapUserToDto(user1);
