@@ -1,4 +1,5 @@
 import { AdditionalService } from "./additional-service";
+import { AdditionalServicesDTO } from "./AdditionalServicesModel/additional-services-dto.model";
 import { Address } from "./address";
 
 export class Adventure{
@@ -11,7 +12,7 @@ export class Adventure{
       public photos: string[] = [];
       public maxNumberOfGuests!: number;
       public houseRules!: string;
-      public additionalServicesDto!: AdditionalService;
+      public additionalServices!: AdditionalServicesDTO[];
       public pricePerDay!: number;
       public cancellationFee!: number;
       public entityPhoto!: string;

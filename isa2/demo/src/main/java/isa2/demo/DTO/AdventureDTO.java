@@ -23,4 +23,5 @@ public class AdventureDTO {
     private Integer cancellationFee;
     private String entityPhoto;
     private Collection<ReservationDTO> reservations;
+    private Collection<AdditionalServiceDTO> additionalServices;
 }

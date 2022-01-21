@@ -195,6 +195,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
+        reservation.setReservationStatus(ReservationStatus.RESERVED);
         Collection<Reservation> entityReservations = entity.getReservations();
         entityReservations.add(reservation);
         entity.setReservations(entityReservations);
@@ -304,6 +305,13 @@ public class ReservationServiceImpl implements ReservationService {
     public void cancelReservation(String username, Integer reservationId) throws Exception{
         Client client = clientService.findByUsername(username);
         Reservation reservation = reservationRepository.getById(reservationId);
+        Entity entity = reservation.getEntity();
+        if(entity instanceof Adventure){
+            if(((Adventure) entity).getCancellationFee() != 0){
+                Double income = reservation.getPrice() * (((Adventure) entity).getCancellationFee()/100);
+                reservation.setOwnersIncome(income);
+            }
+        }
         if(!client.getReservation().contains(reservation))
             throw new Exception("Client does not have this reservation");
         if(reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now().plusDays(3)))

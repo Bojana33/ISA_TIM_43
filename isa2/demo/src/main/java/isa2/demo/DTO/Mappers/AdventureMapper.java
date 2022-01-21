@@ -1,6 +1,7 @@
 package isa2.demo.DTO.Mappers;
 
 import isa2.demo.Config.ModelMapperConfig;
+import isa2.demo.DTO.AdditionalServiceDTO;
 import isa2.demo.DTO.AddressDTO;
 import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.CottageDTO;
@@ -35,6 +36,12 @@ public class AdventureMapper {
         Address address = adventure.getAddress();
         address.setEntity(adventure);
         adventure.setReservations(getReservations(adventure));
+        Collection<AdditionalService> additionalServices = adventure.getAdditionalServices();
+        if (additionalServices != null) {
+            for (AdditionalService additionalService : additionalServices) {
+                additionalService.setEntity(adventure);
+            }
+        }
         return adventure;
     }
 
