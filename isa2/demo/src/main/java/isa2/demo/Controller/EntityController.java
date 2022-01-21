@@ -8,7 +8,6 @@ import isa2.demo.Model.*;
 import isa2.demo.DTO.PeriodDTO;
 import isa2.demo.DTO.RentalTimeDTO;
 import isa2.demo.DTO.ReservationDTO;
-import isa2.demo.Model.*;
 import isa2.demo.Service.ClientService;
 import isa2.demo.Service.EntityService;
 import isa2.demo.Service.ReservationService;
@@ -18,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,8 +26,6 @@ import java.util.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/entities" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,7 +84,21 @@ public class EntityController {
         }
         return ResponseEntity.ok().body(reservationDTOS);
     }
-
+    @GetMapping("/rentalTime/{entityId}")
+    public ResponseEntity<Collection<RentalTimeDTO>> getRentalTime(@PathVariable Integer entityId){
+        ResponseEntity responseEntity = null;
+        try{
+            Collection<RentalTimeDTO> rentalTimeDTOS = new ArrayList<>();
+            Collection<RentalTime> rentalTimes = entityService.getRentalPeriodForEntity(entityId);
+            for(RentalTime rentalTime:rentalTimes){
+                rentalTimeDTOS.add(modelMapper.modelMapper().map(rentalTime, RentalTimeDTO.class));
+            }
+            responseEntity = ResponseEntity.ok(rentalTimeDTOS);
+        }catch (Exception e){
+            responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return responseEntity;
+    }
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("/subscribe/{entity_id}")
     public String subscribe(@PathVariable Integer entity_id, Principal user){
@@ -171,8 +181,13 @@ public class EntityController {
     @PostMapping(value = "/createReservationForUser")
     public ResponseEntity<ReservationDTO> createReservationForUser(@RequestBody ReservationDTO reservationDTO){
         try{
-            Reservation reservation = reservationService.reserveEntity(reservationDTO);
-            return new ResponseEntity<>(modelMapper.modelMapper().map(reservation, ReservationDTO.class), HttpStatus.OK);
+            if(reservationService.isClientsReservationCurrent(reservationDTO.getClientId())){
+                Reservation reservation = reservationService.reserveEntity(reservationDTO);
+                return new ResponseEntity<>(modelMapper.modelMapper().map(reservation, ReservationDTO.class), HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
         }
         catch(InvalidReservationException e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

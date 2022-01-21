@@ -35,7 +35,6 @@ export class ReservationFormComponent implements OnInit{
       additionalServices: this.formBuilder.array([this.createAdditionalServices()])
     });
     // @ts-ignore
-    this.reservation?.clientId = this.clientId;
   }
 
   createAdditionalServices(): FormGroup{
@@ -55,12 +54,9 @@ export class ReservationFormComponent implements OnInit{
   makeReservation(): void {
     this.reservation = this.cottageReservationForm.getRawValue();
     // @ts-ignore
-    console.log(this.clientId);
-    // @ts-ignore
-    this.reservation?.clientId = this.clientId;
-    console.log(this.reservation);
-    // @ts-ignore
     this.reservation.entityId = this.entityId;
+    // @ts-ignore
+    this.reservation.clientId = this.clientId;
     this.createdReservationEvent.emit(this.reservation);
   }
   get additionalServices(): FormArray {

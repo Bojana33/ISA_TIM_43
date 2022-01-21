@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +35,7 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public ResponseEntity<CottageDTO> addCottage(@RequestBody CottageDTO cottageDTO){
+    public ResponseEntity<CottageDTO> addCottage(@Valid @RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
         cottage = cottageService.addNewCottage(cottage);

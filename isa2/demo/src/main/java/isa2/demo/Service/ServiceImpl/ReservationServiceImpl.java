@@ -97,6 +97,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public Reservation reserveEntityByOwner(ReservationDTO reservationDTO) throws InvalidReservationException {
+        Reservation reservation = reserveEntity(reservationDTO);
+        return  reservation;
+    }
+
+    @Override
     public Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException {
         Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
         Client client = clientRepository.findById(reservationDTO.getClientId()).get();
@@ -278,5 +284,13 @@ public class ReservationServiceImpl implements ReservationService {
             throw new Exception("the reservation can no longer be canceled");
         reservation.setReservationStatus(ReservationStatus.CANCELED);
         reservationRepository.save(reservation);
+    }
+
+    @Override
+    public boolean isClientsReservationCurrent(Integer clientId) {
+        List<Reservation> reservations = reservationRepository.findAllByClient_Id(clientId);
+        if(reservations != null && !reservations.isEmpty())
+            return reservations.removeIf(reservation -> (reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now()) && reservation.getReservedPeriod().getEndDate().isAfter(LocalDateTime.now())));
+        return false;
     }
 }
