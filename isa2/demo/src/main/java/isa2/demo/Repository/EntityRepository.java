@@ -11,4 +11,5 @@ import java.util.*;
 public interface EntityRepository extends JpaRepository<Entity,Integer> {
 
     Entity findByReservations(Reservation reservation);
+
 }

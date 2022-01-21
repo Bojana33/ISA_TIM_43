@@ -9,6 +9,7 @@ import {CottageService} from "../../../service/cottage.service";
 import {FormBuilder} from "@angular/forms";
 import {BoatDTO} from "../../../model/boat-dto";
 import {EntityService} from "../../../service/entity.service";
+import {AdditionalServicesDTO} from "../../../model/AdditionalServicesModel/additional-services-dto.model";
 
 @Component({
   selector: 'app-one-boat-user',
@@ -19,6 +20,7 @@ export class OneBoatUserComponent implements OnInit {
 
   boat: BoatDTO = ({} as any);
   isSubscribed!: boolean;
+  checkboxFlag: Array<AdditionalServicesDTO> = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -55,5 +57,10 @@ export class OneBoatUserComponent implements OnInit {
 
   hasRole(role:string){
     return this.userService.loggedRole(role);
+  }
+
+  addAdditionalService(serv: AdditionalServicesDTO){
+    this.checkboxFlag.push(serv);
+    console.log(this.checkboxFlag);
   }
 }

@@ -1,13 +1,19 @@
 package isa2.demo.Controller;
 
+import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.AdventureMapper;
+import isa2.demo.DTO.UserDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
+import isa2.demo.Model.Entity;
+import isa2.demo.Model.Owner;
 import isa2.demo.Service.AdventureService;
+import isa2.demo.Service.EntityService;
+import isa2.demo.Service.OwnerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +38,17 @@ public class AdventureController {
 
     public final AdventureService adventureService;
     public final AdventureMapper adventureMapper;
+    private final ModelMapperConfig modelMapper;
+    private final EntityService entityService;
+    private final OwnerService ownerService;
 
-    public AdventureController(AdventureService adventureService, AdventureMapper adventureMapper){
+    public AdventureController(AdventureService adventureService, AdventureMapper adventureMapper, ModelMapperConfig modelMapper, EntityService entityService,
+                               OwnerService ownerService){
         this.adventureService = adventureService;
         this.adventureMapper = adventureMapper;
+        this.modelMapper = modelMapper;
+        this.entityService = entityService;
+        this.ownerService = ownerService;
     }
 
     @GetMapping(value = "/get_all_adventures", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,4 +116,11 @@ public class AdventureController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    //@GetMapping(value="/getInstructor/{entityId}")
+    //public ResponseEntity<UserDTO> getInstructorOfAdventure(@PathVariable Integer entityId){
+      //  Entity entity = entityService.findById(entityId);
+      //  Owner owner = ownerService.findByEntity(entity);
+       // return new ResponseEntity<UserDTO>(modelMapper.modelMapper().map(owner,UserDTO.class), HttpStatus.OK);
+    //}
 }

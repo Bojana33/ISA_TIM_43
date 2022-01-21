@@ -159,6 +159,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
+        reservation.setReservationStatus(ReservationStatus.RESERVED);
         Collection<Reservation> entityReservations = entity.getReservations();
         entityReservations.add(reservation);
         entity.setReservations(entityReservations);

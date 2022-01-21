@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../service/config.service';
 import {Adventure} from '../../model/adventure';
+import { AdventureDTO } from 'src/app/model/adventure-dto';
 
 @Component({
   selector: 'app-adventures-user',
@@ -10,8 +11,8 @@ import {Adventure} from '../../model/adventure';
 })
 export class AdventuresUserComponent implements OnInit {
 
-  allAdventures: Adventure[] = [];
-  adventures: Adventure[] = [];
+  allAdventures: AdventureDTO[] = [];
+  adventures: AdventureDTO[] = [];
   adventure: any;
   searchTerm: any;
   searchFilter: any;
@@ -43,15 +44,15 @@ export class AdventuresUserComponent implements OnInit {
       this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
     } else if (search === 'pricePerDay') {
       this.adventure = this.allAdventures.filter((val) => Number(val.pricePerDay) === Number(value));
-    } //else if (search === 'averageGrade') {
-     // this.adventure = this.allAdventures.filter((val) => Number(val.averageGrade) === Number(value));
-    //}
+    } else if (search === 'averageGrade') {
+      this.adventure = this.allAdventures.filter((val) => Number(val.averageGrade) === Number(value));
+    }
     // else if (search === 'location') {
     // this.cottages = this.allCottages.filter((val) => val.address.includes(value) || val.name.toLowerCase().includes(value));
     // }
-    else if (search === 'instructorName') {
-      this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
-    }
+    //else if (search === 'instructorName') {
+      //this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
+    //}
   }
 
 }

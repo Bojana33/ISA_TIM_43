@@ -45,7 +45,6 @@ export class CottagesUserComponent implements OnInit {
   }
 
   search(search: any, value: any): void {
-    console.log(value);
     if (search === 'name') {
       this.cottages = this.allCottages.filter((val) => val.cottageName.toUpperCase().includes(value) || val.cottageName.toLowerCase().includes(value));
     }

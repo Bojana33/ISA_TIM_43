@@ -1,5 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.AdventureDTO;
+import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;
@@ -12,10 +14,7 @@ import isa2.demo.Service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AdventureServiceImpl implements AdventureService {
@@ -106,5 +105,39 @@ public class AdventureServiceImpl implements AdventureService {
             }
         }
         return freeAdventures;
+    }
+
+    Comparator<AdventureDTO> compareByPrice = new Comparator<AdventureDTO>() {
+        @Override
+        public int compare(AdventureDTO o1, AdventureDTO o2) {
+            return o1.getPricePerDay().compareTo(o2.getPricePerDay());
+        }
+    };
+
+    Comparator<AdventureDTO> compareByAverageGrade = new Comparator<AdventureDTO>() {
+        @Override
+        public int compare(AdventureDTO o1, AdventureDTO o2) {
+            return o1.getAvgGrade().compareTo(o2.getAvgGrade());
+        }
+    };
+
+    @Override
+    public ArrayList<AdventureDTO> sortAdventures(Collection<AdventureDTO> adventures, String criterion, boolean asc){
+        ArrayList<AdventureDTO> newList = new ArrayList<>(adventures);
+        if (criterion.equals("price") && asc)
+            Collections.sort(newList, compareByPrice);
+        else if (criterion.equals("grade") && asc)
+            Collections.sort(newList, compareByAverageGrade);
+        else if (criterion.equals("price") && !asc)
+            Collections.sort(newList, compareByPrice.reversed());
+        else
+            Collections.sort(newList, compareByAverageGrade.reversed());
+        return newList;
+    }
+
+    @Override
+    public Owner getOwnerForAdventure(Integer adventureId){
+        Adventure adventure = adventureRepository.findById(adventureId).get();
+        return adventure.getOwner();
     }
 }

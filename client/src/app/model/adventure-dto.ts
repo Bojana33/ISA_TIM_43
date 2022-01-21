@@ -3,6 +3,7 @@ import {AdditionalService} from './additional-service';
 import {AddressDTO} from './address-dto.model';
 import {RoomDTO} from "./room-dto.model";
 import {ReservationDTO} from "./reservation-dto.model";
+import {AdditionalServicesDTO} from "./AdditionalServicesModel/additional-services-dto.model";
 
 export class AdventureDTO{
   public id!: number;
@@ -14,16 +15,17 @@ export class AdventureDTO{
   public photos: string[] = [];
   public maxNumberOfGuests!: number;
   public houseRules!: string;
-  public additionalServicesDto!: AdditionalService;
+  public additionalServices!: AdditionalServicesDTO[];
   public pricePerDay!: number;
   public cancellationFee!: number;
   public entityPhoto!: string;
   public defaultFishingEquipment!: string;
   public reservations: ReservationDTO[];
+  public averageGrade!: number;
 
   constructor(id: number, name: string, description: string, photos: string[], adventureOwnerId: number,
               maxNumberOfGuests: number, pricePerDay: number,
-              addressDTO: AddressDTO, reservationsDTO: ReservationDTO[]) {
+              addressDTO: AddressDTO, reservationsDTO: ReservationDTO[], additionalServices: AdditionalServicesDTO[]) {
     this.id = id;
     this.adventureOwnerId = adventureOwnerId;
     this.name = name;
@@ -33,5 +35,6 @@ export class AdventureDTO{
     this.pricePerDay = pricePerDay;
     this.addressDTO = addressDTO;
     this.reservations = reservationsDTO;
+    this.additionalServices = additionalServices;
   }
 }

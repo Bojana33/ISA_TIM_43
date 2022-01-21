@@ -110,7 +110,7 @@ public class CottageController {
     }
 
     @GetMapping(value =  "/get_all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CottageDTO>> getAllForUser(@RequestBody Integer ownerId){
+    public ResponseEntity<List<CottageDTO>> getAllForUser(){
         List<Cottage> cottages = this.cottageService.findAll();
         List<CottageDTO> cottageDTOS = new ArrayList<>();
         for (Cottage cottage : cottages)

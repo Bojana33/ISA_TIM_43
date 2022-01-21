@@ -15,6 +15,7 @@ public class AdventureDTO {
     private AddressDTO addressDTO;
     private String description;
     private String instructorBio;
+    private Double avgGrade;
     private Set<String> photos;
     private Integer maxNumberOfGuests;
     private String houseRules;
@@ -23,4 +24,5 @@ public class AdventureDTO {
     private Integer cancellationFee;
     private String entityPhoto;
     private Collection<ReservationDTO> reservations;
+    private Collection<AdditionalServiceDTO> additionalServices;
 }

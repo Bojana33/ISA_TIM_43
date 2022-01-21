@@ -1,6 +1,7 @@
 import {AddressDTO} from './address-dto.model';
 import {ReservationDTO} from './reservation-dto.model';
 import {BoatTypeEnum} from '../enum/boat-type.enum';
+import {AdditionalServicesDTO} from "./AdditionalServicesModel/additional-services-dto.model";
 
 export class BoatDTO {
   constructor(
@@ -23,6 +24,7 @@ export class BoatDTO {
     public pricePerDay: number = 0,
     public address: AddressDTO = new AddressDTO('', '', '', ''),
     public reservations: ReservationDTO[] = [],
-    public entityPhoto: string = ''
+    public entityPhoto: string = '',
+    public additionalServices: AdditionalServicesDTO[] = []
   ) {}
 }

@@ -41,7 +41,7 @@
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signupAdmin" *ngIf="hasSignedIn() && hasRole('ADMIN')">Register Admin</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
-    <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up</a>
+    <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up As Client</a>
     <a mat-stroked-button color="accent" *ngIf="hasSignedIn()" (click)="logout()" >Logout</a>
     <a mat-stroked-button color="accent" routerLink="userProfile" *ngIf="hasSignedIn()">Profile</a>
 </mat-toolbar>

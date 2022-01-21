@@ -1,5 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.BoatDTO;
+import isa2.demo.DTO.CottageDTO;
 import isa2.demo.Model.*;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
@@ -126,4 +128,33 @@ public class BoatServiceImpl implements BoatService {
     public List<Boat> findBoatsByOwnerId(Integer id) {
         return boatRepository.findBoatsByOwner_id(id);
     }
+
+    Comparator<BoatDTO> compareByPrice = new Comparator<BoatDTO>() {
+        @Override
+        public int compare(BoatDTO o1, BoatDTO o2) {
+            return o1.getPricePerDay().compareTo(o2.getPricePerDay());
+        }
+    };
+
+    Comparator<BoatDTO> compareByAverageGrade = new Comparator<BoatDTO>() {
+        @Override
+        public int compare(BoatDTO o1, BoatDTO o2) {
+            return o1.getAvgGrade().compareTo(o2.getAvgGrade());
+        }
+    };
+
+    @Override
+    public ArrayList<BoatDTO> sortBoats(Collection<BoatDTO> boats, String criterion, boolean asc){
+        ArrayList<BoatDTO> newList = new ArrayList<>(boats);
+        if (criterion.equals("price") && asc)
+            Collections.sort(newList, compareByPrice);
+        else if (criterion.equals("grade") && asc)
+            Collections.sort(newList, compareByAverageGrade);
+        else if (criterion.equals("price") && !asc)
+            Collections.sort(newList, compareByPrice.reversed());
+        else
+            Collections.sort(newList, compareByAverageGrade.reversed());
+        return newList;
+    }
+
 }

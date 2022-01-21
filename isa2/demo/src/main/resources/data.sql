@@ -31,7 +31,7 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
 
 insert into owner (category, loyalty_points, owner_type, id)
 values (0,0,1,2),
-       (0,0,0,4);
+       (0,0,3,4);
 
 insert into client (category, loyalty_points, penalty, id)
 values (0,0,2,1);
@@ -39,7 +39,10 @@ values (0,0,2,1);
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
 values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png',1),
-       ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2),
+       ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2);
+insert into
+    entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
+    values
        ('VIKENDICA 1', 'This is a beautiful cottage', 10, 10, './../../assets/images/cottage1.jpg', 2),
        ('VIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1),
        ('BROD 1', 'Incredible', 10, 10, './../../assets/images/yacht.jpg',  1),
@@ -66,6 +69,9 @@ insert into rental_time(start_date, end_date, reservation_entity_id) values ('20
 insert into additional_services(name, price, entity_id) values ('add serv 1', 15, 4);
 insert into additional_services(name, price, entity_id) values ('add serv 2', 25, 4);
 insert into additional_services(name, price, entity_id) values ('add serv 3', 45, 4);
+insert into additional_services(name, price, entity_id) values ('brod dodatna', 15, 5);
+insert into additional_services(name, price, entity_id) values ('brod dodatna 2', 25, 5);
+insert into additional_services(name, price, entity_id) values ('avantura dodatna', 45, 1);
 
 INSERT INTO COTTAGE (id) VALUES (3),
                                 (4);

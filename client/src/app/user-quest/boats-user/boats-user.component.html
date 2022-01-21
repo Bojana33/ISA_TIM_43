@@ -3,7 +3,6 @@
   <option value="name">Boat Name</option>
   <option value="pricePerDay">Price per day</option>
   <option value="averageGrade">Average grade</option>
-  <option value="location">Location</option>
 </select>
 <input #box class="searchForm" type="text" placeholder="Search by name, price per day or description :"  [(ngModel)]="searchTerm"  (input)="search(searchFilter,box.value)">
 

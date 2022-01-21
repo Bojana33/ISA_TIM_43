@@ -1,6 +1,7 @@
 package isa2.demo.DTO.Mappers;
 
 import isa2.demo.Config.ModelMapperConfig;
+import isa2.demo.DTO.AdditionalServiceDTO;
 import isa2.demo.DTO.AddressDTO;
 import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.CottageDTO;
@@ -12,6 +13,7 @@ import isa2.demo.Service.UserService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,6 +37,9 @@ public class AdventureMapper {
         Address address = adventure.getAddress();
         address.setEntity(adventure);
         adventure.setReservations(getReservations(adventure));
+        Collection<AdditionalService> additionalServices = new ArrayList<>();
+        //Collection<AdditionalServiceDTO> additionalServiceDTOS = adventureDTO.setAdditionalServiceDTOS();
+        //adventure.setAdditionalServices(adventureDTO.getAdditionalServiceDTOS());
         return adventure;
     }
 

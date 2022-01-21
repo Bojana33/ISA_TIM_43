@@ -1,10 +1,8 @@
 <select class="select" ng-model="searchFilter" ng-change="selectAction()">
   <option>Search By ...</option>
   <option value="name">Adventure Name</option>
-  <option value="instructorName">Instructor Name</option>
   <option value="pricePerDay">Price per day</option>
   <option value="averageGrade">Average grade</option>
-  <option value="location">Location</option>
 </select>
 <input #box class="searchForm" type="text" placeholder="Search by name, price per day or description :"  [(ngModel)]="searchTerm"  (input)="search(searchFilter,box.value)">
 
@@ -32,7 +30,13 @@
             Price: {{item.pricePerDay}}
           </p>
           <p>
+            Average grade: {{item.avgGrade}}
+          </p>
+          <p>
             Address: {{item.addressDTO.country}}, {{item.addressDTO.city}}, {{item.addressDTO.street}}, {{item.addressDTO.houseNumber}}
+          </p>
+          <p>
+            Instrucotr bio: {{item.instructorBio}}
           </p>
         </mat-card-content>
       </mat-card>
