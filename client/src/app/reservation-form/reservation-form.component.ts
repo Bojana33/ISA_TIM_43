@@ -10,7 +10,7 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 })
 export class ReservationFormComponent implements OnInit{
   @Input() entityId: any;
-  @Input() clientId!: number;
+  @Input() clientId!: any;
   @Output() createdReservationEvent = new EventEmitter<ReservationDTO>();
   cottageReservationForm!: FormGroup;
   private _additionalServices!: FormArray;

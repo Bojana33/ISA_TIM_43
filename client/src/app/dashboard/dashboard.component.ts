@@ -8,6 +8,8 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {ReservationService} from '../service/reservation.service';
 import {PeriodDTO} from '../model/period-dto.model';
+import {CottageService} from '../service/cottage.service';
+import {BoatService} from '../service/boatService/boat.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +35,9 @@ export class DashboardComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private boatService: BoatService,
+    private cottageService: CottageService
   ) { }
 
   ngOnInit(): void {
