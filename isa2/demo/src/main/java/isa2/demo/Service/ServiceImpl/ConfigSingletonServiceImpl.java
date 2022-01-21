@@ -118,4 +118,18 @@ public class ConfigSingletonServiceImpl implements ConfigSingletonService {
         }
         return (1 - (loyaltyProgram.getFeePercentage()/100));
     }
+
+    @Override
+    public void addReservationPointsToClient(Client client) {
+        ConfigSingleton loyaltyProgram = this.getConfig(1);
+        client.setLoyaltyPoints(client.getLoyaltyPoints() + loyaltyProgram.getClientReservationPoints());
+        this.userService.save(client);
+    }
+
+    @Override
+    public void addReservationPointsToOwner(Owner owner) {
+        ConfigSingleton loyaltyProgram = this.getConfig(1);
+        owner.setLoyaltyPoints(owner.getLoyaltyPoints() + loyaltyProgram.getSuccessfulOwnerPoints());
+        this.userService.save(owner);
+    }
 }

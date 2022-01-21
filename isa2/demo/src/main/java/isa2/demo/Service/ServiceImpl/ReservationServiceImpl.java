@@ -120,19 +120,22 @@ public class ReservationServiceImpl implements ReservationService {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
         }
-        Double clientsDiscount = this.configSingletonService.getClientDiscount(this.clientService.findById(reservationDTO.getClientId()));
+        Client client = this.clientService.findById(reservationDTO.getClientId());
+        this.configSingletonService.addReservationPointsToClient(client);
+        Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
         if (clientsDiscount != -1){
             price = price * (1 - clientsDiscount);
         }
-        // calculate owner income for this reservation
+        // calculate owner income for this reservation and his loyalty points
         Owner owner = this.ownerService.findByEntity(entity);
+        this.configSingletonService.addReservationPointsToOwner(owner);
         Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
         ownerIncome = price * ownerIncome;
         reservation.setOwnersIncome(ownerIncome);
 
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
-        reservation.setClient(clientRepository.findById(reservationDTO.getClientId()).get());
+        reservation.setClient(client);
         reservation = reservationRepository.save(reservation);
 
         //send email
@@ -166,6 +169,8 @@ public class ReservationServiceImpl implements ReservationService {
         if (clientsDiscount != -1){
             price = price * (1 - clientsDiscount);
         }
+        this.configSingletonService.addReservationPointsToClient(client);
+
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
@@ -176,6 +181,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         // calculate owner income for this reservation
         Owner owner = this.ownerService.findByEntity(entity);
+        this.configSingletonService.addReservationPointsToOwner(owner);
         Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
         ownerIncome = price * ownerIncome;
         reservation.setOwnersIncome(ownerIncome);

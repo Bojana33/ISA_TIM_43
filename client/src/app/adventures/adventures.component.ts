@@ -28,7 +28,7 @@ export class AdventuresComponent implements OnInit {
   }
 
   getAdventures(){
-    this.api.get(this.config.adventure_url + '/get_all_adventures').subscribe(
+    this.api.get(this.config.adventure_url + '/get_my_adventures/'+ this.userService.currentUser.id).subscribe(
       response => {
         console.log(response);
         this.adventures = response;

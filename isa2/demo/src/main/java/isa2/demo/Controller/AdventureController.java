@@ -7,7 +7,9 @@ import isa2.demo.DTO.Mappers.AdventureMapper;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
+import isa2.demo.Model.Owner;
 import isa2.demo.Service.AdventureService;
+import isa2.demo.Service.OwnerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +34,12 @@ public class AdventureController {
 
     public final AdventureService adventureService;
     public final AdventureMapper adventureMapper;
+    public final OwnerService ownerService;
 
-    public AdventureController(AdventureService adventureService, AdventureMapper adventureMapper){
+    public AdventureController(AdventureService adventureService, AdventureMapper adventureMapper,OwnerService ownerService){
         this.adventureService = adventureService;
         this.adventureMapper = adventureMapper;
+        this.ownerService = ownerService;
     }
 
     @GetMapping(value = "/get_all_adventures", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -102,5 +106,16 @@ public class AdventureController {
         catch (InvalidInputException e){
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+    }
+
+    @GetMapping("/get_my_adventures/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
+    public ResponseEntity<List<AdventureDTO>> getMyAdventures(@PathVariable Integer id){
+        Owner owner = this.ownerService.findById(id);
+        List<Adventure> adventures = this.adventureService.findAdventuresByInstructor(owner);
+        List<AdventureDTO> adventureDTOS = new ArrayList<>();
+        for(Adventure adventure : adventures)
+            adventureDTOS.add(adventureMapper.mapAdventureToDTO(adventure));
+        return new ResponseEntity<>(adventureDTOS, HttpStatus.OK);
     }
 }

@@ -10,11 +10,17 @@ public interface ConfigSingletonService {
 
     ConfigSingleton getConfig(Integer id);
 
-    public void defineClientCategory(Client client);
+    void defineClientCategory(Client client);
 
-    public void defineOwnerCategory(Owner owner);
+    void defineOwnerCategory(Owner owner);
 
-    public Double getClientDiscount(Client client);
+    Double getClientDiscount(Client client);
 
-    public Double getOwnerIncome(Owner owner);
+    Double getOwnerIncome(Owner owner);
+
+    void addReservationPointsToClient(Client client);
+
+    void addReservationPointsToOwner(Owner owner);
+
+
 }
