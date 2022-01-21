@@ -67,35 +67,37 @@
       <td>{{res.price}}</td>
       <td>{{res.numberOfGuests}}</td>
       <td>{{res.reservationStatus.toString()}}</td>
-      <td>{{res.reservedPeriod.startDate}}</td>
-      <td>{{res.reservedPeriod.endDate}}</td>
-      <td>{{res.salePeriod.startDate}}</td>
-      <td>{{res.salePeriod.endDate}}</td>
+      <td><div *ngIf="res.salePeriod != null">{{res.salePeriod.startDate}}</div></td>
+      <td><div *ngIf="res.salePeriod != null">{{res.salePeriod.endDate}}</div></td>
+      <td><div *ngIf="res.salePeriod == null">no sale</div></td>
+      <td><div *ngIf="res.salePeriod == null">no sale</div></td>
       <td>{{res.clientId}}</td>
       <td>
+        <div *ngIf="res.additionalServices">
         <li *ngFor="let addService of res.additionalServices">
           {{addService['name']}} : {{addService['price']}}
         </li>
+        </div>
       </td>
       <td>
-        <button class="button is-link is-inverted" (click)="showForm=2" *ngIf="res.reservationStatus.toString() == 'COMPLETED'">
-          <i class="fa fa-pencil" aria-hidden="true" > Review</i>
+        <button class="button is-link is-inverted" type="button" (click)="showForm=2" *ngIf="res.reservationStatus.toString() == 'COMPLETED'">
+          <i class="fa fa-pencil" aria-hidden="true"> Review</i>
         </button>
+        <div class="modal is-active" *ngIf="showForm === 2">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Review client</p>
+              <button class="delete" type="button" (click)="showForm=1" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              <app-owner-review-form [clientId]="res.clientId" [reservationId]="res.id">
+              </app-owner-review-form>
+            </section>
+          </div>
+        </div>
       </td>
     </tr>
     </tbody>
   </table>
-  <div class="modal is-active" *ngIf="showForm === 2">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Review client</p>
-        <button class="delete" (click)="showForm=1" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <app-owner-review-form>
-        </app-owner-review-form>
-      </section>
-    </div>
-  </div>
 </div>

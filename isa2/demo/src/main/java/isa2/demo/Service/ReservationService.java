@@ -16,6 +16,7 @@ public interface ReservationService {
     List<Reservation> findByClient(Client client);
 
     Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException;
+    Reservation reserveEntityByOwner(ReservationDTO reservationDTO) throws InvalidReservationException;
 //    Collection<Reservation> findAllReservationsForEntity(Integer entityId);
 
     Collection<Reservation> findAllReservationsForOwner(Owner owner);
@@ -25,4 +26,6 @@ public interface ReservationService {
     Reservation fastReservation(ReservationDTO reservationDTO) throws  InvalidReservationException;
     List<Reservation> findAllReservationsForClient(Integer clientId);
     void cancelReservation(String username, Integer reservationId) throws Exception;
+
+    boolean isClientsReservationCurrent(Integer id);
 }

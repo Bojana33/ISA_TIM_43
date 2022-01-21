@@ -89,25 +89,29 @@ public class CottageServiceImpl implements CottageService {
 
     @Override
     public Collection<Cottage> findFreeCottages(FreeEntityDTO request) throws InvalidInputException {
+        Collection<Cottage> freeCottages = new ArrayList<Cottage>();
         if (request.getStartDate().isAfter(request.getEndDate()) || request.getStartDate().isEqual(request.getEndDate()))
             throw new InvalidInputException("Invalid start and end date");
         Collection<Cottage> cottages = cottageRepository.findAll();
-        Collection<Cottage> freeCottages = new ArrayList<Cottage>();
         if (request.getGrade() != null && request.getGrade() < 0)
             throw new InvalidInputException("Grade needs to be positive");
         if (request.getNumberOfGuests() != null && request.getNumberOfGuests() < 1)
             throw new InvalidInputException("Number of guests needs to be at least 1");
         for (Cottage cottage : cottages) {
-            if ((request.getNumberOfGuests() != null && cottage.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (cottage.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && cottage.getAverageGrade() < request.getGrade()))
-                break;
+            if (
+                    (request.getNumberOfGuests() != null && cottage.getMaxNumberOfGuests() < request.getNumberOfGuests())
+                    || (cottage.getAverageGrade() == null && request.getGrade() != null)
+                    || (request.getGrade() != null && cottage.getAverageGrade() < request.getGrade()))
+
+                continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!checkLocation(request.getCountry(), cottage.getAddress().getCountry()))
-                    break;
+                    continue;
             if (request.getCity() != null && !request.getCity().equals(""))
                 if (!checkLocation(request.getCity(), cottage.getAddress().getCity()))
-                    break;
+                    continue;
             if (!isPeriodInRentalTime(cottage, request.getStartDate(), request.getEndDate()))
-                break;
+                continue;
             else
                 freeCottages.add(cottage);
             Collection<Reservation> reservations = cottage.getReservations();

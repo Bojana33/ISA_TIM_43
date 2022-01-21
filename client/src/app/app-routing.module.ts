@@ -205,10 +205,6 @@ const routes: Routes = [
     canActivate: [GuestGuard]
   },
   {
-    path: 'boats/:id/reservations',
-    component: CottageReservationsTableComponent
-  },
-  {
     path: 'calendar',
     component: CalendarComponent,
     canActivate: [GuestGuard]

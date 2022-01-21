@@ -19,5 +19,5 @@ public class FreeEntityDTO {
     //private AddressDTO address;
     private String country;
     private String city;
-    private Integer grade;
+    private Double grade;
 }

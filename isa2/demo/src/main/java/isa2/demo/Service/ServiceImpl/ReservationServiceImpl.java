@@ -103,6 +103,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public Reservation reserveEntityByOwner(ReservationDTO reservationDTO) throws InvalidReservationException {
+        Reservation reservation = reserveEntity(reservationDTO);
+        return  reservation;
+    }
+
+    @Override
     public Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException {
         Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
         Client client = clientRepository.findById(reservationDTO.getClientId()).get();
@@ -122,7 +128,11 @@ public class ReservationServiceImpl implements ReservationService {
         Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
-            additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
+            additionalServiceDTO.setId(null);
+            AdditionalService additionalService = modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class);
+            additionalService.setEntity(entity);
+            additionalService.setReservation(reservation);
+            additionalServices.add(additionalService);
         }
         this.configSingletonService.addReservationPointsToClient(client);
         Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
@@ -318,5 +328,13 @@ public class ReservationServiceImpl implements ReservationService {
             throw new Exception("the reservation can no longer be canceled");
         reservation.setReservationStatus(ReservationStatus.CANCELED);
         reservationRepository.save(reservation);
+    }
+
+    @Override
+    public boolean isClientsReservationCurrent(Integer clientId) {
+        List<Reservation> reservations = reservationRepository.findAllByClient_Id(clientId);
+        if(reservations != null && !reservations.isEmpty())
+            return reservations.removeIf(reservation -> (reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now()) && reservation.getReservedPeriod().getEndDate().isAfter(LocalDateTime.now())));
+        return false;
     }
 }

@@ -22,7 +22,7 @@
           Administration
         </p>
         <ul class="menu-list">
-          <li><a>My Profile</a></li>
+          <li><a routerLink="/userProfile">My Profile</a></li>
         </ul>
       </aside>
     </div>
@@ -31,7 +31,7 @@
       <section class="hero is-info welcome is-small">
         <div class="hero-body">
           <div class="container">
-            <h1 class="title">
+            <h1 class="title" *ngIf="user">
               Hello, {{this.user.firstName}}.
             </h1>
             <h2 class="subtitle">
@@ -44,7 +44,7 @@
         <div class="tile is-ancestor has-text-centered column is-gapless">
           <div class="tile is-parent column">
             <article class="tile is-child box">
-              <p class="title">{{this.activeEntities.size}}</p>
+              <p class="title" *ngIf="activeEntities">{{this.activeEntities.size}}</p>
               <div class="subtitle">
                 Active
                 <div *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">cottages</div>
@@ -86,28 +86,48 @@
             <th><abbr title="Sale end">Sale end</abbr></th>
             <th><abbr title="Client id">Client id</abbr></th>
             <th><abbr title="Additional services"> Service : Price</abbr></th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let res of reservations">
+          <tr *ngFor="let res of this.reservations">
             <th>{{res.id}}</th>
             <td>{{res.price}}</td>
             <td>{{res.numberOfGuests}}</td>
             <td>{{res.reservationStatus.toString()}}</td>
             <td>{{res.reservedPeriod.startDate}}</td>
             <td>{{res.reservedPeriod.endDate}}</td>
-            <td>{{res.salePeriod.startDate}}</td>
-            <td>{{res.salePeriod.endDate}}</td>
+            <td *ngIf="res.salePeriod != null">{{res.salePeriod.startDate}}</td>
+            <td *ngIf="res.salePeriod != null">{{res.salePeriod.endDate}}</td>
+            <td *ngIf="res.salePeriod == null">no sale</td>
+            <td *ngIf="res.salePeriod == null">no sale</td>
             <td>{{res.clientId}}</td>
             <td>
               <li *ngFor="let addService of res.additionalServices">
                 {{addService['name']}} : {{addService['price']}}
               </li>
             </td>
+            <td>
+              <div>
+                <button *ngIf="isReservationActive(res)" class="button is-link is-light level-item" (click)="showForm=2">Create new reservation</button>
+                <div class="modal is-active" *ngIf="showForm === 2">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Create new quick reservation</p>
+                      <button class="delete" (click)="showForm=1" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                      <app-reservation-form [entityId]="res.entityId" [clientId]="res.clientId" (createdReservationEvent)="createNewReservation($event)">
+                      </app-reservation-form>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </td>
           </tr>
           </tbody>
         </table>
-      </div>
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
@@ -116,7 +136,7 @@
             </p>
           </div>
           <div class="level-item">
-            <form [formGroup]= "reservationsDateRangeForm">
+            <form *ngIf="reservationsDateRangeForm" [formGroup]= "reservationsDateRangeForm">
               <div class=" field has-addons">
                 <div class = "control">
                   <input class = "input" id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
@@ -155,11 +175,13 @@
                   <span class="dropdown-item is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 2 }" (click)="filterReservationsByStatus('RESERVED'); filterStatus = 2">Reserved</span>
                   <span class="dropdown-item is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 3 }" (click)="filterReservationsByStatus('COMPLETED'); filterStatus = 3">Completed</span>
                   <span class="dropdown-item is-size-5" [ngClass]="{'tag is-danger is-light': filterStatus == 4 }" (click)="filterReservationsByStatus('CANCELED'); filterStatus = 4">Canceled</span>
+                  <span class="dropdown-item is-size-5" (click)="activeReservations()">active reservations</span>
               </div>
             </div>
           </div>
         </div>
       </nav>
+      </div>
     </div>
       <div *ngIf="activeButton==='BOATS'">
         <app-boats>
@@ -177,6 +199,8 @@
         <app-register-cottage>
         </app-register-cottage>
       </div>
+<!--      <app-barchart>-->
+<!--      </app-barchart>-->
   </div>
   </div>
 </div>

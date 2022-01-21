@@ -1,7 +1,7 @@
 <div class="content" style="width:1500px; margin-left:35%; margin-top:5%; margin-right: 35%">
   <div fxLayout="row wrap" fxLayoutGap="16px grid">
     <div fxFlex="25%">
-      <mat-card class="mat-elevation-z4">
+      <mat-card class="mat-elevation-z4" *ngIf="this.userProfile">
         <form>
         <mat-card-header class="top">
           <mat-card-title>{{userProfile.firstName}} {{userProfile.surname}}</mat-card-title>

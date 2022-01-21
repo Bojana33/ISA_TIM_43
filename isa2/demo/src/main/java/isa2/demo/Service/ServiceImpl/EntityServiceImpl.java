@@ -238,4 +238,13 @@ public class EntityServiceImpl implements EntityService {
         return false;
     }
 
+    @Override
+    public Collection<RentalTime> getRentalPeriodForEntity(Integer entityId) throws Exception {
+        Entity entity = entityRepository.findById(entityId).orElse(null);
+        if(entity != null){
+            return entity.getRentalTimes();
+        }else{
+            throw new Exception("Entity doesn't exist");
+        }
+    }
 }

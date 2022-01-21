@@ -8,4 +8,5 @@ export class OwnersReview {
     public isReported!: boolean;
     public reviewStatus!: ReviewStatus;
     public reservationDTO!: ReservationDTO;
+    public clientId!: number;
 }

@@ -28,7 +28,7 @@ public class ClientsReviewController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('CLIENT')")
+
     @PostMapping(value = "/save_review")
     public ResponseEntity<? extends Object> createClientReview(@RequestBody ClientsReviewDTO clientsReviewDTO){
         ClientsReview clientsReview = this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO);
