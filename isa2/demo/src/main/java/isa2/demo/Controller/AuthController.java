@@ -7,10 +7,9 @@ import isa2.demo.DTO.RegistrationRequestDTO;
 import isa2.demo.DTO.UserRequestDTO;
 import isa2.demo.Exception.EmailAlreadyInUseException;
 import isa2.demo.Exception.ResourceConflictException;
-import isa2.demo.Model.RegistrationRequest;
-import isa2.demo.Model.User;
-import isa2.demo.Model.UserRequest;
+import isa2.demo.Model.*;
 import isa2.demo.DTO.UserTokenState;
+import isa2.demo.Service.ConfigSingletonService;
 import isa2.demo.Service.RegistrationRequestService;
 import isa2.demo.Service.ServiceImpl.CustomUserDetailsService;
 import isa2.demo.Service.UserService;
@@ -61,6 +60,9 @@ public class AuthController {
     @Autowired
     private RegistrationRequestMapper registrationRequestMapper;
 
+    @Autowired
+    private ConfigSingletonService configSingletonService;
+
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
@@ -77,6 +79,15 @@ public class AuthController {
 
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
+
+        if(user instanceof Owner){
+            this.configSingletonService.defineOwnerCategory((Owner) user);
+        }
+
+        if(user instanceof Client){
+            this.configSingletonService.defineClientCategory((Client) user);
+        }
+
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 

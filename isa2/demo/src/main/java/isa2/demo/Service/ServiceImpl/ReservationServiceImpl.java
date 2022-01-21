@@ -31,6 +31,8 @@ public class ReservationServiceImpl implements ReservationService {
     private final CottageService cottageService;
     private final BoatService boatService;
     private final ClientService clientService;
+    private final ConfigSingletonService configSingletonService;
+    private final OwnerService ownerService;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository,
                                   EntityRepository entityRepository,
@@ -40,7 +42,9 @@ public class ReservationServiceImpl implements ReservationService {
                                   BoatService boatService,
                                   CottageService cottageService,
                                   AdventureService adventureService,
-                                  ClientService clientService) {
+                                  ClientService clientService,
+                                  ConfigSingletonService configSingletonService,
+                                  OwnerService ownerService) {
         this.reservationRepository = reservationRepository;
         this.adventureService = adventureService;
         this.cottageService = cottageService;
@@ -50,6 +54,8 @@ public class ReservationServiceImpl implements ReservationService {
         this.modelMapper = modelMapperConfig;
         this.clientRepository = clientRepository;
         this.clientService = clientService;
+        this.configSingletonService = configSingletonService;
+        this.ownerService = ownerService;
     }
 
     @Override
@@ -118,8 +124,21 @@ public class ReservationServiceImpl implements ReservationService {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
         }
+        this.configSingletonService.addReservationPointsToClient(client);
+        Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
+        if (clientsDiscount != -1){
+            price = price * (1 - clientsDiscount);
+        }
+        // calculate owner income for this reservation and his loyalty points
+        Owner owner = this.ownerService.findByEntity(entity);
+        this.configSingletonService.addReservationPointsToOwner(owner);
+        Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
+        ownerIncome = price * ownerIncome;
+        reservation.setOwnersIncome(ownerIncome);
+
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
+        reservation.setClient(client);
         Collection<Reservation> entityReservations = entity.getReservations();
         entityReservations.add(reservation);
         entity.setReservations(entityReservations);
@@ -148,7 +167,16 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservation.getReservationStatus() == ReservationStatus.RESERVED)
             throw new InvalidReservationException("Invalid reservation input");
         Collection<AdditionalService> additionalServices = new ArrayList<>();
+
+        Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
         Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
+
+        // calculate clients discount based on category
+        if (clientsDiscount != -1){
+            price = price * (1 - clientsDiscount);
+        }
+        this.configSingletonService.addReservationPointsToClient(client);
+
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
@@ -156,6 +184,14 @@ public class ReservationServiceImpl implements ReservationService {
         //check if reservation is in sale period and calculate discount
         if (LocalDateTime.now().isAfter(reservation.getSalePeriod().getStartDate()) && LocalDateTime.now().isBefore(reservation.getSalePeriod().getEndDate()) && reservation.getDiscount() != null)
             price = price - reservation.getDiscount();
+
+        // calculate owner income for this reservation
+        Owner owner = this.ownerService.findByEntity(entity);
+        this.configSingletonService.addReservationPointsToOwner(owner);
+        Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
+        ownerIncome = price * ownerIncome;
+        reservation.setOwnersIncome(ownerIncome);
+
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
@@ -269,6 +305,13 @@ public class ReservationServiceImpl implements ReservationService {
     public void cancelReservation(String username, Integer reservationId) throws Exception{
         Client client = clientService.findByUsername(username);
         Reservation reservation = reservationRepository.getById(reservationId);
+        Entity entity = reservation.getEntity();
+        if(entity instanceof Adventure){
+            if(((Adventure) entity).getCancellationFee() != 0){
+                Double income = reservation.getPrice() * (((Adventure) entity).getCancellationFee()/100);
+                reservation.setOwnersIncome(income);
+            }
+        }
         if(!client.getReservation().contains(reservation))
             throw new Exception("Client does not have this reservation");
         if(reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now().plusDays(3)))

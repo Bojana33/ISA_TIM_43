@@ -38,7 +38,7 @@
             Category: {{userProfile.category}}
           </p>
         </mat-card-content>
-          <div *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px;" mat-raised-button type="submit" routerLink="/profileUpdate">Update information</button> </div>
+          <div *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px;" mat-raised-button type="submit" routerLink="/profile/{{userProfile.id}}/profileUpdate">Update information</button> </div>
           <div  *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="openDialog()"> Send delete request</button> </div>
           <div  *ngIf="isLoggedIdEqualToProfileId(userProfile.id)"> <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=4">Change Password</button> </div>
 

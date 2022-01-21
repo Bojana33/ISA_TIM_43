@@ -101,6 +101,7 @@ import { ClientsReviewsComponent } from './clients-reviews/clients-reviews.compo
 import { ReviewDialogComponent } from './user-reservations/review-dialog/review-dialog.component';
 import { FutureReservationsComponent } from './user-reservations/future-reservations/future-reservations.component';
 import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.component';
+import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -176,6 +177,7 @@ const mapConfig: YaConfig = {
     ReviewDialogComponent,
     FutureReservationsComponent,
     OwnersReviewsComponent,
+    ConfigSingletonComponent,
     RegisterBoatComponent,
     DashboardComponent
   ],

@@ -40,6 +40,12 @@ public class AdventureMapper {
         Collection<AdditionalService> additionalServices = new ArrayList<>();
         //Collection<AdditionalServiceDTO> additionalServiceDTOS = adventureDTO.setAdditionalServiceDTOS();
         //adventure.setAdditionalServices(adventureDTO.getAdditionalServiceDTOS());
+        Collection<AdditionalService> additionalServices = adventure.getAdditionalServices();
+        if (additionalServices != null) {
+            for (AdditionalService additionalService : additionalServices) {
+                additionalService.setEntity(adventure);
+            }
+        }
         return adventure;
     }
 

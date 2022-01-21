@@ -3,14 +3,14 @@
 
     <div class="spacer"></div>
 
-    <a mat-button routerLink="registration-requests" *ngIf="hasSignedIn() && hasRole('ADMIN')">Registration Requests</a>
+    <a mat-button routerLink="config-singleton" *ngIf="hasRole('ADMIN')">System Configuration</a>
     <a mat-button routerLink="home">Home</a>
   <!--USER AND GUEST ENTITY CATALOGS!-->
     <a mat-button routerLink="adventuresCatalog">Adventures</a>
     <a mat-button routerLink="boatsCatalog">Boats</a>
     <a mat-button routerLink="cottagesCatalog">Cottages</a>
   <!--!-->
-    <a mat-button routerLink="userComplaint" *ngIf="hasRole('USER')">Complaint</a>
+    <!-- <a mat-button routerLink="userComplaint" *ngIf="hasRole('USER')">Complaint</a> -->
     <a mat-button routerLink="complaints" *ngIf="hasRole('ADMIN')">Complaints</a>
     <a mat-button routerLink="clients-reviews" *ngIf="hasRole('ADMIN')">Client reviews</a>
     <a mat-button routerLink="owners-reviews" *ngIf="hasRole('ADMIN')">Owner reviews</a>
@@ -36,6 +36,8 @@
         </div>
       </div>
     </div>
+
+    <a mat-button *ngIf="hasSignedIn() && hasRole('INSTRUCTOR')" routerLink = "adventures"  >My Adventures</a>
     <a mat-button routerLink="dashboard" *ngIf="hasSignedIn() && (hasRole('COTTAGEOWNER') || hasRole('BOATOWNER')) ">Dashboard</a>
     <a mat-button routerLink="users" *ngIf="hasSignedIn() && hasRole('ADMIN')">Users</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
@@ -43,6 +45,6 @@
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
     <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up As Client</a>
     <a mat-stroked-button color="accent" *ngIf="hasSignedIn()" (click)="logout()" >Logout</a>
-    <a mat-stroked-button color="accent" routerLink="userProfile" *ngIf="hasSignedIn()">Profile</a>
+    <a mat-stroked-button color="accent" routerLink="profile/{{user.id}}" *ngIf="hasSignedIn()">Profile</a>
 </mat-toolbar>
 

@@ -42,6 +42,9 @@ public class Reservation implements Serializable {
    @Column
    private Double discount;
 
+   @Column
+   private Double ownersIncome;
+
    @Column(name = "number_of_guests")
    private Integer numberOfGuests;
 

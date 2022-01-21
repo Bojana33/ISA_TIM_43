@@ -31,6 +31,9 @@ export class OwnerReservationsComponent implements OnInit {
   reviewForm!: FormGroup;
   success!: boolean;
   radioButtonValue: any;
+  pricesList: any;
+  allEarnings: any;
+  completedReservations: any;
 
 
   constructor(
@@ -61,6 +64,9 @@ export class OwnerReservationsComponent implements OnInit {
         this.userService.getUser(res.clientId).subscribe((result)=>{
           this.user = result;
           this.clientNames.push(this.user.firstName + ' ' + this.user.surname);});
+      this.allEarnings = this.allReservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => a.ownersIncome);
+      this.completedReservations = this.allEarnings.length;
+      this.allEarnings = this.allEarnings.reduce((a: number, b: number) => a + b, 0);
         
       }
     });
@@ -68,7 +74,6 @@ export class OwnerReservationsComponent implements OnInit {
       startDate: new FormControl(null),
       endDate: new FormControl(null)
     });
-    //this.getClientNames();
 
     this.reviewForm = this.formBuilder.group({
       description: new FormControl(''),
@@ -77,8 +82,14 @@ export class OwnerReservationsComponent implements OnInit {
     })
   }
 
+  private updatePrices(): void {
+    this.pricesList = this.reservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => a.price);
+    this.pricesList = this.pricesList.reduce((a: number, b: number) => a + b, 0);
+  }
+
   filterReservationsByStatus(status: string): void{
     this.reservations = this.allReservations.filter((val) => val.reservationStatus.toString() === status);
+    this.updatePrices();
   }
 
   findReservationsInDateRange(form: FormGroup): void {
@@ -97,11 +108,7 @@ export class OwnerReservationsComponent implements OnInit {
     }
     this.reservations = this.allReservations.filter((val) => new Date(val.reservedPeriod.startDate) >= timePeriod.startDate &&
       new Date(val.reservedPeriod.endDate) <= timePeriod.endDate);
-    // this.reservations = this.reservationService.getReservationsInDateRange(timePeriod).subscribe(
-    //     (res: ReservationDTO[]) => {
-    //     this.reservations = res;
-    //   }
-    // );
+      this.updatePrices();
   }
 
   getClientName(id: number) : string{

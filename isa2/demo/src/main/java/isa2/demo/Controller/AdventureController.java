@@ -11,8 +11,10 @@ import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
 import isa2.demo.Model.Entity;
 import isa2.demo.Model.Owner;
+import isa2.demo.Model.Owner;
 import isa2.demo.Service.AdventureService;
 import isa2.demo.Service.EntityService;
+import isa2.demo.Service.OwnerService;
 import isa2.demo.Service.OwnerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -117,10 +119,14 @@ public class AdventureController {
         }
     }
 
-    //@GetMapping(value="/getInstructor/{entityId}")
-    //public ResponseEntity<UserDTO> getInstructorOfAdventure(@PathVariable Integer entityId){
-      //  Entity entity = entityService.findById(entityId);
-      //  Owner owner = ownerService.findByEntity(entity);
-       // return new ResponseEntity<UserDTO>(modelMapper.modelMapper().map(owner,UserDTO.class), HttpStatus.OK);
-    //}
+    @GetMapping("/get_my_adventures/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
+    public ResponseEntity<List<AdventureDTO>> getMyAdventures(@PathVariable Integer id){
+        Owner owner = this.ownerService.findById(id);
+        List<Adventure> adventures = this.adventureService.findAdventuresByInstructor(owner);
+        List<AdventureDTO> adventureDTOS = new ArrayList<>();
+        for(Adventure adventure : adventures)
+            adventureDTOS.add(adventureMapper.mapAdventureToDTO(adventure));
+        return new ResponseEntity<>(adventureDTOS, HttpStatus.OK);
+    }
 }

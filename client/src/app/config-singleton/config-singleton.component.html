@@ -1,0 +1,45 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="75">
+        <mat-toolbar color="primary">Update Config</mat-toolbar>
+        <form *ngIf="configForm" fxLayoutAlign="stretch" fxLayout="column"  [formGroup]="configForm" (ngSubmit)="updateConfig()">
+            <mat-form-field>
+                <input matInput type="number" placeholder="Fee percentage" formControlName="feePercentage" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Client reservation points" formControlName="clientReservationPoints" required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Owners points after successful reservation" formControlName="successfulOwnerPoints" required>
+              </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Regular start points" formControlName="regularStartPoints" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Silver start points" formControlName="silverStartPoints" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Gold start points" formControlName="goldStartPoints">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Discount regular" formControlName="discountRegular" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Discount gold" formControlName="discountGold" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Discount silver" formControlName="discountSilver" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Owner income regular" formControlName="incomeRegular" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Owner income gold" formControlName="incomeGold" required>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Owner income silver" formControlName="incomeSilver" required>
+              </mat-form-field>
+        
+              <button mat-raised-button type="submit">Submit</button>
+          </form>
+    </mat-card>
+</div>

@@ -18,9 +18,11 @@
       <h1>House Rules</h1>
       <p>{{adventure.houseRules}}</p>
       <h1>Default fishing equipment</h1>
-      <p></p>
+      <p>{{adventure.defaultFishingEquipment}}</p>
       <h1>Cancellation Fee</h1>
       <p>{{adventure.cancellationFee}}%</p>
+      <h1>Additional Services</h1>
+      <p *ngFor="let serv of adventure.additionalServices">{{serv.name}} : {{serv.price}}$</p>
       <h1>Address</h1>
       <p>{{addressTxt}}</p>
         <app-map [address]="address"></app-map>
@@ -44,9 +46,6 @@
                 </div>
               </ng-template>
             </ngb-carousel>
-<!--                <figure class="image is-5by3">-->
-<!--                  <img src="{{cottage.entityPhoto}}">-->
-<!--                </figure>-->
           </div>
         </div>
         
