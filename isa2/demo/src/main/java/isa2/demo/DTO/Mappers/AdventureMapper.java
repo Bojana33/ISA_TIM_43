@@ -37,9 +37,6 @@ public class AdventureMapper {
         Address address = adventure.getAddress();
         address.setEntity(adventure);
         adventure.setReservations(getReservations(adventure));
-        Collection<AdditionalService> additionalServices = new ArrayList<>();
-        //Collection<AdditionalServiceDTO> additionalServiceDTOS = adventureDTO.setAdditionalServiceDTOS();
-        //adventure.setAdditionalServices(adventureDTO.getAdditionalServiceDTOS());
         Collection<AdditionalService> additionalServices = adventure.getAdditionalServices();
         if (additionalServices != null) {
             for (AdditionalService additionalService : additionalServices) {

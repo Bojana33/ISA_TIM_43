@@ -36,8 +36,10 @@ public class BasicController {
     public User user(Principal user) {
         return this.userService.findByEmail(user.getName());
     }
-    
+
+
     @GetMapping("/get_user/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'BOATOWNER', 'COTTAGEOWNER', 'ADMIN', 'CLIENT', 'INSTRUCTOR')")
     public User findUser(@PathVariable Integer id){
         return this.userService.findById(id);
     }

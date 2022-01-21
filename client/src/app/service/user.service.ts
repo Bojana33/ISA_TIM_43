@@ -92,7 +92,7 @@ export class UserService {
   }
 
   update(data:UserDTO){
-    return this.apiService.post('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
+    return this.apiService.put('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
   }
 
   saveAdmin(data:any){
