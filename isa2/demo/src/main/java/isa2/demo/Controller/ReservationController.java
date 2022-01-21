@@ -51,6 +51,7 @@ public class ReservationController {
         return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/getAllUserReservations/{clientId}")
     public ResponseEntity<Collection<ReservationDTO>> getListOfReservations(@PathVariable Integer clientId){
         Collection<Reservation> reservations = this.reservationService.findAllReservationsForClient(clientId);

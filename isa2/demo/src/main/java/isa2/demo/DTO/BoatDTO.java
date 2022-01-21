@@ -5,6 +5,7 @@ import isa2.demo.Model.NavigationEquipment;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 public class BoatDTO {
     private Integer id;
     private Integer boatOwnerId;
+    @NotBlank
     private String name;
     private String description;
     private Integer maxNumberOfGuests;
@@ -24,7 +26,8 @@ public class BoatDTO {
     private String entityPhoto;
     private Set<String> photos;
     private Double length;
-    private String enginePower;
+    private Double enginePower;
+    private String engineNumber;
     private Double maxSpeed;
     private Double capacity;
     private Double cancellationFee;

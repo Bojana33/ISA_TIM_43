@@ -56,7 +56,7 @@
             </div>
           </div>
 
-          <div *ngIf="hasRole('INSTRUCTOR') &&  isLoggedIdEqualToProfileId(userProfile.id)"> 
+          <div *ngIf="hasRole('INSTRUCTOR') &&  isLoggedIdEqualToProfileId(userProfile.id)">
             <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=2">Set Available Period</button>
             <button style="width:330px; margin-top:5%;" mat-raised-button type="submit" (click)="showForm=3">Set Unavailable Period</button>
             <div class="modal is-active" *ngIf="showForm === 2 || showForm === 3">

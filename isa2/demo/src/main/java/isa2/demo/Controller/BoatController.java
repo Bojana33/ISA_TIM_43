@@ -4,17 +4,15 @@ import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.BoatMapper;
 import isa2.demo.Exception.InvalidInputException;
-import isa2.demo.Model.Adventure;
 import isa2.demo.Model.Boat;
-import isa2.demo.Model.Cottage;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.BoatService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +47,7 @@ public class BoatController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public Boat addBoat(@RequestBody BoatDTO boatDTO){
+    public Boat addBoat(@RequestBody @Valid BoatDTO boatDTO){
         Boat boat = boatMapper.mapDtoToBoat(boatDTO);
         boat.setOwner(ownerRepository.findById(boatDTO.getBoatOwnerId()).get());
         boat = boatService.addNewBoat(boat);
@@ -76,7 +74,7 @@ public class BoatController {
         return ResponseEntity.status(HttpStatus.OK).body(boatDTO);
     }
     @PutMapping("/{boat_id}")
-    public ResponseEntity<BoatDTO> updateCottage(@RequestBody BoatDTO boatDTO){
+    public ResponseEntity<BoatDTO> updateBoat(@RequestBody BoatDTO boatDTO){
         ResponseEntity responseEntity = null;
         try{
             Boat boat = boatMapper.mapDtoToBoat(boatDTO);
@@ -90,7 +88,16 @@ public class BoatController {
 
         return responseEntity;
     }
-
+    @GetMapping("/getForOwner/{id}")
+    public List<BoatDTO> getBoatsForOwner(@PathVariable("id") Integer ownerId){
+        List<Boat> boats = new ArrayList<>();
+        boats = boatService.findBoatsByOwnerId(ownerId);
+        List<BoatDTO> boatDTOS = new ArrayList<>();
+        for(Boat boat:boats){
+            boatDTOS.add(boatMapper.mapBoatToDTO(boat));
+        }
+        return boatDTOS;
+    }
     @RequestMapping(value = "/findFree", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<BoatDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
         try {

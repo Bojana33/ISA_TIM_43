@@ -58,7 +58,7 @@
         <th><abbr title="Sale end">Sale end</abbr></th>
         <th><abbr title="Client id">Client</abbr></th>
         <th><abbr title="Additional services"> Service : Price</abbr></th>
-        <th ><abbr title="Review">Report</abbr></th>
+        <th *ngIf="filterStatus==3"><abbr title="Review">Report</abbr></th>
       </tr>
       </thead>
       <tbody>
@@ -72,7 +72,7 @@
         <td>{{res.reservedPeriod.endDate}}</td>
         <td>{{res.salePeriod.startDate}}</td>
         <td>{{res.salePeriod.endDate}}</td>
-        <td *ngIf="filterStatus==3"><a routerLink="/profile/{{res.clientId}}"> {{clientNames[res.id-1]}}</a></td>
+        <td ><a routerLink="/profile/{{res.clientId}}"> {{clientNames[res.id-1]}}</a></td>
         <td>
           <li *ngFor="let addService of res.additionalServices">
             {{addService['name']}} : {{addService['price']}}

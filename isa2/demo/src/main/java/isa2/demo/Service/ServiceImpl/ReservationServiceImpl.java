@@ -105,22 +105,25 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation reserveEntity(ReservationDTO reservationDTO) throws InvalidReservationException {
         Entity entity = entityRepository.findById(reservationDTO.getEntityId()).get();
+        Client client = clientRepository.findById(reservationDTO.getClientId()).get();
+        if(client.getPenalty() >= 3)
+            throw new InvalidReservationException("Client has 3 or more penalties");
         if(!checkReservation(reservationDTO, entity, false))
             throw new InvalidReservationException("Invalid reservation input");
-        Reservation reservation = new Reservation();
-        reservation.setEntity(entity);
-        reservation.setReservationStatus(ReservationStatus.RESERVED);
-        reservation.setCreationDate(LocalDateTime.now());
-        reservation.setNumberOfGuests(reservationDTO.getNumberOfGuests());
-        reservation.setReservedPeriod(new Period(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()));
-
+        //check if client canceled same reservation
+        for (Reservation reservation : client.getReservation()){
+            if(reservation.getEntity().equals(entity) && reservation.getReservationStatus() == ReservationStatus.CANCELED &&
+                    reservation.getReservedPeriod().getStartDate().isEqual(reservationDTO.getReservedPeriod().getStartDate()) &&
+                    reservation.getReservedPeriod().getEndDate().isEqual(reservationDTO.getReservedPeriod().getEndDate()))
+                throw new InvalidReservationException("Client canceled this reservation, can't reserve one more time");
+        }
+        Reservation reservation = saveReservation(reservationDTO, entity, client);
         Collection<AdditionalService> additionalServices = new ArrayList<>();
         Double price = entity.getPricePerDay() * DAYS.between(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate());
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
             additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
         }
-        Client client = this.clientService.findById(reservationDTO.getClientId());
         this.configSingletonService.addReservationPointsToClient(client);
         Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
         if (clientsDiscount != -1){
@@ -136,6 +139,9 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
+        Collection<Reservation> entityReservations = entity.getReservations();
+        entityReservations.add(reservation);
+        entity.setReservations(entityReservations);
         reservation = reservationRepository.save(reservation);
 
         //send email
@@ -156,10 +162,10 @@ public class ReservationServiceImpl implements ReservationService {
         if(!checkReservation(reservationDTO, entity, true))
             throw new InvalidReservationException("Invalid reservation input");
         Reservation reservation = reservationRepository.getById(reservationDTO.getId());
+        if (client.getReservation().contains(reservation) && reservation.getReservationStatus() == ReservationStatus.CANCELED)
+            throw new InvalidReservationException("Client canceled this reservation, can't reserve one more time");
         if (reservation.getReservationStatus() == ReservationStatus.RESERVED)
             throw new InvalidReservationException("Invalid reservation input");
-        reservation.setReservationStatus(ReservationStatus.RESERVED);
-        reservation.setNumberOfGuests(reservationDTO.getNumberOfGuests());
         Collection<AdditionalService> additionalServices = new ArrayList<>();
 
         Double clientsDiscount = this.configSingletonService.getClientDiscount(client);
@@ -189,6 +195,9 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
+        Collection<Reservation> entityReservations = entity.getReservations();
+        entityReservations.add(reservation);
+        entity.setReservations(entityReservations);
         reservation = reservationRepository.save(reservation);
 
         //send email
@@ -201,15 +210,30 @@ public class ReservationServiceImpl implements ReservationService {
         return reservation;
     }
 
+    private Reservation saveReservation(ReservationDTO reservationDTO, Entity entity, Client client) {
+        Reservation reservation = new Reservation();
+        reservation.setEntity(entity);
+        reservation.setReservationStatus(ReservationStatus.RESERVED);
+        reservation.setCreationDate(LocalDateTime.now());
+        reservation.setNumberOfGuests(reservationDTO.getNumberOfGuests());
+        reservation.setReservedPeriod(new Period(reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()));
+        reservation.setClient(client);
+        return reservation;
+    }
+
     private Boolean checkReservation(ReservationDTO reservationDTO, Entity entity, Boolean fastReservation){
+        //check reservation dates
         if (reservationDTO.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now()))
             return false;
         if (reservationDTO.getReservedPeriod().getEndDate().isBefore(reservationDTO.getReservedPeriod().getStartDate()))
             return false;
+        //check if there is any reservation with status resrved in this period
         for (Reservation reservation : entity.getReservations())
             if (reservation.getReservationStatus() == ReservationStatus.RESERVED && entityService.doTimeIntervalsIntersect(reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(), reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()))
                 return false;
-
+        //check if client already canceled this reservation
+        //if (clientRepository.findById(reservationDTO.getClientId()).get().getReservation().contains())
+        //check if reservation reserved period is in rental time
         if(!fastReservation)
             if (!entityService.isPeriodInRentalTime(entity, reservationDTO.getReservedPeriod().getStartDate(), reservationDTO.getReservedPeriod().getEndDate()))
                 return false;
