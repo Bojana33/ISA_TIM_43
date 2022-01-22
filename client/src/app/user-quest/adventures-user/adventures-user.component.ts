@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../service/config.service';
 import {Adventure} from '../../model/adventure';
 import { AdventureDTO } from 'src/app/model/adventure-dto';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-adventures-user',
@@ -18,11 +19,14 @@ export class AdventuresUserComponent implements OnInit {
   searchFilter: any;
   addressTxt!: string;
   address!: string;
+  tmpAdventures!: AdventureDTO[];
 
   constructor(
     private httpClient: HttpClient,
-    private config: ConfigService
-  ) { }
+    private config: ConfigService,
+    private userService: UserService
+  ) {
+  }
 
   ngOnInit(): void {
     this.getAdventures();
@@ -35,7 +39,14 @@ export class AdventuresUserComponent implements OnInit {
         console.log(data);
         this.adventures = data;
         this.allAdventures = this.adventures;
-        console.log(this.addressTxt);
+        for(let adventure of this.allAdventures){
+          this.userService.getUser(adventure.adventureOwnerId).subscribe(res => {
+            console.log(res);
+            adventure.instructorName =  res.firstName;
+            this.tmpAdventures.push(adventure);;
+          });
+        }
+        this.allAdventures = this.tmpAdventures;
       });
   }
 
@@ -55,4 +66,27 @@ export class AdventuresUserComponent implements OnInit {
     //}
   }
 
+  sort(criterion: any) {
+    if(criterion === 'name')
+      this.allAdventures.sort((a,b) => a.name > b.name ? 1 : -1);
+    else if (criterion === 'instructorName')
+      this.allAdventures.sort((a, b) => a.instructorName > b.instructorName ? 1 : -1);
+    else if(criterion === 'price')
+      this.allAdventures.sort((a, b) => a.pricePerDay > b.pricePerDay ? 1 : -1);
+    else if(criterion === 'location')
+      this.allAdventures.sort(function(a, b) {
+        if (a.addressDTO.country !== b.addressDTO.country) {
+          // Price is only important when cities are the same
+          return a.addressDTO.country > b.addressDTO.country ? 1 : -1;
+        }
+        if (a.addressDTO.city !== b.addressDTO.city) {
+          return a.addressDTO.city > b.addressDTO.city ? 1 : -1;
+        }
+        else if (a.addressDTO.street !== b.addressDTO.street){
+          return a.addressDTO.street > b.addressDTO.street ? 1 : -1;
+        }
+        else
+          return a.addressDTO.houseNumber > b.addressDTO.houseNumber ? 1 : -1;
+      });
+  }
 }

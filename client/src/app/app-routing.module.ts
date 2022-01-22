@@ -64,6 +64,8 @@ import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.componen
 import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 import {SubscriptionsComponent} from './user-quest/subscriptions/subscriptions.component';
 import {CottageOwnerAndBoatOwnerGuard} from './guard/cottage-owner-and-boat-owner.guard';
+import {ReservationsHistoryComponent} from "./client-reservations/reservations-history/reservations-history.component";
+import {ClientGuard} from "./guard/client.guard";
 
 
 const routes: Routes = [
@@ -108,9 +110,15 @@ const routes: Routes = [
     component: UserReservationsComponent
   },
   {
+    path: 'reservationsHistory',
+    component: ReservationsHistoryComponent,
+    //canActivate: [ClientGuard]
+    pathMatch: 'full'
+  },
+  {
     path: 'userProfile',
     component: ProfileComponent,
-    //canActivate: [LoginGuard, GuestGuard],
+    canActivate: [LoginGuard, GuestGuard],
     pathMatch: 'full'
   },
   {

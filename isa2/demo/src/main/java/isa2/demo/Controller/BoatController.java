@@ -1,5 +1,6 @@
 package isa2.demo.Controller;
 
+import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.DTO.Mappers.BoatMapper;
@@ -10,6 +11,7 @@ import isa2.demo.Service.BoatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -110,5 +112,12 @@ public class BoatController {
         catch (InvalidInputException e){
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @RequestMapping(value = "/sorted/{criterion}/{asc}",  method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<BoatDTO>> getSorted(@PathVariable("criterion")String criterion, @PathVariable("asc") Boolean asc, @RequestBody Collection<BoatDTO> boats){
+        List<BoatDTO> boatsSorted = this.boatService.sortBoats(boats, criterion, asc);
+        return new ResponseEntity<>(boatsSorted, HttpStatus.OK);
     }
 }

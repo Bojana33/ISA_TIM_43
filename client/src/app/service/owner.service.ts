@@ -15,4 +15,7 @@ export class OwnerService {
   getInstructorAvailability(instructorId:number){
     return this.api.get(this.config.owner_url + '/get_instructor_availabilities/' + instructorId);
   }
+  getOwnerById(id:number){
+    return this.api.get(this.config.owner_url + '/getOwnerById/' + id);
+  }
 }

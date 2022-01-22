@@ -22,6 +22,7 @@ export class AdventureDTO{
   public defaultFishingEquipment!: string;
   public reservations: ReservationDTO[];
   public averageGrade!: number;
+  public instructorName!: string;
 
   constructor(id: number, name: string, description: string, photos: string[], adventureOwnerId: number,
               maxNumberOfGuests: number, pricePerDay: number,

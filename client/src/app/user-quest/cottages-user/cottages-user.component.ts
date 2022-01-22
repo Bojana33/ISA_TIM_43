@@ -18,6 +18,7 @@ export class CottagesUserComponent implements OnInit {
   searchTerm: any;
   searchFilter: any;
   showAll!: boolean;
+  sortedCottages: CottageDTO[] = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -35,7 +36,7 @@ export class CottagesUserComponent implements OnInit {
   getCottages(){
     this.httpClient.get<any>(this.config.cottage_url + '/get_all').subscribe(
       (data) => {
-        this.cottages = data;
+        this.allCottages = data;
       });
   }
 
@@ -57,5 +58,27 @@ export class CottagesUserComponent implements OnInit {
     //else if (search === 'location') {
       //this.cottages = this.allCottages.filter((val) => val.address.includes(value) || val.name.toLowerCase().includes(value));
     //}
+  }
+
+  sort(criterion: any) {
+    if(criterion === 'name')
+      this.allCottages.sort((a,b) => a.cottageName > b.cottageName ? 1 : -1);
+    else if(criterion === 'price')
+      this.allCottages.sort((a, b) => a.pricePerDay > b.pricePerDay ? 1 : -1);
+    else if(criterion === 'location')
+      this.allCottages.sort(function(a, b) {
+        if (a.address.country !== b.address.country) {
+          // Price is only important when cities are the same
+          return a.address.country > b.address.country ? 1 : -1;
+        }
+        if (a.address.city !== b.address.city) {
+          return a.address.city > b.address.city ? 1 : -1;
+        }
+        else if (a.address.street !== b.address.street){
+          return a.address.street > b.address.street ? 1 : -1;
+        }
+        else
+          return a.address.houseNumber > b.address.houseNumber ? 1 : -1;
+      });
   }
 }

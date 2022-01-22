@@ -111,7 +111,8 @@ public class ReservationServiceImpl implements ReservationService {
         if(!checkReservation(reservationDTO, entity, false))
             throw new InvalidReservationException("Invalid reservation input");
         //check if client canceled same reservation
-        for (Reservation reservation : client.getReservation()){
+        Collection<Reservation> clientsReservation = client.getReservation();
+        for (Reservation reservation : clientsReservation){
             if(reservation.getEntity().equals(entity) && reservation.getReservationStatus() == ReservationStatus.CANCELED &&
                     reservation.getReservedPeriod().getStartDate().isEqual(reservationDTO.getReservedPeriod().getStartDate()) &&
                     reservation.getReservedPeriod().getEndDate().isEqual(reservationDTO.getReservedPeriod().getEndDate()))

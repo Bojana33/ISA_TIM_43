@@ -83,11 +83,26 @@ export class UserService {
 
   loggedRole(role: string){
     if (this.currentUser == null){
+      //console.log('curr je null');
       return false;
     }
     if (JSON.stringify(this.currentUser.authorities).search('ROLE_' + role) !== -1){
       return true;
     }
+    return false;
+  }
+
+  isClient(){
+    //console.log('usap');
+    if (this.currentUser == null){
+      //console.log('curr ej null');
+      return false;
+    }
+    if (JSON.stringify(this.currentUser.authorities).search('ROLE_CLIENT') !== -1){
+      //console.log('varati true');
+      return true;
+    }
+    //console.log('vrati false');
     return false;
   }
 

@@ -69,6 +69,7 @@ export class SignupClientComponent implements OnInit {
     this.request.email = form.value.email;
     this.request.password = form.value.password;
     this.request.phoneNumber = form.value.phoneNumber;
+    console.log(this.request);
   }
 
   get firstName() { return this.form.get('firstName'); }

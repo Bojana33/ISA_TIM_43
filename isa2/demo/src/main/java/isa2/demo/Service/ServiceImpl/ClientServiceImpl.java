@@ -105,4 +105,21 @@ public class ClientServiceImpl implements ClientService {
             clientRepository.save(client);
         }
     }
+
+    @Override
+    public Collection<Reservation> reservationsHistory(String username, String criterion){
+        Collection<Reservation> reservations = findByUsername(username).getReservation();
+        Collection<Reservation> reservationsHistory = new ArrayList<>();
+        for (Reservation reservation : reservations){
+            if(criterion.equals("cottage") && reservation.getEntity().getClass() == Cottage.class && reservation.getReservedPeriod().getEndDate().isAfter(LocalDateTime.now()))
+                reservationsHistory.add(reservation);
+            else if(criterion.equals("boat") && reservation.getEntity().getClass() == Boat.class && reservation.getReservedPeriod().getEndDate().isAfter(LocalDateTime.now()))
+                reservationsHistory.add(reservation);
+            else if(criterion.equals("adventure") && reservation.getEntity().getClass() == Adventure.class && reservation.getReservedPeriod().getEndDate().isBefore(LocalDateTime.now()))
+                reservationsHistory.add(reservation);
+            else if (criterion.equals("all") && reservation.getReservedPeriod().getEndDate().isBefore(LocalDateTime.now()))
+                reservationsHistory.add(reservation);
+        }
+        return reservationsHistory;
+    }
 }

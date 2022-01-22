@@ -104,6 +104,8 @@ import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.componen
 import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReservationsHistoryComponent } from './client-reservations/reservations-history/reservations-history.component';
+import { ClientGuard } from './guard/client.guard';
 
 
 const mapConfig: YaConfig = {
@@ -179,7 +181,8 @@ const mapConfig: YaConfig = {
     OwnersReviewsComponent,
     ConfigSingletonComponent,
     RegisterBoatComponent,
-    DashboardComponent
+    DashboardComponent,
+    ReservationsHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -233,6 +236,7 @@ const mapConfig: YaConfig = {
     GuestGuard,
     InstructorGuard,
     AdminGuard,
+    ClientGuard,
     AuthService,
     ApiService,
     UserService,

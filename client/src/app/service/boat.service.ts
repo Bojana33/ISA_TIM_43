@@ -4,6 +4,7 @@ import {ConfigService} from './config.service';
 import {HttpClient} from '@angular/common/http';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {FreeEntityDTO} from "../model/free-entity-dto";
+import {BoatDTO} from "../model/boat-dto";
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +21,8 @@ export class BoatService {
 
   getFreeBoats(request: FreeEntityDTO) {
     return this.apiService.post('http://localhost:8090/boats/findFree',  JSON.parse(JSON.stringify(request)));
+  }
+  getSorted(boats: BoatDTO[], criterion: string, asc: boolean){
+    return this.apiService.post('http://localhost:8090/boats/sorted' + '/' + criterion + '/' + asc, JSON.parse(JSON.stringify(boats)));
   }
 }

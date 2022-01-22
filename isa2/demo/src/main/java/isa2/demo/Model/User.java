@@ -58,7 +58,7 @@ public class User implements UserDetails {
    private String email;
 
    @NotBlank(message = "Phone number is mandatory")
-   @Size(min=5, max=30, message = "Invalid number of input characters")
+   //@Size(min=2, max=30, message = "Invalid number of input characters")
    @Column
    private String phoneNumber;
 

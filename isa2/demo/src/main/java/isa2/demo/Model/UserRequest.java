@@ -38,7 +38,7 @@ public class UserRequest {
     private String email;
 
     @NotNull
-    @Size(min=5, max=30)
+    //@Size(min=5, max=30)
     @Column
     private String phoneNumber;
 

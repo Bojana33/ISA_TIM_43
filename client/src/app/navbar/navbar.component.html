@@ -40,6 +40,10 @@
     <a mat-button *ngIf="hasSignedIn() && hasRole('INSTRUCTOR')" routerLink = "adventures"  >My Adventures</a>
     <a mat-button routerLink="dashboard" *ngIf="hasSignedIn() && (hasRole('COTTAGEOWNER') || hasRole('BOATOWNER')) ">Dashboard</a>
     <a mat-button routerLink="users" *ngIf="hasSignedIn() && hasRole('ADMIN')">Users</a>
+    <a mat-button routerLink="reservationsHistory" *ngIf="hasSignedIn() && hasRole('CLIENT')">Previous reservations</a>
+    <a mat-button routerLink="futureReservations" *ngIf="hasSignedIn() && hasRole('CLIENT')">Future reservations</a>
+    <a mat-button routerLink="subscriptions" *ngIf="hasSignedIn() && hasRole('CLIENT')">Subscriptions</a>
+    <a mat-button routerLink="userReservations" *ngIf="hasSignedIn() && hasRole('CLIENT')">Give reservation feedback</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
     <a mat-stroked-button color="accent" routerLink="signupAdmin" *ngIf="hasSignedIn() && hasRole('ADMIN')">Register Admin</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>

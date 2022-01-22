@@ -1,4 +1,7 @@
-<div class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 5%">
+<div *ngIf="dataSource.length == 0" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 5%">
+  <p>User subscriptions list is empty</p>
+</div>
+<div *ngIf="dataSource.length > 0" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 5%">
   <table  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="Entity name">
       <th mat-header-cell *matHeaderCellDef>Entity name</th>

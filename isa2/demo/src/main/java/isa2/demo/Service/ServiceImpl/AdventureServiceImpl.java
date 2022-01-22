@@ -85,15 +85,15 @@ public class AdventureServiceImpl implements AdventureService {
             throw new InvalidInputException("Number of guests needs to be at least 1");
         for (Adventure adventure : adventures) {
             if ((request.getNumberOfGuests() != null && adventure.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (adventure.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && adventure.getAverageGrade() < request.getGrade()))
-                break;
+                continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!request.getCountry().equals(adventure.getAddress().getCountry()))
-                    break;
+                    continue;
             if (request.getCity() != null && !request.getCity().equals(""))
                 if (!request.getCity().equals(adventure.getAddress().getCity()))
-                    break;
+                    continue;
             if (!entityService.isPeriodInRentalTime(adventure, request.getStartDate(), request.getEndDate()))
-                break;
+                continue;
             else
                 freeAdventures.add(adventure);
             Collection<Reservation> reservations = adventure.getReservations();

@@ -4,6 +4,7 @@ import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.InstructorAvailabilityDTO;
 import isa2.demo.DTO.PeriodDTO;
+import isa2.demo.DTO.UserDTO;
 import isa2.demo.Model.Adventure;
 import isa2.demo.Model.InstructorAvailability;
 import isa2.demo.Model.Owner;
@@ -64,4 +65,10 @@ public class OwnerController {
             return new ResponseEntity<>(instructorAvailabilityDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping("/getOwnerById/{ownerId}")
+    public ResponseEntity<UserDTO> getOwnerById(@PathVariable Integer ownerId){
+        Owner owner = this.ownerService.findById(ownerId);
+        return new ResponseEntity<>(this.modelMapper.modelMapper().map(owner, UserDTO.class), HttpStatus.OK);
+    }
 }

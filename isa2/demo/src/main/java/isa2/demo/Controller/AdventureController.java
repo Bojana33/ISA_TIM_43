@@ -1,16 +1,10 @@
 package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
-import isa2.demo.DTO.AdventureDTO;
-import isa2.demo.DTO.BoatDTO;
-import isa2.demo.DTO.FreeEntityDTO;
+import isa2.demo.DTO.*;
 import isa2.demo.DTO.Mappers.AdventureMapper;
-import isa2.demo.DTO.UserDTO;
 import isa2.demo.Exception.InvalidInputException;
-import isa2.demo.Model.Adventure;
-import isa2.demo.Model.Boat;
-import isa2.demo.Model.Entity;
-import isa2.demo.Model.Owner;
+import isa2.demo.Model.*;
 import isa2.demo.Model.Owner;
 import isa2.demo.Service.AdventureService;
 import isa2.demo.Service.EntityService;
@@ -105,8 +99,9 @@ public class AdventureController {
         this.adventureService.delete(id);
     }
 
-    @RequestMapping(value = "/findFree", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<AdventureDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
+    @PreAuthorize("hasRole('CLIENT')")
+    @RequestMapping(value = "/findFreeAdventures", method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<AdventureDTO>> getFreeAdventures(@RequestBody FreeEntityDTO request){
         try {
             Collection<Adventure> adventures = this.adventureService.findFreeAdventures(request);
             Collection<AdventureDTO> adventureDTOS = new ArrayList<>();
@@ -128,5 +123,27 @@ public class AdventureController {
         for(Adventure adventure : adventures)
             adventureDTOS.add(adventureMapper.mapAdventureToDTO(adventure));
         return new ResponseEntity<>(adventureDTOS, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @RequestMapping(value = "/findFree", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<AdventureDTO>> getFree(@RequestBody FreeEntityDTO request){
+        try {
+            Collection<Adventure> adventures = this.adventureService.findFreeAdventures(request);
+            Collection<AdventureDTO> adventureDTOS = new ArrayList<>();
+            for (Adventure adventure : adventures)
+                adventureDTOS.add(this.adventureMapper.mapAdventureToDTO(adventure));
+            return new ResponseEntity<>(adventureDTOS, HttpStatus.OK);
+        }
+        catch (InvalidInputException e){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @RequestMapping(value = "/sorted/{criterion}/{asc}",  method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AdventureDTO>> getSorted(@PathVariable("criterion")String criterion, @PathVariable("asc") Boolean asc,@RequestBody Collection<AdventureDTO> adventures){
+        List<AdventureDTO> adventuresSorted = this.adventureService.sortAdventures(adventures, criterion, asc);
+        return new ResponseEntity<>(adventuresSorted, HttpStatus.OK);
     }
 }

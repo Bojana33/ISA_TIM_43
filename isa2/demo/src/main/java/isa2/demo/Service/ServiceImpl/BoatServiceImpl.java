@@ -102,15 +102,15 @@ public class BoatServiceImpl implements BoatService {
             throw new InvalidInputException("Number of guests needs to be at least 1");
         for (Boat boat : boats) {
             if ((request.getNumberOfGuests() != null && boat.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (boat.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && boat.getAverageGrade() < request.getGrade()))
-                break;
+                continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!request.getCountry().equals(boat.getAddress().getCountry()))
-                    break;
+                    continue;
             if (request.getCity() != null && !request.getCity().equals(""))
                 if (!request.getCity().equals(boat.getAddress().getCity()))
-                    break;
+                    continue;
             if (!entityService.isPeriodInRentalTime(boat, request.getStartDate(), request.getEndDate()))
-                break;
+                continue;
             else
                 freeBoats.add(boat);
             Collection<Reservation> reservations = boat.getReservations();

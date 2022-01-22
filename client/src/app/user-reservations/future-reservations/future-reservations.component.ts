@@ -26,7 +26,7 @@ export class FutureReservationsComponent implements OnInit {
     this.setDateToCompare();
     this.clientService.getFutureReservations().subscribe(res => {
       this.dataSource = res;
-      console.log(res);
+      console.log('future reservations', res);
     });
   }
 
@@ -40,6 +40,9 @@ export class FutureReservationsComponent implements OnInit {
     this.reservationService.cancelReservation(element.id).subscribe(res =>{
       console.log(res);
       this.snackBar.open('Successfully canceled.', 'cancel');
+    },
+    err => {
+      this.snackBar.open('Successfully canceled. Reload page', 'cancel');
     });
   }
 

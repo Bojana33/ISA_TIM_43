@@ -8,6 +8,10 @@
 
 
 <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+  <button mat-button cdkFocusInitial (click)="sort('name')" style="margin-bottom: 3%">Sort by name</button>
+  <button mat-button cdkFocusInitial (click)="sort('location')" style="margin-bottom: 3%">Sort by location</button>
+  <button mat-button cdkFocusInitial (click)="sort('price')" style="margin-bottom: 3%">Sort by price</button>
+
   <div fxLayout="row wrap" fxLayoutGap="16px grid">
     <div *ngFor="let item of boats | filter: searchTerm">
       <mat-card class="mat-elevation-z4" style="width: 520px;">
