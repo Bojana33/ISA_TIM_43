@@ -60,7 +60,7 @@ public class EntityServiceImpl implements EntityService {
             rentalTimeList.add( rentalTime);
             entity.setRentalTimes(rentalTimeList);
             entity = entityRepository.save(entity);
-            sendEmailsToSubscribers(entity ,rentalTime.getStart_date(),rentalTime.getEnd_date(),Optional.empty(),Optional.empty());
+            //sendEmailsToSubscribers(entity ,rentalTime.getStart_date(),rentalTime.getEnd_date(),Optional.empty(),Optional.empty());
             return entity;
         }else{
             return null;
@@ -71,6 +71,16 @@ public class EntityServiceImpl implements EntityService {
     public Entity addReservation(Integer entity_id, Reservation reservation) throws MessagingException {
         //TODO: ako imas vremena, resi ovo da bude sa optional
         Entity entity =  entityRepository.findById(entity_id).get();
+        Collection<RentalTime> rentalTimes = entity.getRentalTimes();
+        if (rentalTimes.isEmpty()) {
+            return null;
+        }
+        for(RentalTime rentalTime: rentalTimes){
+            if(!doTimeIntervalsIntersect(rentalTime.getStart_date(),rentalTime.getEnd_date(),
+                    reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())){
+                return null;
+            }
+        }
         if(isReservationOverlaping(entity, reservation)){
             Collection<Reservation> reservations = entity.getReservations();
             reservation.setCreationDate(LocalDateTime.now());
@@ -87,7 +97,6 @@ public class EntityServiceImpl implements EntityService {
             reservations.add( reservation);
             entity.setReservations(reservations);
             entity = entityRepository.save(entity);
-            //TODO: posalji mejlove subscribovanim klijentima
             sendEmailsToSubscribers(entity,reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate(),
                                     Optional.of(reservation.getSalePeriod().getStartDate()), Optional.of(reservation.getSalePeriod().getEndDate()));
             return entity;
@@ -127,7 +136,8 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,LocalDateTime startDate2, LocalDateTime endDate2) {
+    public boolean doTimeIntervalsIntersect(LocalDateTime startDate1, LocalDateTime endDate1,
+                                            LocalDateTime startDate2, LocalDateTime endDate2) {
         return (!startDate2.isAfter(endDate1) && !endDate2.isBefore(startDate1));
     }
 

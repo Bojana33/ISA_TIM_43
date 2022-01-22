@@ -69,7 +69,13 @@ export class CottageComponent implements OnInit{
             Validators.required,
             Validators.min(0),
             Validators.max(300)]
-          )
+          ),
+          address: new FormGroup({
+            country: new FormControl(this.cottage.address.country, [Validators.required]),
+            city: new FormControl(this.cottage.address.city, [Validators.required]),
+            street: new FormControl(this.cottage.address.street, [Validators.required]),
+            houseNumber: new FormControl(this.cottage.address.houseNumber, [Validators.required])
+          }),
         });
         this.addressFormated = this.cottage.address.city + ', ' + this.cottage.address.street
           + ', ' + this.cottage.address.houseNumber;
@@ -101,10 +107,16 @@ export class CottageComponent implements OnInit{
   }
   // tslint:disable-next-line:typedef
   updateCottage(form: FormGroup){
+    console.log(form.value.address);
     this.cottage.cottageName = form.value.cottageName;
     this.cottage.description = form.value.description;
     this.cottage.maxNumberOfGuests = form.value.maxNumberOfGuests;
     this.cottage.pricePerDay = form.value.pricePerDay;
+    this.cottage.address.country = form.value.address.country;
+    this.cottage.address.street = form.value.address.street;
+    this.cottage.address.city = form.value.address.city;
+    this.cottage.address.houseNumber = form.value.address.houseNumber;
+    console.log(this.cottage.address);
     return this.cottageService.updateCottage(this.cottage).subscribe(
       res => {
         console.log(res.id);
