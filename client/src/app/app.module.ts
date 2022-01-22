@@ -104,6 +104,7 @@ import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.componen
 import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminReservationsComponent } from './admin-reservations/admin-reservations.component';
 
 
 const mapConfig: YaConfig = {
@@ -179,7 +180,8 @@ const mapConfig: YaConfig = {
     OwnersReviewsComponent,
     ConfigSingletonComponent,
     RegisterBoatComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminReservationsComponent
   ],
   imports: [
     BrowserModule,

@@ -36,4 +36,7 @@ export class ReservationService {
   cancelReservation(reservationId: any) {
     return this.api.put(this.config.reservation_url + '/cancelReservation/' + reservationId, null);
   }
+  getAllReservations(){
+    return this.api.get(this.config.reservation_url + '/get_all');
+  }
 }

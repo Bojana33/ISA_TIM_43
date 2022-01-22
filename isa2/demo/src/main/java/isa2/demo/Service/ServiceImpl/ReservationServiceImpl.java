@@ -240,6 +240,25 @@ public class ReservationServiceImpl implements ReservationService {
                 return false;
         if (reservationDTO.getNumberOfGuests() < 1 || reservationDTO.getNumberOfGuests() > entity.getMaxNumberOfGuests())
             return false;
+        if(entity instanceof Adventure){
+            Collection<InstructorAvailability> unavailabilityPeriods = ((Adventure) entity).getOwner().getAvailabilityPeriods();
+            for (InstructorAvailability instructorAvailability: unavailabilityPeriods){
+                if(instructorAvailability.getAvailabilityType()==AvailabilityType.UNAVAILABLE){
+                    if(reservationDTO.getReservedPeriod().getStartDate().isBefore(instructorAvailability.getPeriod().getStartDate())
+                            && reservationDTO.getReservedPeriod().getEndDate().isAfter(instructorAvailability.getPeriod().getStartDate())){
+                        return false;
+                    }
+                    if(reservationDTO.getReservedPeriod().getStartDate().isAfter(instructorAvailability.getPeriod().getStartDate())
+                            && reservationDTO.getReservedPeriod().getEndDate().isBefore(instructorAvailability.getPeriod().getEndDate())){
+                        return false;
+                    }
+                    if(reservationDTO.getReservedPeriod().getStartDate().isBefore(instructorAvailability.getPeriod().getEndDate())
+                            && reservationDTO.getReservedPeriod().getEndDate().isAfter(instructorAvailability.getPeriod().getEndDate())){
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 
@@ -319,4 +338,11 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setReservationStatus(ReservationStatus.CANCELED);
         reservationRepository.save(reservation);
     }
+
+    @Override
+    public Collection<Reservation> findAll() {
+        return this.reservationRepository.findAll();
+    }
+
+
 }

@@ -1,6 +1,15 @@
 <!-- <h1 class="title"> Fishing Adventures</h1> -->
     <button *ngIf="hasRole('INSTRUCTOR')" mat-flat-button color="accent" class="edit" routerLink="/create-adventure">Create</button>
-
+    <form >
+        <div class = "column is-three-fifths is-offset-one-fifth">
+          <div class=" field">
+            <label class="label"></label>
+            <div class="control">
+              <input #box class="input" type="text" placeholder="Search" [(ngModel)]="name" (input)="filterAdventures(box.value)">
+            </div>
+          </div>
+        </div>
+      </form>
 <div class="content">
     <div fxLayout="row wrap" fxLayoutGap="30px grid">
         <div fxFlex="25%" *ngFor="let adventure of adventures">

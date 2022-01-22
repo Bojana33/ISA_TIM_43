@@ -1,3 +1,4 @@
+import { Adventure } from './../model/adventure';
 import { UserService } from './../service/user.service';
 import { ApiService } from './../service/api.service';
 import { AdditionalService } from './../model/additional-service';
@@ -5,7 +6,6 @@ import { Address } from './../model/address';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../service/config.service';
-import { Adventure } from '../model/adventure';
 
 @Component({
   selector: 'app-adventures',
@@ -15,6 +15,8 @@ import { Adventure } from '../model/adventure';
 export class AdventuresComponent implements OnInit {
 
   adventures: Adventure[]=[];
+  allAdventures: Adventure[] = [];
+  name:any;
 
   constructor(
     private httpClient: HttpClient,
@@ -32,6 +34,7 @@ export class AdventuresComponent implements OnInit {
       response => {
         console.log(response);
         this.adventures = response;
+        this.allAdventures = this.adventures;
       }
     )
   }
@@ -42,6 +45,11 @@ export class AdventuresComponent implements OnInit {
 
   hasSignedIn() {
     return !!this.userService.currentUser;
+  }
+
+  filterAdventures(adventureName: any){
+    this.adventures = this.allAdventures.filter((val) => val.name.toUpperCase().includes(adventureName)
+      || val.name.toLowerCase().includes(adventureName));
   }
 
 }

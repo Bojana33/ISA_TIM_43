@@ -64,6 +64,7 @@ import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.componen
 import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 import {SubscriptionsComponent} from './user-quest/subscriptions/subscriptions.component';
 import {CottageOwnerAndBoatOwnerGuard} from './guard/cottage-owner-and-boat-owner.guard';
+import { AdminReservationsComponent } from './admin-reservations/admin-reservations.component';
 
 
 const routes: Routes = [
@@ -310,6 +311,11 @@ const routes: Routes = [
   {
     path: 'config-singleton',
     component: ConfigSingletonComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'admin-reservations',
+    component: AdminReservationsComponent,
     canActivate: [GuestGuard]
   },
   {

@@ -2,6 +2,7 @@ package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.ReservationDTO;
+import isa2.demo.Exception.InvalidReservationException;
 import isa2.demo.Model.Owner;
 import isa2.demo.Model.Reservation;
 import isa2.demo.Service.ServiceImpl.OwnerServiceImpl;
@@ -71,4 +72,16 @@ public class ReservationController {
             return new ResponseEntity("Something went wrong", HttpStatus.FORBIDDEN);
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/get_all")
+    public ResponseEntity<Collection<ReservationDTO>> getAllReservations(){
+        Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
+        Collection<Reservation> reservations = this.reservationService.findAll();
+        for(Reservation reservation:reservations){
+            reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
+        }
+        return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
+    }
+
 }

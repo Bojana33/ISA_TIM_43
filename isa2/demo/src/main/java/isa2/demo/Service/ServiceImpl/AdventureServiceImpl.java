@@ -2,10 +2,7 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
-import isa2.demo.Model.Adventure;
-import isa2.demo.Model.Owner;
-import isa2.demo.Model.Reservation;
-import isa2.demo.Model.ReservationStatus;
+import isa2.demo.Model.*;
 import isa2.demo.Repository.AdventureRepository;
 import isa2.demo.Service.AdventureService;
 import isa2.demo.Service.EntityService;
@@ -43,17 +40,27 @@ public class AdventureServiceImpl implements AdventureService {
 
     @Override
     public Adventure save(Adventure adventure) {
+        Collection<InstructorAvailability> instructorAvailabilities = adventure.getOwner().getAvailabilityPeriods();
+        Collection<RentalTime> rentalTimes = new ArrayList<>();
+        for(InstructorAvailability instructorAvailability: instructorAvailabilities){
+            if(instructorAvailability.getAvailabilityType() == AvailabilityType.AVAILABLE){
+                RentalTime rentalTime = new RentalTime();
+                rentalTime.setStart_date(instructorAvailability.getPeriod().getStartDate());
+                rentalTime.setEnd_date(instructorAvailability.getPeriod().getEndDate());
+                rentalTimes.add(rentalTime);
+            }
+        }
+        adventure.setRentalTimes(rentalTimes);
         return this.adventureRepository.save(adventure);
     }
 
     @Override
     public Adventure update(Adventure adventure) {
         Collection<Reservation> reservations = new ArrayList<>(adventure.getReservations());
-        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-        if(reservations.isEmpty())
-            return this.adventureRepository.save(adventure);
+        if(!(reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.RESERVED))))
+            return adventureRepository.save(adventure);
         else
-            throw new UnsupportedOperationException("Entity with active reservations can't be deleted");
+            throw new UnsupportedOperationException("Entity with active reservations can't be updated");
 
 
     }

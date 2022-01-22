@@ -81,5 +81,5 @@ VALUES (5, 0, 20.0, 12.3, 200, 15, 15, 20, 'no rules', null),
 insert into config_singleton(config_singleton_id,client_reservation_points, discount_gold, discount_regular, discount_silver,
                              fee_percentage,gold_start_points,silver_start_points,regular_start_points, successful_owner_points,
                              income_gold, income_regular, income_silver)
-            values (1,0,0,0,0,0,0,0,0,0,0,0,0);
+            values (1,5,20,10,15,20,25,15,5,7,80,50,60);
 

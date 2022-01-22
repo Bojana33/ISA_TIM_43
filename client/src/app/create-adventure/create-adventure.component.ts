@@ -31,7 +31,7 @@ export class CreateAdventureComponent implements OnInit {
     //photos: string[],
     maxNumberOfGuests: new FormControl(0),
     houseRules: new FormControl(''),
-    additionalServices: this.formBuilder.array([this.createAdditionalServices()]),
+    //additionalServices: this.formBuilder.array([this.createAdditionalServices()]),
     pricePerDay: new FormControl(0.0),
     cancellationFee: new FormControl(0),
     defaultFishingEquipment: new FormControl('')
@@ -50,28 +50,6 @@ constructor(
     this.adventure;
   }
 
-  createAdditionalServices(): FormGroup{
-    console.log('createAdditionalService');
-    return this.formBuilder.group({
-      name: '',
-      price: ''
-    });
-  }
-
-  addService(): void{
-    this._additionalServices = this.adventure.get('additionalServices') as FormArray;
-    this._additionalServices.push(this.createAdditionalServices());
-  }
-
-  deleteService(index: number): void {
-    this._additionalServices = this.adventure.get('additionalServices') as FormArray;
-    this._additionalServices.removeAt(index);
-  }
-
-  get additionalServices(): FormArray {
-    return this.adventure.get('additionalServices') as FormArray;
-  }
-
   addAdventure(form:any){
     this.adventureObj = new Adventure();
     this.adventureObj.name = form.value.name;
@@ -88,7 +66,6 @@ constructor(
     this.adventureObj.entityPhoto = "./../../assets/images/capsule_616x353.jpg";
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
     this.adventureObj.adventureOwnerId = this.userService.currentUser.id;
-    this.adventureObj.additionalServices = form.value.additionalServices;
   }
 
   createAdventure(){
