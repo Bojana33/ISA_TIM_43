@@ -179,6 +179,7 @@ public class EntityController {
         return new ResponseEntity<>(modelMapper.modelMapper().map(entity, EntityDTO.class), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('BOATOWNER','COTTAGEOWNER')")
     @PostMapping(value = "/createReservationForUser")
     public ResponseEntity<ReservationDTO> createReservationForUser(@RequestBody ReservationDTO reservationDTO){
         try{
