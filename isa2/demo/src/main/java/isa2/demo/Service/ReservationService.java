@@ -25,4 +25,5 @@ public interface ReservationService {
     Reservation fastReservation(ReservationDTO reservationDTO) throws  InvalidReservationException;
     List<Reservation> findAllReservationsForClient(Integer clientId);
     void cancelReservation(String username, Integer reservationId) throws Exception;
+    public ArrayList<ReservationDTO> sortReservations(Collection<ReservationDTO> reservations, String criterion);
 }

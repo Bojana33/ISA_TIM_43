@@ -39,6 +39,7 @@ export class OneBoatUserComponent implements OnInit {
     this.httpClient.get<any>(this.config.boat_url + '/get_boat/' + this.router.snapshot.params.id).subscribe(
       response => {
         this.boat = response;
+        console.log(response);
       });
     this.entityService.isSubscribed(this.router.snapshot.params.id).subscribe(res =>
     {

@@ -99,20 +99,20 @@ public class CottageServiceImpl implements CottageService {
             throw new InvalidInputException("Number of guests needs to be at least 1");
         for (Cottage cottage : cottages) {
             if ((request.getNumberOfGuests() != null && cottage.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (cottage.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && cottage.getAverageGrade() < request.getGrade()))
-                break;
+                continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!checkLocation(request.getCountry(), cottage.getAddress().getCountry()))
-                    break;
+                    continue;
             if (request.getCity() != null && !request.getCity().equals(""))
                 if (!checkLocation(request.getCity(), cottage.getAddress().getCity()))
-                    break;
+                    continue;
             if (!isPeriodInRentalTime(cottage, request.getStartDate(), request.getEndDate()))
-                break;
+                continue;
             else
                 freeCottages.add(cottage);
             Collection<Reservation> reservations = cottage.getReservations();
             for (Reservation reservation : reservations) {
-                if (entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
+                if (reservation.getReservationStatus() == ReservationStatus.RESERVED  && entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
                     freeCottages.remove(cottage);
                     break;
                 }

@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {ApiService} from './api.service';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {PeriodDTO} from '../model/period-dto.model';
+import {BoatDTO} from "../model/boat-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,8 @@ export class ReservationService {
   }
   cancelReservation(reservationId: any) {
     return this.api.put(this.config.reservation_url + '/cancelReservation/' + reservationId, null);
+  }
+  getSorted(boats: ReservationDTO[], criterion: string){
+    return this.api.post('http://localhost:8090/reservations/sorted' + '/' + criterion, JSON.parse(JSON.stringify(boats)));
   }
 }

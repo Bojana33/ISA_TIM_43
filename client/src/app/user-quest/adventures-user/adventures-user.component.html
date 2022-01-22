@@ -6,8 +6,9 @@
 </select>
 <input #box class="searchForm" type="text" placeholder="Search by name, price per day or description :"  [(ngModel)]="searchTerm"  (input)="search(searchFilter,box.value)">
 
-
 <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+
+  <a  mat-stroked-button color="accent" routerLink="/createReservation" *ngIf="hasSignedIn() && hasRole('CLIENT')">Search entities</a>
   <button mat-button cdkFocusInitial (click)="sort('name')" style="margin-bottom: 3%">Sort by adventure name</button>
   <button mat-button cdkFocusInitial (click)="sort('instructorName')" style="margin-bottom: 3%">Sort by instructor name</button>
   <button mat-button cdkFocusInitial (click)="sort('location')" style="margin-bottom: 3%">Sort by location</button>
@@ -41,10 +42,16 @@
             Address: {{item.addressDTO.country}}, {{item.addressDTO.city}}, {{item.addressDTO.street}}, {{item.addressDTO.houseNumber}}
           </p>
           <p>
-            Instrucotr bio: {{item.instructorBio}}
+            Instructor bio: {{item.instructorBio}}
           </p>
           <p>
             Instructor name: {{item.instructorName}}
+          </p>
+          <p>
+            House rules: {{item.houseRules}}
+          </p>
+          <p>
+            Fishing equipment : {{item.fishingEquipment}}
           </p>
         </mat-card-content>
       </mat-card>

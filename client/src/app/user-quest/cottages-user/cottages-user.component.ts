@@ -4,6 +4,7 @@ import {ConfigService} from '../../service/config.service';
 import {Adventure} from '../../model/adventure';
 import {Cottage} from '../../model/cottage';
 import { CottageDTO } from 'src/app/model/cottage-dto.model';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-cottages-client',
@@ -22,7 +23,8 @@ export class CottagesUserComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private config: ConfigService
+    private config: ConfigService,
+    private userService: UserService
   ) {
     this.showAll = true;
   }
@@ -80,5 +82,13 @@ export class CottagesUserComponent implements OnInit {
         else
           return a.address.houseNumber > b.address.houseNumber ? 1 : -1;
       });
+  }
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
   }
 }

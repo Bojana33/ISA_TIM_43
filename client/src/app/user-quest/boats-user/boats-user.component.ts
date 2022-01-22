@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Boat} from '../../model/boat';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../service/config.service';
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-boats-client',
@@ -18,7 +19,8 @@ export class BoatsUserComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private config: ConfigService
+    private config: ConfigService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -68,5 +70,13 @@ export class BoatsUserComponent implements OnInit {
         else
           return a.address.houseNumber > b.address.houseNumber ? 1 : -1;
       });
+  }
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
   }
 }

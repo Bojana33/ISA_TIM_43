@@ -4,6 +4,7 @@ import {ConfigService} from '../../service/config.service';
 import {Adventure} from '../../model/adventure';
 import { AdventureDTO } from 'src/app/model/adventure-dto';
 import { UserService } from 'src/app/service/user.service';
+import { OwnerService } from 'src/app/service/owner.service';
 
 @Component({
   selector: 'app-adventures-user',
@@ -24,7 +25,8 @@ export class AdventuresUserComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
-    private userService: UserService
+    private userService: UserService,
+    private ownerService: OwnerService
   ) {
   }
 
@@ -40,7 +42,7 @@ export class AdventuresUserComponent implements OnInit {
         this.adventures = data;
         this.allAdventures = this.adventures;
         for(let adventure of this.allAdventures){
-          this.userService.getUser(adventure.adventureOwnerId).subscribe(res => {
+          this.ownerService.getOwnerById(adventure.adventureOwnerId).subscribe(res => {
             console.log(res);
             adventure.instructorName =  res.firstName;
             this.tmpAdventures.push(adventure);;
@@ -88,5 +90,13 @@ export class AdventuresUserComponent implements OnInit {
         else
           return a.addressDTO.houseNumber > b.addressDTO.houseNumber ? 1 : -1;
       });
+  }
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
+
+  hasRole(role:string){
+    return this.userService.loggedRole(role);
   }
 }

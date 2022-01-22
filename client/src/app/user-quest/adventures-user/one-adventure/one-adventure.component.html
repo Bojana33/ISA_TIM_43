@@ -22,7 +22,7 @@
             <p>
               Address: {{adventure.addressDTO.country}}, {{adventure.addressDTO.city}}, {{adventure.addressDTO.street}}, {{adventure.addressDTO.houseNumber}}
             </p>
-            <p>
+            <p *ngIf="hasSignedIn() && hasRole('CLIENT')">
               Instructor name: {{instructor.firstName}}
             </p>
             <p>

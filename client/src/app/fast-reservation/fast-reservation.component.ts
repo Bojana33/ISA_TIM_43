@@ -18,12 +18,16 @@ export class FastReservationComponent implements OnInit {
                                 'Price', 'Discount', 'Reserve'];
   dataSource: Array<ReservationDTO> = [];
   userId: any;
+  loaded!: boolean;
 
-  constructor(private reservationService: ReservationService, private dialog: MatDialog, private userService: UserService) { }
+  constructor(private reservationService: ReservationService, private dialog: MatDialog, private userService: UserService) {
+    this.loaded = false;
+  }
 
   ngOnInit(): void {
       this.reservationService.getFutureReservationsOnSale().subscribe(
         res => {
+          this.loaded = true;
           console.log(res);
           this.dataSource = res;}
       );

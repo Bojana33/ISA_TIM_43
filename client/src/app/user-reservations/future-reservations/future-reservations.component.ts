@@ -17,15 +17,17 @@ export class FutureReservationsComponent implements OnInit {
   dataSource: Array<ReservationDTO> = [];
   canceledEnabled!: boolean;
   dateAdded: Date = new Date();
+  loaded!: boolean;
 
   constructor(private clientService: ClientService,
               private reservationService: ReservationService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar) {  this.loaded = false;}
 
   ngOnInit(): void {
     this.setDateToCompare();
     this.clientService.getFutureReservations().subscribe(res => {
       this.dataSource = res;
+      this.loaded = true;
       console.log('future reservations', res);
     });
   }
@@ -39,11 +41,17 @@ export class FutureReservationsComponent implements OnInit {
   cancel(element: any) {
     this.reservationService.cancelReservation(element.id).subscribe(res =>{
       console.log(res);
-      this.snackBar.open('Successfully canceled.', 'cancel');
+        this.snackBar.open('Successfully canceled.', 'cancel');
     },
     err => {
-      this.snackBar.open('Successfully canceled. Reload page', 'cancel');
+     // this.snackBar.open('Something went wrong.', 'cancel');
     });
+    this.clientService.getFutureReservations().subscribe(res => {
+      this.dataSource = res;
+      this.loaded = true;
+      console.log('future reservations', res);
+    });
+    this.snackBar.open('Please reload your page.', 'cancel');
   }
 
   setCancelEnabled(element: any){

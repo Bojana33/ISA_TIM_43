@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
   }
 
   getCottages(){
-    this.httpClient.get<any>(this.config.cottage_url + '/get_all').subscribe(
+    this.httpClient.get<any>('http://localhost:8090/cottages/get_all').subscribe(
       (data) => {
         this.cottages = data;
       });

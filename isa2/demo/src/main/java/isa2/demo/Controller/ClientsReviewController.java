@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,10 @@ public class ClientsReviewController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(value = "/save_review")
-    public ResponseEntity<? extends Object> createClientReview(@RequestBody ClientsReviewDTO clientsReviewDTO){
+    public ResponseEntity<? extends Object> createClientReview(@RequestBody ClientsReviewDTO clientsReviewDTO, Principal username){
         ClientsReview clientsReview = this.clientsReviewMapper.mapDtoToClientsReview(clientsReviewDTO);
         try{
-            ClientsReview review = this.clientsReviewService.save(clientsReview);
+            ClientsReview review = this.clientsReviewService.save(clientsReview, username.getName());
             return new ResponseEntity<ClientsReviewDTO>(this.clientsReviewMapper.mapClientsReviewToDto(review), HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(new Exception("Forbidden"), HttpStatus.FORBIDDEN);

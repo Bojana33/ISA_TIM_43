@@ -115,7 +115,7 @@ public class BoatServiceImpl implements BoatService {
                 freeBoats.add(boat);
             Collection<Reservation> reservations = boat.getReservations();
             for (Reservation reservation : reservations) {
-                if (entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
+                if (reservation.getReservationStatus() == ReservationStatus.RESERVED  && entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
                     freeBoats.remove(boat);
                     break;
                 }

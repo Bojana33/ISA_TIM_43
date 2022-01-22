@@ -74,8 +74,6 @@ values ('VIKENDICA 2', 'Incredible', 10, 9, './../../assets/images/cottage2.jpg'
 insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',4);
 insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',2);
 insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',1);
-insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',6);
-insert into rental_time(start_date, end_date, reservation_entity_id) values ('2022-1-12 14:15:06', '2022-12-22 21:34:55',7);
 insert into additional_services(name, price, entity_id) values ('add serv 1', 15, 4);
 insert into additional_services(name, price, entity_id) values ('add serv 2', 25, 4);
 insert into additional_services(name, price, entity_id) values ('add serv 3', 45, 4);
@@ -91,9 +89,9 @@ INSERT INTO ROOM (number_of_beds, cottage_id) VALUES (2, 3),
                                                      (2, 4);
 
 
-INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment)
-VALUES (6, 0, 20.0, 12.3, 200, 15, 15, 20, 'no rules', null),
-       (7, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel');
+INSERT INTO BOATS (id, type, length, engine_number, engine_power, max_speed, capacity, cancellation_fee, house_rules, fishing_equipment, boat_owner_id)
+VALUES (6, 0, 20.0, 12.3, 200, 15, 15, 20, 'no rules', null, 4),
+       (7, 1, 20.0, 12.3, 200, 15, 15, 20, 'no pets', 'Hooks, lines, sinkers, fishing reel', 4);
 
 insert into config_singleton(config_singleton_id,client_reservation_points, discount_gold, discount_regular, discount_silver,
                              fee_percentage,gold_start_points,silver_start_points,regular_start_points, successful_owner_points,
@@ -103,10 +101,16 @@ insert into config_singleton(config_singleton_id,client_reservation_points, disc
 insert into periods (start_date, end_date) values ('2021-1-11 14:15:06', '2021-1-14 14:15:06'),
                                                       ('2021-1-12 14:15:06', '2021-1-12 14:15:06'),
                                                       ('2022-9-12 14:15:06', '2022-9-12 14:15:06'),
-                                                      ('2022-10-11 14:15:06', '2022-10-14 14:15:06');
+                                                      ('2022-10-11 14:15:06', '2022-10-14 14:15:06'),
+                                                        ('2022-9-11 14:15:06', '2022-9-14 14:15:06'),
+                                                        ('2022-1-11 14:15:06', '2022-2-22 16:15:06');
 
 insert into reservations (price, number_of_guests,  reserved_period_id, client_id, reservation_entity_id, reservation_status)
         values (190, 10, 2, 5, 1,0),
                (180, 10, 1, 5, 2,0),
                (180, 10, 3, 5, 2,3),
                (180, 10, 4, 5, 2, 3);
+
+
+insert into reservations (number_of_guests, reserved_period_id, sale_period_id, client_id, reservation_entity_id, reservation_status, discount)
+        values (5, 5, 6, 5, 3, 2, 10);

@@ -65,7 +65,7 @@ public class OwnerController {
             return new ResponseEntity<>(instructorAvailabilityDTOS, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('CLIENT')")
+    //@PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/getOwnerById/{ownerId}")
     public ResponseEntity<UserDTO> getOwnerById(@PathVariable Integer ownerId){
         Owner owner = this.ownerService.findById(ownerId);

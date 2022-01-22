@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ReservationDTO} from "../../model/reservation-dto.model";
 import {ClientService} from "../../service/client.service";
 import {DatePipe} from "@angular/common";
+import {ReservationService} from "../../service/reservation.service";
 
 @Component({
   selector: 'app-reservations-history',
@@ -18,7 +19,7 @@ export class ReservationsHistoryComponent implements OnInit {
   selected: boolean = false;
   sortedData: Array<ReservationDTO> = [];
 
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService, private reservationService: ReservationService) { }
 
   ngOnInit(): void {
     this.clientService.getReservationsHistory('/all').subscribe(res => {
@@ -51,18 +52,24 @@ export class ReservationsHistoryComponent implements OnInit {
 
   sort(criterion: any) {
     if(criterion === 'startDate') {
-      this.sortedData = this.dataSource.sort((a, b) => a.reservedPeriod.startDate > b.reservedPeriod.startDate ? 1 : -1);
-      console.log(this.dataSource);
+        this.reservationService.getSorted(this.dataSource, 'startDate').subscribe(res =>{
+          this.dataSource = res.body;
+        });
     }
     else if(criterion === 'endDate') {
-      this.sortedData = this.dataSource.sort((a, b) => a.reservedPeriod.endDate > b.reservedPeriod.endDate ? 1 : -1);
-      console.log(this.dataSource);
+      this.reservationService.getSorted(this.dataSource, 'endDate').subscribe(res =>{
+        this.dataSource = res.body;
+      });
     }
     else if(criterion === 'price') {
-      this.sortedData = this.dataSource.sort((a, b) => a.price > b.price ? 1 : -1);
-      console.log(this.dataSource);
+      this.reservationService.getSorted(this.dataSource, 'price').subscribe(res =>{
+        this.dataSource = res.body;
+      });
     }
-    //else if(criterion === 'duration')
-      //this.dataSource.sort((a, b) => (a.reservedPeriod.endDate.getTime() - a.reservedPeriod.startDate) > (b.reservedPeriod.endDate - b.reservedPeriod.startDate) ? 1 : -1);
-  }
+    else if(criterion === 'duration'){
+      this.reservationService.getSorted(this.dataSource, 'duration').subscribe(res =>{
+        this.dataSource = res.body;
+      });
+    }
+    }
 }
