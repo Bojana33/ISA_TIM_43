@@ -144,7 +144,7 @@
        <app-map [address]="addressFormated"></app-map>
      </div>
      <div *ngIf="cottage.id != 0">
-       <button (click) = "showRentalTimes = !showRentalTimes">rental time</button>
+       <button class="button is-small is-primary" (click) = "showRentalTimes = !showRentalTimes">rental time</button>
        <app-calendar *ngIf="showRentalTimes" [showRentalPeriod]= true [entityId]= "cottage.id">
        </app-calendar>
        <app-calendar *ngIf="!showRentalTimes" [showRentalPeriod]= false [entityId]= "cottage.id">

@@ -108,9 +108,9 @@
               </li>
             </td>
             <td>
-              <div>
-                <button *ngIf="isReservationActive(res)" class="button is-link is-light level-item" (click)="showForm=2">Create new reservation</button>
-                <div class="modal is-active" *ngIf="showForm === 2">
+              <div *ngIf="isReservationActive(res)">
+                <button class="button is-link is-light level-item" (click)="clickedEntity=res.entityId; clickedClient=res.clientId; showForm=2;">Create new reservation</button>
+                <div class="modal is-active" *ngIf="showForm === 2 && res.clientId">
                   <div class="modal-background"></div>
                   <div class="modal-card">
                     <header class="modal-card-head">
@@ -118,7 +118,7 @@
                       <button class="delete" (click)="showForm=1" aria-label="close"></button>
                     </header>
                     <section class="modal-card-body">
-                      <app-reservation-form [entityId]="res.entityId" [clientId]="res.clientId" (createdReservationEvent)="createNewReservation($event)">
+                      <app-reservation-form [entityId]="clickedEntity" [clientId]="clickedClient" (createdReservationEvent)="createNewReservation($event)">
                       </app-reservation-form>
                     </section>
                   </div>

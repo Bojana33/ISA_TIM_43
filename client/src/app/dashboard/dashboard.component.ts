@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit {
   showForm = 1;
   canceledReservationsNumber = 0;
   activeButton = 'DASHBOARD';
+  clickedClient = -1;
+  clickedEntity = -1;
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,

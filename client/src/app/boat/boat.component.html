@@ -153,12 +153,15 @@
       </div>
     </div>
   </div>
-  <div class = "box" *ngIf="boat.id != 0">
-    <app-calendar [entityId]= "boat.id">
-    </app-calendar>
-  </div>
   <div class = "box" *ngIf="addressFormated != null">
     {{addressFormated}}
     <app-map [address]="addressFormated"></app-map>
+  </div>
+  <div class = "box" *ngIf="boat.id != 0">
+    <button class="button is-small is-primary" (click) = "showRentalTimes = !showRentalTimes">rental time</button>
+    <app-calendar *ngIf="showRentalTimes" [showRentalPeriod]= true [entityId]= "boat.id">
+    </app-calendar>
+    <app-calendar *ngIf="!showRentalTimes" [showRentalPeriod]= false [entityId]= "boat.id">
+    </app-calendar>
   </div>
 </div>

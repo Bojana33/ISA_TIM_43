@@ -20,6 +20,7 @@ export class BoatComponent implements OnInit {
   boat: BoatDTO = new BoatDTO();
   addressFormated: any;
   boatTypeButtonActive = false;
+  showRentalTimes = false;
   showForm = 1;
   clicked = false;
   private selectedFile!: File;

@@ -10,16 +10,17 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 })
 export class ReservationFormComponent implements OnInit{
   @Input() entityId: any;
-  @Input() clientId!: any;
+  @Input() clientId: any;
   @Output() createdReservationEvent = new EventEmitter<ReservationDTO>();
   cottageReservationForm!: FormGroup;
   private _additionalServices!: FormArray;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {console.log(Math.random());}
 
   private reservation: ReservationDTO | undefined;
 
   ngOnInit(): void {
+    console.log(this.clientId, this.entityId);
     this.cottageReservationForm = this.formBuilder.group({
       price: ['', [Validators.required]],
       numberOfGuests: ['', [Validators.required, Validators.min(1), Validators.max(300)]],
