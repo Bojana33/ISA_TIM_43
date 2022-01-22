@@ -105,6 +105,8 @@ import { ConfigSingletonComponent } from './config-singleton/config-singleton.co
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminReservationsComponent } from './admin-reservations/admin-reservations.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { BarchartComponent } from './barchart/barchart.component';
 
 
 const mapConfig: YaConfig = {
@@ -181,7 +183,8 @@ const mapConfig: YaConfig = {
     ConfigSingletonComponent,
     RegisterBoatComponent,
     DashboardComponent,
-    AdminReservationsComponent
+    AdminReservationsComponent,
+    BarchartComponent
   ],
   imports: [
     BrowserModule,
@@ -219,7 +222,8 @@ const mapConfig: YaConfig = {
     MatRadioModule,
     MatSortModule,
     MatSlideToggleModule,
-    NgbModule
+    NgbModule,
+    NgxChartsModule
   ],
   exports: [
     SignupClientComponent

@@ -21,6 +21,31 @@
       <div class = "column is-5" *ngIf ="hasSignedIn() && loggedUserIsOwner()">
         <form  [formGroup]="boatUpdateForm">
         <div class="box">
+          <nav class="level">
+            <div class="level-left">
+              <h4 class="title is-4 level-item">Name</h4>
+            </div>
+            <div class="level-right">
+              <div class="dropdown level-item" [ngClass]="{'is-active':this.clicked.valueOf()}" (click)="this.clicked = !clicked">
+                <div class="dropdown-trigger">
+                  <button class="button is-link is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                              <i class="fa fa-ellipsis-v" style="font-size:24px" aria-hidden="true"></i>
+                            </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                  <div class="dropdown-content">
+                    <div class = "buttons block">
+                      <button class="dropdown-item button is-link is-light level-item" (click)="showForm=2">Create new quick reservation</button>
+                      <button class="dropdown-item button is-warning is-light level-item" routerLink="reservations">Reservations</button>
+                      <button class="dropdown-item button is-danger is-light level-item"  routerLink="boats" (click)="deleteboat()">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
           <h4 class="title is-4 my-2">Name</h4>
           <input class = "input is-small is-rounded" formControlName="name">
           <h4 class="title is-4 my-2">Description</h4>
@@ -52,6 +77,7 @@
               <option value=1 >Fishing boat</option>
             </select>
           </div>
+          Average grade: <ngb-rating [max]="5"[readonly]="true" [(rate)]="boat.averageGrade"></ngb-rating>
           <div class = 'block'>
             <button class="button is-info is-rounded" [disabled]="boatUpdateForm.invalid" (click)="updateboat(boatUpdateForm)">Update</button>
           </div>
@@ -59,9 +85,6 @@
         </form>
 
         <div class="buttons block">
-          <button class="button is-link is-rounded is-light" (click)="showForm=2">Create new quick reservation</button>
-          <button class="button is-warning is-rounded is-light" routerLink="reservations">Reservations</button>
-          <button class="button is-danger is-rounded is-light"  routerLink="boats" (click)="deleteboat()">Delete</button>
           <div class="modal is-active" *ngIf="showForm === 2">
             <div class="modal-background"></div>
             <div class="modal-card">
@@ -125,18 +148,20 @@
             {{boat.fishingEquipment}}
           </p>
         </div>
-        <ngb-rating [readonly]="true" [(rate)]="boat.averageGrade"></ngb-rating>
         <hr>
         <pre>Rate: <b>{{boat.averageGrade}}</b></pre>
       </div>
     </div>
   </div>
-  <div class = "box" *ngIf="boat.id != 0">
-    <app-calendar [entityId]= "boat.id">
-    </app-calendar>
-  </div>
   <div class = "box" *ngIf="addressFormated != null">
     {{addressFormated}}
     <app-map [address]="addressFormated"></app-map>
+  </div>
+  <div class = "box" *ngIf="boat.id != 0">
+    <button class="button is-small is-primary" (click) = "showRentalTimes = !showRentalTimes">rental time</button>
+    <app-calendar *ngIf="showRentalTimes" [showRentalPeriod]= true [entityId]= "boat.id">
+    </app-calendar>
+    <app-calendar *ngIf="!showRentalTimes" [showRentalPeriod]= false [entityId]= "boat.id">
+    </app-calendar>
   </div>
 </div>

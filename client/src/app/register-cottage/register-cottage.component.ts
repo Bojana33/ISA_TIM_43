@@ -1234,12 +1234,5 @@ export class RegisterCottageComponent implements OnInit {
       rooms: this.formBuilder.array([this.createRooms()])
     });
   }
-  // search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     map(term => term.length < 2 ? []
-  //       : cities.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-  //   )
 }
 

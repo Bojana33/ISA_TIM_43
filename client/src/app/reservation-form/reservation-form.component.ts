@@ -10,15 +10,17 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 })
 export class ReservationFormComponent implements OnInit{
   @Input() entityId: any;
+  @Input() clientId: any;
   @Output() createdReservationEvent = new EventEmitter<ReservationDTO>();
   cottageReservationForm!: FormGroup;
   private _additionalServices!: FormArray;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {console.log(Math.random());}
 
   private reservation: ReservationDTO | undefined;
 
   ngOnInit(): void {
+    console.log(this.clientId, this.entityId);
     this.cottageReservationForm = this.formBuilder.group({
       price: ['', [Validators.required]],
       numberOfGuests: ['', [Validators.required, Validators.min(1), Validators.max(300)]],
@@ -33,11 +35,10 @@ export class ReservationFormComponent implements OnInit{
       }),
       additionalServices: this.formBuilder.array([this.createAdditionalServices()])
     });
-    console.log('ngInitOver');
+    // @ts-ignore
   }
 
   createAdditionalServices(): FormGroup{
-    console.log('createAdditionalService');
     return this.formBuilder.group({
       name: '',
       price: ''
@@ -53,11 +54,10 @@ export class ReservationFormComponent implements OnInit{
   }
   makeReservation(): void {
     this.reservation = this.cottageReservationForm.getRawValue();
-    console.log(this.reservation);
-    // @ts-ignore
-    console.log(this.reservation.reservedPeriod.startDate.toISOString());
     // @ts-ignore
     this.reservation.entityId = this.entityId;
+    // @ts-ignore
+    this.reservation.clientId = this.clientId;
     this.createdReservationEvent.emit(this.reservation);
   }
   get additionalServices(): FormArray {

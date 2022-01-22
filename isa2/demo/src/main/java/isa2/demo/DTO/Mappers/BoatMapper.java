@@ -41,7 +41,8 @@ public class BoatMapper {
                   //  temp_reservation.setClient(clientService.findById(temp_reservationDTO.getClientId()));
 
                 temp_reservation.setEntity(boat);
-                //zasto je ovo u mapperu?
+                if(temp_reservationDTO.getClientId() != null)
+                    temp_reservation.setClient(clientService.findById(temp_reservationDTO.getClientId()));
                 if(temp_reservation.getCreationDate() == null)
                     temp_reservation.setCreationDate(LocalDateTime.now());
                 Collection<AdditionalService> additionalServices = temp_reservation.getAdditionalServices();

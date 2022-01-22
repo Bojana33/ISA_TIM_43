@@ -20,6 +20,7 @@ import {EntityService} from '../service/entity.service';
 export class CottageComponent implements OnInit{
   cottage: CottageDTO = new CottageDTO();
   addressFormated: any;
+  showRentalTimes = false;
   private selectedFile!: File;
   clicked = false;
   showForm = 1;

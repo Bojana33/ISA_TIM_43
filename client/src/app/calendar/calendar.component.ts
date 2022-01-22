@@ -10,6 +10,9 @@ import {ReservationService} from '../service/reservation.service';
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationStatus} from '../enum/ReservationStatus';
 import {Moment} from 'moment';
+import {EntityService} from '../service/entity.service';
+import {PeriodDTO} from '../model/period-dto.model';
+import {RentalTimeDto} from '../model/rental-time-dto';
 
 
 @Component({
@@ -30,16 +33,43 @@ import {Moment} from 'moment';
 export class CalendarComponent implements OnInit{
   view: CalendarView = CalendarView.Week;
   @Input() entityId: any;
+  @Input() showRentalPeriod = false;
 
 
   constructor(private configService: ConfigService,
-              private reservationService: ReservationService) {}
+              private reservationService: ReservationService,
+              private entityService: EntityService) {}
 
   viewDate: Date = new Date();
   refresh = new Subject<void>();
   events: CalendarEvent[] = [];
   ngOnInit(): void {
-    this.getReservationsForEntity(this.entityId);
+    if (this.showRentalPeriod) {
+      this.getRentalTimesForEntity(this.entityId);
+    }
+    else{
+      this.getReservationsForEntity(this.entityId);
+    }
+  }
+  private getRentalTimesForEntity(entityId: any): void {
+    this.entityService.getRentalTimeForEntity(entityId).subscribe(
+      (modelData: RentalTimeDto[]) => {
+        modelData.forEach((item) => {
+          const eventColor = colors.green;
+          this.events.push({
+            id: item.id,
+            // @ts-ignore
+            start: new Date(item.start_date),
+            // @ts-ignore
+            end: new Date(item.end_date),
+            title: item.id.toString() + ' termin',
+            color: eventColor,
+            draggable: false
+          });
+        });
+        console.log(this.events);
+        this.refresh.next();
+      });
   }
   getReservationsForEntity(entityId: number): void{
 

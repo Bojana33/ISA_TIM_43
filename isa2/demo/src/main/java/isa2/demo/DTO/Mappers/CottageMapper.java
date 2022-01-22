@@ -40,6 +40,8 @@ public class CottageMapper {
                   //  temp_reservation.setClient(clientService.findById(Integer.parseInt(temp_reservationDTO.getClientId()));
 
                 temp_reservation.setEntity(cottage);
+                if(temp_reservationDTO.getClientId() != null)
+                    temp_reservation.setClient(clientService.findById(temp_reservationDTO.getClientId()));
                 //zasto je ovo u mapperu?
                 if(temp_reservation.getCreationDate() == null)
                     temp_reservation.setCreationDate(LocalDateTime.now());

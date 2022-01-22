@@ -6,6 +6,7 @@ import isa2.demo.Model.Reservation;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 public interface EntityService {
     Entity addRentalTime(Integer entity_id, RentalTime rentalTime) throws MessagingException;
@@ -22,4 +23,6 @@ public interface EntityService {
     void uploadEntityPhoto(Integer id, String fileUrl);
     void savePhoto(Integer id, String fileUrl);
     boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate);
+
+    Collection<RentalTime> getRentalPeriodForEntity(Integer entityId) throws Exception;
 }

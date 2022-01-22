@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -67,7 +66,7 @@ public class Reservation implements Serializable {
    private Period salePeriod;
 
    @JsonManagedReference
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.PERSIST})
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.ALL)
    private Collection<AdditionalService> additionalServices;
 
    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = CascadeType.MERGE)
@@ -92,5 +91,12 @@ public class Reservation implements Serializable {
 
    public void setReservedPeriod(Period reservedPeriod) {
       this.reservedPeriod = reservedPeriod;
+   }
+
+   @PostLoad
+   private void changeTime(){
+      if(reservationStatus == ReservationStatus.RESERVED && reservedPeriod.getStartDate().isBefore(LocalDateTime.now()) && reservedPeriod.getEndDate().isBefore(LocalDateTime.now())){
+         this.reservationStatus = ReservationStatus.COMPLETED;
+      }
    }
 }

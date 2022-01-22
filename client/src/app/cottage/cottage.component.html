@@ -68,6 +68,7 @@
                   </tr>
                   </tbody>
                 </table>
+                  Average grade: <ngb-rating [max]="5" [readonly]="true" [(rate)]="cottage.averageGrade"></ngb-rating>
                 <nav class="level">
                   <div class="level-left">
                   </div>
@@ -81,22 +82,6 @@
             </div>
 
               <div>
-                <div class="modal">
-                  <div class="modal-background"></div>
-                  <div class="modal-card">
-                    <header class="modal-card-head">
-                      <p class="modal-card-title">Modal title</p>
-                      <button class="delete" aria-label="close"></button>
-                    </header>
-                    <section class="modal-card-body">
-                      <!-- Content ... -->
-                    </section>
-                    <footer class="modal-card-foot">
-                      <button class="button is-success">Save changes</button>
-                      <button class="button">Cancel</button>
-                    </footer>
-                  </div>
-                </div>
                 <div class="modal is-active" *ngIf="showForm === 2">
                   <div class="modal-background"></div>
                   <div class="modal-card">
@@ -153,14 +138,17 @@
             </div>
          </div>
       </div>
-   <div class = "columns">
-     <div class = "column" *ngIf="cottage.id != 0">
-       <app-calendar [entityId]= "cottage.id">
-       </app-calendar>
-     </div>
-     <div class="column" *ngIf="addressFormated != null">
+   <div >
+     <div *ngIf="addressFormated != null">
        {{addressFormated}}
        <app-map [address]="addressFormated"></app-map>
+     </div>
+     <div *ngIf="cottage.id != 0">
+       <button class="button is-small is-primary" (click) = "showRentalTimes = !showRentalTimes">rental time</button>
+       <app-calendar *ngIf="showRentalTimes" [showRentalPeriod]= true [entityId]= "cottage.id">
+       </app-calendar>
+       <app-calendar *ngIf="!showRentalTimes" [showRentalPeriod]= false [entityId]= "cottage.id">
+       </app-calendar>
      </div>
    </div>
  </div>

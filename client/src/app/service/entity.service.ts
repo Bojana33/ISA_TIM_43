@@ -41,4 +41,7 @@ export class EntityService {
   isSubscribed(entityId: number){
     return this.apiService.get(this.config.entity_url + '/isSubscribed/' + entityId);
   }
+  getRentalTimeForEntity(entityId: number){
+    return this.apiService.get(this.config.entity_url + /rentalTime/ + entityId);
+  }
 }
