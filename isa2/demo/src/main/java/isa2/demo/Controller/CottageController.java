@@ -12,6 +12,7 @@ import isa2.demo.Service.CottageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
+    //@PreAuthorize("hasRole('COTTAGEOWNER')")
     public ResponseEntity<CottageDTO> addCottage(@Valid @RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
@@ -42,6 +44,7 @@ public class CottageController {
         cottageDTO = cottageMapper.mapCottageToDto(cottage);
         return ResponseEntity.status(HttpStatus.OK).body(cottageDTO);
     }
+    @PreAuthorize("hasRole('COTTAGEOWNER')")
     @DeleteMapping("/{cottage_id}")
     public ResponseEntity<CottageDTO> deleteCottage(@PathVariable("cottage_id") Integer id){
         CottageDTO cottageDTO = new CottageDTO();
@@ -95,6 +98,7 @@ public class CottageController {
         return cottageDTOS;
     }
     @PutMapping("/{cottage_id}")
+    @PreAuthorize("hasRole('COTTAGEOWNER')")
     public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
         try{

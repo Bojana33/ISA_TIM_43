@@ -46,6 +46,7 @@ public class EntityController {
     }
 
     @PostMapping("/rentalTime")
+    @PreAuthorize("hasAnyRole('BOATOWNER','COTTAGEOWNER', 'INSTRUCTOR')")
     public ResponseEntity<RentalTimeDTO> addRentalTimeToEntity(@RequestBody RentalTimeDTO rentalTimeDTO) throws MessagingException {
         RentalTime rentalTime = modelMapper.modelMapper().map(rentalTimeDTO, RentalTime.class);
         ResponseEntity responseEntity = null;
@@ -60,6 +61,7 @@ public class EntityController {
         return responseEntity;
     }
 
+    @PreAuthorize("hasAnyRole('BOATOWNER','COTTAGEOWNER')")
     @PostMapping("/reservations")
     public ResponseEntity<ReservationDTO> addReservationToEntity(@RequestBody ReservationDTO reservationDTO) throws MessagingException {
         Reservation reservation = modelMapper.modelMapper().map(reservationDTO, Reservation.class);
@@ -120,7 +122,7 @@ public class EntityController {
     }
 
     @PostMapping(value = "/save_entity_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @PreAuthorize("hasRole('COTTAGEOWNER')")
+    @PreAuthorize("hasAnyRole('BOATOWNER','COTTAGEOWNER')")
     public void saveEntityImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
         String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
 
@@ -130,7 +132,7 @@ public class EntityController {
 
     }
     @PostMapping(value = "/save_image/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @PreAuthorize("hasRole('COTTAGEOWNER')")
+    @PreAuthorize("hasAnyRole('BOATOWNER','COTTAGEOWNER')")
     public void saveImage(@PathVariable Integer id,@RequestParam("imageUrl") MultipartFile imageUrl) throws IOException {
         String fileName = StringUtils.cleanPath(imageUrl.getOriginalFilename());
 

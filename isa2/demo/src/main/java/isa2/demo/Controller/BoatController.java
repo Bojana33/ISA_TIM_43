@@ -10,6 +10,7 @@ import isa2.demo.Service.BoatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -47,6 +48,7 @@ public class BoatController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
+    @PreAuthorize("hasRole('BOATOWNER')")
     public Boat addBoat(@RequestBody @Valid BoatDTO boatDTO){
         Boat boat = boatMapper.mapDtoToBoat(boatDTO);
         boat.setOwner(ownerRepository.findById(boatDTO.getBoatOwnerId()).get());
@@ -62,6 +64,7 @@ public class BoatController {
         return boatDTO;
     }
     @DeleteMapping("/{boat_id}")
+    @PreAuthorize("hasRole('BOATOWNER')")
     public ResponseEntity<BoatDTO> deleteBoat(@PathVariable("boat_id") Integer id){
         BoatDTO boatDTO = new BoatDTO();
         try{
@@ -74,6 +77,7 @@ public class BoatController {
         return ResponseEntity.status(HttpStatus.OK).body(boatDTO);
     }
     @PutMapping("/{boat_id}")
+    @PreAuthorize("hasRole('BOATOWNER')")
     public ResponseEntity<BoatDTO> updateBoat(@RequestBody BoatDTO boatDTO){
         ResponseEntity responseEntity = null;
         try{

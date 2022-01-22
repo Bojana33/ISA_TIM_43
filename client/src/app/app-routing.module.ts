@@ -193,16 +193,17 @@ const routes: Routes = [
   {
     path: 'cottages/:id',
     component: CottageComponent,
-    canActivate: [GuestGuard]
+    canActivate: [CottageownerGuard]
   },
   {
     path: 'boats/:id',
-    component: BoatComponent
+    component: BoatComponent,
+    canActivate: [BoatownerGuard]
   },
   {
     path: 'cottages/:id/reservations',
     component: CottageReservationsTableComponent,
-    canActivate: [GuestGuard]
+    canActivate: [CottageOwnerAndBoatOwnerGuard]
   },
   {
     path: 'calendar',
