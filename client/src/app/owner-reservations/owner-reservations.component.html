@@ -83,13 +83,31 @@
         <td>{{res.reservedPeriod.endDate}}</td>
         <td>{{res.salePeriod.startDate}}</td>
         <td>{{res.salePeriod.endDate}}</td>
-        <td ><a routerLink="/profile/{{res.clientId}}"> {{clientNames[res.id-1]}}</a></td>
+        <td ><a routerLink="/profile/{{res.clientId}}"> {{res.clientName}}</a></td>
         <td>
           <li *ngFor="let addService of res.additionalServices">
             {{addService['name']}} : {{addService['price']}}
           </li>
         </td>
         <td *ngIf="filterStatus==3"><button class="button is-danger is-rounded" (click)= "showForm=1; review.reservationDTO = res">Fill report</button></td>
+        <td>
+          <div *ngIf="isReservationActive(res)">
+            <button class="button is-link is-light level-item" (click)="clickedEntity=res.entityId; clickedClient=res.clientId; showForm=2;">Create new reservation</button>
+            <div class="modal is-active" *ngIf="showForm === 2 && res.clientId">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Create new quick reservation</p>
+                  <button class="delete" (click)="showForm=1" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <app-reservation-form [entityId]="clickedEntity" [clientId]="clickedClient" (createdReservationEvent)="createNewReservation($event)">
+                  </app-reservation-form>
+                </section>
+              </div>
+            </div>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>

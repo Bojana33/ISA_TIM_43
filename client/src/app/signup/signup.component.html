@@ -3,19 +3,19 @@
         <mat-toolbar color="primary">Signup Form</mat-toolbar>
         <form fxLayoutAlign="stretch" fxLayout="column" class="signup-form" [formGroup]="form" (submit)="submit()">
             <mat-form-field>
-                <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
+                <input matInput type="text" placeholder="First Name" formControlName="firstName" ngbPopover="You must enter minimum 2 and maximum 64 characters." popoverTitle="Validation" required minlength="2" maxlength="64">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="text" placeholder="Surname" formControlName="surname" required>
+                <input matInput type="text" placeholder="Surname" formControlName="surname" ngbPopover="You must enter minimum 2 and maximum 64 characters." popoverTitle="Validation" required minlength="2" maxlength="64">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="email" placeholder="Email" formControlName="email" required>
+                <input matInput type="email" placeholder="Email" formControlName="email" ngbPopover="You must enter minimum 5 and maximum 64 characters. This is email field don't forget @ " popoverTitle="Validation" required minlength="5" maxlength="64">
               </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <input matInput type="password" placeholder="Password" formControlName="password" ngbPopover="You must enter minimum 5 and maximum 64 characters." popoverTitle="Validation" required minlength="5" maxlength="64">
               </mat-form-field>
               <mat-form-field>
-                <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" required>
+                <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" ngbPopover="You must enter minimum 5 and maximum 64 characters." popoverTitle="Validation" required minlength="5" maxlength="64">
               </mat-form-field>
               <mat-form-field>
                 <input matInput placeholder="City" formControlName="city" required>
@@ -30,7 +30,7 @@
                 <input matInput placeholder="House Number" formControlName="houseNumber" required>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
+                <input matInput placeholder="Phone Number" formControlName="phoneNumber" ngbPopover="You must enter 11 numbers." popoverTitle="Validation" required minlength="11" maxlength="11">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Registration Type</mat-label>
@@ -41,9 +41,9 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field>
-                <textarea matInput type="text" placeholder="Registration Explanation" formControlName="registrationExplanation" required></textarea>
+                <textarea matInput type="text" placeholder="Registration Explanation" formControlName="registrationExplanation" ngbPopover="You must enter min 5 and max 200 characters." popoverTitle="Validation" required minlength="5" maxlength="200"></textarea>
               </mat-form-field>
-              <button mat-raised-button type="submit" (click)="registeredSnackBar()">Sign Up</button>
+              <button mat-raised-button [disabled]="!form.valid" type="submit">Sign Up</button>
           </form>
     </mat-card>
 </div>

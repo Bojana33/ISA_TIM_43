@@ -37,10 +37,10 @@ export class OwnersReviewsComponent implements OnInit {
     return this.ownersReviewService.getAllReviews().subscribe(res=>{console.log(res); this.reviews = res;
       for(let res of this.reviews){
         if(res.reservationDTO.clientId == null){
-          this.clientNames.push("/");}
+          res.clientName = "";}
         this.userService.getUser(res.reservationDTO.clientId).subscribe((result)=>{
           this.user = result;
-          this.clientNames.push(this.user.firstName + ' ' + this.user.surname)})};
+          res.clientName = this.user.firstName + ' ' + this.user.surname})};
     });
      
   }

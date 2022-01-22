@@ -9,4 +9,5 @@ export class OwnersReview {
     public reviewStatus!: ReviewStatus;
     public reservationDTO!: ReservationDTO;
     public clientId!: number;
+    public clientName!: string;
 }

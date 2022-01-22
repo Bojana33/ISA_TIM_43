@@ -43,7 +43,9 @@ export class SignupAdminComponent implements OnInit {
   submit() : void{
     console.log();
     this.saveAdmin(this.form);
-    this.requestService.saveAdmin(this.request).subscribe(res =>{console.log(res);
+    this.requestService.saveAdmin(this.request).subscribe(res =>{console.log(res);this.registeredSnackBar();
+    } , error => {
+      this.snackbar.open('Admin registration failed', 'cancel');
     });
   }
 

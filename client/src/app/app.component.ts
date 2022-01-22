@@ -7,11 +7,11 @@ import {UserService} from "./service/user.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // title = 'client';
-  //
-  // constructor(private userService: UserService) {}
-  //
-  // ngOnInit() {
-  //   console.log(this.userService.initUser());
-  // }
+  title = 'client';
+  
+  constructor(private userService: UserService) {}
+  
+  ngOnInit() {
+    console.log(this.userService.initUser());
+  }
 }

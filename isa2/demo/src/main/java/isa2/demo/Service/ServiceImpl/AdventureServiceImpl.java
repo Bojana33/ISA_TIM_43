@@ -69,8 +69,7 @@ public class AdventureServiceImpl implements AdventureService {
     public void delete(Integer id) {
         Adventure adventure = this.adventureRepository.findById(id).orElse(null);
         Collection<Reservation> reservations = new ArrayList<>(adventure.getReservations());
-        reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.FREE));
-        if(reservations.isEmpty())
+        if(!(reservations.removeIf(reservation -> (reservation.getReservationStatus() == ReservationStatus.RESERVED))))
             this.adventureRepository.deleteById(id);
         else
             throw new UnsupportedOperationException("Entity with active reservations can't be deleted");

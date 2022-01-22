@@ -24,4 +24,5 @@ public class AdventureDTO {
     private String entityPhoto;
     private Collection<ReservationDTO> reservations;
     private Collection<AdditionalServiceDTO> additionalServices;
+    private Double averageGrade;
 }

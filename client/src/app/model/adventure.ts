@@ -17,4 +17,5 @@ export class Adventure{
       public cancellationFee!: number;
       public entityPhoto!: string;
       public defaultFishingEquipment!: string;
+      public averageGrade!: number;
   }

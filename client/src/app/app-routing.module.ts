@@ -145,7 +145,7 @@ const routes: Routes = [
   {
     path: 'adventures',
     component: AdventuresComponent,
-    canActivate: [GuestGuard]
+    canActivate: [InstructorGuard,GuestGuard]
   },
   {
     path: 'adventure/:id',
@@ -179,7 +179,7 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserListComponent,
-    canActivate: [ GuestGuard]
+    canActivate: [ AdminGuard,GuestGuard]
   },
   {
     path: 'registration-requests',
@@ -189,7 +189,7 @@ const routes: Routes = [
   {
     path: 'reject-request/:id',
     component: RejectRequestComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard,AdminGuard]
   },
   {
     path: 'cottages/:id',
@@ -223,7 +223,7 @@ const routes: Routes = [
   {
     path: 'delete-profile',
     component: DeleteProfileComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, LoginGuard]
   },
   {
     path: 'dashboard',
@@ -233,12 +233,12 @@ const routes: Routes = [
   {
     path: 'user-delete-requests',
     component: DeleteRequestsComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard,AdminGuard]
   },
   {
     path: 'delete-request-response/:id/:isApproved',
     component: DeleteRequestResponseComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard,AdminGuard]
   },
   {
     path: 'change-password',
@@ -282,7 +282,7 @@ const routes: Routes = [
   {
     path: 'complaints',
     component: ComplaintsComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, AdminGuard]
   },
   {
     path: 'userReservations',
@@ -297,22 +297,22 @@ const routes: Routes = [
   {
     path: 'clients-reviews',
     component: ClientsReviewsComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, AdminGuard]
   },
   {
     path: 'owners-reviews',
     component: OwnersReviewsComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, AdminGuard]
   },
   {
     path: 'config-singleton',
     component: ConfigSingletonComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, AdminGuard]
   },
   {
     path: 'admin-reservations',
     component: AdminReservationsComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, AdminGuard]
   },
   {
     path: '404',

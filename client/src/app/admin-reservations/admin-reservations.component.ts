@@ -50,10 +50,10 @@ export class AdminReservationsComponent implements OnInit {
       this.allReservations= this.reservations;
       for(let res of this.allReservations){
         if(res.clientId == null){
-          this.clientNames.push("/");}
+          res.clientName = "/";}
         this.userService.getUser(res.clientId).subscribe((result)=>{
           this.user = result;
-          this.clientNames.push(this.user.firstName + ' ' + this.user.surname);});
+          res.clientName =this.user.firstName + ' ' + this.user.surname});
       this.allEarnings = this.allReservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => (a.price - a.ownersIncome));
       this.completedReservations = this.allEarnings.length;
       this.allEarnings = this.allEarnings.reduce((a: number, b: number) => a + b, 0);
@@ -73,7 +73,7 @@ export class AdminReservationsComponent implements OnInit {
   }
 
   private updatePrices(): void {
-    this.pricesList = this.reservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => a.price);
+    this.pricesList = this.reservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => (a.price - a.ownersIncome));
     this.pricesList = this.pricesList.reduce((a: number, b: number) => a + b, 0);
   }
 

@@ -1,8 +1,9 @@
+import { AdventureService } from './../../../service/adventure.service';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../../service/config.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../service/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CottageService} from '../../../service/cottage.service';
@@ -23,12 +24,14 @@ export class OneAdventureComponent implements OnInit {
     private httpClient: HttpClient,
     private config: ConfigService,
     private router: ActivatedRoute,
+    private route: Router,
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
     private formBuilder: FormBuilder,
     private entityService: EntityService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private adventureService: AdventureService
   ) {
   }
 
@@ -55,5 +58,8 @@ export class OneAdventureComponent implements OnInit {
 
   hasRole(role:string){
     return this.userService.loggedRole(role);
+  }
+  deleteAdventure(){
+    return this.adventureService.deleteAdventure(this.adventure.id).subscribe(res=>{console.log(res); this.snackbar.open('Adventure deleted', 'cancel'); this.route.navigate(['/adventuresCatalog'])});
   }
 }

@@ -22,7 +22,6 @@ export class OwnerReservationsComponent implements OnInit {
   reservations: ReservationDTO[];
   allReservations: ReservationDTO[] = [];
   filterStatus = 0;
-  clientNames: string[];
   ownerId = -1;
   name!: string;
   user:any;
@@ -34,6 +33,8 @@ export class OwnerReservationsComponent implements OnInit {
   pricesList: any;
   allEarnings: any;
   completedReservations: any;
+  clickedClient = -1;
+  clickedEntity = -1;
 
 
   constructor(
@@ -46,7 +47,6 @@ export class OwnerReservationsComponent implements OnInit {
     ) 
     {
       this.reservations = [];
-      this.clientNames = [];
     }
 
   ngOnInit(): void {
@@ -60,10 +60,13 @@ export class OwnerReservationsComponent implements OnInit {
       this.allReservations= this.reservations;
       for(let res of this.allReservations){
         if(res.clientId == null){
-          this.clientNames.push("/");}
-        this.userService.getUser(res.clientId).subscribe((result)=>{
-          this.user = result;
-          this.clientNames.push(this.user.firstName + ' ' + this.user.surname);});
+          res.clientName="/"}else {
+            this.userService.getUser(res.clientId).subscribe((result)=>{
+              this.user = result;
+              res.clientName = this.user.firstName + ' ' + this.user.surname;
+              });
+          }
+        
       this.allEarnings = this.allReservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => a.ownersIncome);
       this.completedReservations = this.allEarnings.length;
       this.allEarnings = this.allEarnings.reduce((a: number, b: number) => a + b, 0);
@@ -83,7 +86,7 @@ export class OwnerReservationsComponent implements OnInit {
   }
 
   private updatePrices(): void {
-    this.pricesList = this.reservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => a.price);
+    this.pricesList = this.reservations.filter((val) => val.reservationStatus.toString() === 'COMPLETED').map(a => a.ownersIncome);
     this.pricesList = this.pricesList.reduce((a: number, b: number) => a + b, 0);
   }
 
@@ -111,19 +114,6 @@ export class OwnerReservationsComponent implements OnInit {
       this.updatePrices();
   }
 
-  getClientName(id: number) : string{
-    let firstName: string ='';
-    let surname: string = '';
-    this.userService.getUser(id).subscribe((res)=>this.user = res);
-    this.name = this.user.firstName + ' ' + this.user.surname;
-    return  this.name;
-  }
-
-  getClientNames(){
-    for(let res of this.reservations){
-      this.clientNames.push(this.getClientName(res.clientId));
-    }
-  }
 
   saveReview(){
     if(this.radioButtonValue == 1){
@@ -149,6 +139,25 @@ export class OwnerReservationsComponent implements OnInit {
     }
     this.snackbar.open(message,'cancel');
     window.location.reload();
+  }
+
+  createNewReservation($event: ReservationDTO){
+    this.reservationService.createNewReservationsForClient($event).subscribe(
+      (res: any) => {
+        console.log(res);
+      });
+  }
+
+  isReservationActive(reservation: ReservationDTO): boolean{
+    const dateNow = new Date();
+    return (new Date(reservation.reservedPeriod.startDate) <=  dateNow && new Date(reservation.reservedPeriod.endDate) >= dateNow);
+  }
+  activeReservations(): void {
+    const dateNow = new Date();
+    console.log(dateNow);
+    this.reservations = this.allReservations.filter((val) => new Date(val.reservedPeriod.startDate) <=  dateNow &&
+      new Date(val.reservedPeriod.endDate) >= dateNow);
+    this.updatePrices();
   }
 
 }

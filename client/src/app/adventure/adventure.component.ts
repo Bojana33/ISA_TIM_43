@@ -81,22 +81,6 @@ export class AdventureComponent implements OnInit {
   }
 
   createNewReservation($event: ReservationDTO){
-    const datepipe = new DatePipe('en-US');
-    let formatedReservationStartDate = datepipe.transform($event.reservedPeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
-    let formatedReservationEndDate = datepipe.transform($event.reservedPeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
-    let formatedSaleStartDate = datepipe.transform($event.salePeriod.startDate, 'yyyy-MM-dd HH:mm:ss');
-    let formatedSaleEndDate = datepipe.transform($event.salePeriod.endDate, 'yyyy-MM-dd HH:mm:ss');
-    console.log($event.reservedPeriod.startDate);
-    console.log(formatedReservationStartDate);
-    // @ts-ignore
-    $event.reservedPeriod.startDate = new Date(formatedReservationStartDate.toString());
-    console.log($event.reservedPeriod.startDate);
-    // @ts-ignore
-    $event.reservedPeriod.endDate = new Date(formatedReservationEndDate.toString());
-    // @ts-ignore
-    $event.salePeriod.startDate = new Date(formatedSaleStartDate.toString());
-    // @ts-ignore
-    $event.salePeriod.endDate = new Date(formatedSaleEndDate.toString());
     this.reservationService.createNewReservationForEntity($event).subscribe(
         (res: any) => {
         console.log(res);

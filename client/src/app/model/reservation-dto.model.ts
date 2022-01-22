@@ -16,6 +16,9 @@ export class ReservationDTO {
   public clientId!: number;
   public discount: number = 0;
   public ownersIncome!: number;
+  public entityName!: string;
+  public ownerName!: string;
+  public clientName!: string;
 
   //constructor(
     //public id: number,

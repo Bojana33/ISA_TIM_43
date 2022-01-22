@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit {
 
   deleteUser(id:number){
     this.userService.delete(id);
-    window.location.reload();
+    //window.location.reload();
   }
 
 }

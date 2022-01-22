@@ -26,6 +26,7 @@
         </form>
         <button *ngIf="!isSubscribed && hasSignedIn() && hasRole('CLIENT')" mat-raised-button color="accent" (click)="subscribe(adventure.id)">Subscribe</button>
         <button *ngIf="isSubscribed && hasSignedIn() && hasRole('CLIENT')" mat-stroked-button color="accent">Subscribed</button>
+        <button mat-raised-button color="accent" (click)="deleteAdventure()"  *ngIf="hasRole('ADMIN')">Delete</button>
       </mat-card>
     </div>
   </div>

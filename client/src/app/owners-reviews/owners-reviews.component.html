@@ -19,7 +19,7 @@
           <ng-container matColumnDef="client">
             <mat-header-cell *matHeaderCellDef>Client</mat-header-cell>
             <mat-cell class="duration-cell"
-                      *matCellDef="let res">{{clientNames[res.id-1]}}</mat-cell>
+                      *matCellDef="let res">{{res.clientName}}</mat-cell>
           </ng-container>
       
           <ng-container matColumnDef="approve">

@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackbar: MatSnackBar
   ) {
 
   }
@@ -78,6 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         _error => {
           this.submitted = false;
           this.notification = {msgType: 'error', msgBody: 'Incorrect email or password.'};
+          this.snackbar.open('Bad credentials', 'cancel');
         });
 
   }

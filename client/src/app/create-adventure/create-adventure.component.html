@@ -38,6 +38,30 @@
               <mat-form-field>
                 <input matInput type="text" placeholder="Fishing Equipment" formControlName="defaultFishingEquipment" required>
               </mat-form-field>
+
+              <div class = "block">
+                <label class = "label" for="addServ">
+                  Additional services
+                </label>
+                <div *ngIf="additionalServices.controls">
+                  <div formArrayName="additionalServices" *ngFor="let service of additionalServices.controls; let i=index;" id="addServ">
+                    <div class="field is-grouped">
+                      <div [formGroupName]="i">
+                        <input formControlName="name" placeholder="Name">
+                        <input formControlName="price" placeholder="Price">
+                        <a (click)="deleteService(i)">
+                          <i class="fa fa-times-circle" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <button class = "button is-inverted is-link" type="button" id="addService" (click) = "addService()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add another service</button>
+                </div>
+              </div>
+
+
               <button mat-raised-button type="submit">Submit</button>
           </form>
     </mat-card>

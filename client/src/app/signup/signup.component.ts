@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomValidationService } from '../service/custom-validation.service';
 import { RegistrationRequest } from '../model/registration-request';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -46,8 +45,7 @@ export class SignupComponent implements OnInit {
   submit() : void{
     console.log();
     this.saveOwner(this.form);
-    this.requestService.saveRequest(this.request).subscribe(res =>{console.log(res);
-    });
+    this.requestService.saveRequest(this.request).subscribe(res =>{console.log(res); this.registeredSnackBar()}, error => {this.snackbar.open('Signup failed','cancel');});
   }
 
   saveOwner(form:any){
