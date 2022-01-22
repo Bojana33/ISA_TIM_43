@@ -3,6 +3,7 @@ package isa2.demo.Model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.firebase.database.annotations.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.lang.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -35,19 +38,27 @@ public class User implements UserDetails {
    @Column(unique = true,nullable = false)
    private Integer id;
 
-   @Column(nullable = false)
+   @NotBlank(message = "Name is mandatory")
+   @Size(min=2, max=30, message = "Invalid number of input characters")
+   @Column
    private String firstName;
 
-   @Column(nullable = false)
+   @NotBlank(message = "Surname is mandatory")
+   @Size(min=2, max=30, message = "Invalid number of input characters")
+   @Column
    private String surname;
 
    @JsonIgnore
    @Column(nullable = false)
    private String password;
 
+   @NotBlank(message = "Email is mandatory")
+   @Size(min=5, max=50, message = "Invalid number of input characters")
    @Column(nullable = false, unique = true)
    private String email;
 
+   @NotBlank(message = "Phone number is mandatory")
+   //@Size(min=2, max=30, message = "Invalid number of input characters")
    @Column
    private String phoneNumber;
 

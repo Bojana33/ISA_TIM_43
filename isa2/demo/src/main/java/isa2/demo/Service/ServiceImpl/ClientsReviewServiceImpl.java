@@ -26,11 +26,15 @@ public class ClientsReviewServiceImpl implements ClientsReviewService {
     }
 
     @Override
-    public ClientsReview save(ClientsReview clientsReview) throws Exception {
+    public ClientsReview save(ClientsReview clientsReview, String username) throws Exception {
+        User existingUser = userService.findByUsername(username);
+        Reservation reservation = clientsReview.getReservation();
         if (clientsReview.getGrade() <= 0)
             throw new Exception("Invalid input");
         if(clientsReviewRepository.existsClientsReviewsByReservation(clientsReview.getReservation()))
             throw new Exception("Invalid input");
+        if (reservation.getClient().getId() != existingUser.getId())
+            throw new Exception("This client is not allowed to give a comment, rate or complaint for this entity");
         clientsReview.setStatus(ClientsReviewStatus.UNPROCESSED);
         return this.clientsReviewRepository.save(clientsReview);
     }

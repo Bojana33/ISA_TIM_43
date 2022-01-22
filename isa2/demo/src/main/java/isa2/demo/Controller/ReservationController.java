@@ -1,6 +1,7 @@
 package isa2.demo.Controller;
 
 import isa2.demo.Config.ModelMapperConfig;
+import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.ReservationDTO;
 import isa2.demo.Model.Owner;
 import isa2.demo.Model.Reservation;
@@ -70,5 +71,12 @@ public class ReservationController {
         } catch(Exception e) {
             return new ResponseEntity("Something went wrong", HttpStatus.FORBIDDEN);
         }
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @RequestMapping(value = "/sorted/{criterion}",  method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ReservationDTO>> getSorted(@PathVariable("criterion")String criterion,  @RequestBody Collection<ReservationDTO> reservations){
+        List<ReservationDTO> reservationsSorted = this.reservationService.sortReservations(reservations, criterion);
+        return new ResponseEntity<>(reservationsSorted, HttpStatus.OK);
     }
 }

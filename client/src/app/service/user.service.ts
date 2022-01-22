@@ -83,6 +83,7 @@ export class UserService {
 
   loggedRole(role: string){
     if (this.currentUser == null){
+      //console.log('curr je null');
       return false;
     }
     if (JSON.stringify(this.currentUser.authorities).search('ROLE_' + role) !== -1){
@@ -91,8 +92,22 @@ export class UserService {
     return false;
   }
 
+  isClient(){
+    //console.log('usap');
+    if (this.currentUser == null){
+      //console.log('curr ej null');
+      return false;
+    }
+    if (JSON.stringify(this.currentUser.authorities).search('ROLE_CLIENT') !== -1){
+      //console.log('varati true');
+      return true;
+    }
+    //console.log('vrati false');
+    return false;
+  }
+
   update(data:UserDTO){
-    return this.apiService.post('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
+    return this.apiService.put('http://localhost:8090/user/update', data).subscribe((res)=>{console.log});
   }
 
   saveAdmin(data:any){

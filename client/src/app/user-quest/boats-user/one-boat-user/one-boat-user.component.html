@@ -22,6 +22,40 @@
             <p>
               Address: {{boat.address.country}}, {{boat.address.city}}, {{boat.address.street}}, {{boat.address.houseNumber}}
             </p>
+            <p>
+              Average grade: {{boat.averageGrade}}
+            </p>
+            <p>
+              Length: {{boat.length}}
+            </p>
+            <p>
+              Engine power: {{boat.enginePower}}
+            </p>
+            <p>
+              Engine number: {{boat.engineNumber}}
+            </p>
+            <p>
+              House rules: {{boat.houseRules}}
+            </p>
+            <p>
+              Max speed: {{boat.maxSpeed}}
+            </p>
+            <p>
+              Capacity: {{boat.capacity}}
+            </p>
+            <div *ngIf="boat.additionalServices.length > 0">
+            <p>
+              Additional services:
+            </p>
+            <span class="example-list-section">
+            <ul>
+              <li *ngFor="let serv of boat.additionalServices">
+                <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
+                {{serv.name}} price: {{serv.price}}
+              </li>
+            </ul>
+          </span>
+            </div>
           </mat-card-content>
         </form>
         <button *ngIf="!isSubscribed && hasSignedIn() && hasRole('CLIENT')" mat-raised-button color="accent" (click)="subscribe(boat.id)">Subscribe</button>

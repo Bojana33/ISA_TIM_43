@@ -1,5 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.BoatDTO;
+import isa2.demo.DTO.CottageDTO;
 import isa2.demo.Model.*;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
@@ -100,20 +102,20 @@ public class BoatServiceImpl implements BoatService {
             throw new InvalidInputException("Number of guests needs to be at least 1");
         for (Boat boat : boats) {
             if ((request.getNumberOfGuests() != null && boat.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (boat.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && boat.getAverageGrade() < request.getGrade()))
-                break;
+                continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!request.getCountry().equals(boat.getAddress().getCountry()))
-                    break;
+                    continue;
             if (request.getCity() != null && !request.getCity().equals(""))
                 if (!request.getCity().equals(boat.getAddress().getCity()))
-                    break;
+                    continue;
             if (!entityService.isPeriodInRentalTime(boat, request.getStartDate(), request.getEndDate()))
-                break;
+                continue;
             else
                 freeBoats.add(boat);
             Collection<Reservation> reservations = boat.getReservations();
             for (Reservation reservation : reservations) {
-                if (entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
+                if (reservation.getReservationStatus() == ReservationStatus.RESERVED  && entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
                     freeBoats.remove(boat);
                     break;
                 }
@@ -126,4 +128,33 @@ public class BoatServiceImpl implements BoatService {
     public List<Boat> findBoatsByOwnerId(Integer id) {
         return boatRepository.findBoatsByOwner_id(id);
     }
+
+    Comparator<BoatDTO> compareByPrice = new Comparator<BoatDTO>() {
+        @Override
+        public int compare(BoatDTO o1, BoatDTO o2) {
+            return o1.getPricePerDay().compareTo(o2.getPricePerDay());
+        }
+    };
+
+    Comparator<BoatDTO> compareByAverageGrade = new Comparator<BoatDTO>() {
+        @Override
+        public int compare(BoatDTO o1, BoatDTO o2) {
+            return o1.getAvgGrade().compareTo(o2.getAvgGrade());
+        }
+    };
+
+    @Override
+    public ArrayList<BoatDTO> sortBoats(Collection<BoatDTO> boats, String criterion, boolean asc){
+        ArrayList<BoatDTO> newList = new ArrayList<>(boats);
+        if (criterion.equals("price") && asc)
+            Collections.sort(newList, compareByPrice);
+        else if (criterion.equals("grade") && asc)
+            Collections.sort(newList, compareByAverageGrade);
+        else if (criterion.equals("price") && !asc)
+            Collections.sort(newList, compareByPrice.reversed());
+        else
+            Collections.sort(newList, compareByAverageGrade.reversed());
+        return newList;
+    }
+
 }

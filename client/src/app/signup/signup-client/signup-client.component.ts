@@ -31,15 +31,16 @@ export class SignupClientComponent implements OnInit {
   ngOnInit(): void {
     this.isSuccess = false;
     this.form = this.formBuilder.group({
-      firstName: '',
-      surname: '',
-      email: '',
+      firstName: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+      surname: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+      email: ['', Validators.required, Validators.minLength(3), Validators.maxLength(50)],
       password: ['', Validators.required, Validators.minLength(3), Validators.maxLength(64)],
       repeatPassword: ['', Validators.required, Validators.minLength(3), Validators.maxLength(64)],
-      address: '',
-      city: '',
-      country: '',
-      phoneNumber: ''
+        street: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+      city: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+      country: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
+        houseNumber: ['', Validators.required, Validators.minLength(1), Validators.maxLength(30)],
+      phoneNumber: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)]
     },
       {validator: this.customValidator.passwordMatchValidator('password', 'repeatPassword')});
   }
@@ -68,6 +69,9 @@ export class SignupClientComponent implements OnInit {
     this.request.email = form.value.email;
     this.request.password = form.value.password;
     this.request.phoneNumber = form.value.phoneNumber;
+    console.log(this.request);
   }
+
+  get firstName() { return this.form.get('firstName'); }
 
 }

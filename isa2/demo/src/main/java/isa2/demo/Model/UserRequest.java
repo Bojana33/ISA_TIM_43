@@ -1,9 +1,12 @@
 package isa2.demo.Model;
 
+import com.google.firebase.database.annotations.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,9 +21,13 @@ public class UserRequest {
     @Column(unique = true,nullable = false)
     private Integer id;
 
+    @NotBlank(message = "Name is mandatory")
+    @Size(min=2, max=30, message = "Invalid number of input characters")
     @Column(nullable = false)
     private String firstName;
 
+    @NotBlank(message = "Surname is mandatory")
+    @Size(min=2, max=30, message = "Invalid number of input characters")
     @Column(nullable = false)
     private String surname;
 
@@ -30,6 +37,8 @@ public class UserRequest {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull
+    //@Size(min=5, max=30)
     @Column
     private String phoneNumber;
 

@@ -28,13 +28,13 @@
           <p>
             Email: {{userProfile.email}}
           </p>
-          <p>
+          <p *ngIf="hasRole('CLIENT')">
             Loyalty points: {{userProfile.loyaltyPoints}}
           </p>
-          <p>
+          <p *ngIf="hasRole('CLIENT')">
             Penalty: {{userProfile.penalty}}
           </p>
-          <p>
+          <p *ngIf="hasRole('CLIENT')">
             Category: {{userProfile.category}}
           </p>
         </mat-card-content>

@@ -6,7 +6,7 @@
       Entity type:
     </label>
       <div clas="control">
-        <mat-radio-group aria-label="Select an option">
+        <mat-radio-group aria-label="Select an option" required>
           <mat-radio-button value="1" (click)="chooseEntityValue(1)">Adventure</mat-radio-button>
           <br>
           <mat-radio-button value="2" (click)="chooseEntityValue(2)">Boat</mat-radio-button>
@@ -65,49 +65,45 @@
       </div>
     <br/>
       <button mat-raised-button type="submit">See options</button>
+    </div>
+    <button *ngIf="entity.length > 0 || adventures.length > 0 || boats.length > 0" mat-button cdkFocusInitial (click)="sort('grade')" style="margin-bottom: 3%">Sort by average grade</button>
+    <button *ngIf="entity.length > 0 || adventures.length > 0 || boats.length > 0" mat-button cdkFocusInitial (click)="sort('price')" style="margin-bottom: 3%">Sort by price</button>
+        <div  class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html"
+             xmlns="http://www.w3.org/1999/html">
+          <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
 
-      <div>
-        <button color="accent" mat-raised-button type="submit" (click)="ableSort()" style = "margin-top: 5%">Sort</button>
-        <div class="radioButton-control">
-          <ul class="list-group">
-            <li class="list-group-item"  *ngFor="let item of sortMethod">
-              <input type="radio" [(ngModel)]="value" name="list_name" value="{{item}}" (change)="onItemChange(item)"/>
-              {{item}}
-            </li>
-          </ul>
-        </div>
-        <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
-          <div fxLayout="row wrap" fxLayoutGap="16px grid">
-            <div *ngFor="let item of entity">
-              <mat-card class="mat-elevation-z4"  style="width: 520px;">
-                <a routerLink="/oneCottage/{{item.id}}" routerLinkActive="active">
-                  <mat-card-header class="name">
-                    <mat-card-title>{{item.cottageName}}</mat-card-title>
-                  </mat-card-header>
-                </a>
-                <div class="photo" style="margin-top: 1%">
-                  <img  height="250px auto" mat-card-image src="{{item.entityPhoto}}">
-                </div>
-                <mat-card-content>
-                  <p>
-                    Description: {{item.description}}
-                  </p>
-                  <p>
-                    Guests: max {{item.maxNumberOfGuests}}
-                  </p>
-                  <p>
-                    Price: {{item.pricePerDay}}
-                  </p>
-                  <p>
-                    Address: {{item.address.country}}, {{item.address.city}}, {{item.address.street}}, {{item.address.houseNumber}}
-                  </p>
-                  <p>
-                    Average grade: {{item.averageGrade}}
-                  </p>
-                  <p>
-                    Additional services:
-                  </p>
-                  <span class="example-list-section">
+
+            <div fxLayout="row wrap" fxLayoutGap="16px grid">
+              <div *ngFor="let item of adventures">
+                <mat-card class="mat-elevation-z4"  style="width: 520px;">
+                  <a routerLink="/oneAdventure/{{item.id}}" routerLinkActive="active">
+                    <mat-card-header class="name">
+                      <mat-card-title>{{item.name}}</mat-card-title>
+                    </mat-card-header>
+                  </a>
+                  <div class="photo" style="margin-top: 1%">
+                    <img  height="250px auto" mat-card-image src="{{item.entityPhoto}}">
+                  </div>
+                  <mat-card-content>
+                    <p>
+                      Description: {{item.description}}
+                    </p>
+                    <p>
+                      Guests: max {{item.maxNumberOfGuests}}
+                    </p>
+                    <p>
+                      Price: {{item.pricePerDay}}
+                    </p>
+                    <p>
+                      Address: {{item.addressDTO.country}}, {{item.addressDTO.city}}, {{item.addressDTO.street}}, {{item.addressDTO.houseNumber}}
+                    </p>
+                    <p>
+                      Average grade: {{item.averageGrade}}
+                    </p>
+                    <p>
+                      Additional services:
+                    </p>
+                    <span class="example-list-section">
                   <ul>
                     <li *ngFor="let serv of item.additionalServices">
                       <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
@@ -115,10 +111,110 @@
                     </li>
                   </ul>
                 </span>
-                </mat-card-content>
-                <a mat-stroked-button color="accent" (click)="reserve(item.id)"  style="margin-top: 5%">Reserve</a>
-              </mat-card>
+                  </mat-card-content>
+                  <a mat-stroked-button color="accent" (click)="reserve(item.id)"  style="margin-top: 5%">Reserve</a>
+                </mat-card>
+              </div>
             </div>
           </div>
         </div>
 
+
+
+    <div  class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html"
+          xmlns="http://www.w3.org/1999/html">
+      <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div *ngFor="let item of entity">
+            <mat-card class="mat-elevation-z4"  style="width: 520px;">
+              <a routerLink="/oneAdventure/{{item.id}}" routerLinkActive="active">
+                <mat-card-header class="name">
+                  <mat-card-title>{{item.cottageName}}</mat-card-title>
+                </mat-card-header>
+              </a>
+              <div class="photo" style="margin-top: 1%">
+                <img  height="250px auto" mat-card-image src="{{item.entityPhoto}}">
+              </div>
+              <mat-card-content>
+                <p>
+                  Description: {{item.description}}
+                </p>
+                <p>
+                  Guests: max {{item.maxNumberOfGuests}}
+                </p>
+                <p>
+                  Price: {{item.pricePerDay}}
+                </p>
+                <p>
+                  Address: {{item.address.country}}, {{item.address.city}}, {{item.address.street}}, {{item.address.houseNumber}}
+                </p>
+                <p>
+                  Average grade: {{item.averageGrade}}
+                </p>
+                <p>
+                  Additional services:
+                </p>
+                <span class="example-list-section">
+                  <ul>
+                    <li *ngFor="let serv of item.additionalServices">
+                      <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
+                      {{serv.name}} price: {{serv.price}}
+                    </li>
+                  </ul>
+                </span>
+              </mat-card-content>
+              <a mat-stroked-button color="accent" (click)="reserve(item.id)"  style="margin-top: 5%">Reserve</a>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div  class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html"
+          xmlns="http://www.w3.org/1999/html">
+      <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div *ngFor="let item of boats">
+            <mat-card class="mat-elevation-z4"  style="width: 520px;">
+              <a routerLink="/oneAdventure/{{item.id}}" routerLinkActive="active">
+                <mat-card-header class="name">
+                  <mat-card-title>{{item.name}}</mat-card-title>
+                </mat-card-header>
+              </a>
+              <div class="photo" style="margin-top: 1%">
+                <img  height="250px auto" mat-card-image src="{{item.entityPhoto}}">
+              </div>
+              <mat-card-content>
+                <p>
+                  Description: {{item.description}}
+                </p>
+                <p>
+                  Guests: max {{item.maxNumberOfGuests}}
+                </p>
+                <p>
+                  Price: {{item.pricePerDay}}
+                </p>
+                <p>
+                  Address: {{item.address.country}}, {{item.address.city}}, {{item.address.street}}, {{item.address.houseNumber}}
+                </p>
+                <p>
+                  Average grade: {{item.averageGrade}}
+                </p>
+                <p>
+                  Additional services:
+                </p>
+                <span class="example-list-section">
+                  <ul>
+                    <li *ngFor="let serv of item.additionalServices">
+                      <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
+                      {{serv.name}} price: {{serv.price}}
+                    </li>
+                  </ul>
+                </span>
+              </mat-card-content>
+              <a mat-stroked-button color="accent" (click)="reserve(item.id)"  style="margin-top: 5%">Reserve</a>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -39,4 +39,7 @@ export class CottageService {
   getSorted(cottages: CottageDTO[], criterion: string, asc: boolean){
     return this.apiService.post('http://localhost:8090/cottages/sorted' + '/' + criterion + '/' + asc, JSON.parse(JSON.stringify(cottages)));
   }
+  getAllCottagesForUser() {
+    return this.apiService.get(this.config.cottages_url + '/get_all');
+  }
 }

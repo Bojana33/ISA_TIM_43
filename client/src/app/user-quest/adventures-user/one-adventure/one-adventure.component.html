@@ -22,6 +22,20 @@
             <p>
               Address: {{adventure.addressDTO.country}}, {{adventure.addressDTO.city}}, {{adventure.addressDTO.street}}, {{adventure.addressDTO.houseNumber}}
             </p>
+            <p *ngIf="hasSignedIn() && hasRole('CLIENT')">
+              Instructor name: {{instructor.firstName}}
+            </p>
+            <p>
+              Additional services:
+            </p>
+            <span class="example-list-section">
+            <ul>
+              <li *ngFor="let serv of adventure.additionalServices">
+                <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
+                {{serv.name}} price: {{serv.price}}
+              </li>
+            </ul>
+            </span>
           </mat-card-content>
         </form>
         <button *ngIf="!isSubscribed && hasSignedIn() && hasRole('CLIENT')" mat-raised-button color="accent" (click)="subscribe(adventure.id)">Subscribe</button>

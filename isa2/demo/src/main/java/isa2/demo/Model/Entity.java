@@ -44,6 +44,7 @@ public class Entity implements Serializable {
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
     private java.util.Collection<RentalTime> rentalTimes;
 

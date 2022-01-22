@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -66,5 +63,15 @@ public class ClientController {
     @PutMapping("/refresh")
     public void doSomething() {
         clientService.refreshPenaltyPoints();
+    }
+
+    @PreAuthorize("hasRole('CLIENT')")
+    @GetMapping("/getReservationsHistory/{criterion}")
+    public ResponseEntity<Collection<ReservationDTO>> getReservationsHistory(Principal user, @PathVariable String criterion){
+        Collection<Reservation> reservations = clientService.reservationsHistory(user.getName(), criterion);
+        Collection<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation : reservations)
+            reservationDTOS.add(modelMapper.modelMapper().map(reservation, ReservationDTO.class));
+        return new ResponseEntity<>(reservationDTOS, HttpStatus.OK);
     }
 }

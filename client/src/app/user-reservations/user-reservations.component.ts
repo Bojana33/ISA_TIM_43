@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {FastReservationDialogComponent} from "../fast-reservation/fast-reservation-dialog/fast-reservation-dialog.component";
 import { FeedbackDialogComponent } from './feedback-dialog/feedback-dialog.component';
 import {ReviewDialogComponent} from "./review-dialog/review-dialog.component";
+import { OwnerService } from '../service/owner.service';
 
 export interface FeedbackDialog {
   grade: any;
@@ -24,16 +25,18 @@ export interface FeedbackDialog {
 })
 export class UserReservationsComponent implements OnInit {
 
-  displayedColumns: string[] = ['Entity', 'Owner', 'Price','Start date', 'End date', 'Complain','Rate'];
+  displayedColumns: string[] = ['Entity',  'Price','Start date', 'End date', 'Complain','Rate'];
   dataSource: Array<ReservationDTO> = [];
   entityName: Array<string> = [];
   owner!: any;
   userId!: number;
   oneName!: string;
+  tmpReservations: Array<ReservationDTO> = [];
 
   constructor(private reservationService : ReservationService,
               private userService : UserService,
               private entityService: EntityService,
+              private ownerService: OwnerService,
               private dialog: MatDialog) {
 
   }
@@ -41,20 +44,21 @@ export class UserReservationsComponent implements OnInit {
   ngOnInit(): void {
     this.getUserId();
     //this.entityService.getEntity()
+    //this.getData();
   }
 
   getData(userId: number) {
     this.reservationService.getAllUserReservations(this.userId).subscribe(
       res => {
-        console.log(res);
         this.dataSource = res;
-        this.dataSource.forEach(res => {
-          this.getName(res.entityId);
-          console.log(this.oneName);
-          this.entityName.push(this.oneName);
-        });
-      }
-    );
+        for(let oneReservation of res) {
+          this.entityService.getEntity(oneReservation.entityId).subscribe(res => {
+            oneReservation.entityName = res.name;
+            oneReservation.ownerName = res.owner.firstName;
+            this.dataSource.push(oneReservation);
+          });
+        }
+      });
   }
 
   getName(id: number){

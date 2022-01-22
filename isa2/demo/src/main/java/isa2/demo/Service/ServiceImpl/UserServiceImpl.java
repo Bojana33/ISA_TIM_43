@@ -16,10 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
@@ -98,26 +102,29 @@ public class UserServiceImpl implements UserService {
                 "<br> Password - " + userRequest.getPassword() + "</p>" +
                 "<br> After first login, you must change initial password! <br><br> Best regards,<br> ISA TIM 43";
 
-        sendEmail(subject,content,userRequest.getEmail());
+        User savedUser = userRepository.save(user);
+        if(savedUser != null)
+            sendEmail(subject,content,savedUser.getEmail());
 
-        return userRepository.save(user);
+        return savedUser;
     }
 
     @Override
     public UserRequest saveUserRequest(UserRequest userRequest) throws MessagingException, EmailAlreadyInUseException {
-        try {
-            String randomCode = RandomString.make(64);
-            userRequest.setVerificationCode(randomCode);
-            sendVerificationEmail(userRequest);
-        }catch (MessagingException me) {
-            System.out.println("Message exception");
-        }
-
         if (userRepository.findByEmail(userRequest.getEmail()) != null || userRequestRepository.findByEmail(userRequest.getEmail()) != null) {
             throw new EmailAlreadyInUseException("Email already in use");
         }
-        UserRequest u = this.userRequestRepository.save(userRequest);
-        return u;
+
+        String randomCode = RandomString.make(64);
+        userRequest.setVerificationCode(randomCode);
+        UserRequest newUserRequest = this.userRequestRepository.save(userRequest);
+
+        try {
+            sendVerificationEmail(newUserRequest);
+        }catch (MessagingException me) {
+            System.out.println("Message exception");
+        }
+        return newUserRequest;
     }
 
     @Override
@@ -185,8 +192,8 @@ public class UserServiceImpl implements UserService {
             user.setPenalty(0);
 
             List<Authority> auth;
-            auth = authService.findByname("ROLE_USER");
-            auth.add(authService.findByName("ROLE_CLIENT"));
+            auth = authService.findByname("ROLE_CLIENT");
+            //auth.add(authService.findByname("ROLE_CLIENT"));
             user.setAuthorities(auth);
 
             userRepository.save(user);

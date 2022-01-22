@@ -102,7 +102,6 @@ public class CottageServiceImpl implements CottageService {
                     (request.getNumberOfGuests() != null && cottage.getMaxNumberOfGuests() < request.getNumberOfGuests())
                     || (cottage.getAverageGrade() == null && request.getGrade() != null)
                     || (request.getGrade() != null && cottage.getAverageGrade() < request.getGrade()))
-
                 continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!checkLocation(request.getCountry(), cottage.getAddress().getCountry()))
@@ -116,7 +115,7 @@ public class CottageServiceImpl implements CottageService {
                 freeCottages.add(cottage);
             Collection<Reservation> reservations = cottage.getReservations();
             for (Reservation reservation : reservations) {
-                if (entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
+                if (reservation.getReservationStatus() == ReservationStatus.RESERVED  && entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
                     freeCottages.remove(cottage);
                     break;
                 }

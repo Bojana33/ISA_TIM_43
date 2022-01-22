@@ -1,5 +1,7 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.AdventureDTO;
+import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.FreeEntityDTO;
 import isa2.demo.Exception.InvalidInputException;
 import isa2.demo.Model.Adventure;
@@ -12,10 +14,7 @@ import isa2.demo.Service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AdventureServiceImpl implements AdventureService {
@@ -86,25 +85,59 @@ public class AdventureServiceImpl implements AdventureService {
             throw new InvalidInputException("Number of guests needs to be at least 1");
         for (Adventure adventure : adventures) {
             if ((request.getNumberOfGuests() != null && adventure.getMaxNumberOfGuests() < request.getNumberOfGuests()) || (adventure.getAverageGrade() == null && request.getGrade() != null)  || (request.getGrade() != null && adventure.getAverageGrade() < request.getGrade()))
-                break;
+                continue;
             if (request.getCountry() != null && !request.getCountry().equals(""))
                 if (!request.getCountry().equals(adventure.getAddress().getCountry()))
-                    break;
+                    continue;
             if (request.getCity() != null && !request.getCity().equals(""))
                 if (!request.getCity().equals(adventure.getAddress().getCity()))
-                    break;
+                    continue;
             if (!entityService.isPeriodInRentalTime(adventure, request.getStartDate(), request.getEndDate()))
-                break;
+                continue;
             else
                 freeAdventures.add(adventure);
             Collection<Reservation> reservations = adventure.getReservations();
             for (Reservation reservation : reservations) {
-                if (entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
+                if (reservation.getReservationStatus() == ReservationStatus.RESERVED  && entityService.doTimeIntervalsIntersect(request.getStartDate(), request.getEndDate(), reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())) {
                     freeAdventures.remove(adventure);
                     break;
                 }
             }
         }
         return freeAdventures;
+    }
+
+    Comparator<AdventureDTO> compareByPrice = new Comparator<AdventureDTO>() {
+        @Override
+        public int compare(AdventureDTO o1, AdventureDTO o2) {
+            return o1.getPricePerDay().compareTo(o2.getPricePerDay());
+        }
+    };
+
+    Comparator<AdventureDTO> compareByAverageGrade = new Comparator<AdventureDTO>() {
+        @Override
+        public int compare(AdventureDTO o1, AdventureDTO o2) {
+            return o1.getAvgGrade().compareTo(o2.getAvgGrade());
+        }
+    };
+
+    @Override
+    public ArrayList<AdventureDTO> sortAdventures(Collection<AdventureDTO> adventures, String criterion, boolean asc){
+        ArrayList<AdventureDTO> newList = new ArrayList<>(adventures);
+        if (criterion.equals("price") && asc)
+            Collections.sort(newList, compareByPrice);
+        else if (criterion.equals("grade") && asc)
+            Collections.sort(newList, compareByAverageGrade);
+        else if (criterion.equals("price") && !asc)
+            Collections.sort(newList, compareByPrice.reversed());
+        else
+            Collections.sort(newList, compareByAverageGrade.reversed());
+        return newList;
+    }
+
+    @Override
+    public Owner getOwnerForAdventure(Integer adventureId){
+        Adventure adventure = adventureRepository.findById(adventureId).get();
+        return adventure.getOwner();
     }
 }

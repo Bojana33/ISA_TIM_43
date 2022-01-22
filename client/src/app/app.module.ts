@@ -104,8 +104,9 @@ import { OwnersReviewsComponent } from './owners-reviews/owners-reviews.componen
 import { ConfigSingletonComponent } from './config-singleton/config-singleton.component';
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { BarchartComponent } from './barchart/barchart.component';
+import { ReservationsHistoryComponent } from './client-reservations/reservations-history/reservations-history.component';
+import { ClientGuard } from './guard/client.guard';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 const mapConfig: YaConfig = {
@@ -182,47 +183,47 @@ const mapConfig: YaConfig = {
     ConfigSingletonComponent,
     RegisterBoatComponent,
     DashboardComponent,
-    BarchartComponent
+    ReservationsHistoryComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatToolbarModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTableModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatNativeDateModule,
-    MatRippleModule,
-    Ng2SearchPipeModule,
-    MatGridListModule,
-    AngularYandexMapsModule.forRoot(mapConfig),
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatDatepickerModule,
-    MatButtonModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
-    AngularYandexMapsModule.forRoot(mapConfig),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    MatCheckboxModule,
-    MatRadioModule,
-    MatSortModule,
-    MatSlideToggleModule,
-    NgbModule,
-    NgxChartsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        MatToolbarModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatSelectModule,
+        MatTableModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatNativeDateModule,
+        MatRippleModule,
+        Ng2SearchPipeModule,
+        MatGridListModule,
+        AngularYandexMapsModule.forRoot(mapConfig),
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatDatepickerModule,
+        MatButtonModule,
+        OwlDateTimeModule,
+        OwlNativeDateTimeModule,
+        AngularYandexMapsModule.forRoot(mapConfig),
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
+        MatCheckboxModule,
+        MatRadioModule,
+        MatSortModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule,
+        NgbModule
+    ],
   exports: [
     SignupClientComponent
   ],
@@ -237,6 +238,7 @@ const mapConfig: YaConfig = {
     GuestGuard,
     InstructorGuard,
     AdminGuard,
+    ClientGuard,
     AuthService,
     ApiService,
     UserService,

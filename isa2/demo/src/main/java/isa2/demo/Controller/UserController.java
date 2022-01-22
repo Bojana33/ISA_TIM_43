@@ -29,7 +29,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @RequestMapping(path = "/update", method = RequestMethod.PUT)
     @PreAuthorize("hasAnyRole('USER', 'BOATOWNER', 'COTTAGEOWNER', 'ADMIN', 'CLIENT', 'INSTRUCTOR')")
     public ResponseEntity<? extends Object> updateUser(@RequestBody UserDTO userUpdateDTO, Principal user) {
         try {

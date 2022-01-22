@@ -1,3 +1,4 @@
+<mat-spinner *ngIf="!loaded"></mat-spinner>
 <div *ngIf="dataSource.length > 0" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 5%">
   <table  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

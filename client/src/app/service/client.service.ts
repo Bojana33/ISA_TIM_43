@@ -24,4 +24,8 @@ export class ClientService {
   getAllSubscriptions() {
     return this.apiService.get(this.clientsUrl + '/getAllSubscriptions');
   }
+
+  getReservationsHistory(criterion:any){
+    return this.apiService.get(this.clientsUrl + '/getReservationsHistory' + criterion);
+  }
 }

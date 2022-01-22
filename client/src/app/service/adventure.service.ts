@@ -5,6 +5,8 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {FreeEntityDTO} from "../model/free-entity-dto";
+import {CottageDTO} from "../model/cottage-dto.model";
+import {AdventureDTO} from "../model/adventure-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +41,9 @@ export class AdventureService {
     return this.apiService.delete(this.config.adventure_url + '/delete_adventure/'+id);
   }
   getFreeAdventures(request: FreeEntityDTO) {
-    return this.apiService.post(this.config.adventure_url + '/findFree',  JSON.parse(JSON.stringify(request)));
+    return this.apiService.post(this.config.adventure_url + '/findFreeAdventures',  JSON.parse(JSON.stringify(request)));
   }
-
+  getSorted(adventures: AdventureDTO[], criterion: string, asc: boolean){
+    return this.apiService.post('http://localhost:8090/adventures/sorted' + '/' + criterion + '/' + asc, JSON.parse(JSON.stringify(adventures)));
+  }
 }

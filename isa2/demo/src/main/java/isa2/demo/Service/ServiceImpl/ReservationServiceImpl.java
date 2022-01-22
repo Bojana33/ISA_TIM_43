@@ -2,6 +2,7 @@ package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Config.ModelMapperConfig;
 import isa2.demo.DTO.AdditionalServiceDTO;
+import isa2.demo.DTO.BoatDTO;
 import isa2.demo.DTO.ReservationDTO;
 import isa2.demo.Exception.InvalidReservationException;
 import isa2.demo.Model.*;
@@ -11,6 +12,7 @@ import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Service.*;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -117,7 +119,8 @@ public class ReservationServiceImpl implements ReservationService {
         if(!checkReservation(reservationDTO, entity, false))
             throw new InvalidReservationException("Invalid reservation input");
         //check if client canceled same reservation
-        for (Reservation reservation : client.getReservation()){
+        Collection<Reservation> clientsReservation = client.getReservation();
+        for (Reservation reservation : clientsReservation){
             if(reservation.getEntity().equals(entity) && reservation.getReservationStatus() == ReservationStatus.CANCELED &&
                     reservation.getReservedPeriod().getStartDate().isEqual(reservationDTO.getReservedPeriod().getStartDate()) &&
                     reservation.getReservedPeriod().getEndDate().isEqual(reservationDTO.getReservedPeriod().getEndDate()))
@@ -189,7 +192,11 @@ public class ReservationServiceImpl implements ReservationService {
 
         for (AdditionalServiceDTO additionalServiceDTO : reservationDTO.getAdditionalServices()) {
             price += additionalServiceDTO.getPrice();
-            additionalServices.add(modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class));
+            additionalServiceDTO.setId(null);
+            AdditionalService additionalService = modelMapper.modelMapper().map(additionalServiceDTO, AdditionalService.class);
+            additionalService.setEntity(entity);
+            additionalService.setReservation(reservation);
+            additionalServices.add(additionalService);
         }
         //check if reservation is in sale period and calculate discount
         if (LocalDateTime.now().isAfter(reservation.getSalePeriod().getStartDate()) && LocalDateTime.now().isBefore(reservation.getSalePeriod().getEndDate()) && reservation.getDiscount() != null)
@@ -197,11 +204,12 @@ public class ReservationServiceImpl implements ReservationService {
 
         // calculate owner income for this reservation
         Owner owner = this.ownerService.findByEntity(entity);
-        this.configSingletonService.addReservationPointsToOwner(owner);
-        Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
-        ownerIncome = price * ownerIncome;
-        reservation.setOwnersIncome(ownerIncome);
-
+        if (owner != null) {
+            this.configSingletonService.addReservationPointsToOwner(owner);
+            Double ownerIncome = this.configSingletonService.getOwnerIncome(owner);
+            ownerIncome = price * ownerIncome;
+            reservation.setOwnersIncome(ownerIncome);
+        }
         reservation.setPrice(price);
         reservation.setAdditionalServices(additionalServices);
         reservation.setClient(client);
@@ -333,8 +341,49 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public boolean isClientsReservationCurrent(Integer clientId) {
         List<Reservation> reservations = reservationRepository.findAllByClient_Id(clientId);
-        if(reservations != null && !reservations.isEmpty())
-            return reservations.removeIf(reservation -> (reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now()) && reservation.getReservedPeriod().getEndDate().isAfter(LocalDateTime.now())));
+        if (reservations != null && !reservations.isEmpty())
+            return reservations.removeIf(reservation -> (reservation.getReservedPeriod().getStartDate().isBefore(LocalDateTime.now())
+                    && reservation.getReservedPeriod().getEndDate().isAfter(LocalDateTime.now())));
         return false;
+    }
+    Comparator<ReservationDTO> compareByPrice = new Comparator<ReservationDTO>() {
+        @Override
+        public int compare(ReservationDTO o1, ReservationDTO o2) {
+            return o1.getPrice().compareTo(o2.getPrice());
+        }
+    };
+
+    Comparator<ReservationDTO> compareByStartDate = new Comparator<ReservationDTO>() {
+        @Override
+        public int compare(ReservationDTO o1, ReservationDTO o2) {
+            return o1.getReservedPeriod().getStartDate().compareTo(o2.getReservedPeriod().getStartDate());
+        }
+    };
+
+    Comparator<ReservationDTO> compareByEndDate = new Comparator<ReservationDTO>() {
+        @Override
+        public int compare(ReservationDTO o1, ReservationDTO o2) {
+            return o1.getReservedPeriod().getEndDate().compareTo(o2.getReservedPeriod().getEndDate());
+        }
+    };
+
+   // Comparator<ReservationDTO> compareByDuration = new Comparator<ReservationDTO>() {
+     //   @Override
+      //  public int compare(ReservationDTO o1, ReservationDTO o2) {
+        //    return Duration.between(o1.getReservedPeriod().getStartDate(), o1.getReservedPeriod().getEndDate()).toDays().compareTo(Duration.between(o1.getReservedPeriod().getStartDate(), o1.getReservedPeriod().getEndDate()).toDays());
+            //return o1.getReservedPeriod().getStartDate().compareTo(o2.getReservedPeriod().getEndDate());
+        //}
+    //};
+
+    @Override
+    public ArrayList<ReservationDTO> sortReservations(Collection<ReservationDTO> reservations, String criterion){
+        ArrayList<ReservationDTO> newList = new ArrayList<>(reservations);
+        if (criterion.equals("price"))
+            Collections.sort(newList, compareByPrice);
+        else if (criterion.equals("startDate"))
+            Collections.sort(newList, compareByStartDate);
+        else if (criterion.equals("endDate"))
+            Collections.sort(newList, compareByEndDate);
+        return newList;
     }
 }

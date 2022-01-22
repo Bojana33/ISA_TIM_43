@@ -123,6 +123,7 @@ public class CottageController {
         return new ResponseEntity<>(cottageDTOS, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @RequestMapping(value = "/findFree", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<CottageDTO>> getFreeCottages(@RequestBody FreeEntityDTO request){
         try {
@@ -138,6 +139,7 @@ public class CottageController {
         }
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @RequestMapping(value = "/sorted/{criterion}/{asc}",  method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CottageDTO>> getSorted(@PathVariable("criterion")String criterion, @PathVariable("asc") Boolean asc,@RequestBody Collection<CottageDTO> cottages){
         List<CottageDTO> cottagesSorted = this.cottageService.sortCottages(cottages, criterion, asc);

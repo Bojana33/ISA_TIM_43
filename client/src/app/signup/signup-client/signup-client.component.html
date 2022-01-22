@@ -3,13 +3,13 @@
     <mat-toolbar color="primary">Signup Form</mat-toolbar>
     <form fxLayoutAlign="stretch" fxLayout="column" class="signup-form" [formGroup]="form" (submit)="submit()">
       <mat-form-field>
-        <input matInput type="text" placeholder="First Name" formControlName="firstName" required>
+        <input matInput type="text" placeholder="First Name" formControlName="firstName" required minlength="3">
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Surname" formControlName="surname" required>
+        <input matInput type="text" placeholder="Surname" formControlName="surname" required minlength="3">
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="email" placeholder="Email" formControlName="email" required  ngModel email="true">
+        <input matInput type="email" placeholder="Email" formControlName="email" required  ngModel email="true" minlength="5">
       </mat-form-field>
       <mat-form-field>
         <input matInput type="password" placeholder="Password" formControlName="password" required ngModel>
@@ -18,13 +18,16 @@
         <input matInput type="password" placeholder="Repeat Password" formControlName="repeatPassword" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="address" required>
+        <input matInput placeholder="Address" formControlName="street" required minlength="3">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="city" required>
+        <input matInput placeholder="City" formControlName="city" required minlength="3">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Country" formControlName="country" required>
+        <input matInput placeholder="Country" formControlName="country" required minlength="3">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="House number" formControlName="houseNumber" required minlength="1">
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>

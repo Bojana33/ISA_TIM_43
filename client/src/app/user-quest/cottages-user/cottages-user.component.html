@@ -3,14 +3,17 @@
   <option value="name">Cottage Name</option>
   <option value="pricePerDay">Price per day</option>
   <option value="averageGrade">Average grade</option>
-  <option value="location">Location</option>
 </select>
 <input #box class="searchForm" type="text" placeholder="Search by name, price per day or description :"  [(ngModel)]="searchTerm"  (input)="search(searchFilter,box.value)">
 
 
 <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
+  <a  mat-stroked-button color="accent" routerLink="/createReservation" *ngIf="hasSignedIn() && hasRole('CLIENT')">Search entities</a>
+  <button mat-button cdkFocusInitial (click)="sort('name')" style="margin-bottom: 3%">Sort by name</button>
+  <button mat-button cdkFocusInitial (click)="sort('location')" style="margin-bottom: 3%">Sort by location</button>
+  <button mat-button cdkFocusInitial (click)="sort('price')" style="margin-bottom: 3%">Sort by price</button>
   <div fxLayout="row wrap" fxLayoutGap="16px grid">
-    <div *ngFor="let item of cottages | filter: searchTerm">
+    <div *ngFor="let item of allCottages | filter: searchTerm">
       <mat-card class="mat-elevation-z4"  style="width: 520px;">
         <a routerLink="/oneCottage/{{item.id}}" routerLinkActive="active">
         <mat-card-header class="name">
