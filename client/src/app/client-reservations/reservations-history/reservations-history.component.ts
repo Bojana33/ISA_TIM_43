@@ -3,6 +3,7 @@ import {ReservationDTO} from "../../model/reservation-dto.model";
 import {ClientService} from "../../service/client.service";
 import {DatePipe} from "@angular/common";
 import {ReservationService} from "../../service/reservation.service";
+import { EntityService } from 'src/app/service/entity.service';
 
 @Component({
   selector: 'app-reservations-history',
@@ -12,19 +13,27 @@ import {ReservationService} from "../../service/reservation.service";
 export class ReservationsHistoryComponent implements OnInit {
 
   displayedColumns: string[] = ['Reservation start date', 'Reservation end date',
-    'Price', 'Number of guests'];
+    'Price', 'Number of guests', 'Discount', 'Entity', 'Description'];
   dataSource: Array<ReservationDTO> = [];
   canceledEnabled!: boolean;
   dateAdded: Date = new Date();
   selected: boolean = false;
   sortedData: Array<ReservationDTO> = [];
 
-  constructor(private clientService: ClientService, private reservationService: ReservationService) { }
+  constructor(private clientService: ClientService, private reservationService: ReservationService, private entityService: EntityService) { }
 
   ngOnInit(): void {
     this.clientService.getReservationsHistory('/all').subscribe(res => {
       this.dataSource = res;
-      console.log(res);
+      for(let oneReservation of res) {
+        this.entityService.getEntity(oneReservation.entityId).subscribe(res => {
+          console.log(res);
+          oneReservation.entityName = res.name;
+          oneReservation.description = res.description;
+          oneReservation.pricePerDay = res.pricePerDay;
+          this.dataSource.push(oneReservation);
+        });
+      }
     });
   }
 

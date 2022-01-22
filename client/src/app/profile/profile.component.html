@@ -32,8 +32,11 @@
             Loyalty points: {{userProfile.loyaltyPoints}}
           </p>
           <p *ngIf="hasRole('CLIENT')">
-            Penalty: {{userProfile.penalty}}
-          </p>
+            Penalty: {{userProfile.penalty}}</p>
+          <div class="alert is-helpful">
+            *If you have 3 or more penalties you will not be able to make reservations
+        </div>
+
           <p *ngIf="hasRole('CLIENT')">
             Category: {{userProfile.category}}
           </p>

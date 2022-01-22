@@ -1,10 +1,10 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-    <span><i class="fa fa-suitcase" aria-hidden="true" style="margin-right: 10%;"></i>ISA43</span>
+    <span routerLink="home"><i class="fa fa-suitcase" aria-hidden="true" style="margin-right: 10%;"></i>ISA43</span>
 
     <div class="spacer"></div>
 
     <a mat-button routerLink="config-singleton" *ngIf="hasRole('ADMIN')">System Configuration</a>
-    <a mat-button routerLink="home">Home</a>
+
   <!--USER AND GUEST ENTITY CATALOGS!-->
     <a mat-button routerLink="adventuresCatalog">Adventures</a>
     <a mat-button routerLink="boatsCatalog">Boats</a>

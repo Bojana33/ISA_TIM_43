@@ -4,6 +4,7 @@ import {ClientService} from "../../service/client.service";
 import {DatePipe} from "@angular/common";
 import {ReservationService} from "../../service/reservation.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { EntityService } from 'src/app/service/entity.service';
 
 @Component({
   selector: 'app-future-reservations',
@@ -13,7 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class FutureReservationsComponent implements OnInit {
 
   displayedColumns: string[] = ['Reservation start date', 'Reservation end date',
-    'Price', 'Number of guests', 'Cancel'];
+    'Price', 'Number of guests', 'Discount', 'Entity', 'Description','Cancel'];
   dataSource: Array<ReservationDTO> = [];
   canceledEnabled!: boolean;
   dateAdded: Date = new Date();
@@ -21,14 +22,23 @@ export class FutureReservationsComponent implements OnInit {
 
   constructor(private clientService: ClientService,
               private reservationService: ReservationService,
-              private snackBar: MatSnackBar) {  this.loaded = false;}
+              private snackBar: MatSnackBar,
+              private entityService: EntityService) {  this.loaded = false;}
 
   ngOnInit(): void {
     this.setDateToCompare();
     this.clientService.getFutureReservations().subscribe(res => {
       this.dataSource = res;
       this.loaded = true;
-      console.log('future reservations', res);
+      for(let oneReservation of res) {
+        this.entityService.getEntity(oneReservation.entityId).subscribe(res => {
+          console.log(res);
+          oneReservation.entityName = res.name;
+          oneReservation.description = res.description;
+          oneReservation.pricePerDay = res.pricePerDay;
+          this.dataSource.push(oneReservation);
+        });
+      }
     });
   }
 

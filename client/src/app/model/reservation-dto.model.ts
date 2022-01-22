@@ -18,6 +18,8 @@ export class ReservationDTO {
   public ownersIncome!: number;
   public entityName!: string;
   public ownerName!: string;
+  public description!: string;
+  public pricePerDay!: number;
 
   //constructor(
     //public id: number,

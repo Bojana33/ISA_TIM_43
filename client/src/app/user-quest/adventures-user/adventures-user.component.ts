@@ -38,12 +38,10 @@ export class AdventuresUserComponent implements OnInit {
   getAdventures(){
     this.httpClient.get<any>(this.config.adventure_url + '/get_all_adventures').subscribe(
       (data) => {
-        console.log(data);
         this.adventures = data;
         this.allAdventures = this.adventures;
         for(let adventure of this.allAdventures){
           this.ownerService.getOwnerById(adventure.adventureOwnerId).subscribe(res => {
-            console.log(res);
             adventure.instructorName =  res.firstName;
             this.tmpAdventures.push(adventure);;
           });
@@ -54,21 +52,19 @@ export class AdventuresUserComponent implements OnInit {
 
   search(search: any, value: any): void {
     if (search === 'name') {
-      this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
+      this.adventures = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
     } else if (search === 'pricePerDay') {
-      this.adventure = this.allAdventures.filter((val) => Number(val.pricePerDay) === Number(value));
+      this.adventures = this.allAdventures.filter((val) => val.pricePerDay.toString() === value.toString());
     } else if (search === 'averageGrade') {
-      this.adventure = this.allAdventures.filter((val) => Number(val.averageGrade) === Number(value));
+      console.log(value);
+      this.adventures = this.allAdventures.filter((val) => val.averageGrade.toString() === value.toString());
     }
-    // else if (search === 'location') {
-    // this.cottages = this.allCottages.filter((val) => val.address.includes(value) || val.name.toLowerCase().includes(value));
-    // }
-    //else if (search === 'instructorName') {
-      //this.adventure = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
+   // else if (search === 'location') {
+     // this.adventures = this.adventures.filter(s.addressDTO.country => s.addressDTO.country.includes(value));
     //}
   }
 
-  sort(criterion: any) {
+  sortTMP(criterion: any) {
     if(criterion === 'name')
       this.allAdventures.sort((a,b) => a.name > b.name ? 1 : -1);
     else if (criterion === 'instructorName')
@@ -99,4 +95,5 @@ export class AdventuresUserComponent implements OnInit {
   hasRole(role:string){
     return this.userService.loggedRole(role);
   }
+
 }

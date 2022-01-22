@@ -42,9 +42,9 @@ export class ReservationDialogComponent implements OnInit {
     this.entityService.reserve(this.reservation).subscribe(
       res => {
         console.log(res);
+        this.snackBar.open('Successfully booked, check your email.', 'cancel');
       }
     );
     this.dialogRef.close();
-    this.snackBar.open('Successfully booked, check your email.', 'cancel');
   }
 }

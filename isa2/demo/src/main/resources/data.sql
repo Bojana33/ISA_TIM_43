@@ -43,8 +43,8 @@ values (0,0,2,5);
 
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id, average_grade)
-values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png',1, 3),
-       ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2, 4);
+values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 15, './../../assets/images/pecanje.png',1, 5),
+       ('Fishing Adventure', 'This is a beautiful adventure', 15, 10, './../../assets/images/pecanje1.jpg',2, 10);
 insert into
     entities(name, description,  max_guests, price_per_day, entity_photo, address_id, average_grade)
     values

@@ -6,6 +6,7 @@ import {ReservationDialogComponent} from "../client-reservations/reservation-dia
 import {MatDialog} from "@angular/material/dialog";
 import { UserService } from '../service/user.service';
 import { FastReservationDialogComponent } from './fast-reservation-dialog/fast-reservation-dialog.component';
+import { EntityService } from '../service/entity.service';
 
 @Component({
   selector: 'app-fast-reservation',
@@ -15,12 +16,12 @@ import { FastReservationDialogComponent } from './fast-reservation-dialog/fast-r
 export class FastReservationComponent implements OnInit {
 
   displayedColumns: string[] = ['Sale start date', 'Sale end date', 'Reservation start date', 'Reservation end date',
-                                'Price', 'Discount', 'Reserve'];
+                                'Price', 'Discount', 'Entity', 'Description','Reserve'];
   dataSource: Array<ReservationDTO> = [];
   userId: any;
   loaded!: boolean;
 
-  constructor(private reservationService: ReservationService, private dialog: MatDialog, private userService: UserService) {
+  constructor(private reservationService: ReservationService, private dialog: MatDialog, private userService: UserService, private entityService: EntityService) {
     this.loaded = false;
   }
 
@@ -28,9 +29,17 @@ export class FastReservationComponent implements OnInit {
       this.reservationService.getFutureReservationsOnSale().subscribe(
         res => {
           this.loaded = true;
-          console.log(res);
-          this.dataSource = res;}
-      );
+          this.dataSource = res;
+          for(let oneReservation of res) {
+            this.entityService.getEntity(oneReservation.entityId).subscribe(res => {
+              console.log(res);
+              oneReservation.entityName = res.name;
+              oneReservation.description = res.description;
+              oneReservation.pricePerDay = res.pricePerDay;
+              this.dataSource.push(oneReservation);
+            });
+          }
+        });
   }
 
   convertDateToString(date: Date) : any{

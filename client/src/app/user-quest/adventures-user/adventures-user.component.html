@@ -3,16 +3,16 @@
   <option value="name">Adventure Name</option>
   <option value="pricePerDay">Price per day</option>
   <option value="averageGrade">Average grade</option>
+  <option value="location">Location</option>
 </select>
 <input #box class="searchForm" type="text" placeholder="Search by name, price per day or description :"  [(ngModel)]="searchTerm"  (input)="search(searchFilter,box.value)">
 
 <div class="content" style="margin-left:3%; margin-top:3%; margin-right: 3%">
-
   <a  mat-stroked-button color="accent" routerLink="/createReservation" *ngIf="hasSignedIn() && hasRole('CLIENT')">Search entities</a>
-  <button mat-button cdkFocusInitial (click)="sort('name')" style="margin-bottom: 3%">Sort by adventure name</button>
-  <button mat-button cdkFocusInitial (click)="sort('instructorName')" style="margin-bottom: 3%">Sort by instructor name</button>
-  <button mat-button cdkFocusInitial (click)="sort('location')" style="margin-bottom: 3%">Sort by location</button>
-  <button mat-button cdkFocusInitial (click)="sort('price')" style="margin-bottom: 3%">Sort by price</button>
+  <button mat-button cdkFocusInitial (click)="sortTMP('name')" style="margin-bottom: 3%">Sort by adventure name</button>
+  <button mat-button cdkFocusInitial (click)="sortTMP('instructorName')" style="margin-bottom: 3%">Sort by instructor name</button>
+  <button mat-button cdkFocusInitial (click)="sortTMP('location')" style="margin-bottom: 3%">Sort by location</button>
+  <button mat-button cdkFocusInitial (click)="sortTMP('price')" style="margin-bottom: 3%">Sort by price</button>
 
   <div fxLayout="row wrap" fxLayoutGap="16px grid">
     <div *ngFor="let item of adventures | filter: searchTerm">
@@ -36,7 +36,7 @@
             Price: {{item.pricePerDay}}
           </p>
           <p>
-            Average grade: {{item.avgGrade}}
+            Average grade: {{item.averageGrade}}
           </p>
           <p>
             Address: {{item.addressDTO.country}}, {{item.addressDTO.city}}, {{item.addressDTO.street}}, {{item.addressDTO.houseNumber}}

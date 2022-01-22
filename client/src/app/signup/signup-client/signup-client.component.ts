@@ -40,7 +40,7 @@ export class SignupClientComponent implements OnInit {
       city: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
       country: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)],
         houseNumber: ['', Validators.required, Validators.minLength(1), Validators.maxLength(30)],
-      phoneNumber: ['', Validators.required, Validators.minLength(3), Validators.maxLength(30)]
+      phoneNumber: ''
     },
       {validator: this.customValidator.passwordMatchValidator('password', 'repeatPassword')});
   }
@@ -59,6 +59,7 @@ export class SignupClientComponent implements OnInit {
   }
 
   saveRequest(form:any) {
+    console.log(form.phoneNumber);
     this.request = new UserRequest();
     this.request.firstName = form.value.firstName;
     this.request.surname = form.value.surname;
