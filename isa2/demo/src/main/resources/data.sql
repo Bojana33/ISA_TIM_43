@@ -100,13 +100,13 @@ insert into config_singleton(config_singleton_id,client_reservation_points, disc
                              income_gold, income_regular, income_silver)
             values (1,0,0,0,0,0,0,0,0,0,0,0,0);
 
-insert into periods (id, start_date, end_date) values (1, '2021-1-11 14:15:06', '2021-1-14 14:15:06'),
-                                                      (2, '2021-1-12 14:15:06', '2021-1-12 14:15:06'),
-                                                      (3, '2022-9-12 14:15:06', '2022-9-12 14:15:06'),
-                                                      (4, '2022-10-11 14:15:06', '2022-10-14 14:15:06');
+insert into periods (start_date, end_date) values ('2021-1-11 14:15:06', '2021-1-14 14:15:06'),
+                                                      ('2021-1-12 14:15:06', '2021-1-12 14:15:06'),
+                                                      ('2022-9-12 14:15:06', '2022-9-12 14:15:06'),
+                                                      ('2022-10-11 14:15:06', '2022-10-14 14:15:06');
 
-insert into reservations (id, price, number_of_guests,  reserved_period_id, client_id, reservation_entity_id, reservation_status)
-        values (1, 190, 10, 2, 5, 1,0),
-               (2, 180, 10, 1, 5, 2,0),
-               (3, 180, 10, 3, 5, 2,3),
-               (4, 180, 10, 4, 5, 2, 3);
+insert into reservations (price, number_of_guests,  reserved_period_id, client_id, reservation_entity_id, reservation_status)
+        values (190, 10, 2, 5, 1,0),
+               (180, 10, 1, 5, 2,0),
+               (180, 10, 3, 5, 2,3),
+               (180, 10, 4, 5, 2, 3);
