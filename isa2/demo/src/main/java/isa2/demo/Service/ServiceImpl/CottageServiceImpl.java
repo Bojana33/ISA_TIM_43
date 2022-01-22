@@ -128,7 +128,7 @@ public class CottageServiceImpl implements CottageService {
     private boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate) {
         Collection<RentalTime> rentalTimes = entity.getRentalTimes();
         for (RentalTime rentalTime : rentalTimes) {
-            if(rentalTime.getStart_date().isBefore(startDate) && rentalTime.getEnd_date().isAfter(endDate))
+            if(rentalTime.getStartDate().isBefore(startDate) && rentalTime.getEndDate().isAfter(endDate))
                 return true;
         }
         return false;

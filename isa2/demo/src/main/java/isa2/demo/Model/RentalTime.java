@@ -23,10 +23,10 @@ public class RentalTime implements Serializable {
    private Integer id;
 
    @Column
-   private LocalDateTime start_date;
+   private LocalDateTime startDate;
 
    @Column
-   private LocalDateTime end_date;
+   private LocalDateTime endDate;
 
    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
    @JoinColumn(name = "reservation_entity_id", referencedColumnName = "id")

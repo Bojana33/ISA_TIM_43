@@ -6,6 +6,7 @@ import {FreeEntityDTO} from "../model/free-entity-dto";
 import {AdditionalServicesDTO} from "../model/AdditionalServicesModel/additional-services-dto.model";
 import {Injectable} from "@angular/core";
 import {ReservationDTO} from "../model/reservation-dto.model";
+import {RentalTimeDto} from '../model/rental-time-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,8 @@ export class EntityService {
   }
   getRentalTimeForEntity(entityId: number){
     return this.apiService.get(this.config.entity_url + /rentalTime/ + entityId);
+  }
+  createRentalTime(rentalTime: RentalTimeDto){
+    return this.apiService.post(this.config.entity_url + '/rentalTime', rentalTime);
   }
 }

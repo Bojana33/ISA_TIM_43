@@ -1,34 +1,22 @@
 package isa2.demo.Service.ServiceImpl;
 
 import isa2.demo.Config.ModelMapperConfig;
-import isa2.demo.DTO.AdditionalServiceDTO;
-import isa2.demo.DTO.FreeEntityDTO;
-import isa2.demo.DTO.ReservationDTO;
-import isa2.demo.Exception.EmailAlreadyInUseException;
-import isa2.demo.Exception.InvalidReservationException;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.ClientRepository;
 import isa2.demo.Repository.EntityRepository;
 import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Repository.PeriodRepository;
-import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Service.ClientService;
 import isa2.demo.Service.EntityService;
 import isa2.demo.Service.UserService;
-import org.apache.tomcat.jni.Local;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class EntityServiceImpl implements EntityService {
@@ -59,16 +47,16 @@ public class EntityServiceImpl implements EntityService {
         if(isRentalTimeDateValid(entity,rentalTime)){
             Collection<RentalTime> rentalTimeList = entity.getRentalTimes();
             for(RentalTime rentalTimeTemp: rentalTimeList){
-                if (doTimeIntervalsIntersect(rentalTime.getStart_date(),rentalTime.getEnd_date(), rentalTimeTemp.getStart_date(), rentalTimeTemp.getEnd_date())) {
-                    if(rentalTime.getStart_date().isBefore(rentalTimeTemp.getStart_date())){
+                if (doTimeIntervalsIntersect(rentalTime.getStartDate(),rentalTime.getEndDate(), rentalTimeTemp.getStartDate(), rentalTimeTemp.getEndDate())) {
+                    if(rentalTime.getStartDate().isBefore(rentalTimeTemp.getStartDate())){
                     }
-                    else if(rentalTime.getStart_date().isAfter(rentalTimeTemp.getStart_date())){
-                        rentalTime.setStart_date(rentalTimeTemp.getStart_date());
+                    else if(rentalTime.getStartDate().isAfter(rentalTimeTemp.getStartDate())){
+                        rentalTime.setStartDate(rentalTimeTemp.getStartDate());
                     }
-                    if(rentalTime.getEnd_date().isAfter(rentalTimeTemp.getEnd_date())){
+                    if(rentalTime.getEndDate().isAfter(rentalTimeTemp.getEndDate())){
                     }
-                    else if(rentalTime.getEnd_date().isBefore(rentalTimeTemp.getEnd_date())){
-                        rentalTime.setEnd_date(rentalTimeTemp.getEnd_date());
+                    else if(rentalTime.getEndDate().isBefore(rentalTimeTemp.getEndDate())){
+                        rentalTime.setEndDate(rentalTimeTemp.getEndDate());
                     }
                     continue;
                 }
@@ -93,7 +81,7 @@ public class EntityServiceImpl implements EntityService {
             return null;
         }
         for(RentalTime rentalTime: rentalTimes){
-            if(!doTimeIntervalsIntersect(rentalTime.getStart_date(),rentalTime.getEnd_date(),
+            if(!doTimeIntervalsIntersect(rentalTime.getStartDate(),rentalTime.getEndDate(),
                     reservation.getReservedPeriod().getStartDate(), reservation.getReservedPeriod().getEndDate())){
                 return null;
             }
@@ -125,7 +113,7 @@ public class EntityServiceImpl implements EntityService {
     public boolean isRentalTimeDateValid(Entity entity, RentalTime rentalTime) {
 
         Collection<RentalTime> rentalTimeCollection = entity.getRentalTimes();
-        if(rentalTime.getStart_date().isAfter(rentalTime.getEnd_date()) || rentalTime.getStart_date().isEqual(rentalTime.getEnd_date())){
+        if(!rentalTimeCollection.isEmpty() && (rentalTime.getStartDate().isAfter(rentalTime.getEndDate()) || rentalTime.getStartDate().isEqual(rentalTime.getEndDate()))){
                 return false;
         }
 //        for(RentalTime rentalTimeTemp: rentalTimeCollection){
@@ -262,7 +250,7 @@ public class EntityServiceImpl implements EntityService {
     public boolean isPeriodInRentalTime(Entity entity, LocalDateTime startDate, LocalDateTime endDate) {
         Collection<RentalTime> rentalTimes = entity.getRentalTimes();
         for (RentalTime rentalTime : rentalTimes) {
-            if(rentalTime.getStart_date().isBefore(startDate) && rentalTime.getEnd_date().isAfter(endDate))
+            if(rentalTime.getStartDate().isBefore(startDate) && rentalTime.getEndDate().isAfter(endDate))
                 return true;
         }
         return false;

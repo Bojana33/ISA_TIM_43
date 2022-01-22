@@ -10,6 +10,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 import {EntityService} from '../service/entity.service';
+import {RentalTimeDto} from '../model/rental-time-dto';
 
 
 @Component({
@@ -24,8 +25,12 @@ export class CottageComponent implements OnInit{
   private selectedFile!: File;
   clicked = false;
   showForm = 1;
+  showRentalTimeForm = 0;
   // @ts-ignore
   cottageUpdateForm: FormGroup;
+  // @ts-ignore
+  rentalTimeForm: FormGroup;
+  rentalTime: RentalTimeDto = new RentalTimeDto();
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
@@ -76,6 +81,10 @@ export class CottageComponent implements OnInit{
             street: new FormControl(this.cottage.address.street, [Validators.required]),
             houseNumber: new FormControl(this.cottage.address.houseNumber, [Validators.required])
           }),
+        });
+        this.rentalTimeForm = this.formBuilder.group({
+          startRentalDate: new FormControl(['', [Validators.required]]),
+          endRentalDate: new FormControl(['', [Validators.required]])
         });
         this.addressFormated = this.cottage.address.city + ', ' + this.cottage.address.street
           + ', ' + this.cottage.address.houseNumber;
@@ -145,5 +154,14 @@ export class CottageComponent implements OnInit{
     const data: FormData = new FormData();
     data.append('imageUrl', this.selectedFile, this.selectedFile.name);
     this.entityService.savePhoto(data, id).subscribe(res => {console.log(res); });
+  }
+  createRentalTime(): void{
+    this.rentalTime.startDate = this.rentalTimeForm.value.startRentalDate;
+    this.rentalTime.endDate = this.rentalTimeForm.value.endRentalDate;
+    this.rentalTime.entityId = this.cottage.id;
+    console.log(this.rentalTime);
+    this.entityService.createRentalTime(this.rentalTime).subscribe(res =>{
+      console.log(res);
+    });
   }
 }

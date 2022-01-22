@@ -51,7 +51,7 @@ public class EntityController {
         ResponseEntity responseEntity = null;
 
         try{
-            entityService.addRentalTime(rentalTimeDTO.getEntity_id(), rentalTime);
+            entityService.addRentalTime(rentalTimeDTO.getEntityId(), rentalTime);
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(rentalTimeDTO);
         }
         catch (MessagingException e){
