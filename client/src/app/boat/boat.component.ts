@@ -10,6 +10,7 @@ import {ReservationDTO} from '../model/reservation-dto.model';
 import {ReservationService} from '../service/reservation.service';
 import {BoatDTO} from '../model/boat-dto';
 import {EntityService} from '../service/entity.service';
+import {RentalTimeDto} from '../model/rental-time-dto';
 
 @Component({
   selector: 'app-boat',
@@ -23,9 +24,13 @@ export class BoatComponent implements OnInit {
   showRentalTimes = false;
   showForm = 1;
   clicked = false;
+  showRentalTimeForm = 0;
+  rentalTime: RentalTimeDto = new RentalTimeDto();
   private selectedFile!: File;
   // @ts-ignore
   boatUpdateForm: FormGroup;
+  // @ts-ignore
+  rentalTimeForm: FormGroup;
   //     public fishingEquipment: string = '',
   //     public houseRules: string = '',
   //     public cancellationFee: number = 0,
@@ -124,6 +129,10 @@ export class BoatComponent implements OnInit {
         houseNumber: new FormControl(this.boat.address.houseNumber, [Validators.required])
       }),
     });
+    this.rentalTimeForm = this.formBuilder.group({
+      startRentalDate: new FormControl(['', [Validators.required]]),
+      endRentalDate: new FormControl(['', [Validators.required]])
+    });
   }
   // tslint:disable-next-line:typedef
   hasRole(role: string) {
@@ -197,5 +206,14 @@ export class BoatComponent implements OnInit {
     const data: FormData = new FormData();
     data.append('imageUrl', this.selectedFile, this.selectedFile.name);
     this.entityService.savePhoto(data, id).subscribe(res => {console.log(res); });
+  }
+  createRentalTime(): void{
+    this.rentalTime.startDate = this.rentalTimeForm.value.startRentalDate;
+    this.rentalTime.endDate = this.rentalTimeForm.value.endRentalDate;
+    this.rentalTime.entityId = this.boat.id;
+    console.log(this.rentalTime);
+    this.entityService.createRentalTime(this.rentalTime).subscribe(res =>{
+      console.log(res);
+    });
   }
 }

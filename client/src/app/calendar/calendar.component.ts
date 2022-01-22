@@ -59,9 +59,9 @@ export class CalendarComponent implements OnInit{
           this.events.push({
             id: item.id,
             // @ts-ignore
-            start: new Date(item.start_date),
+            start: new Date(item.startDate),
             // @ts-ignore
-            end: new Date(item.end_date),
+            end: new Date(item.endDate),
             title: item.id.toString() + ' termin',
             color: eventColor,
             draggable: false
