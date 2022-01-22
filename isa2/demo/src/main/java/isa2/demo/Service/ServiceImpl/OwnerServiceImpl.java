@@ -1,5 +1,6 @@
 package isa2.demo.Service.ServiceImpl;
 
+import isa2.demo.DTO.PeriodDTO;
 import isa2.demo.Model.*;
 import isa2.demo.Repository.OwnerRepository;
 import isa2.demo.Service.AuthorityService;
@@ -34,7 +35,7 @@ public class OwnerServiceImpl implements OwnerService {
         owner.setEmail(registrationRequest.getEmail());
         owner.setPhoneNumber(registrationRequest.getPhoneNumber());
         owner.setAddress(registrationRequest.getAddress());
-        owner.setFirstLogIn(true);
+        owner.setFirstLogin(true);
         owner.setDeleted(false);
         owner.setIsAdmin(false);
         owner.setActivated(true);
@@ -61,5 +62,21 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public Owner findById(Integer id) {
         return this.ownerRepository.findById(id).get();
+    }
+
+    @Override
+    public Owner findByEntity(Entity entity) {
+        Owner owner = new Owner();
+        if(entity instanceof Adventure){
+            owner = this.ownerRepository.findByAdventures((Adventure) entity);
+        }
+        if(entity instanceof Cottage){
+            owner = //((Cottage) entity).getOwner();
+                    this.ownerRepository.findByCottages((Cottage) entity);
+        }
+        if(entity instanceof Boat){
+            owner = this.ownerRepository.findByBoat((Boat) entity);
+        }
+        return owner;
     }
 }

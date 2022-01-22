@@ -8,24 +8,25 @@ import { UserService } from '../service/user.service';
 })
 export class InstructorGuard implements CanActivate {
 
+  currentUser: any;
+
   constructor(private router: Router, private userService: UserService) {
   }
-  
   canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (this.userService.currentUser) {
-        if (JSON.stringify(this.userService.currentUser.authorities).search('ROLE_INSTRUCTOR') !== -1) {
-          this.router.navigate(['/home']);
+      this.currentUser = this.userService.initUser();
+      if (this.currentUser) {
+        if (this.userService.loggedRole('INSTRUCTOR')) {
           return true;
         } else {
           this.router.navigate(['/403']);
           return false;
         }
-  
+
       } else {
         console.log('NOT AN INSTRUCTOR ROLE');
         this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
         return false;
       }
   }
-  
+
 }

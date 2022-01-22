@@ -10,13 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  user:any;
+
   constructor(
     private userService : UserService,
     private authService : AuthService,
     private router : Router
-  ) { }
+  ) { this.user = userService.currentUser}
 
   ngOnInit(): void {
+    this.userService.getMyInfo().subscribe((response) =>
+       this.user = response);
   }
 
   logout(){

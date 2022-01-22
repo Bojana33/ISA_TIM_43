@@ -1,16 +1,24 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-    <span><mat-icon>eco</mat-icon>App</span>
+    <span><i class="fa fa-suitcase" aria-hidden="true" style="margin-right: 10%;"></i>ISA43</span>
 
     <div class="spacer"></div>
 
-    <a mat-button routerLink="profile">Profile</a>
+    <a mat-button routerLink="config-singleton" *ngIf="hasRole('ADMIN')">System Configuration</a>
+    <a mat-button routerLink="home">Home</a>
+    <a mat-button routerLink="adventuresCatalog">Adventures</a>
+    <a mat-button routerLink="boatsCatalog">Boats</a>
+    <a mat-button routerLink="cottagesCatalog">Cottages</a>
+    <a mat-button routerLink="complaints" *ngIf="hasRole('ADMIN')">Complaints</a>
+    <a mat-button routerLink="clients-reviews" *ngIf="hasRole('ADMIN')">Client reviews</a>
+    <a mat-button routerLink="owners-reviews" *ngIf="hasRole('ADMIN')">Owner reviews</a>
+    <a mat-button routerLink="userReservations" *ngIf="hasRole('CLIENT')">Reservations</a>
 
     <div class="dropdown is-hoverable" *ngIf="hasSignedIn() && hasRole('ADMIN')">
       <div class="dropdown-trigger">
         <button class="mat-button" aria-haspopup="true" aria-controls="dropdown-menu4">
           <span>Requests</span>
           <span class="icon is-small">
-          <i class="fas fa-angle-down" aria-hidden="true"></i>
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
         </span>
         </button>
       </div>
@@ -25,35 +33,19 @@
         </div>
       </div>
     </div>
-    
-    <a mat-button routerLink="home">Home</a>
-    <div class="dropdown is-hoverable">
-      <div class="dropdown-trigger">
-        <button class="mat-button" aria-haspopup="true" aria-controls="dropdown-menu4">
-          <span>Entities</span>
-          <span class="icon is-small">
-          <i class="fas fa-angle-down" aria-hidden="true"></i>
-        </span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-        <div class="dropdown-content">
-          <div color="accent" class="dropdown-item">
-            <a mat-button routerLink = "adventures">Adventures</a>
-          </div>
-          <div class="dropdown-item">
-            <a mat-button routerLink = "cottages">Cottages</a>
-          </div>
-          <div class="dropdown-item">
-            <a mat-button routerLink = "boats">Boats</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <a mat-button routerLink="register-cottage" *ngIf="hasSignedIn() && hasRole('COTTAGEOWNER')">Register cottage</a>
-    <a mat-button routerLink="users">Users</a>
+
+    <a mat-button *ngIf="hasSignedIn() && hasRole('INSTRUCTOR')" routerLink = "adventures"  >My Adventures</a>
+    <a mat-button routerLink="dashboard" *ngIf="hasSignedIn() && (hasRole('COTTAGEOWNER') || hasRole('BOATOWNER')) ">Dashboard</a>
+    <a mat-button routerLink="users" *ngIf="hasSignedIn() && hasRole('ADMIN')">Users</a>
+    <a mat-button routerLink="reservationsHistory" *ngIf="hasSignedIn() && hasRole('CLIENT')">Previous reservations</a>
+    <a mat-button routerLink="futureReservations" *ngIf="hasSignedIn() && hasRole('CLIENT')">Future reservations</a>
+    <a mat-button routerLink="subscriptions" *ngIf="hasSignedIn() && hasRole('CLIENT')">Subscriptions</a>
+    <a mat-button routerLink="userReservations" *ngIf="hasSignedIn() && hasRole('CLIENT')">Give reservation feedback</a>
     <a mat-button routerLink="login" *ngIf="!hasSignedIn()">Login</a>
+    <a mat-stroked-button color="accent" routerLink="signupAdmin" *ngIf="hasSignedIn() && hasRole('ADMIN')">Register Admin</a>
     <a mat-stroked-button color="accent" routerLink="signup" *ngIf="!hasSignedIn()">Sign Up As Owner</a>
-    <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up</a>
+    <a mat-raised-button color="accent" routerLink="signupClient" *ngIf="!hasSignedIn()">Sign Up As Client</a>
     <a mat-stroked-button color="accent" *ngIf="hasSignedIn()" (click)="logout()" >Logout</a>
+    <a mat-stroked-button color="accent" routerLink="profile/{{user.id}}" *ngIf="hasSignedIn()">Profile</a>
 </mat-toolbar>
+

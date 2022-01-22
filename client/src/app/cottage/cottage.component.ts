@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CottageDTO} from '../model/cottage-dto.model';
 import {ConfigService} from '../service/config.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../service/user.service';
-import {User} from '../model/user';
 import {CottageService} from '../service/cottage.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ReservationDTO} from '../model/reservation-dto.model';
+import {ReservationService} from '../service/reservation.service';
+import {EntityService} from '../service/entity.service';
+import {RentalTimeDto} from '../model/rental-time-dto';
 
 
 @Component({
@@ -15,37 +18,80 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
   templateUrl: './cottage.component.html',
   styleUrls: ['./cottage.component.css']
 })
-export class CottageComponent implements OnInit {
-  cottage: CottageDTO = ({} as any);
-
-  cottageUpdateForm = this.formBuilder.group({
-    cottageName: new FormControl(this.cottage.cottageName, Validators.required),
-    description: new FormControl(this.cottage.description, Validators.required),
-    pricePerDay: new FormControl(this.cottage.pricePerDay, [Validators.min(0), Validators.required]),
-    maxNumberOfGuests: new FormControl(this.cottage.maxNumberOfGuests, [Validators.required, Validators.min(0)])
-  });
+export class CottageComponent implements OnInit{
+  cottage: CottageDTO = new CottageDTO();
+  addressFormated: any;
+  showRentalTimes = false;
+  private selectedFile!: File;
+  clicked = false;
+  showForm = 1;
+  showRentalTimeForm = 0;
+  // @ts-ignore
+  cottageUpdateForm: FormGroup;
+  // @ts-ignore
+  rentalTimeForm: FormGroup;
+  rentalTime: RentalTimeDto = new RentalTimeDto();
   constructor(
     private httpClient: HttpClient,
     private config: ConfigService,
-    private router: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private snackbar: MatSnackBar,
     private cottageService: CottageService,
-    private formBuilder: FormBuilder
+    private reservationService: ReservationService,
+    private formBuilder: FormBuilder,
+    private entityService: EntityService
   ) {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<any>(this.config.cottages_url + '/' + this.router.snapshot.params.id).subscribe(
-      response => {
-        this.cottage = response;
-      });
+    this.loadData();
     // if (this.hasSignedIn() && this.loggedUserIsOwner()){
     //   // @ts-ignore
     //   this.cottageUpdateForm.get('cottageName')?.setValue(this.cottage.cottageName);
     // }
   }
-  // tslint:disable-next-line:typedef
+
+  private loadData(): void {
+    this.httpClient.get<any>(this.config.cottages_url + '/' + this.activatedRoute.snapshot.params.id).subscribe(
+      response => {
+        this.cottage = response;
+        this.cottageUpdateForm = this.formBuilder.group({
+          cottageName: new FormControl(this.cottage.cottageName, [
+            Validators.required,
+            Validators.minLength(5)]
+          ),
+          description: new FormControl(this.cottage.description, [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(511)]
+          ),
+          pricePerDay: new FormControl(this.cottage.pricePerDay, [
+            Validators.min(0),
+            Validators.required]
+          ),
+          maxNumberOfGuests: new FormControl(this.cottage.maxNumberOfGuests, [
+            Validators.required,
+            Validators.min(0),
+            Validators.max(300)]
+          ),
+          address: new FormGroup({
+            country: new FormControl(this.cottage.address.country, [Validators.required]),
+            city: new FormControl(this.cottage.address.city, [Validators.required]),
+            street: new FormControl(this.cottage.address.street, [Validators.required]),
+            houseNumber: new FormControl(this.cottage.address.houseNumber, [Validators.required])
+          }),
+        });
+        this.rentalTimeForm = this.formBuilder.group({
+          startRentalDate: new FormControl(['', [Validators.required]]),
+          endRentalDate: new FormControl(['', [Validators.required]])
+        });
+        this.addressFormated = this.cottage.address.city + ', ' + this.cottage.address.street
+          + ', ' + this.cottage.address.houseNumber;
+      });
+  }
+
+// tslint:disable-next-line:typedef
   hasRole(role: string){
     return this.userService.loggedRole(role);
   }
@@ -61,7 +107,6 @@ export class CottageComponent implements OnInit {
   }
   // tslint:disable-next-line:typedef
   deleteCottage(){
-    // return this.httpClient.delete(this.config.cottages_url + '/' + this.cottage.id);
     // this.snackbar.open('cottage delete request sent', 'cancel');
     return this.cottageService.deleteCottage(this.cottage.id).subscribe(
       res => {
@@ -70,11 +115,53 @@ export class CottageComponent implements OnInit {
     );
   }
   // tslint:disable-next-line:typedef
-  updateCottage(){
-    // this.snackbar.open('cottage delete request sent', 'cancel');
+  updateCottage(form: FormGroup){
+    console.log(form.value.address);
+    this.cottage.cottageName = form.value.cottageName;
+    this.cottage.description = form.value.description;
+    this.cottage.maxNumberOfGuests = form.value.maxNumberOfGuests;
+    this.cottage.pricePerDay = form.value.pricePerDay;
+    this.cottage.address.country = form.value.address.country;
+    this.cottage.address.street = form.value.address.street;
+    this.cottage.address.city = form.value.address.city;
+    this.cottage.address.houseNumber = form.value.address.houseNumber;
+    console.log(this.cottage.address);
     return this.cottageService.updateCottage(this.cottage).subscribe(
       res => {
-        this.cottage = res;
+        console.log(res.id);
+        this.uploadImage(res.id);
+        if (res.status === 200){
+          this.snackbar.open('Cottage update successful', 'cancel');
+        }else{
+          this.snackbar.open(`There's a problem with update`, 'cancel');
+        }
+        this.loadData();
       });
+  }
+
+  // tslint:disable-next-line:typedef
+  createNewReservation($event: ReservationDTO){
+    this.reservationService.createNewReservationForEntity($event).subscribe(
+        (res: any) => {
+        console.log(res);
+      });
+  }
+  public onFileChanged(event: any): void {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile.name);
+  }
+  private uploadImage(id: number): void{
+    const data: FormData = new FormData();
+    data.append('imageUrl', this.selectedFile, this.selectedFile.name);
+    this.entityService.savePhoto(data, id).subscribe(res => {console.log(res); });
+  }
+  createRentalTime(): void{
+    this.rentalTime.startDate = this.rentalTimeForm.value.startRentalDate;
+    this.rentalTime.endDate = this.rentalTimeForm.value.endRentalDate;
+    this.rentalTime.entityId = this.cottage.id;
+    console.log(this.rentalTime);
+    this.entityService.createRentalTime(this.rentalTime).subscribe(res =>{
+      console.log(res);
+    });
   }
 }

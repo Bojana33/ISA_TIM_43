@@ -1,0 +1,46 @@
+<div style = "margin-top: 5%; margin-bottom: 2%;" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html">
+  <h3 *ngIf="selected===false">All history reservations</h3>
+</div>
+<div style = "margin-top: 1%; margin-bottom: 2%;" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html">
+  <button mat-button cdkFocusInitial (click)="select('adventure')">Previous adventures reservations</button>
+  <button mat-button cdkFocusInitial (click)="select('cottage')">Previous cottages reservations</button>
+  <button mat-button cdkFocusInitial (click)="select('boat')">Previous boats reservations</button>
+</div>
+<div style = "margin-top: 1%; margin-bottom: 2%;" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html">
+  <button mat-button cdkFocusInitial (click)="sort('startDate')" style="margin-bottom: 3%">Sort by start date</button>
+  <button mat-button cdkFocusInitial (click)="sort('endDate')" style="margin-bottom: 3%">Sort by end date</button>
+  <button mat-button cdkFocusInitial (click)="sort('price')" style="margin-bottom: 3%">Sort by price</button>
+  <button mat-button cdkFocusInitial (click)="sort('duration')" style="margin-bottom: 3%">Sort by duration</button>
+</div>
+<div *ngIf="dataSource.length > 0" class="columns is-mobile is-centered" xmlns="http://www.w3.org/1999/html" style="margin-top: 1%">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="Reservation start date">
+      <th mat-header-cell *matHeaderCellDef>Reservation start date</th>
+      <td mat-cell *matCellDef="let element"> {{convertDateToString(element.reservedPeriod.startDate)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Reservation end date">
+      <th mat-header-cell *matHeaderCellDef>Reservation end date</th>
+      <td mat-cell *matCellDef="let element"> {{convertDateToString(element.reservedPeriod.endDate)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let element"> {{ element.price }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Number of guests">
+      <th mat-header-cell *matHeaderCellDef>Number of guests</th>
+      <td mat-cell *matCellDef="let element"> {{ element.numberOfGuests }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Reservation status">
+      <th mat-header-cell *matHeaderCellDef>Reservation status</th>
+      <td mat-cell *matCellDef="let element"> {{ element.reservationStatus }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

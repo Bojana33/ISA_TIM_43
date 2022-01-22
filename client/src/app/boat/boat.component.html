@@ -1,0 +1,239 @@
+<div class = "column is-10 is-offset-1">
+  <div class = "box">
+    <div class = "columns">
+
+      <div class = "column is-7" *ngIf="boat.entityPhoto != null || boat.photos.length != 0">
+          <ngb-carousel>
+            <ng-template *ngIf="boat.entityPhoto != null" ngbSlide>
+              <div class="picsum-img-wrapper image is-5by3">
+                <img [src]="boat.entityPhoto" alt="Random first slide">
+              </div>
+            </ng-template>
+            <ng-template ngbSlide *ngFor="let img of boat.photos">
+              <div class="picsum-img-wrapper image is-5by3">
+                <img [src]="img" alt="Random first slide">
+              </div>
+            </ng-template>
+          </ngb-carousel>
+      </div>
+      <input class= "is-small is-primary" type="file" (change)="onFileChanged($event)">
+
+      <div class = "column is-5" *ngIf ="hasSignedIn() && loggedUserIsOwner()">
+        <form  [formGroup]="boatUpdateForm">
+        <div class="box">
+          <nav class="level">
+            <div class="level-left">
+              <h4 class="title is-4 level-item">Name</h4>
+            </div>
+            <div class="level-right">
+              <div class="dropdown level-item" [ngClass]="{'is-active':this.clicked.valueOf()}" (click)="this.clicked = !clicked">
+                <div class="dropdown-trigger">
+                  <button class="button is-link is-inverted" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                              <i class="fa fa-ellipsis-v" style="font-size:24px" aria-hidden="true"></i>
+                            </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                  <div class="dropdown-content">
+                    <div class = "buttons block">
+                      <button class="dropdown-item button is-link is-light level-item" (click)="showForm=2">Create new quick reservation</button>
+                      <button class="dropdown-item button is-link is-light level-item" (click)="showRentalTimeForm=1">Create new rental time</button>
+                      <button class="dropdown-item button is-warning is-light level-item" routerLink="reservations">Reservations</button>
+                      <button class="dropdown-item button is-danger is-light level-item"  routerLink="boats" (click)="deleteboat()">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+          <h4 class="title is-4 my-2">Name</h4>
+          <input class = "input is-small is-rounded" formControlName="name">
+          <h4 class="title is-4 my-2">Description</h4>
+          <textarea class = "is-rounded textarea"  formControlName="description"></textarea>
+          <h4 class="title is-4 my-2">Maximum number of guests</h4>
+          <input class = "input is-small is-rounded" type="number"formControlName="maxNumberOfGuests">
+          <h4 class="title is-4 my-2">Price per day</h4>
+          <input class = "input is-small is-rounded" type="number"formControlName="pricePerDay">
+          <h4 class="title is-4 my-2">Length</h4>
+          <input class = "input is-small is-rounded" type="number"formControlName="length">
+          <h4 class="title is-4 my-2">Engine power</h4>
+          <input class = "input is-small is-rounded" type="number"formControlName="enginePower">
+          <h4 class="title is-4 my-2">Engine number</h4>
+          <input class = "input is-small is-rounded" type="text" formControlName="engineNumber">
+          <h4 class="title is-4 my-2">Maximum speed</h4>
+          <input class = "input is-small is-rounded" type="number"formControlName="maxSpeed">
+          <h4 class="title is-4 my-2">Capacity</h4>
+          <input class = "input is-small is-rounded" type="number" formControlName="capacity">
+          <h4 class="title is-4 my-2">Cancellation fee</h4>
+          <input class = "input is-small is-rounded" type="number" formControlName="cancellationFee">
+          <h4 class="title is-4 my-2">Fishing equipment</h4>
+          <input class = "input is-small is-rounded" type="text" formControlName="fishingEquipment">
+          <h4 class="title is-4 my-2">House rules</h4>
+          <input class = "input is-small is-rounded" type="text" formControlName="houseRules">
+          <div formGroupName="address">
+            <div class = "field">
+              <label class = "label" for="country">
+                Country
+              </label>
+              <div class = "control">
+                <input class = "input" id="country" type="text" formControlName="country">
+              </div>
+            </div>
+            <div class = "field">
+              <label class = "label" for="city">
+                City
+              </label>
+              <div class = "control">
+                <input class = "input" id="city" type="text" formControlName="city" >
+              </div>
+            </div>
+            <div class = "field">
+              <label class = "label" for="street">
+                Street
+              </label>
+              <div class = "control">
+                <input class = "input" id="street" type="text" formControlName="street">
+              </div>
+            </div>
+            <div class = "field">
+              <label class = "label" for="houseNumber">
+                House number
+              </label>
+              <div class = "control">
+                <input class = "input" id="houseNumber" type="text" formControlName="houseNumber">
+              </div>
+            </div>
+          </div>
+          <h4 class="title is-4 my-2">Boat type: {{boat.type.toString()}} </h4>
+          <div class="select is-rounded">
+            <select formControlName="boatType">
+              <option value=0 >Yacht</option>
+              <option value=1 >Fishing boat</option>
+            </select>
+          </div>
+          Average grade: <ngb-rating [max]="5"[readonly]="true" [(rate)]="boat.averageGrade"></ngb-rating>
+          <div class = 'block'>
+            <button class="button is-info is-rounded" [disabled]="boatUpdateForm.invalid" (click)="updateboat(boatUpdateForm)">Update</button>
+          </div>
+        </div>
+        </form>
+
+        <div>
+          <div class="modal is-active" *ngIf="showRentalTimeForm === 1">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Create new rental time</p>
+                <button class="delete" (click)="showRentalTimeForm=0" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <form [formGroup]="rentalTimeForm">
+                  <div class = "field">
+                    <label class = "label" for="startRentalDate">
+                      Rental time start:
+                    </label>
+                    <div class = "control">
+                      <input class = "input" id="startRentalDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                             placeholder="Date Time" formControlName="startRentalDate">
+                      <owl-date-time #dt1></owl-date-time>
+                    </div>
+                  </div>
+                  <div class = "field">
+                    <label class = "label" for="endRentalDate">
+                      Rental time end:
+                    </label>
+                    <div class = "control">
+                      <input class = "input" id="endRentalDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                             placeholder="Date Time" formControlName="endRentalDate">
+                      <owl-date-time #dt2></owl-date-time>
+                    </div>
+                  </div>
+                  <button class="button is-success is-right" (click)="createRentalTime()">Create</button>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="buttons block">
+          <div class="modal is-active" *ngIf="showForm === 2">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Create new quick reservation</p>
+                <button class="delete" (click)="showForm=1" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <app-reservation-form [entityId]="boat.id" (createdReservationEvent)="createNewReservation($event)">
+                </app-reservation-form>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class = "column is-5" *ngIf ="!(hasSignedIn() && loggedUserIsOwner())">
+        <div class="box">
+          <h4 class="title is-4 my-2">Name</h4>
+          <p class = "item">
+            {{boat.name}}
+          </p>
+          <h4 class="title is-4 my-2">Description</h4>
+          <p class = "item">
+            {{boat.description}}
+          </p>
+          <h4 class="title is-4 my-2">Maximum number of guests</h4>
+          <p class = "item">
+            {{boat.maxNumberOfGuests}}
+          </p>
+          <h4 class="title is-4 my-2">Price per day</h4>
+          <p class = "item">
+            {{boat.pricePerDay}}
+          </p>
+          <h4 class="title is-4 my-2">Boat type:</h4>
+          <p class = "item">
+            {{boat.type}}
+          </p>
+          <h4 class="title is-4 my-2">Engine power</h4>
+          <p class = "item">
+            {{boat.enginePower}}
+          </p>
+          <h4 class="title is-4 my-2">Length</h4>
+          <p class = "item">
+            {{boat.length}}
+          </p>
+          <h4 class="title is-4 my-2">Maximum speed</h4>
+          <p class = "item">
+            {{boat.maxSpeed}}
+          </p>
+          <h4 class="title is-4 my-2">Capacity</h4>
+          <p class = "item">
+            {{boat.capacity}}
+          </p>
+          <h4 class="title is-4 my-2">House rules</h4>
+          <p class = "item">
+            {{boat.houseRules}}
+          </p>
+          <h4 class="title is-4 my-2">Fishing equipment</h4>
+          <p class = "item">
+            {{boat.fishingEquipment}}
+          </p>
+        </div>
+        <hr>
+        <pre>Rate: <b>{{boat.averageGrade}}</b></pre>
+      </div>
+    </div>
+  </div>
+  <div class = "box" *ngIf="addressFormated != null">
+    {{addressFormated}}
+    <app-map [address]="addressFormated"></app-map>
+  </div>
+  <div class = "box" *ngIf="boat.id != 0">
+    <button class="button is-small is-primary" (click) = "showRentalTimes = !showRentalTimes">rental time</button>
+    <app-calendar *ngIf="showRentalTimes" [showRentalPeriod]= true [entityId]= "boat.id">
+    </app-calendar>
+    <app-calendar *ngIf="!showRentalTimes" [showRentalPeriod]= false [entityId]= "boat.id">
+    </app-calendar>
+  </div>
+</div>

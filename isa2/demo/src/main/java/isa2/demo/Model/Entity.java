@@ -1,4 +1,5 @@
 package isa2.demo.Model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,22 +35,42 @@ public class Entity implements Serializable {
     @Column
     private java.lang.String entityPhoto;
 
+    //TO DO: return this to transient, it is only a temporary column
     @Transient
+    @Column(name = "average_grade")
     private java.lang.Double averageGrade = 0.0;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
     private java.util.Collection<RentalTime> rentalTimes;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "entity")
+    @OneToMany(mappedBy = "entity")
     private java.util.Collection<AdditionalService> additionalServices;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "subscriptions")
     private java.util.Collection<Client> subscribedClients;
 
-    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity")
+
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "entity", orphanRemoval = true)
     public java.util.Collection<Reservation> reservations;
+
+    @PostLoad
+    private void onLoad() {
+        Double sum = 0.0;
+        Double counter = 0.0;
+
+        for(Reservation reservation: this.getReservations()){
+            if(reservation.getClientsReview() != null){
+                sum += reservation.getClientsReview().getGrade();
+                counter += 1;
+            }
+        }
+
+        this.averageGrade = (sum/counter);
+    }
 }

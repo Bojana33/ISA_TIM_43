@@ -1,8 +1,9 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from './../service/user.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { __param } from 'tslib';
 import { Address } from '../model/address';
 import { Adventure } from '../model/adventure';
@@ -16,6 +17,8 @@ import { AdventureService } from '../service/adventure.service';
 export class CreateAdventureComponent implements OnInit {
   
   adventureObj! : Adventure;
+  success!: boolean;
+  private _additionalServices!: FormArray;
 
   adventure = new FormGroup({
     name: new FormControl(''),
@@ -28,7 +31,7 @@ export class CreateAdventureComponent implements OnInit {
     //photos: string[],
     maxNumberOfGuests: new FormControl(0),
     houseRules: new FormControl(''),
-    //public additionalServices: AdditionalService,
+    additionalServices: this.formBuilder.array([this.createAdditionalServices()]),
     pricePerDay: new FormControl(0.0),
     cancellationFee: new FormControl(0),
     defaultFishingEquipment: new FormControl('')
@@ -36,11 +39,37 @@ export class CreateAdventureComponent implements OnInit {
 
 constructor(
   private router: ActivatedRoute,
+  private route: Router,
   private adventureService: AdventureService,
-  private userService: UserService
+  private userService: UserService,
+  private snackbar: MatSnackBar,
+  private formBuilder: FormBuilder
 ) { }
 
   ngOnInit(): void {
+    this.adventure;
+  }
+
+  createAdditionalServices(): FormGroup{
+    console.log('createAdditionalService');
+    return this.formBuilder.group({
+      name: '',
+      price: ''
+    });
+  }
+
+  addService(): void{
+    this._additionalServices = this.adventure.get('additionalServices') as FormArray;
+    this._additionalServices.push(this.createAdditionalServices());
+  }
+
+  deleteService(index: number): void {
+    this._additionalServices = this.adventure.get('additionalServices') as FormArray;
+    this._additionalServices.removeAt(index);
+  }
+
+  get additionalServices(): FormArray {
+    return this.adventure.get('additionalServices') as FormArray;
   }
 
   addAdventure(form:any){
@@ -59,11 +88,26 @@ constructor(
     this.adventureObj.entityPhoto = "./../../assets/images/capsule_616x353.jpg";
     this.adventureObj.defaultFishingEquipment = form.value.defaultFishingEquipment;
     this.adventureObj.adventureOwnerId = this.userService.currentUser.id;
+    this.adventureObj.additionalServices = form.value.additionalServices;
   }
 
   createAdventure(){
     this.addAdventure(this.adventure);
-    this.adventureService.saveAdventure(JSON.parse(JSON.stringify(this.adventureObj))).subscribe(res=>{console.log(res)});
+    this.adventureService.saveAdventure(JSON.parse(JSON.stringify(this.adventureObj))).subscribe(res=>{console.log(res); this.success= true; this.route.navigate(['/adventures']); this.openSnackBar();},
+      error => {
+        this.success = false;
+        this.openSnackBar();
+      });
+  }
+
+  openSnackBar(){
+    let message: string;
+    if( this.success == true){
+      message = 'Adventure created!';
+    } else{
+      message = 'Adventure creation failed';
+    }
+    this.snackbar.open(message,'cancel');
   }
 
 }

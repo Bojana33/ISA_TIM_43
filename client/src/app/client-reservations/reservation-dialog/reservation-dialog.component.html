@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>One click away from your reservation</h1>
+<div mat-dialog-content>
+  <p>Information about your reservation</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Number of guests</mat-label>
+    <input matInput [(ngModel)]="data.numberOfGuests" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Start date</mat-label>
+    <input matInput [(ngModel)]="data.reservationStartDate" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>End date</mat-label>
+    <input matInput [(ngModel)]="data.reservationEndDate" required>
+  </mat-form-field>
+  <span class="example-list-section">
+                  <ul>
+                    <li *ngFor="let serv of data.additionalServices">
+                      <input  type="checkbox" [checked]="true"/>
+                      {{serv.name}} price: {{serv.price}}
+                    </li>
+                  </ul>
+  </span>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial type="submit" (click)="createReservation()">Reserve</button>
+</div>

@@ -1,0 +1,12 @@
+.mat-cell{
+  display: table-cell;
+  height: 48px;
+  vertical-align: middle;
+  text-align: center;
+  margin-left: 5%;
+}
+
+table{
+  width: 80%;
+  text-align: center;
+}

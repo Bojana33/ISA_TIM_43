@@ -1,85 +1,78 @@
 <div >
-  <div  fxLayout="row" >
     <img class="entity_photo" src="{{adventure.entityPhoto}}">
-    <div >
-      <mat-card *ngIf="hasRole('INSTRUCTOR')" class="reservation">
-        <h1>Create fast reservation</h1>
-        <form>
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="Date" [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Address">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Time">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Duration">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Max number of guests">
-          </mat-form-field><br>
-          <!-- <mat-form-field>
-            <mat-label>Additional Services</mat-label>
-            <mat-select formControlName = "additionalServices" multiple>
-              <mat-option value="additionalService">Fishing from boat / Price: 5e</mat-option>
-              <mat-option value="a1">Rubber boots / Price: 3e</mat-option>
-            </mat-select>
-          </mat-form-field><br> -->
-          <button mat-raised-button type="submit">Submit</button>
-        </form>
-
-      </mat-card>
-    </div>
-  </div>
     <h1 class="info">{{adventure.name}}</h1>
-    <div fxLayout="row" fxLayoutGap="20px" *ngIf="hasSignedIn() && (hasRole('INSTRUCTOR') || hasRole('ADMIN'))" class="buttons">
-      <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}">Edit</button>
-      <button mat-flat-button color="accent" (click)="deleteAdventure()" >Delete</button>
+    <div fxLayout="row" fxLayoutGap="20px" class="buttons">
+      <button mat-flat-button color="accent" routerLink="/update-adventure/{{adventure.id}}" *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)">Edit</button>
+      <button mat-flat-button color="accent" (click)="deleteAdventure()"  *ngIf="hasRole('ADMIN') || (hasRole('INSTRUCTOR')&& isOwner(adventure.adventureOwnerId))">Delete</button>
     </div>
 
-      <div class="content">
-        <h1>Price</h1>
-        <h3>{{adventure.pricePerDay}}e</h3>
-        <h1>Description</h1>
-        <h3>{{adventure.description}}</h3>
-        <h1>Instructor Biography</h1>
-        <h3>{{adventure.instructorBio}}</h3>
-        <h1>Max Number of Guests</h1>
-        <h3>{{adventure.maxNumberOfGuests}}</h3>
-        <h1>House Rules</h1>
-        <h3>{{adventure.houseRules}}</h3>
-        <h1>Default fishing equipment</h1>
-        <h3></h3>
-        <h1>Cancellation Fee</h1>
-        <h3>{{adventure.cancellationFee}}%</h3>
-        <h1>Address</h1>
-        <h3>{{addressTxt}}</h3>
+    <div class="content">
+      <h1>Price</h1>
+      <p>{{adventure.pricePerDay}}e</p>
+      <h1>Description</h1>
+      <p>{{adventure.description}}</p>
+      <h1>Instructor Biography</h1>
+      <p>{{adventure.instructorBio}}</p>
+      <h1>Max Number of Guests</h1>
+      <p>{{adventure.maxNumberOfGuests}}</p>
+      <h1>House Rules</h1>
+      <p>{{adventure.houseRules}}</p>
+      <h1>Default fishing equipment</h1>
+      <p>{{adventure.defaultFishingEquipment}}</p>
+      <h1>Cancellation Fee</h1>
+      <p>{{adventure.cancellationFee}}%</p>
+      <h1>Additional Services</h1>
+      <p *ngFor="let serv of adventure.additionalServices">{{serv.name}} : {{serv.price}}$</p>
+      <h1>Address</h1>
+      <p>{{addressTxt}}</p>
         <app-map [address]="address"></app-map>
         <h1>Photos of previous adventures</h1>
-        <div  fxLayout="row" fxLayoutGap="20px">
+        <div *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)" fxLayout="row" fxLayoutGap="20px">
           <input type="file" (change)="onFileChanged($event)">
-          <button mat-flat-button color="accent" (click)="uploadPhoto()">Save new photo</button>
+          <button mat-flat-button color="accent" (click)="uploadPhoto()" >Save new photo</button>
         </div>
 
+        <div class = "column" *ngIf="adventure.entityPhoto != null || adventure.photos.length != 0">
+          <div class="box">
+            <ngb-carousel>
+              <ng-template ngbSlide>
+                <div class="picsum-img-wrapper image is-5by3">
+                  <img [src]="adventure.entityPhoto" alt="Random first slide">
+                </div>
+              </ng-template>
+              <ng-template ngbSlide *ngFor="let img of adventure.photos">
+                <div class="picsum-img-wrapper image is-5by3">
+                  <img [src]="img" alt="Random first slide">
+                </div>
+              </ng-template>
+            </ngb-carousel>
+          </div>
         </div>
-        <div class="album">
-          <!-- <mat-grid-list cols="4" rowHeight="150px" size="400px">
-            <mat-grid-tile
-              *ngFor = "let url of adventure.photos;let photo of album;"
-              [rowspan]="photo.rows"
-              [colspan]="photo.cols"
-              style="background-color: blueviolet;"> -->
-              <!-- <img src="https://picsum.photos/200/{{300+index}}" style="object-fit: cover; width: 100%; height: 100%;"> -->
-              <img *ngFor="let url of adventure.photos;" src="{{url}}" style="object-fit: cover; width: 100%; height: 100%;">
-            <!-- </mat-grid-tile>
-          </mat-grid-list>
-        </div> -->
+        
+        <h1>Adventure Calendar</h1>
+        <button class="button is-link is-rounded" (click)="showForm=2" *ngIf="hasSignedIn() && hasRole('INSTRUCTOR') && isOwner(adventure.adventureOwnerId)">Create new quick reservation</button>
+                <div class="modal is-active" *ngIf="showForm === 2">
+                  <div class="modal-background"></div>
+                  <div class="modal-card">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Create new quick reservation</p>
+                      <button class="delete" (click)="showForm=1" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                      <app-reservation-form [entityId]="adventure.id" (createdReservationEvent)="createNewReservation($event)">
+                      </app-reservation-form>
+                    </section>
+                    <footer class="modal-card-foot">
+                      <button class="button" (click)="showForm=1">Cancel</button>
+                    </footer>
+                  </div>
+                </div>
+          <div class = "box" *ngIf="adventure.id != 0">
+            <app-calendar [entityId]= "adventure.id">
+            </app-calendar>
+          </div>
 
-
+      </div>
 
 </div>
 

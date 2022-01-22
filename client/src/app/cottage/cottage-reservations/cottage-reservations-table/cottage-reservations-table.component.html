@@ -1,0 +1,103 @@
+
+<div class = "column is-10 is-offset-1">
+  <nav class="level">
+    <!-- Left side -->
+    <div class="level-left">
+      <div class="level-item">
+        <p class="subtitle is-5">
+          <strong>{{reservations.length}}</strong> reservations
+          <strong>{{pricesList}}$</strong>
+        </p>
+      </div>
+      <div class="level-item">
+        <form [formGroup]= "reservationsDateRangeForm">
+          <div class=" field has-addons">
+            <div class = "control">
+            <input class = "input" id="startDate" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                   placeholder="From" formControlName="startDate">
+            <owl-date-time #dt1></owl-date-time>
+            </div>
+            <div class = "control">
+            <input class = "input" id="endDate" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2"
+                   placeholder="To" formControlName="endDate">
+            <owl-date-time #dt2 ></owl-date-time>
+            </div>
+            <div class = "control">
+              <button class="button is-success is-right" (click) = "findReservationsInDateRange(reservationsDateRangeForm)">Search</button>
+            </div>
+            <div class = "control">
+              <button class="button is-danger is-right" [disabled]="!dt1.selected && !dt2.selected" (click)="clearDateRangeFilter()">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right side -->
+    <div class="level-right">
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 1 , '': filterStatus == 0}" (click)="filterReservationsByStatus('FREE'); (filterStatus == 1 ? filterStatus = 0 : filterStatus = 1)">Free</span></p>
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 2 }" (click)="filterReservationsByStatus('RESERVED'); (filterStatus == 2 ? filterStatus = 0 : filterStatus = 2)">Reserved</span></p>
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-success is-light': filterStatus == 3 }" (click)="filterReservationsByStatus('COMPLETED'); (filterStatus == 3 ? filterStatus = 0 : filterStatus = 3)">Completed</span></p>
+      <p class="level-item"><span class="is-size-5" [ngClass]="{'tag is-danger is-light': filterStatus == 4 }" (click)="filterReservationsByStatus('CANCELED'); (filterStatus == 4 ? filterStatus = 0 : filterStatus = 4)">Canceled</span></p>
+    </div>
+  </nav>
+  <table matSort (matSortChange)="sortData($event)" class="table is-striped">
+    <thead>
+    <tr>
+      <th><abbr title="Id">Id</abbr></th>
+      <th mat-sort-header="creationDate">Creation date</th>
+      <th mat-sort-header="price">Price</th>
+      <th mat-sort-header="numberOfGuests"># of guests</th>
+      <th mat-sort-header="reservationStatus">Status</th>
+      <th mat-sort-header="reservationStart">Start</th>
+      <th mat-sort-header="reservationEnd">End</th>
+      <th mat-sort-header="saleStart">Sale start</th>
+      <th mat-sort-header="saleEnd">Sale end</th>
+      <th mat-sort-header="clientId">Client id</th>
+      <th ><abbr title="Additional services"> Service : Price</abbr></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let res of reservations">
+      <th>{{res.id}}</th>
+      <td>{{res.creationDate}}</td>
+      <td>{{res.price}}</td>
+      <td>{{res.numberOfGuests}}</td>
+      <td>{{res.reservationStatus.toString()}}</td>
+      <td><div *ngIf="res.salePeriod != null">{{res.salePeriod.startDate}}</div></td>
+      <td><div *ngIf="res.salePeriod != null">{{res.salePeriod.endDate}}</div></td>
+      <td><div *ngIf="res.salePeriod == null">no sale</div></td>
+      <td><div *ngIf="res.salePeriod == null">no sale</div></td>
+      <td>{{res.clientId}}</td>
+      <td>
+        <div *ngIf="res.additionalServices">
+        <li *ngFor="let addService of res.additionalServices">
+          {{addService['name']}} : {{addService['price']}}
+        </li>
+        </div>
+      </td>
+      <td>
+        <button class="button is-link is-inverted" type="button" (click)="showForm=2" *ngIf="res.reservationStatus.toString() == 'COMPLETED'">
+          <i class="fa fa-pencil" aria-hidden="true"> Review</i>
+        </button>
+        <div class="modal is-active" *ngIf="showForm === 2">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Review client</p>
+              <button class="delete" type="button" (click)="showForm=1" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              <app-owner-review-form [clientId]="res.clientId" [reservationId]="res.id">
+              </app-owner-review-form>
+            </section>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,48 @@
+<div>
+    <mat-card class="mat-elevation-z4" style="width:1200px; margin-left:15%; margin-top:2%; margin-right: 2%; position: center">
+        <mat-toolbar color="primary">Clients Reviews</mat-toolbar>
+        <mat-table class="lessons-table mat-elevation-z8" [dataSource]="reviews">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+            <mat-cell class="description-cell"
+                      *matCellDef="let res">{{res.id}}</mat-cell>
+      
+          </ng-container>
+      
+          <ng-container matColumnDef="client">
+            <mat-header-cell *matHeaderCellDef>Client</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let res">{{clientNames[res.id-1]}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let res">{{res.description}}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="grade">
+            <mat-header-cell *matHeaderCellDef>Grade</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let res">{{res.grade}}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="approve">
+            <mat-header-cell *matHeaderCellDef>Approve</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let res"><button class="button is-danger is-rounded" (click)="approvePublication(res)">Approve</button></mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="deny">
+            <mat-header-cell *matHeaderCellDef>Deny</mat-header-cell>
+            <mat-cell class="duration-cell"
+                      *matCellDef="let res"><button class="button is-danger is-rounded" (click)="denyPublication(res)">Deny</button></mat-cell>
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </mat-card>
+</div>
+

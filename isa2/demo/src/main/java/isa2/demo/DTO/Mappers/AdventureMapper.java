@@ -1,6 +1,7 @@
 package isa2.demo.DTO.Mappers;
 
 import isa2.demo.Config.ModelMapperConfig;
+import isa2.demo.DTO.AdditionalServiceDTO;
 import isa2.demo.DTO.AddressDTO;
 import isa2.demo.DTO.AdventureDTO;
 import isa2.demo.DTO.CottageDTO;
@@ -11,6 +12,8 @@ import isa2.demo.Service.ServiceImpl.UserServiceImpl;
 import isa2.demo.Service.UserService;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,12 +32,37 @@ public class AdventureMapper {
         Adventure adventure = modelMapper.modelMapper().map(adventureDTO, Adventure.class);
         Owner owner = ownerService.findById(adventureDTO.getAdventureOwnerId());
         adventure.setOwner(owner);
-//        Collection<Adventure> adventures = owner.getAdventures();
-//        adventures.add(adventure);
-//        owner.setAdventures(adventures);
+        Collection<Adventure> adventures = owner.getAdventures();
+        owner.setAdventures(adventures);
         Address address = adventure.getAddress();
         address.setEntity(adventure);
+        adventure.setReservations(getReservations(adventure));
+        Collection<AdditionalService> additionalServices = adventure.getAdditionalServices();
+        if (additionalServices != null) {
+            for (AdditionalService additionalService : additionalServices) {
+                additionalService.setEntity(adventure);
+            }
+        }
         return adventure;
+    }
+
+    private Collection<Reservation> getReservations(Adventure adventure) {
+        Collection<Reservation> reservationCollection = adventure.getReservations();
+
+        if (reservationCollection != null) {
+            for (Reservation reservation : reservationCollection) {
+                reservation.setEntity(adventure);
+                reservation.setCreationDate(LocalDateTime.now());
+                Collection<AdditionalService> additionalServices = reservation.getAdditionalServices();
+                if (additionalServices != null) {
+                    for (AdditionalService additionalService : additionalServices) {
+                        additionalService.setEntity(adventure);
+                        additionalService.setReservation(reservation);
+                    }
+                }
+            }
+        }
+        return reservationCollection;
     }
 
     public AdventureDTO mapAdventureToDTO(Adventure adventure){
