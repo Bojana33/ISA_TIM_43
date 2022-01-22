@@ -36,7 +36,7 @@ public class CottageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    //@PreAuthorize("hasRole('COTTAGEOWNER')")
+    @PreAuthorize("hasRole('COTTAGEOWNER')")
     public ResponseEntity<CottageDTO> addCottage(@Valid @RequestBody CottageDTO cottageDTO){
         Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);
         cottage.setOwner(ownerRepository.findById(Integer.parseInt(cottageDTO.getCottageOwnerId())).get());
