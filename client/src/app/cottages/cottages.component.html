@@ -29,7 +29,8 @@
         <div class="card large">
           <div class="card-image">
             <figure class="image is-16by9">
-              <img src="{{cottage.entityPhoto}}" alt="Image">
+              <img *ngIf="cottage.entityPhoto!=null" src="{{cottage.entityPhoto}}" alt="Image">
+              <img *ngIf="cottage.photos[0]!=null && cottage.entityPhoto==null" src="{{cottage.photos[0]}}" alt="Image">
             </figure></div>
           <div class="card-content">
             <div class="media">

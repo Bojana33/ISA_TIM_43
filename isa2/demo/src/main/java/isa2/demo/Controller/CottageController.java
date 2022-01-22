@@ -99,7 +99,7 @@ public class CottageController {
     }
     @PutMapping("/{cottage_id}")
     @PreAuthorize("hasRole('COTTAGEOWNER')")
-    public ResponseEntity<CottageDTO> updateCottage(@RequestBody CottageDTO cottageDTO){
+    public ResponseEntity<CottageDTO> updateCottage(@Valid @RequestBody CottageDTO cottageDTO){
         ResponseEntity responseEntity = null;
         try{
             Cottage cottage = cottageMapper.mapDtoToCottage(cottageDTO);

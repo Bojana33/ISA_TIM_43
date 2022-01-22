@@ -22,6 +22,7 @@ public class CottageDTO {
     private String cottageName;
     @Length(min = 5, max = 511)
     private String description;
+    @Min(0)
     private Double avgGrade;
     private Set<String> photos;
     @Min(0)
@@ -33,6 +34,7 @@ public class CottageDTO {
     private Collection<RoomDTO> rooms;
     private Collection<ReservationDTO> reservations;
     private String entityPhoto;
+    @Min(0)
     private Double averageGrade;
     private Collection<AdditionalServiceDTO> additionalServices;
 }

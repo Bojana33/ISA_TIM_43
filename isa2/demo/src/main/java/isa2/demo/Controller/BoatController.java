@@ -79,7 +79,7 @@ public class BoatController {
     }
     @PutMapping("/{boat_id}")
     @PreAuthorize("hasRole('BOATOWNER')")
-    public ResponseEntity<BoatDTO> updateBoat(@RequestBody BoatDTO boatDTO){
+    public ResponseEntity<BoatDTO> updateBoat(@Valid @RequestBody BoatDTO boatDTO){
         ResponseEntity responseEntity = null;
         try{
             Boat boat = boatMapper.mapDtoToBoat(boatDTO);

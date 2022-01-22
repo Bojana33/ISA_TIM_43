@@ -46,7 +46,6 @@ public class EntityController {
     }
 
     @PostMapping("/rentalTime")
-    @PreAuthorize("hasAnyRole('BOATOWNER','COTTAGEOWNER', 'INSTRUCTOR')")
     public ResponseEntity<RentalTimeDTO> addRentalTimeToEntity(@RequestBody RentalTimeDTO rentalTimeDTO) throws MessagingException {
         RentalTime rentalTime = modelMapper.modelMapper().map(rentalTimeDTO, RentalTime.class);
         ResponseEntity responseEntity = null;

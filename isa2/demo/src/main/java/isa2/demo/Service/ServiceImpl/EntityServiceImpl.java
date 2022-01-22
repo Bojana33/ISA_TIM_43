@@ -87,6 +87,9 @@ public class EntityServiceImpl implements EntityService {
             }
         }
         if(isReservationOverlaping(entity, reservation)){
+            if(reservation.getNumberOfGuests() > entity.getMaxNumberOfGuests()){
+                return null;
+            }
             Collection<Reservation> reservations = entity.getReservations();
             reservation.setCreationDate(LocalDateTime.now());
             reservation.setEntity(entity);

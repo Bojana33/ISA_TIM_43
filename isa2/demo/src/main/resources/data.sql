@@ -22,7 +22,8 @@ VALUES (true,false, 'user@userovic.com', false, true, null, '$2a$10$OyHff7x9UR3a
        (true,false,'arhitekturaracunara111@gmail.com',false,false ,null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC','094i9234kdf','arhi','tektura',3),
        (true,false,'inst@gmail.com',false,false ,null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC','094i9234kdf','arhi','tektura', 4),
         (true,false, 'client@gmail.com', false, false, null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC', '12345', 'Klijent', 'Klijentovic', 1),
-       (true,false, 'instrucotr@gmail.com', false, false, null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC', '12345', 'Lepo', 'Ime', 1);
+       (true,false, 'instrucotr@gmail.com', false, false, null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC', '12345', 'Lepo', 'Ime', 1),
+       (true,false,'pravi_user',false,false ,null, '$2a$10$OyHff7x9UR3atoDyz7.VAuKKSqZOB6ZZvL338Nic2WiPNi.0zdwqC','094i9234kdf','arhi','tektura', 4);
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
                                                           (1, 2),
@@ -33,12 +34,14 @@ INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1),
                                                           (4,1),
                                                           (4,3),
                                                           (5,4),
-                                                          (6,6);
+                                                          (6,6),
+                                                          (7,3);
 
 insert into owner (category, loyalty_points, owner_type, id)
 values (0,0,1,2),
        (0,0,0,4),
-       (0,0,2,6);
+       (0,0,2,6),
+       (0,0,0,7);
 
 insert into client (category, loyalty_points, penalty, id)
 values (0,0,2,1),

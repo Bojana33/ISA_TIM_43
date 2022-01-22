@@ -4,7 +4,7 @@
 
             <div class = "column is-8" *ngIf="cottage.entityPhoto != null || cottage.photos.length != 0">
                 <ngb-carousel>
-                  <ng-template ngbSlide>
+                  <ng-template *ngIf="cottage.entityPhoto != null" ngbSlide>
                     <div class="picsum-img-wrapper image is-5by3">
                       <img [src]="cottage.entityPhoto" alt="Random first slide">
                     </div>
@@ -15,8 +15,8 @@
                     </div>
                   </ng-template>
                 </ngb-carousel>
-              <input type="file" (change)="onFileChanged($event)">
             </div>
+            <input class= "is-small is-primary"type="file" (change)="onFileChanged($event)">
 
             <div class = "column is-4" *ngIf ="hasSignedIn() && loggedUserIsOwner()">
               <form [formGroup]="cottageUpdateForm">
