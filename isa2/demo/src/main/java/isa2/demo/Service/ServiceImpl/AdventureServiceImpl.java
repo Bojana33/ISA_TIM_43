@@ -117,7 +117,7 @@ public class AdventureServiceImpl implements AdventureService {
     Comparator<AdventureDTO> compareByAverageGrade = new Comparator<AdventureDTO>() {
         @Override
         public int compare(AdventureDTO o1, AdventureDTO o2) {
-            return o1.getAvgGrade().compareTo(o2.getAvgGrade());
+            return o1.getAverageGrade().compareTo(o2.getAverageGrade());
         }
     };
 

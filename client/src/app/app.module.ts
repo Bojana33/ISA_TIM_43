@@ -26,6 +26,7 @@ import { AuthService } from './service/auth.service';
 import { LoginGuard } from './guard/login.guard';
 import { GuestGuard } from './guard/guest.guard';
 import { AdminGuard } from './guard/admin.guard';
+import { ClientGuard } from './guard/client.guard';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -105,7 +106,6 @@ import { ConfigSingletonComponent } from './config-singleton/config-singleton.co
 import { RegisterBoatComponent } from './register-boat/register-boat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReservationsHistoryComponent } from './client-reservations/reservations-history/reservations-history.component';
-import { ClientGuard } from './guard/client.guard';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 

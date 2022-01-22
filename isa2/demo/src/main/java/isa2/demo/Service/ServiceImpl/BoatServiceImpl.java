@@ -139,7 +139,7 @@ public class BoatServiceImpl implements BoatService {
     Comparator<BoatDTO> compareByAverageGrade = new Comparator<BoatDTO>() {
         @Override
         public int compare(BoatDTO o1, BoatDTO o2) {
-            return o1.getAvgGrade().compareTo(o2.getAvgGrade());
+            return o1.getAverageGrade().compareTo(o2.getAverageGrade());
         }
     };
 

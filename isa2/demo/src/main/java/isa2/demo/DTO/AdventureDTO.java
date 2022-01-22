@@ -15,7 +15,7 @@ public class AdventureDTO {
     private AddressDTO addressDTO;
     private String description;
     private String instructorBio;
-    private Double avgGrade;
+    private Double averageGrade;
     private Set<String> photos;
     private Integer maxNumberOfGuests;
     private String houseRules;

@@ -42,17 +42,17 @@ insert into client (category, loyalty_points, penalty, id)
 values (0,0,2,5);
 
 insert into
-    entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
-values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png',1),
-       ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2);
+    entities(name, description,  max_guests, price_per_day, entity_photo, address_id, average_grade)
+values ('Fishing at Gradac', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje.png',1, 3),
+       ('Fishing Adventure', 'This is a beautiful adventure', 10, 10, './../../assets/images/pecanje1.jpg',2, 4);
 insert into
-    entities(name, description,  max_guests, price_per_day, entity_photo, address_id)
+    entities(name, description,  max_guests, price_per_day, entity_photo, address_id, average_grade)
     values
-       ('VIKENDICA 1', 'This is a beautiful cottage', 10, 19, './../../assets/images/cottage1.jpg', 2),
-       ('SVIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1),
-       ('MOJA VIKENDICA', 'Incredible', 10, 5, './../../assets/images/cottage2.jpg', 3),
-       ('BROD 1', 'Incredible', 10, 15, './../../assets/images/yacht.jpg',  1),
-       ('ABROD 2', 'Perfect rest day on our boat', 10, 11, './../../assets/images/fishing-boat.jpg',  3);
+       ('VIKENDICA 1', 'This is a beautiful cottage', 10, 19, './../../assets/images/cottage1.jpg', 2, 1),
+       ('SVIKENDICA 2', 'Incredible', 10, 10, './../../assets/images/cottage2.jpg', 1, 5),
+       ('MOJA VIKENDICA', 'Incredible', 10, 5, './../../assets/images/cottage2.jpg', 3, 3),
+       ('BROD 1', 'Incredible', 10, 15, './../../assets/images/yacht.jpg',  1, 2),
+       ('ABROD 2', 'Perfect rest day on our boat', 10, 11, './../../assets/images/fishing-boat.jpg',  3, 4);
 
 insert into
     adventure(id, instructor_bio, cancellation_fee, house_rules, adventure_owner_id)

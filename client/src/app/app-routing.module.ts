@@ -107,12 +107,13 @@ const routes: Routes = [
   },
   {
     path: 'userReservations',
-    component: UserReservationsComponent
+    component: UserReservationsComponent,
+    canActivate: [ClientGuard]
   },
   {
     path: 'reservationsHistory',
     component: ReservationsHistoryComponent,
-    //canActivate: [ClientGuard]
+    canActivate: [ClientGuard],
     pathMatch: 'full'
   },
   {
@@ -134,15 +135,18 @@ const routes: Routes = [
   },
   {
     path: 'fastReservation',
-    component: FastReservationComponent
+    component: FastReservationComponent,
+    canActivate: [ClientGuard]
   },
   {
     path: 'subscriptions',
-    component: SubscriptionsComponent
+    component: SubscriptionsComponent,
+    canActivate: [ClientGuard]
   },
   {
     path: 'futureReservations',
-    component: FutureReservationsComponent
+    component: FutureReservationsComponent,
+    canActivate: [ClientGuard]
   },
   {
     path: 'profile/:id/profileUpdate',
@@ -234,7 +238,7 @@ const routes: Routes = [
   {
     path: 'delete-profile',
     component: DeleteProfileComponent,
-    canActivate: [GuestGuard]
+    canActivate: [ClientGuard]
   },
   {
     path: 'dashboard',
@@ -288,7 +292,7 @@ const routes: Routes = [
   {
     path: 'userComplaint',
     component: UserComplaintComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, ClientGuard]
   },
   {
     path: 'complaints',
@@ -298,7 +302,7 @@ const routes: Routes = [
   {
     path: 'userReservations',
     component: ReservationsComponent,
-    canActivate: [GuestGuard]
+    canActivate: [GuestGuard, ClientGuard]
   },
   {
     path: 'owner-reservations/:id',

@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService } from '../service/user.service';
+import {UserService} from '../service/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClientGuard  implements CanActivate {
-
-  currentUser: any;
-
+export class ClientGuard implements CanActivate {
+  private currentUser!: Promise<void | null>;
   constructor(private router: Router, private userService: UserService) {
   }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.currentUser = this.userService.initUser();
-    console.log(this.currentUser);
     if (this.currentUser) {
       if (this.userService.loggedRole('CLIENT')) {
         return true;
@@ -25,9 +23,10 @@ export class ClientGuard  implements CanActivate {
       }
 
     } else {
-      console.log('NOT AN INSTRUCTOR ROLE');
+      console.log('ONLY AVAILABLE TO CLIENTS');
       this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
       return false;
     }
   }
+
 }

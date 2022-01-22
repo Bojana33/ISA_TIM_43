@@ -353,13 +353,14 @@ public class ReservationServiceImpl implements ReservationService {
         }
     };
 
-   // Comparator<ReservationDTO> compareByDuration = new Comparator<ReservationDTO>() {
-     //   @Override
-      //  public int compare(ReservationDTO o1, ReservationDTO o2) {
-        //    return Duration.between(o1.getReservedPeriod().getStartDate(), o1.getReservedPeriod().getEndDate()).toDays().compareTo(Duration.between(o1.getReservedPeriod().getStartDate(), o1.getReservedPeriod().getEndDate()).toDays());
-            //return o1.getReservedPeriod().getStartDate().compareTo(o2.getReservedPeriod().getEndDate());
-        //}
-    //};
+    Comparator<ReservationDTO> compareByDuration = new Comparator<ReservationDTO>() {
+        @Override
+        public int compare(ReservationDTO o1, ReservationDTO o2) {
+            Long duratio1 = Duration.between(o1.getReservedPeriod().getStartDate(), o1.getReservedPeriod().getEndDate()).toDays();
+            Long duratio2 = Duration.between(o1.getReservedPeriod().getStartDate(), o1.getReservedPeriod().getEndDate()).toDays();
+            return duratio1.compareTo(duratio2);
+        }
+    };
 
     @Override
     public ArrayList<ReservationDTO> sortReservations(Collection<ReservationDTO> reservations, String criterion){
@@ -370,6 +371,8 @@ public class ReservationServiceImpl implements ReservationService {
             Collections.sort(newList, compareByStartDate);
         else if (criterion.equals("endDate"))
             Collections.sort(newList, compareByEndDate);
+        else if (criterion.equals("duration"))
+            Collections.sort(newList, compareByDuration);
         return newList;
     }
 }
