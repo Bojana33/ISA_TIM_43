@@ -15,6 +15,7 @@ import isa2.demo.Repository.ReservationRepository;
 import isa2.demo.Service.ClientService;
 import isa2.demo.Service.EntityService;
 import isa2.demo.Service.UserService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,24 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public Entity addRentalTime(Integer entity_id, RentalTime rentalTime) throws MessagingException {
         Entity entity =  entityRepository.getById(entity_id);
+        Collection<RentalTime> rentalTimes = entity.getRentalTimes();
         if(isRentalTimeDateValid(entity,rentalTime)){
             Collection<RentalTime> rentalTimeList = entity.getRentalTimes();
+            for(RentalTime rentalTimeTemp: rentalTimeList){
+                if (doTimeIntervalsIntersect(rentalTime.getStart_date(),rentalTime.getEnd_date(), rentalTimeTemp.getStart_date(), rentalTimeTemp.getEnd_date())) {
+                    if(rentalTime.getStart_date().isBefore(rentalTimeTemp.getStart_date())){
+                    }
+                    else if(rentalTime.getStart_date().isAfter(rentalTimeTemp.getStart_date())){
+                        rentalTime.setStart_date(rentalTimeTemp.getStart_date());
+                    }
+                    if(rentalTime.getEnd_date().isAfter(rentalTimeTemp.getEnd_date())){
+                    }
+                    else if(rentalTime.getEnd_date().isBefore(rentalTimeTemp.getEnd_date())){
+                        rentalTime.setEnd_date(rentalTimeTemp.getEnd_date());
+                    }
+                    continue;
+                }
+            }
             rentalTime.setEntity(entity);
             rentalTimeList.add( rentalTime);
             entity.setRentalTimes(rentalTimeList);
@@ -108,10 +125,13 @@ public class EntityServiceImpl implements EntityService {
     public boolean isRentalTimeDateValid(Entity entity, RentalTime rentalTime) {
 
         Collection<RentalTime> rentalTimeCollection = entity.getRentalTimes();
-        for(RentalTime rentalTimeTemp: rentalTimeCollection){
-            if (doTimeIntervalsIntersect(rentalTime.getStart_date(),rentalTime.getEnd_date(), rentalTimeTemp.getStart_date(), rentalTimeTemp.getEnd_date()))
+        if(rentalTime.getStart_date().isAfter(rentalTime.getEnd_date()) || rentalTime.getStart_date().isEqual(rentalTime.getEnd_date())){
                 return false;
         }
+//        for(RentalTime rentalTimeTemp: rentalTimeCollection){
+//            if (doTimeIntervalsIntersect(rentalTime.getStart_date(),rentalTime.getEnd_date(), rentalTimeTemp.getStart_date(), rentalTimeTemp.getEnd_date()))
+//                return false;
+//        }
         return true;
     }
 

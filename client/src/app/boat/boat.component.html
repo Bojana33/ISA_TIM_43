@@ -70,6 +70,40 @@
           <input class = "input is-small is-rounded" type="text" formControlName="fishingEquipment">
           <h4 class="title is-4 my-2">House rules</h4>
           <input class = "input is-small is-rounded" type="text" formControlName="houseRules">
+          <div formGroupName="address">
+            <div class = "field">
+              <label class = "label" for="country">
+                Country
+              </label>
+              <div class = "control">
+                <input class = "input" id="country" type="text" formControlName="country">
+              </div>
+            </div>
+            <div class = "field">
+              <label class = "label" for="city">
+                City
+              </label>
+              <div class = "control">
+                <input class = "input" id="city" type="text" formControlName="city" >
+              </div>
+            </div>
+            <div class = "field">
+              <label class = "label" for="street">
+                Street
+              </label>
+              <div class = "control">
+                <input class = "input" id="street" type="text" formControlName="street">
+              </div>
+            </div>
+            <div class = "field">
+              <label class = "label" for="houseNumber">
+                House number
+              </label>
+              <div class = "control">
+                <input class = "input" id="houseNumber" type="text" formControlName="houseNumber">
+              </div>
+            </div>
+          </div>
           <h4 class="title is-4 my-2">Boat type: {{boat.type.toString()}} </h4>
           <div class="select is-rounded">
             <select formControlName="boatType">

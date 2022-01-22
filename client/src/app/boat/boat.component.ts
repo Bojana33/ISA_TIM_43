@@ -116,7 +116,13 @@ export class BoatComponent implements OnInit {
         Validators.required,
         Validators.minLength(0),
         Validators.maxLength(300)]
-      )
+      ),
+      address: new FormGroup({
+        country: new FormControl(this.boat.address.country, [Validators.required]),
+        city: new FormControl(this.boat.address.city, [Validators.required]),
+        street: new FormControl(this.boat.address.street, [Validators.required]),
+        houseNumber: new FormControl(this.boat.address.houseNumber, [Validators.required])
+      }),
     });
   }
   // tslint:disable-next-line:typedef
@@ -160,6 +166,10 @@ export class BoatComponent implements OnInit {
     this.boat.houseRules = form.value.houseRules;
     this.boat.fishingEquipment = form.value.fishingEquipment;
     this.boat.engineNumber = form.value.engineNumber;
+    this.boat.address.country = form.value.address.country;
+    this.boat.address.street = form.value.address.street;
+    this.boat.address.city = form.value.address.city;
+    this.boat.address.houseNumber = form.value.address.houseNumber;
     return this.boatService.updateBoat(this.boat).subscribe(
       res => {
         this.uploadImage(res.id);
