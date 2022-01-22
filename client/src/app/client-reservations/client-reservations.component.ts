@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import {ReservationDialogComponent} from "./reservation-dialog/reservation-dialog.component";
 import { BoatService } from '../service/boat.service';
 import {AdventureService} from "../service/adventure.service";
+import {AdventureDTO} from "../model/adventure-dto";
+import {BoatDTO} from "../model/boat-dto";
 
 export interface DialogData {
   id: any;
@@ -39,10 +41,12 @@ export class ClientReservationsComponent implements OnInit {
   form!: FormGroup;
   request!: FreeEntityDTO;
   entity: CottageDTO[] = [];
-  sort!: boolean;
+  adventures: AdventureDTO[] = [];
+  boats: BoatDTO[]= [];
   checkboxFlag: Array<AdditionalServicesDTO> = [];
   user!: any;
   entityValue: any;
+  choosenEntity: any;
   public sortMethod: string[] = [];
   public value: string = '';
   constructor(private formBuilder: FormBuilder,
@@ -53,14 +57,14 @@ export class ClientReservationsComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private userService: UserService,
               private adventureService: AdventureService,
-              public dialog: MatDialog) { this.sort = false;}
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      entityType: '',
+      entityType: ['', Validators.required],
       numberOfGuests: '',
-      reservationStartDate: '',
-      reservationEndDate: '',
+      reservationStartDate: ['', Validators.required],
+      reservationEndDate: ['', Validators.required],
       grade: '',
       country: '',
       city: ''
@@ -68,23 +72,33 @@ export class ClientReservationsComponent implements OnInit {
   }
 
   chooseEntity(value: any){
-    if(value === 1)
+    console.log(value);
+    if(value === 1) {
+      this.entity = [];
+      this.boats = [];
       this.adventureService.getFreeAdventures(this.request).subscribe(
         res => {
-          this.entity = res.body;
-          if (this.entity.length === 0)
+          this.adventures = res.body;
+          console.log(this.adventures);
+          if (this.adventures.length === 0)
             this.snackBar.open('There are no free adventures with this specification. Try with another period.', 'cancel');
         }
       );
-    else if(value === 2)
+    }
+    else if(value === 2) {
+      this.adventures = [];
+      this.entity = [];
       this.boatService.getFreeBoats(this.request).subscribe(
         res => {
-          this.entity = res.body;
-          if (this.entity.length === 0)
+          this.boats = res.body;
+          if (this.boats.length === 0)
             this.snackBar.open('There are no free boats with this specification. Try with another period.', 'cancel');
         }
       );
+    }
     else if(value === 3) {
+      this.boats = [];
+      this.adventures = [];
       this.cottageService.getFreeCottages(this.request).subscribe(
         res => {
           this.entity = res.body;
@@ -119,7 +133,6 @@ export class ClientReservationsComponent implements OnInit {
     this.request.grade = this.form.value.grade;
     this.request.country = this.form.value.country;
     this.request.city = this.form.value.city;
-    this.sort = true;
     console.log(this.request);
     this.chooseEntity(this.entityValue);
   }
@@ -164,5 +177,36 @@ export class ClientReservationsComponent implements OnInit {
 
   addAdditionalService(serv: AdditionalServicesDTO){
     this.checkboxFlag.push(serv);
+  }
+
+  sort(criterion: any) {
+    if(criterion === 'price' && this.boats.length > 0)
+      this.boatService.getSorted(this.boats, 'price', true).subscribe(res =>{
+        this.boats = res.body;
+      });
+    else if(criterion === 'grade' && this.boats.length > 0)
+      this.boatService.getSorted(this.boats, 'grade', true).subscribe(res =>{
+        this.boats = res.body;
+      });
+
+     else if(criterion === 'price' && this.adventures.length > 0)
+       this.adventureService.getSorted(this.adventures, 'price', true).subscribe(res =>{
+         this.adventures = res.body;
+       });
+
+     else if(criterion === 'grade' && this.adventures.length > 0)
+       this.adventureService.getSorted(this.adventures, 'grade', true).subscribe(res =>{
+         this.adventures = res.body;
+       });
+
+
+    else if(criterion === 'price' && this.entity.length > 0)
+      this.cottageService.getSorted(this.entity, 'price', true).subscribe(res =>{
+        this.entity = res.body;
+      });
+    else if(criterion === 'grade' && this.entity.length > 0)
+       this.cottageService.getSorted(this.entity, 'grade', true).subscribe(res =>{
+         this.entity = res.body;
+       });
   }
 }
