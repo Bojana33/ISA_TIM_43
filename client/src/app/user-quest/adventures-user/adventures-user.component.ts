@@ -46,7 +46,8 @@ export class AdventuresUserComponent implements OnInit {
             this.tmpAdventures.push(adventure);;
           });
         }
-        this.allAdventures = this.tmpAdventures;
+        //this.allAdventures = this.tmpAdventures;
+        this.adventures = this.allAdventures;
       });
   }
 
@@ -54,7 +55,7 @@ export class AdventuresUserComponent implements OnInit {
     if (search === 'name') {
       this.adventures = this.allAdventures.filter((val) => val.name.toUpperCase().includes(value) || val.name.toLowerCase().includes(value));
     } else if (search === 'pricePerDay') {
-      this.adventures = this.allAdventures.filter((val) => val.pricePerDay.toString() === value.toString());
+      this.adventures = this.allAdventures.filter((val) => val.pricePerDay === Number(value));
     } else if (search === 'averageGrade') {
       console.log(value);
       this.adventures = this.allAdventures.filter((val) => val.averageGrade.toString() === value.toString());

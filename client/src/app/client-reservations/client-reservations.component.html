@@ -100,17 +100,6 @@
                     <p>
                       Average grade: {{item.averageGrade}}
                     </p>
-                    <p>
-                      Additional services:
-                    </p>
-                    <span class="example-list-section">
-                  <ul>
-                    <li *ngFor="let serv of item.additionalServices">
-                      <input [(ngModel)]="checkboxFlag"  type="checkbox" (click)="addAdditionalService(serv)"/>
-                      {{serv.name}} price: {{serv.price}}
-                    </li>
-                  </ul>
-                </span>
                   </mat-card-content>
                   <a mat-stroked-button color="accent" (click)="reserve(item.id)"  style="margin-top: 5%">Reserve</a>
                 </mat-card>

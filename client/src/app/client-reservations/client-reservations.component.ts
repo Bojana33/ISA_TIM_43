@@ -173,6 +173,8 @@ export class ClientReservationsComponent implements OnInit {
     //this.entityService.reserve(this.checkboxFlag, itemId, this.user.id, this.request).subscribe(
       //res => {console.log('res ispisan', res);}
     //)
+
+    this.checkboxFlag = [];
   }
 
   addAdditionalService(serv: AdditionalServicesDTO){

@@ -13,7 +13,7 @@ import { EntityService } from 'src/app/service/entity.service';
 export class ReservationsHistoryComponent implements OnInit {
 
   displayedColumns: string[] = ['Reservation start date', 'Reservation end date',
-    'Price', 'Number of guests', 'Discount', 'Entity', 'Description'];
+    'Price', 'Number of guests', 'Discount', 'Entity'];
   dataSource: Array<ReservationDTO> = [];
   canceledEnabled!: boolean;
   dateAdded: Date = new Date();
